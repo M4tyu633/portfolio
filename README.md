@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Matthew Labrador — Portfolio
 
-## Getting Started
+My personal site: [matthewlabrador.vercel.app](https://matthewlabrador.vercel.app)
 
-First, run the development server:
+A single-page portfolio with an interactive ID badge, dark/light theming,
+scroll-reveal animations, and filterable project cards. Statically generated,
+so every page is served as pre-rendered HTML.
+
+---
+
+## Tech stack
+
+| Layer      | Choice                              | Why / what it's doing here                                                                   |
+| ---------- | ----------------------------------- | -------------------------------------------------------------------------------------------- |
+| Framework  | **Next.js 16** (App Router)         | Static generation, file-based metadata, built-in image + font optimization                   |
+| UI library | **React 19**                        | Server Components by default; only 4 components ship JavaScript to the browser               |
+| Language   | **TypeScript 5**                    | The content file is typed, so a malformed project entry fails at build instead of at runtime |
+| Styling    | **Tailwind CSS v4**                 | Utility classes; theme tokens defined as CSS variables in `globals.css`                      |
+| Font       | **Space Grotesk** (`next/font`)     | Self-hosted at build time — no request to Google, no layout shift                            |
+| Icons      | Hand-written inline SVG             | No icon dependency; all icons live in `src/components/Icons.tsx`                             |
+| Build tool | **Turbopack**                       | Next 16's default bundler                                                                    |
+| Linting    | **ESLint 9** + React Compiler rules | `next lint` is gone in Next 16; the `lint` script calls `eslint` directly                    |
+| Formatting | **Prettier**                        | Includes the Tailwind class-sorting plugin                                                   |
+| Hosting    | **Vercel**                          | Pushes to `main` deploy automatically; PRs get preview URLs                                  |
+
+**Zero runtime dependencies beyond React and Next.** No animation library, no
+UI kit, no icon package, no 3D engine — everything below is hand-built.
+
+### What's implemented and how
+
+- **Interactive ID badge** (`IdBadge.tsx`) — the card hanging in the hero is a
+  pendulum simulation: gravity, angular damping, a stretchy strap, and a
+  separate spin axis, integrated in a `requestAnimationFrame` loop that writes
+  transforms straight to the DOM (no React state per frame). It has a real back
+  face via `backface-visibility`, so it reads correctly when it settles flipped.
+  Drag it with a mouse or touch, or focus it and use the arrow keys.
+- **Dark / light theme** — class-based, with an inline script in `layout.tsx`
+  that reads `localStorage` _before first paint_, so there's no flash of the
+  wrong theme on reload. The sun/moon icon swap is pure CSS, so there is no
+  hydration mismatch to handle.
+- **Scroll reveal** (`Reveal.tsx`) — one `IntersectionObserver` per block,
+  unobserving after it fires. Staggered via a `delay` prop.
+- **Active-section nav** — a second `IntersectionObserver` highlights the nav
+  link for whichever section is currently on screen.
+- **Filterable projects** — curated tag filters defined in `data.ts`; filters
+  that no longer match any project are dropped automatically.
+- **SEO / sharing** — `opengraph-image.tsx` generates a 1200×630 link-preview
+  card at build time with `next/og`, `icon.tsx` generates the favicon, plus
+  `sitemap.xml`, `robots.txt`, and JSON-LD `Person` structured data.
+- **Accessibility** — semantic landmarks, `aria-label`/`aria-pressed` on
+  controls, keyboard support on the badge, and a `prefers-reduced-motion` branch
+  that disables the physics loop and all transitions.
+
+---
+
+## Editing the site
+
+**Everything you'd want to change lives in one file:
+[`src/content/data.ts`](src/content/data.ts).**
+
+Open it, change the text, save. Your name, bio, projects, skills, timeline,
+links and the ID badge all come from there. Anything marked `// TODO` is a
+placeholder waiting on you.
+
+### Adding a project
+
+Find the `projects` list and copy the commented-out block at the bottom of it:
+
+```ts
+{
+  title: "Your Next Project",
+  year: "2026",
+  featured: false,          // true = big card with an image, false = small card
+  blurb: "One or two sentences on what it does and what was hard about it.",
+  image: "/images/your-screenshot.png",
+  tags: ["Python", "FastAPI"],
+  links: { github: "https://github.com/...", demo: "https://..." },
+},
+```
+
+Leave out any link you don't have and it simply won't render.
+
+### Adding images
+
+Drop the file into `public/images/`, then reference it as
+`/images/your-file.png`. Square works best for the photo, roughly 16:10 for
+project screenshots.
+
+The current placeholders are generated SVGs — replace them as you go. To
+regenerate them: `python scripts/make-placeholders.py`.
+
+### Changing the colours
+
+`src/app/globals.css`, at the top. Change `--accent` and `--accent-2` under
+`:root` (light mode) and `.dark` (dark mode) and the whole site follows.
+
+### Updating the resume
+
+Replace `public/Matthew_Labrador_Resume.pdf`. To hide the button, set
+`contact.resume` to `""` in `data.ts`.
+
+---
+
+## Project structure
+
+```
+src/
+  content/data.ts        all copy + config  ← edit this
+  app/
+    layout.tsx           fonts, metadata, JSON-LD, anti-flash theme script
+    page.tsx             section order
+    globals.css          colour tokens, dark mode, animations
+    opengraph-image.tsx  generated link-preview card
+    icon.tsx             generated favicon
+    sitemap.ts robots.ts
+  components/            one file per section + Icons / Reveal / IdBadge
+public/
+  images/                screenshots and photos
+  Matthew_Labrador_Resume.pdf
+scripts/
+  make-placeholders.py   regenerates the placeholder SVGs
+```
+
+---
+
+## Running it locally
+
+```bash
+npm install
+```
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3100.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Checking it before you push
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint && npx tsc --noEmit && npm run build
+```
 
-## Learn More
+## Deploying
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Hosted on Vercel. Pushing to `main` triggers a production deploy; every pull
+request gets its own preview URL.
