@@ -6,7 +6,7 @@ import { hero, site } from "@/content/data";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = `${hero.name} — portfolio`;
+export const alt = `${hero.name} · portfolio`;
 
 export default function OpengraphImage() {
   return new ImageResponse(

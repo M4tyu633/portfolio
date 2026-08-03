@@ -44,11 +44,11 @@ export default function CommandPalette() {
     }));
 
     for (const p of projects) {
-      const url = p.links?.demo || p.links?.github;
+      const url = p.links?.demo ?? p.links?.trailer ?? p.links?.more;
       out.push({
         id: `proj-${p.title}`,
         label: p.title,
-        hint: url ? "Open repo" : "Jump to projects",
+        hint: url ? "Open link" : "Jump to projects",
         group: "Projects",
         keywords: p.tags.join(" "),
         run: () =>
@@ -109,7 +109,7 @@ export default function CommandPalette() {
           navigator.clipboard
             ?.writeText(contact.email)
             .then(() => flash("Email copied"))
-            .catch(() => flash("Couldn't copy — select it on the page"));
+            .catch(() => flash("Couldn't copy. Select it on the page"));
         },
       },
       {

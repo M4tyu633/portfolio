@@ -421,7 +421,7 @@ export default function IdBadge() {
                   {badge.org}
                 </p>
                 <p className="text-muted mt-3 text-[8px] leading-relaxed">
-                  Property of the holder. If found, please return it — or just
+                  Property of the holder. If found, please return it, or just
                   drag it around some more.
                 </p>
                 <p className="text-accent mt-3 text-[9px] font-medium">

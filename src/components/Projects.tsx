@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { projectFilters, projects, type Project } from "@/content/data";
-import { IconExternal, IconGithub } from "./Icons";
+import { IconExternal, IconFilm, IconPlay } from "./Icons";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
@@ -109,21 +109,24 @@ export default function Projects() {
 
 function FeaturedCard({ project, index }: { project: Project; index: number }) {
   const flip = index % 2 === 1;
+  const contain = project.fit === "contain";
 
   return (
     <Reveal as="article">
       <div className="group border-border bg-surface/40 hover:border-accent/40 grid overflow-hidden rounded-3xl border transition-colors lg:grid-cols-2">
         <div
-          className={`bg-background relative aspect-16/10 overflow-hidden lg:aspect-auto lg:min-h-80 ${
+          className={`relative aspect-16/10 overflow-hidden lg:aspect-auto lg:min-h-80 ${
             flip ? "lg:order-last" : ""
-          }`}
+          } ${contain ? "bg-surface p-6 sm:p-8" : "bg-background"}`}
         >
           <Image
             src={project.image}
             alt={project.title}
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`transition-transform duration-500 group-hover:scale-105 ${
+              contain ? "object-contain" : "object-cover"
+            }`}
           />
         </div>
 
@@ -154,16 +157,24 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
 }
 
 function SmallCard({ project, index }: { project: Project; index: number }) {
+  const contain = project.fit === "contain";
+
   return (
     <Reveal as="article" delay={index * 70}>
       <div className="group border-border bg-surface/40 hover:border-accent/50 flex h-full flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1">
-        <div className="bg-background relative aspect-16/10 overflow-hidden">
+        <div
+          className={`relative aspect-16/10 overflow-hidden ${
+            contain ? "bg-surface p-4" : "bg-background"
+          }`}
+        >
           <Image
             src={project.image}
             alt={project.title}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`transition-transform duration-500 group-hover:scale-105 ${
+              contain ? "object-contain" : "object-cover"
+            }`}
           />
         </div>
 
@@ -212,51 +223,36 @@ function TagRow({ tags }: { tags: string[] }) {
   );
 }
 
+/* Ordered deliberately: the thing you can actually click into first, then the
+ * things you can only watch. Anything without a URL drops out. */
 function LinkRow({ project }: { project: Project }) {
-  const { github, demo, more } = project.links ?? {};
-  if (!github && !demo && !more) return null;
+  const { demo, trailer, gameplay, more } = project.links ?? {};
+
+  // flatMap rather than filter: it narrows `href` to a string for free, where
+  // a filter would need a type predicate to do the same.
+  const links = [
+    { href: demo, label: "Live demo", icon: <IconExternal /> },
+    { href: trailer, label: "Trailer", icon: <IconPlay /> },
+    { href: gameplay, label: "Gameplay", icon: <IconFilm /> },
+    { href: more, label: "Read more", icon: <IconExternal /> },
+  ].flatMap(({ href, ...rest }) => (href ? [{ href, ...rest }] : []));
+
+  if (links.length === 0) return null;
 
   return (
     <div className="mt-6 flex flex-wrap items-center gap-4 text-sm">
-      {github && (
+      {links.map(({ href, label, icon }) => (
         <a
-          href={github}
+          key={label}
+          href={href}
           target="_blank"
           rel="noreferrer"
           className="text-muted hover:text-accent inline-flex items-center gap-2 transition-colors"
         >
-          <span className="h-4 w-4">
-            <IconGithub />
-          </span>
-          Code
+          <span className="h-4 w-4">{icon}</span>
+          {label}
         </a>
-      )}
-      {demo && (
-        <a
-          href={demo}
-          target="_blank"
-          rel="noreferrer"
-          className="text-muted hover:text-accent inline-flex items-center gap-2 transition-colors"
-        >
-          <span className="h-4 w-4">
-            <IconExternal />
-          </span>
-          Live demo
-        </a>
-      )}
-      {more && (
-        <a
-          href={more}
-          target="_blank"
-          rel="noreferrer"
-          className="text-muted hover:text-accent inline-flex items-center gap-2 transition-colors"
-        >
-          <span className="h-4 w-4">
-            <IconExternal />
-          </span>
-          Read more
-        </a>
-      )}
+      ))}
     </div>
   );
 }

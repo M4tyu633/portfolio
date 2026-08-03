@@ -14,9 +14,9 @@
  * ------------------------------------------------------------------------ */
 export const site = {
   // Used for the browser tab title and search results.
-  title: "Matthew Labrador — Portfolio",
+  title: "Matthew Labrador · Portfolio",
   description:
-    "CS @ UP Manila. I build multi-agent AI, civic tech, and games — from LangGraph clinical swarms to a CHIP-8 emulator written from scratch.",
+    "CS @ UP Manila. I build multi-agent AI, civic tech, and games, from LangGraph clinical swarms to a CHIP-8 emulator written from scratch.",
   // Used for link previews, the sitemap, and structured data. Update this to
   // your real domain after the first Vercel deploy.
   url: "https://matthewlabrador.vercel.app",
@@ -30,7 +30,7 @@ export const hero = {
   // The line under your name. Keep it short — it's big on screen.
   roles: ["AI & Multi-Agent Systems", "Civic Tech", "Games"],
   tagline:
-    "CS student at the University of the Philippines Manila. I build things that ship — multi-agent clinical AI, a triage system aimed at shortening hospital lines, and a 4-player Filipino street game.",
+    "CS student at the University of the Philippines Manila. I build things that ship: multi-agent clinical AI, a triage system aimed at shortening hospital lines, and a 4-player Filipino street game.",
   // The two small pills above your name. Set either to "" to hide it.
   status: "Open to internships & research",
   highlight: "", // set a string here to show a gold pill above your name
@@ -91,7 +91,7 @@ export const about = {
   // Each string is its own paragraph.
   paragraphs: [
     "I'm a BS Computer Science student and University Scholar at UP Manila, and a DOST Undergraduate Scholar. Before that I was class valedictorian at PAREF Southridge School.",
-    "Most of my work sits where AI meets something physical and messy — hospital queues, patient lab data, a street game played with a tin can. I like problems where the model is only half the answer and the rest is systems design.",
+    "Most of my work sits where AI meets something physical and messy: hospital queues, patient lab data, a street game played with a tin can. I like problems where the model is only half the answer and the rest is systems design.",
     "Outside of code I spent three years as a competitive debater, which is still the most useful thing I've done for explaining technical work to people who don't share my context.",
   ],
   // Small stat cards. Keep to 3–4 or the row gets cramped.
@@ -112,7 +112,7 @@ export const services: Service[] = [
   {
     icon: "agents",
     title: "Agentic AI",
-    body: "Multi-agent systems with LangGraph and LangChain — parallel specialist agents, tool use, and synthesis stages that produce one ranked answer.",
+    body: "Multi-agent systems with LangGraph and LangChain: parallel specialist agents, tool use, and synthesis stages that produce one ranked answer.",
   },
   {
     icon: "brain",
@@ -122,7 +122,7 @@ export const services: Service[] = [
   {
     icon: "server",
     title: "LLM Deployment",
-    body: "Running open models locally and on GPU — Gemma and Qwen via Ollama, served through FastAPI with failover when a provider drops.",
+    body: "Running open models locally and on GPU. Gemma and GLM via Ollama, served through FastAPI with failover when a provider drops.",
   },
   {
     icon: "chip",
@@ -132,12 +132,12 @@ export const services: Service[] = [
   {
     icon: "gamepad",
     title: "Game Development",
-    body: "Godot and GDScript, including authoritative-host networked multiplayer where every contact call has to resolve the same on all peers.",
+    body: "Godot and GDScript, including authoritative-host networked multiplayer where every contact call has to resolve the same way on all peers.",
   },
   {
     icon: "chart",
     title: "Data & Analysis",
-    body: "Turning raw datasets into something decidable — statistical analysis, prompt evaluations across model versions, documented findings.",
+    body: "Turning raw datasets into something decidable: statistical analysis, prompt evaluations across model versions, documented findings.",
   },
 ];
 
@@ -158,9 +158,25 @@ export type Project = {
   image: string;
   tags: string[];
   featured?: boolean;
-  // Optional — renders a gold ribbon on the card. Leave it out for no ribbon.
+  /* How the image sits in its frame.
+   *   "cover"   (default) fills the frame and crops the overflow. Right for
+   *             art and wide screenshots you can safely cut into.
+   *   "contain" shows the whole image on a padded backdrop, never cropping.
+   *             Right for logos and UI screenshots where the edges carry
+   *             meaning. A featured card's image column is as tall as its text
+   *             column, so "cover" there crops far more than the 16:10 you'd
+   *             expect from the small cards. */
+  fit?: "cover" | "contain";
+  // Optional. Renders a gold ribbon on the card. Leave it out for no ribbon.
   award?: string;
-  links?: { github?: string; demo?: string; more?: string };
+  /* Any you leave out simply won't render. `trailer` and `gameplay` are for
+   * projects that can't be deployed, like the game. */
+  links?: {
+    demo?: string;
+    trailer?: string;
+    gameplay?: string;
+    more?: string;
+  };
 };
 
 /* The filter buttons above the project grid. Each must match a tag used below,
@@ -182,12 +198,12 @@ export const projects: Project[] = [
     featured: true,
     award: "🏆 Champion · eGov Hackathon PH 2026 · ₱100,000",
     blurb:
-      "Winner of the eGov Hackathon PH 2026 — ₱100,000 grand prize. An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team. Patients are assessed and routed before they queue, so the line itself gets shorter. Integrates the government's eGov API stack — AI triage, messaging, reporting, identity, and payments.",
+      "Winner of the eGov Hackathon PH 2026 and its ₱100,000 grand prize. An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team. Patients are assessed and routed before they queue, so the line itself gets shorter. Integrates the government's eGov API stack: AI triage, messaging, reporting, identity, and payments.",
     image: "/images/project-egovmed.png",
-    tags: ["Next.js", "Node.js", "eGov APIs", "AI Triage", "Vercel"],
+    fit: "contain", // a logo, so cropping it just cuts the wordmark in half
+    tags: ["Next.js", "Node.js", "eGov APIs", "AI Triage"],
     links: {
-      github: "https://github.com/Bisaya-Hackers/egovmed",
-      // demo: "https://your-deployment.vercel.app",  // TODO: add once deployed
+      demo: "https://egovmed-frontend.vercel.app/",
     },
   },
   {
@@ -195,11 +211,14 @@ export const projects: Project[] = [
     year: "2026",
     featured: true,
     blurb:
-      "A 4-player online multiplayer take on the Filipino street game, built in Godot for DOST-GameDev. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once. Networked with an authoritative host — contact is resolved by distance on the host so tags and throws agree across every peer.",
+      "A 4-player online multiplayer take on the Filipino street game, built in Godot for DOST-GameDev. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once. Networked with an authoritative host, so contact is resolved by distance on the host and tags and throws agree across every peer.",
     image: "/images/project-tumbang-preso.jpg",
-    tags: ["Godot 4", "GDScript", "Multiplayer", "Blender", "Game Design"],
+    tags: ["Godot 4", "GDScript", "Multiplayer", "Blender"],
     links: {
-      github: "https://github.com/DOST-GameDEV/DOST-GameDev",
+      trailer:
+        "https://drive.google.com/file/d/15yPUlkaltsnbQn5zuD2bBwSrXgxYpo9n/view?usp=drive_link",
+      gameplay:
+        "https://drive.google.com/file/d/1zadxFIYe46-x3y5XQiFOI0cB80uuZlGs/view?usp=drive_link",
     },
   },
   {
@@ -207,23 +226,23 @@ export const projects: Project[] = [
     year: "2026",
     featured: true,
     blurb:
-      "A multi-agent early-warning system for diabetic complications. A LangGraph StateGraph runs four specialist agents in parallel — renal, neuropathy, retinal and cardiovascular — each writing and executing its own Python scoring code against real NHANES lab data, then fanning into a synthesis agent that ranks the risks and returns one clinical referral. Built as team Snowfall for the AMD Developer Hackathon 2026, Track 3: Unicorn, with an international cross-timezone team I led; I also designed and delivered the live demo and slide deck to the judges.",
+      "A multi-agent early-warning system for diabetic complications. A LangGraph StateGraph runs four specialist agents in parallel (renal, neuropathy, retinal and cardiovascular), each writing and executing its own Python scoring code against real NHANES lab data, then fanning into a synthesis agent that ranks the risks and returns one clinical referral. Built as team Snowfall for the AMD Developer Hackathon 2026, Track 3: Unicorn, with an international cross-timezone team I led. I also designed and delivered the live demo and slide deck to the judges.",
     image: "/images/project-glycoswarm.png",
-    tags: ["LangGraph", "FastAPI", "Ollama", "AMD MI300X", "Next.js"],
+    fit: "contain", // a dashboard shot: cropping it eats the risk figures
+    tags: ["LangGraph", "FastAPI", "Gemma 4", "GLM 5.2", "Next.js"],
     links: {
-      github:
-        "https://github.com/h-a-m-z-a-A-L-i/AMD-developer-hackathon-act-ii",
+      demo: "https://glycoswarm-ai.vercel.app/",
     },
   },
   {
     title: "CHIP-8 Emulator",
     year: "2026",
     blurb:
-      "A CHIP-8 emulator written from scratch in C/C++ — core CPU instruction set, memory management, and a custom Raylib visual debugger that tracks system state, registers, and memory while a ROM runs.",
+      "A CHIP-8 emulator written from scratch in C/C++: the full core instruction set, memory management, delay and sound timers, and a custom Raylib visual debugger that tracks registers, the stack, and live memory while a ROM runs. Compiled to WebAssembly so it plays in the browser.",
     image: "/images/project-chip8.svg", // TODO
-    tags: ["C/C++", "Raylib", "Emulation"],
+    tags: ["C/C++", "Raylib", "WebAssembly", "Emulation"],
     links: {
-      // github: "",  // TODO
+      demo: "https://chip8-emulator-matthew.vercel.app",
     },
   },
   {
@@ -232,7 +251,7 @@ export const projects: Project[] = [
     blurb:
       "A supervised learning model predicting heart disease from patient features, taken end-to-end: data cleaning and feature engineering in pandas, handling missing values and categorical variables, then evaluation past raw accuracy.",
     image: "/images/project-heart.svg", // TODO
-    tags: ["Python", "pandas", "Google Colab"],
+    tags: ["Python", "pandas", "Supervised Learning"],
     links: {},
   },
   {
@@ -241,7 +260,7 @@ export const projects: Project[] = [
     blurb:
       "A day-long 'shadow coding' competition: complex algorithmic problems solved entirely in Notepad, with no compiler, no internet, and no AI assistance. Nothing sharpens your mental model of a language quite like losing the ability to run it.",
     image: "/images/project-codewars.svg", // TODO
-    tags: ["Algorithms", "C++", "Competition"],
+    tags: ["Algorithms", "C/C++", "Competition"],
     links: {},
   },
   // ---- TODO: copy this block for each new project -------------------------
@@ -251,8 +270,9 @@ export const projects: Project[] = [
   //   featured: false,
   //   blurb: "One or two sentences on what it does and what was hard about it.",
   //   image: "/images/placeholder.svg",
+  //   fit: "cover",
   //   tags: ["Tag", "Tag"],
-  //   links: { github: "", demo: "" },
+  //   links: { demo: "" },
   // },
 ];
 
@@ -268,18 +288,18 @@ export type TimelineItem = {
 
 export const timeline: TimelineItem[] = [
   {
-    period: "2025 — Present",
+    period: "2025 – Present",
     role: "BS Computer Science, University Scholar",
     org: "University of the Philippines Manila",
     bullets: [
       "DOST Undergraduate Scholar. Cumulative GWA 1.0375.",
-      "Active in Google Developer Group and UP Socomsci — coordinating cross-functional teams on operations and event setup.",
+      "Active in Google Developer Group and UP Socomsci, coordinating cross-functional teams on operations and event setup.",
     ],
   },
   {
     period: "2026",
     role: "Team Lead",
-    org: "AMD Developer Hackathon ACT II — Track 3",
+    org: "AMD Developer Hackathon ACT II, Track 3",
     bullets: [
       "Led an international, cross-timezone team building GlycoSwarm AI, a four-agent clinical screening prototype.",
       "Served live inference on an AMD MI300X GPU via Ollama, with automatic failover to a hosted provider.",
@@ -287,7 +307,7 @@ export const timeline: TimelineItem[] = [
     ],
   },
   {
-    period: "2025 — 2026",
+    period: "2025 – 2026",
     role: "AI Application & LLM Development",
     org: "Independent",
     bullets: [
@@ -297,7 +317,7 @@ export const timeline: TimelineItem[] = [
     ],
   },
   {
-    period: "2022 — 2025",
+    period: "2022 – 2025",
     role: "Competitive Debater",
     org: "National Tournaments, Philippines",
     bullets: [
@@ -306,7 +326,7 @@ export const timeline: TimelineItem[] = [
     ],
   },
   {
-    period: "2022 — 2025",
+    period: "2022 – 2025",
     role: "Math Team Captain · Class Valedictorian",
     org: "PAREF Southridge School",
     bullets: [
@@ -370,8 +390,8 @@ export const certifications = [
 ];
 
 export const awards = [
-  "Champion, eGov Hackathon PH 2026 — ₱100,000 grand prize",
-  "DOST Undergraduate Scholar (2025 — Present)",
+  "Champion, eGov Hackathon PH 2026 (₱100,000 grand prize)",
+  "DOST Undergraduate Scholar (2025 – Present)",
   "Top 5 Finalist, Olymphysics NCR (2025)",
   "5th Place, Philippine Statistics Quiz NCR (2024)",
   "Class Valedictorian & Gold Medalist, PAREF Southridge (2025)",

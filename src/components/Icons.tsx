@@ -104,6 +104,20 @@ export const IconExternal = () => (
   </svg>
 );
 
+export const IconPlay = () => (
+  <svg {...base}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M10 8.6 15.5 12 10 15.4Z" />
+  </svg>
+);
+
+export const IconFilm = () => (
+  <svg {...base}>
+    <rect x="2.5" y="4.5" width="19" height="15" rx="2" />
+    <path d="M7.5 4.5v15M16.5 4.5v15M2.5 12h19M2.5 8.2h5M2.5 15.8h5M16.5 8.2h5M16.5 15.8h5" />
+  </svg>
+);
+
 export const IconSun = () => (
   <svg {...base}>
     <circle cx="12" cy="12" r="4" />
