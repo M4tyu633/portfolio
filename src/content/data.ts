@@ -158,14 +158,13 @@ export type Project = {
   image: string;
   tags: string[];
   featured?: boolean;
-  /* How the image sits in its frame.
-   *   "cover"   (default) fills the frame and crops the overflow. Right for
-   *             art and wide screenshots you can safely cut into.
+  /* How the image sits in its 16:10 frame.
+   *   "cover"   (default) fills the frame and crops any overflow. A 16:10
+   *             source fills it exactly, so nothing is lost. Screenshots are
+   *             easiest to keep at 16:10 when you take them.
    *   "contain" shows the whole image on a padded backdrop, never cropping.
-   *             Right for logos and UI screenshots where the edges carry
-   *             meaning. A featured card's image column is as tall as its text
-   *             column, so "cover" there crops far more than the 16:10 you'd
-   *             expect from the small cards. */
+   *             Use it when the source is not 16:10 and cropping would eat
+   *             something that matters, which in practice means logos. */
   fit?: "cover" | "contain";
   // Optional. Renders a gold ribbon on the card. Leave it out for no ribbon.
   award?: string;
@@ -210,6 +209,9 @@ export const projects: Project[] = [
     title: "Tumbang Preso",
     year: "2026",
     featured: true,
+    // Built for the DOST-GameDev competition. Results are not out yet; when
+    // they are, add an `award:` line here and it renders as a gold ribbon,
+    // the same as eGovMed's above.
     blurb:
       "A 4-player online multiplayer take on the Filipino street game, built in Godot for DOST-GameDev. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once. Networked with an authoritative host, so contact is resolved by distance on the host and tags and throws agree across every peer.",
     image: "/images/project-tumbang-preso.jpg",
@@ -228,7 +230,6 @@ export const projects: Project[] = [
     blurb:
       "A multi-agent early-warning system for diabetic complications. A LangGraph StateGraph runs four specialist agents in parallel (renal, neuropathy, retinal and cardiovascular), each writing and executing its own Python scoring code against real NHANES lab data, then fanning into a synthesis agent that ranks the risks and returns one clinical referral. Built as team Snowfall for the AMD Developer Hackathon 2026, Track 3: Unicorn, with an international cross-timezone team I led. I also designed and delivered the live demo and slide deck to the judges.",
     image: "/images/project-glycoswarm.png",
-    fit: "contain", // a dashboard shot: cropping it eats the risk figures
     tags: ["LangGraph", "FastAPI", "Gemma 4", "GLM 5.2", "Next.js"],
     links: {
       demo: "https://glycoswarm-ai.vercel.app/",

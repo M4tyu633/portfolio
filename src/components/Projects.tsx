@@ -114,8 +114,14 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
   return (
     <Reveal as="article">
       <div className="group border-border bg-surface/40 hover:border-accent/40 grid overflow-hidden rounded-3xl border transition-colors lg:grid-cols-2">
+        {/* Fixed 16:10 and vertically centred, rather than stretching to match
+            the text column. Letting it stretch meant the crop depended on how
+            long the blurb was: GlycoSwarm's long description made its column
+            tall enough to cut ~14% off the sides of a dashboard screenshot.
+            The project screenshots are all 16:10, so at this aspect they fill
+            the frame exactly, with nothing cropped and no letterboxing. */}
         <div
-          className={`relative aspect-16/10 overflow-hidden lg:aspect-auto lg:min-h-80 ${
+          className={`relative aspect-16/10 self-center overflow-hidden ${
             flip ? "lg:order-last" : ""
           } ${contain ? "bg-surface p-6 sm:p-8" : "bg-background"}`}
         >
