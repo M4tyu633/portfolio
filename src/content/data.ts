@@ -33,7 +33,7 @@ export const hero = {
     "CS student at the University of the Philippines Manila. I build things that ship — multi-agent clinical AI, a triage system aimed at shortening hospital lines, and a 4-player Filipino street game.",
   // The two small pills above your name. Set either to "" to hide it.
   status: "Open to internships & research",
-  highlight: "🏆 Champion — eGov Hackathon PH 2026",
+  highlight: "", // set a string here to show a gold pill above your name
   // Your photo. Drop a square image in public/images/ and point here.
   photo: "/images/profile.jpg",
   primaryCta: { label: "Get in Touch", href: "#contact" },
