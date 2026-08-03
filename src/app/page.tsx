@@ -1,4 +1,5 @@
 import About from "@/components/About";
+import CommandPalette from "@/components/CommandPalette";
 import Contact from "@/components/Contact";
 import Experience from "@/components/Experience";
 import Footer from "@/components/Footer";
@@ -18,6 +19,7 @@ export default function Page() {
   return (
     <>
       <ScrollProgress />
+      <CommandPalette />
       <Header />
       <main className="flex-1">
         <Hero />

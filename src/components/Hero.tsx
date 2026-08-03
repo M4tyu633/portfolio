@@ -26,13 +26,22 @@ export default function Hero() {
       <div className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[1.35fr_1fr]">
         {/* Left: the words */}
         <div>
-          <p className="border-border bg-surface/60 text-muted mb-5 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs backdrop-blur">
-            <span className="relative flex h-2 w-2">
-              <span className="bg-accent absolute inline-flex h-full w-full animate-ping rounded-full opacity-70" />
-              <span className="bg-accent relative inline-flex h-2 w-2 rounded-full" />
-            </span>
-            Open to internships & research
-          </p>
+          <div className="mb-5 flex flex-wrap items-center gap-2">
+            {hero.highlight && (
+              <p className="inline-flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-500/10 px-4 py-1.5 text-xs font-medium text-amber-700 backdrop-blur dark:text-amber-300">
+                {hero.highlight}
+              </p>
+            )}
+            {hero.status && (
+              <p className="border-border bg-surface/60 text-muted inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs backdrop-blur">
+                <span className="relative flex h-2 w-2">
+                  <span className="bg-accent absolute inline-flex h-full w-full animate-ping rounded-full opacity-70" />
+                  <span className="bg-accent relative inline-flex h-2 w-2 rounded-full" />
+                </span>
+                {hero.status}
+              </p>
+            )}
+          </div>
 
           <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
             {hero.greeting} <span className="text-gradient">{hero.name}</span>

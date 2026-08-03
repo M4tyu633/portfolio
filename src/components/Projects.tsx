@@ -139,6 +139,8 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
             {project.title}
           </h3>
 
+          {project.award && <AwardRibbon award={project.award} />}
+
           <p className="text-muted mt-4 text-sm leading-relaxed sm:text-base">
             {project.blurb}
           </p>
@@ -171,6 +173,8 @@ function SmallCard({ project, index }: { project: Project; index: number }) {
             <span className="text-muted shrink-0 text-xs">{project.year}</span>
           </div>
 
+          {project.award && <AwardRibbon award={project.award} />}
+
           <p className="text-muted mt-3 flex-1 text-sm leading-relaxed">
             {project.blurb}
           </p>
@@ -180,6 +184,16 @@ function SmallCard({ project, index }: { project: Project; index: number }) {
         </div>
       </div>
     </Reveal>
+  );
+}
+
+/* Gold rather than the site accent — an award should not read as just another
+ * label, and amber clears 4.5:1 on both the light and dark surfaces. */
+function AwardRibbon({ award }: { award: string }) {
+  return (
+    <p className="mt-3 inline-flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1.5 text-xs font-medium text-amber-700 dark:text-amber-300">
+      {award}
+    </p>
   );
 }
 

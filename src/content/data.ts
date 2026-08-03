@@ -31,6 +31,9 @@ export const hero = {
   roles: ["AI & Multi-Agent Systems", "Civic Tech", "Games"],
   tagline:
     "CS student at the University of the Philippines Manila. I build things that ship — multi-agent clinical AI, a triage system aimed at shortening hospital lines, and a 4-player Filipino street game.",
+  // The two small pills above your name. Set either to "" to hide it.
+  status: "Open to internships & research",
+  highlight: "🏆 Champion — eGov Hackathon PH 2026",
   // Your photo. Drop a square image in public/images/ and point here.
   photo: "/images/profile.jpg",
   primaryCta: { label: "Get in Touch", href: "#contact" },
@@ -65,12 +68,20 @@ export const contact = {
   // Set to "" to hide a link entirely.
   github: "https://github.com/M4tyu633",
   linkedin: "https://www.linkedin.com/in/matthew-emmanuel-labrador-6b52703a4/",
+  facebook: "https://www.facebook.com/matthewtlabrador/",
   // The Resume button. Set to "" to hide it.
   // To update: replace public/Matthew_Labrador_Resume.pdf with a new export.
   resume: "/Matthew_Labrador_Resume.pdf",
   blurb:
     "I'm open to internships, research work, and hackathon teams. The fastest way to reach me is email.",
 };
+
+/* A plain `mailto:` silently does nothing on a machine with no mail client
+ * configured, which is most people on a laptop. Opening Gmail's compose window
+ * works in any browser, and the copy button covers everyone else. */
+export const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+  contact.email,
+)}`;
 
 /* ---------------------------------------------------------------------------
  * 3. ABOUT — the short story next to your photo
@@ -88,7 +99,7 @@ export const about = {
     { value: "1.0375", label: "Cumulative GWA" },
     { value: "2029", label: "Expected BSCS" },
     { value: "6+", label: "Shipped projects" },
-    { value: "3", label: "Hackathons" },
+    { value: "₱100k", label: "Hackathon grand prize" },
   ],
 };
 
@@ -147,6 +158,8 @@ export type Project = {
   image: string;
   tags: string[];
   featured?: boolean;
+  // Optional — renders a gold ribbon on the card. Leave it out for no ribbon.
+  award?: string;
   links?: { github?: string; demo?: string; more?: string };
 };
 
@@ -167,8 +180,9 @@ export const projects: Project[] = [
     title: "eGovMed",
     year: "2026",
     featured: true,
+    award: "🏆 Champion · eGov Hackathon PH 2026 · ₱100,000",
     blurb:
-      "An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team for the EGOV 2026 hackathon. Patients are assessed and routed before they queue, so the line itself gets shorter. Integrates the government's eGov API stack — AI triage, messaging, reporting, identity, and payments.",
+      "Winner of the eGov Hackathon PH 2026 — ₱100,000 grand prize. An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team. Patients are assessed and routed before they queue, so the line itself gets shorter. Integrates the government's eGov API stack — AI triage, messaging, reporting, identity, and payments.",
     image: "/images/project-egovmed.png",
     tags: ["Next.js", "Node.js", "eGov APIs", "AI Triage", "Vercel"],
     links: {
@@ -356,6 +370,7 @@ export const certifications = [
 ];
 
 export const awards = [
+  "Champion, eGov Hackathon PH 2026 — ₱100,000 grand prize",
   "DOST Undergraduate Scholar (2025 — Present)",
   "Top 5 Finalist, Olymphysics NCR (2025)",
   "5th Place, Philippine Statistics Quiz NCR (2024)",
