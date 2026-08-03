@@ -193,8 +193,8 @@ export const projects: Project[] = [
     year: "2026",
     featured: true,
     blurb:
-      "A multi-agent clinical decision-support prototype that screens already-diagnosed diabetic patients for renal, neuropathy, retinal, and cardiovascular complication risk. A LangGraph StateGraph runs four specialist agents in parallel — each writing and executing its own Python scoring code against real NHANES lab data — then fans into a synthesis agent for a ranked referral. Built for the AMD Developer Hackathon ACT II (Track 3) with an international, cross-timezone team I led; I also designed and delivered the live demo and slide deck to the judges.",
-    image: "/images/project-glycoswarm.svg", // TODO: architecture diagram or demo shot
+      "A multi-agent early-warning system for diabetic complications. A LangGraph StateGraph runs four specialist agents in parallel — renal, neuropathy, retinal and cardiovascular — each writing and executing its own Python scoring code against real NHANES lab data, then fanning into a synthesis agent that ranks the risks and returns one clinical referral. Built as team Snowfall for the AMD Developer Hackathon 2026, Track 3: Unicorn, with an international cross-timezone team I led; I also designed and delivered the live demo and slide deck to the judges.",
+    image: "/images/project-glycoswarm.png",
     tags: ["LangGraph", "FastAPI", "Ollama", "AMD MI300X", "Next.js"],
     links: {
       github:
