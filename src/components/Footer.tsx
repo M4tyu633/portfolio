@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { contact, hero, navLinks } from "@/content/data";
 import { IconGithub, IconLinkedin, IconMail } from "./Icons";
 
@@ -10,8 +11,8 @@ export default function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="flex items-center gap-2 font-bold">
-            <span className="from-accent to-accent-2 text-background grid h-7 w-7 place-items-center rounded-lg bg-linear-to-br text-xs">
-              M
+            <span className="from-accent to-accent-2 text-background grid h-7 w-7 place-items-center rounded-lg bg-linear-to-br text-xs font-bold tracking-tight">
+              ML
             </span>
             {hero.name}
           </p>
@@ -21,14 +22,16 @@ export default function Footer() {
         </div>
 
         <ul className="text-muted flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          {/* Rooted rather than bare hashes: the footer also renders on the
+              case-study pages, where "#about" points at nothing. */}
           {navLinks.map((link) => (
             <li key={link.href}>
-              <a
-                href={link.href}
+              <Link
+                href={`/${link.href}`}
                 className="hover:text-accent transition-colors"
               >
                 {link.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

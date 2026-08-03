@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>CHIP-8 emulator</title>
+    <!--
+      A trimmed shell for the portfolio's <iframe>, alongside the emulator's own
+      index.html from the chip8 repo. Same index.js / .wasm / .data, but without
+      the standalone page's header, footer and prose — the case study already
+      says all of that, and repeating it inside the frame reads as a mistake.
+
+      Regenerate the three build artefacts by rebuilding the web target in
+      ~/chip8 and copying build-web/index.{js,wasm,data} here. This file is
+      hand-written and is not overwritten by that copy.
+    -->
+    <style>
+      :root {
+        --panel: #0f1117;
+        --line: #1d202a;
+        --text: #f2f4f8;
+        --dim: #99a1b3;
+        --accent: #5eead4;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        background: transparent;
+        color: var(--text);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* The canvas is a fixed 1280x720 internally. Letterboxing it inside a
+         flexible box keeps the emulated pixels square at any frame height,
+         rather than stretching the backing store to whatever the parent is. */
+      #frame {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        place-items: center;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      canvas {
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
+        aspect-ratio: 16 / 9;
+        width: auto;
+        height: auto;
+        outline: none;
+        image-rendering: pixelated;
+      }
+
+      #loading {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-size: 13px;
+        color: var(--dim);
+        background: var(--panel);
+        transition: opacity 0.3s;
+      }
+
+      #loading.done {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+      }
+
+      /* The touch pad only exists for devices with no keyboard to press.
+         A mouse-driven browser at a narrow width still has the real keys. */
+      #pad {
+        display: none;
+      }
+
+      @media (pointer: coarse) {
+        #pad {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 6px;
+          max-width: 320px;
+          width: 100%;
+          margin: 0 auto;
+        }
+
+        /* Nothing below should try to be clever on a phone: the file picker
+           needs a file manager, and single-stepping needs the debugger text
+           to be legible, which it isn't at this size. */
+        .desktop-only {
+          display: none;
+        }
+      }
+
+      #pad button {
+        padding: 0;
+        aspect-ratio: 1;
+        font-size: 13px;
+        font-weight: 700;
+        /* Stops the long-press callout, the double-tap zoom, and the grey
+           tap flash — all three read as the game being broken. */
+        touch-action: manipulation;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      #pad button:active {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: #171c26;
+      }
+
+      button,
+      label.file {
+        font: inherit;
+        font-size: 12px;
+        padding: 7px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        color: var(--text);
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          color 0.15s;
+      }
+
+      button:hover,
+      label.file:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="frame">
+      <canvas
+        id="canvas"
+        width="1280"
+        height="720"
+        tabindex="0"
+        oncontextmenu="event.preventDefault()"
+      ></canvas>
+      <div id="loading">loading WebAssembly&hellip;</div>
+    </div>
+
+    <div class="controls">
+      <button id="btn-pause" type="button">Pause / resume</button>
+      <button id="btn-next" type="button">Next ROM</button>
+      <button id="btn-reset" type="button">Reset</button>
+      <label class="file desktop-only">
+        Load a .ch8 file
+        <input
+          id="rom-input"
+          type="file"
+          accept=".ch8,.c8,.rom,application/octet-stream"
+        />
+      </label>
+    </div>
+
+    <!-- The CHIP-8 pad, labelled with the keyboard keys it stands in for, so
+         it lines up with the instructions on the page around it: Brix and
+         Catch move with A and D, Pong uses 1/Q and 4/R. -->
+    <div id="pad" aria-label="On-screen keypad"></div>
+
+    <script>
+      const canvas = document.getElementById("canvas");
+
+      // Emscripten looks for this object.
+      var Module = {
+        canvas: canvas,
+        preRun: [],
+        postRun: [
+          function () {
+            document.getElementById("loading").classList.add("done");
+            canvas.focus();
+          },
+        ],
+        print: function (text) {
+          console.log(text);
+        },
+        printErr: function (text) {
+          console.error(text);
+        },
+      };
+
+      // Space, Tab and Backspace all mean something to the emulator. Left
+      // alone they would scroll the frame, move focus, or trigger a history
+      // navigation in the embedding page.
+      canvas.addEventListener("keydown", function (event) {
+        if ([" ", "Tab", "Backspace"].includes(event.key)) {
+          event.preventDefault();
+        }
+      });
+      canvas.addEventListener("click", function () {
+        canvas.focus();
+      });
+
+      /* ---------------------------------------------------------------
+         Touch keypad.
+
+         Raylib's GLFW shim listens on `window` with capture, and its handler
+         reads exactly one property off the event: `keyCode`. So a synthetic
+         KeyboardEvent is enough to drive the emulator, and no rebuild of the
+         WebAssembly is needed to make a phone work.
+
+         `keyCode` can't be set through the KeyboardEvent constructor — it
+         isn't part of KeyboardEventInit — so it's defined on the instance.
+         --------------------------------------------------------------- */
+      const PAD = [
+        ["1", 49], ["2", 50], ["3", 51], ["4", 52],
+        ["Q", 81], ["W", 87], ["E", 69], ["R", 82],
+        ["A", 65], ["S", 83], ["D", 68], ["F", 70],
+        ["Z", 90], ["X", 88], ["C", 67], ["V", 86],
+      ];
+
+      function synthKey(type, keyCode) {
+        const event = new KeyboardEvent(type, {
+          bubbles: true,
+          cancelable: true,
+        });
+        Object.defineProperty(event, "keyCode", { get: () => keyCode });
+        Object.defineProperty(event, "which", { get: () => keyCode });
+        window.dispatchEvent(event);
+      }
+
+      const pad = document.getElementById("pad");
+      for (const [label, keyCode] of PAD) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = label;
+        button.setAttribute("aria-label", "Key " + label);
+
+        let held = false;
+        const press = (event) => {
+          // Without this the browser follows up with a synthetic mouse event
+          // and fires the whole sequence a second time.
+          event.preventDefault();
+          if (held) return;
+          held = true;
+          synthKey("keydown", keyCode);
+        };
+        const release = (event) => {
+          event.preventDefault();
+          if (!held) return;
+          held = false;
+          synthKey("keyup", keyCode);
+        };
+
+        button.addEventListener("pointerdown", press);
+        // pointercancel and pointerleave matter as much as pointerup: a finger
+        // that slides off the button never sends pointerup, and the key would
+        // stay held down for the rest of the session.
+        button.addEventListener("pointerup", release);
+        button.addEventListener("pointercancel", release);
+        button.addEventListener("pointerleave", release);
+        pad.appendChild(button);
+      }
+
+      // A backgrounded tab gets no pointerup either.
+      window.addEventListener("blur", () => {
+        for (const [, keyCode] of PAD) synthKey("keyup", keyCode);
+      });
+
+      function command(id) {
+        if (typeof Module._UiCommand !== "function") return;
+        Module._UiCommand(id);
+        canvas.focus();
+      }
+
+      document.getElementById("btn-pause").onclick = () => command(0);
+      document.getElementById("btn-next").onclick = () => command(1);
+      document.getElementById("btn-reset").onclick = () => command(2);
+
+      document
+        .getElementById("rom-input")
+        .addEventListener("change", function (event) {
+          const file = event.target.files && event.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = function () {
+            const bytes = new Uint8Array(reader.result);
+
+            // The ROM has to live in the WASM heap for the C++ side to read
+            // it, so copy it across and free the block once the core has taken
+            // its own copy.
+            const romPtr = Module._malloc(bytes.length);
+            Module.HEAPU8.set(bytes, romPtr);
+
+            const nameBytes = new TextEncoder().encode(file.name);
+            const namePtr = Module._malloc(nameBytes.length + 1);
+            Module.HEAPU8.set(nameBytes, namePtr);
+            Module.HEAPU8[namePtr + nameBytes.length] = 0;
+
+            Module._LoadRomFromMemory(romPtr, bytes.length, namePtr);
+
+            Module._free(romPtr);
+            Module._free(namePtr);
+            canvas.focus();
+          };
+          reader.readAsArrayBuffer(file);
+        });
+    </script>
+    <script async src="index.js"></script>
+  </body>
+</html>

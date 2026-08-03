@@ -151,13 +151,31 @@ export const services: Service[] = [
  *  tags:  keep to 3–5, they're the little pills on the card.
  *  links: any you leave out simply won't render.
  * ------------------------------------------------------------------------ */
+/* The long-form write-up behind a project card. A project with a `caseStudy`
+ * gets its own page at /projects/<slug> and a "Case study" link on its card.
+ * Leave it out and the card behaves exactly as it always has. */
+export type CaseStudy = {
+  // One paragraph under the title. Say what it is and why it was hard.
+  intro: string;
+  // The small facts panel: role, team, dates, whatever is worth stating flatly.
+  facts: { label: string; value: string }[];
+  // The body. Each entry is a heading and one paragraph per string.
+  sections: { heading: string; body: string[] }[];
+  /* Mounts an interactive panel above the body. "chip8" is the only one wired
+   * up — it serves the WebAssembly build from public/chip8/. */
+  embed?: "chip8";
+};
+
 export type Project = {
   title: string;
+  // Used for the case-study URL, /projects/<slug>. Lowercase, hyphenated.
+  slug: string;
   blurb: string;
   year: string;
   image: string;
   tags: string[];
   featured?: boolean;
+  caseStudy?: CaseStudy;
   /* How the image sits in its 16:10 frame.
    *   "cover"   (default) fills the frame and crops any overflow. A 16:10
    *             source fills it exactly, so nothing is lost. Screenshots are
@@ -193,6 +211,7 @@ export const projectFilters: string[] = [
 export const projects: Project[] = [
   {
     title: "eGovMed",
+    slug: "egovmed",
     year: "2026",
     featured: true,
     award: "🏆 Champion · eGov Hackathon PH 2026 · ₱100,000",
@@ -204,11 +223,56 @@ export const projects: Project[] = [
     links: {
       demo: "https://egovmed-frontend.vercel.app/",
     },
+    caseStudy: {
+      intro:
+        "A patient at a Philippine public hospital re-enters the same details at every counter, repeats labs another facility already ran, and queues a second time to pay. eGovMed puts one login, one record and one payment in front of all of it, built on the government's own eGov API stack. It won the eGov Hackathon PH 2026 and its ₱100,000 grand prize.",
+      facts: [
+        { label: "Team", value: "Bisaya-Hackers, UP Manila" },
+        { label: "Event", value: "eGov Hackathon PH 2026" },
+        { label: "Result", value: "Champion · ₱100,000" },
+        { label: "Pilot target", value: "Philippine General Hospital" },
+        { label: "Stack", value: "React + Vite · Node/Express · Redis · Besu" },
+      ],
+      sections: [
+        {
+          heading: "The flow",
+          body: [
+            "A patient signs in with an eGovPH account and the profile auto-fills from SSO. They describe symptoms in English, Tagalog or Taglish, and triage returns a specialty, an urgency level and any red flags. Identity is confirmed with consent through a face liveness capture and a PhilSys demographic match, then the appointment is booked and a queue number issued with an SMS confirmation. The bill settles through the unified government gateway with statutory discounts already applied.",
+            "The point of the ordering is that assessment happens before the queue rather than inside it. Routing a patient to the right specialty and urgency up front is what makes the line shorter, not another screen for joining it.",
+          ],
+        },
+        {
+          heading: "Eight government APIs, two modes each",
+          body: [
+            "The build integrates eGovPH SSO, eGov AI, National ID eVerify, Face Liveness, eMessage, eGovChain, eGovPay and eReport. Every adapter carries both a mock and a live path, chosen per service by an environment variable, so the whole product runs offline with no credentials and a sandbox outage never takes the demo down.",
+            "That switch is also a safety gate. With mocks disallowed in production the app refuses to boot if any integration is still mocked or missing credentials, and it names the offender. A silent mock cannot quietly serve fake triage or fake payment data to a real patient.",
+            "The two portal docs contradicted each other on where the face liveness session ID comes from. We settled it by testing instead of reading: querying eVerify with a real completed hosted session, and again with a random UUID as a control, produced byte-identical error responses. Without the control query the first result would have been unreadable, because a rejection could just as easily have meant a bad demographic match.",
+          ],
+        },
+        {
+          heading: "Built for real patient data",
+          body: [
+            "The threat model assumes real health information, so most of the engineering went here rather than into features. Records are encrypted at rest with a versioned envelope, and the decryptor reads both formats so a schema change never orphans existing data. On-chain anchoring is hash-only — payloads are stripped to a type and a timestamp before submission, so no patient ID, facility or clinical content ever reaches the chain, which is what the Data Privacy Act requires.",
+            "Liveness sessions are single-use, patient-bound and expire in ten minutes, claimed through a Redis compare-and-set so two simultaneous replays resolve to exactly one success and one rejection. Payment callbacks are treated as non-authoritative: a forged one returns 202 and writes nothing. The SSRF guard lives at the transport rather than the call site, so a later refactor cannot reintroduce the hole by forgetting it in one place.",
+            "Failure behaviour is chosen rather than inherited. Anchor writes fail closed, so an unverifiable record is never stored. Anchor verification fails safe, so an RPC error shows unverified rather than a green badge. A failed SMS never fails a booking. The triage classifier keeps a rule-based floor that can only raise urgency and never lower it, in live mode as well as mock, so a degraded or hostile model response cannot downgrade an emergency.",
+          ],
+        },
+        {
+          heading: "Verification",
+          body: [
+            "Thirty backend security regression tests have to pass before a merge, including a concurrency test for the replay path and one asserting that message bodies never reach the audit log. CI runs the suite, dependency audits on both packages, CodeQL on the security-extended query set, and a secret scan. Branch protection on main requires all of it and blocks force-pushes.",
+          ],
+        },
+      ],
+    },
   },
   {
     title: "Tumbang Preso",
+    slug: "tumbang-preso",
     year: "2026",
     featured: true,
+    // TODO: no case study yet. Copy the `caseStudy` block from eGovMed above,
+    // fill it in, and the card grows a "Case study" link on its own.
     // Built for the DOST-GameDev competition. Results are not out yet; when
     // they are, add an `award:` line here and it renders as a gold ribbon,
     // the same as eGovMed's above.
@@ -225,8 +289,11 @@ export const projects: Project[] = [
   },
   {
     title: "GlycoSwarm AI",
+    slug: "glycoswarm-ai",
     year: "2026",
     featured: true,
+    // TODO: no case study yet. Copy the `caseStudy` block from eGovMed above,
+    // fill it in, and the card grows a "Case study" link on its own.
     blurb:
       "A multi-agent early-warning system for diabetic complications. A LangGraph StateGraph runs four specialist agents in parallel (renal, neuropathy, retinal and cardiovascular), each writing and executing its own Python scoring code against real NHANES lab data, then fanning into a synthesis agent that ranks the risks and returns one clinical referral. Built as team Snowfall for the AMD Developer Hackathon 2026, Track 3: Unicorn, with an international cross-timezone team I led. I also designed and delivered the live demo and slide deck to the judges.",
     image: "/images/project-glycoswarm.png",
@@ -237,6 +304,7 @@ export const projects: Project[] = [
   },
   {
     title: "CHIP-8 Emulator",
+    slug: "chip-8-emulator",
     year: "2026",
     blurb:
       "A CHIP-8 emulator written from scratch in C/C++: the full core instruction set, memory management, delay and sound timers, and a custom Raylib visual debugger that tracks registers, the stack, and live memory while a ROM runs. Compiled to WebAssembly so it plays in the browser.",
@@ -245,28 +313,76 @@ export const projects: Project[] = [
     links: {
       demo: "https://chip8-emulator-matthew.vercel.app",
     },
+    caseStudy: {
+      embed: "chip8",
+      intro:
+        "CHIP-8 is a virtual machine from 1977, built so hobbyists could write a game once and run it on any 8-bit micro with an interpreter. Thirty-five instructions, 4 KB of memory, sixteen 8-bit registers and a 64×32 monochrome display — small enough to hold in your head, and awkward enough to stay interesting. This is a full interpreter in C++17 with a Raylib front end that doubles as a live debugger, running natively and in the browser through WebAssembly.",
+      facts: [
+        { label: "Language", value: "C++17, no dependencies in the core" },
+        { label: "Front end", value: "Raylib, doubling as a debugger" },
+        { label: "Tests", value: "106 assertions over the core" },
+        { label: "Web build", value: "Emscripten → WebAssembly" },
+        { label: "Licence", value: "MIT" },
+      ],
+      sections: [
+        {
+          heading: "The core knows nothing about a window",
+          body: [
+            "The interpreter has no platform dependencies and no idea what a window is. Everything it does is visible in its own state, and the front end reads that state once a frame. That split is what lets the test suite and a headless ASCII runner build and run in CI on a machine with no GPU and no X11 headers at all — the front end is simply switched off at configure time and nothing is fetched or linked.",
+          ],
+        },
+        {
+          heading: "A debugger, not a log",
+          body: [
+            "The right-hand panel is live machine state. V0 to VF in hex and decimal, with a register flashing amber for a moment after it is written. PC, I and SP, plus both timers highlighted while they count down. The call stack, which is the thing that tells you a ROM is about to overflow it. And the eight bytes around I, because I is almost always pointing at whatever matters next: a sprite, a BCD result, or a block of registers about to be loaded.",
+            "Under the display is a disassembly that follows the program counter. CHIP-8 instructions are a fixed two bytes, so the listing can be walked backwards from the PC without the usual guesswork about where an instruction actually starts. Space pauses and N single-steps, which is the pair you want when a ROM is misbehaving.",
+          ],
+        },
+        {
+          heading: "The quirks are switches, not decisions",
+          body: [
+            "Programs were written against one specific interpreter, and the popular ones disagreed with each other. A ROM that renders perfectly under one set of rules can be unplayable under another, so the five contested behaviours are toggles bound to F1 through F5 rather than choices baked into the code: whether the shift opcodes read Vy or shift in place, whether load and store leave I incremented, whether the bitwise ops reset VF as a side effect, whether draws wait for vertical blank, and whether sprites clip or wrap at the edge.",
+            "The defaults are original COSMAC VIP behaviour, which is what the bundled ROMs assume. Most ROMs written after about 1990 want the first two flipped.",
+          ],
+        },
+        {
+          heading: "Four things that are easy to get wrong",
+          body: [
+            "VF is written last. Every arithmetic opcode that sets a flag computes the flag, stores the result, then writes VF. The other order is correct for fifteen of the sixteen registers and wrong for VF itself.",
+            "Display wait rewinds the PC. When a draw is held back to the next frame the instruction has already been fetched and the PC has already advanced, so the step rewinds it and the same draw is retried rather than skipped.",
+            "Fx0A completes on release, not on press. Waiting for the press is the obvious reading and it is wrong: one held key would satisfy several consecutive Fx0A instructions, which breaks any menu asking for two inputs in a row.",
+            "Sprite positions wrap even when the body clips. The starting coordinate is taken modulo the screen size, but a sprite that then runs off the edge is cut off. That asymmetry is real hardware behaviour rather than an oversight — and it, along with the flag-order and release cases, is what the test suite concentrates on.",
+          ],
+        },
+        {
+          heading: "The ROMs are original",
+          body: [
+            "The repository carries no third-party binaries. Every bundled ROM was written for this project in CHIP-8 assembly, with readable source kept alongside it and a small assembler in the tools directory to build it. Brix is a brick breaker, Pong is two-player, and Catch is a one-button reaction game; three smaller ROMs exercise specific instructions. Bounce paces a ball off the display-wait quirk rather than the delay timer and checks its bounds by equality, since CHIP-8 has no signed comparison and a one-pixel step can only ever overshoot an edge by one. Counter walks 0 to 255 in decimal, where the awkward part is that the load instruction always reads from V0 upwards, so reading the digits back necessarily clobbers the counter. Keypad is a test for the blocking key-wait.",
+            "The web build bakes them into a data file next to the WebAssembly, so the page issues no network requests at all once it has loaded.",
+          ],
+        },
+      ],
+    },
   },
   {
     title: "Heart Disease Prediction",
+    slug: "heart-disease-prediction",
     year: "2025",
     blurb:
       "A supervised learning model predicting heart disease from patient features, taken end-to-end: data cleaning and feature engineering in pandas, handling missing values and categorical variables, then evaluation past raw accuracy.",
     image: "/images/project-heart.svg", // TODO
     tags: ["Python", "pandas", "Supervised Learning"],
-    links: {},
+    // TODO: this card has nowhere to go — no demo, no repo link, no case study.
+    // Filling in a `caseStudy` block (copy eGovMed's above) is what fixes that.
+    // Which dataset, which models compared, and what the evaluation actually
+    // showed would be enough.
   },
-  {
-    title: "UPLB Code Wars",
-    year: "2025",
-    blurb:
-      "A day-long 'shadow coding' competition: complex algorithmic problems solved entirely in Notepad, with no compiler, no internet, and no AI assistance. Nothing sharpens your mental model of a language quite like losing the ability to run it.",
-    image: "/images/project-codewars.svg", // TODO
-    tags: ["Algorithms", "C/C++", "Competition"],
-    links: {},
-  },
+  // UPLB Code Wars used to sit here. It's a competition rather than a project,
+  // so it lives in `awards` below instead.
   // ---- TODO: copy this block for each new project -------------------------
   // {
   //   title: "Your Next Project",
+  //   slug: "your-next-project",
   //   year: "2026",
   //   featured: false,
   //   blurb: "One or two sentences on what it does and what was hard about it.",
@@ -353,7 +469,6 @@ export const skillGroups: { label: string; items: string[] }[] = [
       "FastAPI",
       "Multi-Agent Systems",
       "Ollama",
-      "Anthropic API",
       "RAG",
     ],
   },
@@ -395,6 +510,7 @@ export const awards = [
   "DOST Undergraduate Scholar (2025 – Present)",
   "Top 5 Finalist, Olymphysics NCR (2025)",
   "5th Place, Philippine Statistics Quiz NCR (2025)",
+  "Competitor, UPLB Code Wars shadow-coding competition (2025)",
   "Class Valedictorian & Gold Medalist, PAREF Southridge (2025)",
 ];
 

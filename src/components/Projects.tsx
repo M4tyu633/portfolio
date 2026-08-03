@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { projectFilters, projects, type Project } from "@/content/data";
-import { IconExternal, IconFilm, IconPlay } from "./Icons";
+import { IconArrow, IconExternal, IconFilm, IconPlay } from "./Icons";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
@@ -233,6 +234,7 @@ function TagRow({ tags }: { tags: string[] }) {
  * things you can only watch. Anything without a URL drops out. */
 function LinkRow({ project }: { project: Project }) {
   const { demo, trailer, gameplay, more } = project.links ?? {};
+  const hasStudy = Boolean(project.caseStudy);
 
   // flatMap rather than filter: it narrows `href` to a string for free, where
   // a filter would need a type predicate to do the same.
@@ -243,10 +245,23 @@ function LinkRow({ project }: { project: Project }) {
     { href: more, label: "Read more", icon: <IconExternal /> },
   ].flatMap(({ href, ...rest }) => (href ? [{ href, ...rest }] : []));
 
-  if (links.length === 0) return null;
+  if (links.length === 0 && !hasStudy) return null;
 
   return (
     <div className="mt-6 flex flex-wrap items-center gap-4 text-sm">
+      {/* First, because it's the only one that stays on this site. Projects
+          without a `caseStudy` in data.ts simply don't get it. */}
+      {hasStudy && (
+        <Link
+          href={`/projects/${project.slug}`}
+          className="text-accent inline-flex items-center gap-2 font-medium hover:underline"
+        >
+          <span className="h-4 w-4">
+            <IconArrow />
+          </span>
+          Case study
+        </Link>
+      )}
       {links.map(({ href, label, icon }) => (
         <a
           key={label}

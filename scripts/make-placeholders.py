@@ -65,7 +65,9 @@ def motif_terminal(c1):
 COVERS = [
     ("project-chip8", "CHIP-8 Emulator", "C / C++ · Raylib", "#38bdf8", "#a78bfa", motif_chip8),
     ("project-heart", "Heart Disease Model", "Python · pandas", "#f472b6", "#a78bfa", motif_ecg),
-    ("project-codewars", "UPLB Code Wars", "Algorithms · No compiler", "#fbbf24", "#5eead4", motif_terminal),
+    # UPLB Code Wars moved out of `projects` and into `awards`, so nothing
+    # renders its cover any more. motif_terminal is kept for the next project
+    # that wants it.
     ("placeholder", "Your Next Project", "", "#5eead4", "#a78bfa", None),
 ]
 
