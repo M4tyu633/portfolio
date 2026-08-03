@@ -89,6 +89,16 @@ automated/headless check. That is the harness, not a bug — verify the badge's
 physics by exercising the integrator's maths directly rather than by sampling
 the DOM.
 
+## Deploying
+
+Pushing to `main` deploys. The Vercel project is connected to this repo, so
+there is nothing to run by hand and no alias to move — `matthewlabrador.vercel.app`
+follows production automatically.
+
+It was not always so. Deploys used to be `vercel deploy --prod --yes` followed
+by `vercel alias set <new-url> matthewlabrador.vercel.app`, which still works
+if you need to ship without pushing.
+
 ## Git
 
 Commits are authored **`M4tyu633 <matthewtlabrador@gmail.com>`**, sole author.
