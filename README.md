@@ -33,7 +33,10 @@ UI kit, no icon package, no 3D engine — everything below is hand-built.
   separate spin axis, integrated in a `requestAnimationFrame` loop that writes
   transforms straight to the DOM (no React state per frame). It has a real back
   face via `backface-visibility`, so it reads correctly when it settles flipped.
-  Drag it with a mouse or touch, or focus it and use the arrow keys.
+  Drag it, tap it to flip, or focus it and use the arrow keys.
+- **Command palette** (`CommandPalette.tsx`) — ⌘K / Ctrl-K to jump to a section,
+  open a project's repo, download the resume, copy the email or flip the theme.
+  Arrow keys, Enter, Esc, grouped results, live filtering; no dependency.
 - **Dark / light theme** — class-based, with an inline script in `layout.tsx`
   that reads `localStorage` _before first paint_, so there's no flash of the
   wrong theme on reload. The sun/moon icon swap is pure CSS, so there is no

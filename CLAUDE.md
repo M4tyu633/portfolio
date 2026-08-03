@@ -61,6 +61,17 @@ so a hard flick can't swing the card above horizontal, which looks broken on a
 lanyard. Raising them re-introduces that. The worst case a drag can produce
 currently peaks around 71°.
 
+Two things in it that look like they could be simplified, and can't:
+
+- The strap's SVG spans the whole wrapper and the anchor is placed at a
+  _measured_ centre. An earlier version used a zero-width SVG relying on
+  `overflow: visible` to paint outside its own viewport; the geometry and the
+  stroke colour both computed correctly and the strap still never appeared.
+- Flipping drives `spin` to an explicit target with a critically-damped spring
+  (`flipTarget`). An impulse cannot work: too little never clears the potential
+  barrier at π, too much carries straight through to 2π — which is the front
+  face again.
+
 ## Verifying changes
 
 `npm run dev` runs on **port 3100** (3000 is used by another project).
