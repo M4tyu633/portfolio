@@ -7,6 +7,7 @@ import { badge } from "@/content/data";
 /* ---------------------------------------------------------------------------
  * An ID card hanging from a lanyard. Grab it and throw it around — it swings
  * like a pendulum and spins on its vertical axis, then settles facing forward.
+ * Tap it (or press Enter) to flip it over.
  *
  * The motion is a small physics sim run in a rAF loop and written straight to
  * the DOM (no React state per frame, so it stays at 60fps).
@@ -22,12 +23,23 @@ const MAX_STRETCH = 1.28;
 /* Limits, so a hard flick can't swing the card up past horizontal — a lanyard
  * that windmills over its own anchor looks broken.
  * Peak swing solves (1/2)ω² + (g/L)(1-cos θ₀) = (g/L)(1-cos θ_peak); with these
- * numbers the worst case a drag can produce peaks at about 75°. */
+ * numbers the worst case a drag can produce peaks at about 71°. */
 const MAX_SWING_VEL = 3.2; // rad/s
 const MAX_SPIN_VEL = 14; // rad/s
 const MAX_DRAG_ANGLE = 1.0; // rad (~57°) — the furthest it can be pulled aside
 const MAX_ANGLE = Math.PI / 2; // hard stop at horizontal, whatever happens
 const MIN_DT = 0.012; // s — stops a tiny dt turning into a huge velocity
+
+/* A tap is a press that barely moved. Anything more is a drag. */
+const TAP_SLOP = 8; // px
+
+/* Flipping is driven to an explicit target rather than by an impulse. An
+ * impulse can't be tuned to land on the far face: too little and it never
+ * clears the barrier at π, too much and it carries straight on to 2π — which
+ * is the front again. A critically-damped spring settles on the target face in
+ * about a second, every time. */
+const FLIP_K = 60;
+const FLIP_C = 2 * Math.sqrt(FLIP_K);
 
 const clamp = (v: number, lo: number, hi: number) =>
   v < lo ? lo : v > hi ? hi : v;
@@ -36,6 +48,7 @@ export default function IdBadge() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const ropeRef = useRef<SVGPathElement>(null);
+  const anchorRef = useRef<SVGGElement>(null);
   const [hinted, setHinted] = useState(false);
 
   // Physics state lives in refs — mutating it must not trigger a re-render.
@@ -49,6 +62,14 @@ export default function IdBadge() {
     pointerId: -1,
     lastX: 0,
     lastT: 0,
+    // for tap detection
+    downX: 0,
+    downY: 0,
+    travel: 0,
+    // horizontal centre of the wrapper, in the SVG's own coordinates
+    cx: 0,
+    // when a flip is in progress, the spin angle it's heading for
+    flipTarget: null as number | null,
   });
 
   const draw = useCallback((angle: number, spin: number, len: number) => {
@@ -56,6 +77,7 @@ export default function IdBadge() {
     const rope = ropeRef.current;
     if (!card || !rope) return;
 
+    const cx = sim.current.cx;
     const x = Math.sin(angle) * len;
     const y = Math.cos(angle) * len;
 
@@ -66,15 +88,40 @@ export default function IdBadge() {
       Math.PI
     ).toFixed(2)}deg)`;
 
-    // The strap sags a little when the card swings inward.
+    // The strap sags a little when the card hangs near vertical.
     const sag = Math.max(0, 1 - Math.abs(angle) / 0.9) * 12;
     rope.setAttribute(
       "d",
-      `M 0 0 Q ${(x / 2).toFixed(2)} ${(y / 2 + sag).toFixed(2)} ${x.toFixed(
-        2,
-      )} ${y.toFixed(2)}`,
+      `M ${cx} 0 Q ${(cx + x / 2).toFixed(2)} ${(y / 2 + sag).toFixed(2)} ${(
+        cx + x
+      ).toFixed(2)} ${y.toFixed(2)}`,
     );
   }, []);
+
+  /* The SVG spans the whole wrapper, so the anchor's x is the wrapper's centre.
+   * Measured here rather than faked with a zero-width SVG and overflow:visible,
+   * which is exactly the kind of trick that renders differently per browser. */
+  useEffect(() => {
+    const measure = () => {
+      const wrap = wrapRef.current;
+      if (!wrap) return;
+      sim.current.cx = wrap.clientWidth / 2;
+      anchorRef.current?.setAttribute(
+        "transform",
+        `translate(${sim.current.cx} 0)`,
+      );
+      draw(sim.current.angle, sim.current.spin, sim.current.len);
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (wrapRef.current) ro.observe(wrapRef.current);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [draw]);
 
   useEffect(() => {
     const reduced = window.matchMedia(
@@ -83,6 +130,7 @@ export default function IdBadge() {
 
     if (reduced) {
       // Hang it straight down and skip the animation loop entirely.
+      sim.current.angle = 0;
       draw(0, 0, ROPE_LEN);
       return;
     }
@@ -111,15 +159,32 @@ export default function IdBadge() {
         s.len += (ROPE_LEN - s.len) * Math.min(1, 10 * dt);
       }
 
-      // Spin decays and eases back to a flat face — front or back, whichever
-      // is nearer, since sin() has stable points at 0 and π.
-      s.spinVel = clamp(
-        s.spinVel +
-          (-SPIN_RETURN * Math.sin(s.spin) - SPIN_DAMPING * s.spinVel) * dt,
-        -MAX_SPIN_VEL,
-        MAX_SPIN_VEL,
-      );
-      s.spin += s.spinVel * dt;
+      if (s.flipTarget !== null) {
+        // Driven flip: spring straight to the requested face.
+        s.spinVel +=
+          (FLIP_K * (s.flipTarget - s.spin) - FLIP_C * s.spinVel) * dt;
+        s.spin += s.spinVel * dt;
+        if (
+          Math.abs(s.flipTarget - s.spin) < 0.02 &&
+          Math.abs(s.spinVel) < 0.2
+        ) {
+          // Land exactly on the face and fold the angle back near zero, so
+          // repeated flips can't drift the number off to infinity.
+          s.spin = s.flipTarget % (2 * Math.PI);
+          s.spinVel = 0;
+          s.flipTarget = null;
+        }
+      } else {
+        // Free spin decays and eases back to a flat face — front or back,
+        // whichever is nearer, since sin() has stable points at 0 and π.
+        s.spinVel = clamp(
+          s.spinVel +
+            (-SPIN_RETURN * Math.sin(s.spin) - SPIN_DAMPING * s.spinVel) * dt,
+          -MAX_SPIN_VEL,
+          MAX_SPIN_VEL,
+        );
+        s.spin += s.spinVel * dt;
+      }
 
       draw(s.angle, s.spin, s.len);
       raf = requestAnimationFrame(tick);
@@ -135,8 +200,14 @@ export default function IdBadge() {
     s.pointerId = e.pointerId;
     s.lastX = e.clientX;
     s.lastT = performance.now();
+    s.downX = e.clientX;
+    s.downY = e.clientY;
+    s.travel = 0;
     s.vel = 0;
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    s.flipTarget = null; // grabbing it cancels any flip in progress
+    // Capture on the card itself, not e.target — the target may be the <img>,
+    // which React can swap out mid-gesture and silently drop the capture.
+    e.currentTarget.setPointerCapture?.(e.pointerId);
     setHinted(true);
   };
 
@@ -144,6 +215,11 @@ export default function IdBadge() {
     const s = sim.current;
     const wrap = wrapRef.current;
     if (!s.dragging || !wrap || e.pointerId !== s.pointerId) return;
+
+    s.travel = Math.max(
+      s.travel,
+      Math.hypot(e.clientX - s.downX, e.clientY - s.downY),
+    );
 
     const rect = wrap.getBoundingClientRect();
     // Anchor sits at the top-centre of the wrapper.
@@ -174,6 +250,14 @@ export default function IdBadge() {
     s.lastT = now;
   };
 
+  /** Send it round to the other face. */
+  const flip = () => {
+    const s = sim.current;
+    // Nearest flat face, then one further round.
+    s.flipTarget = (Math.round(s.spin / Math.PI) + 1) * Math.PI;
+    setHinted(true);
+  };
+
   const endDrag = (e: React.PointerEvent) => {
     const s = sim.current;
     if (e.pointerId !== s.pointerId) return;
@@ -181,6 +265,10 @@ export default function IdBadge() {
     s.pointerId = -1;
     // Don't let a frantic flick fling it over the top.
     s.vel = clamp(s.vel, -MAX_SWING_VEL, MAX_SWING_VEL);
+    // A press that barely moved is a tap, which flips the card. This is the
+    // only way to turn it over on a touch screen, where there's no hover and a
+    // short drag reads as a scroll attempt.
+    if (s.travel < TAP_SLOP) flip();
   };
 
   /* Keyboard: nudge it, for anyone not using a pointer. */
@@ -190,8 +278,7 @@ export default function IdBadge() {
       s.vel = clamp(s.vel - 2.2, -MAX_SWING_VEL, MAX_SWING_VEL);
     else if (e.key === "ArrowRight")
       s.vel = clamp(s.vel + 2.2, -MAX_SWING_VEL, MAX_SWING_VEL);
-    else if (e.key === " " || e.key === "Enter")
-      s.spinVel = clamp(s.spinVel + 7, -MAX_SPIN_VEL, MAX_SPIN_VEL);
+    else if (e.key === " " || e.key === "Enter") flip();
     else return;
     e.preventDefault();
     setHinted(true);
@@ -203,24 +290,26 @@ export default function IdBadge() {
       className="relative mx-auto h-[32rem] w-full max-w-xs select-none sm:h-[34rem]"
       style={{ perspective: "1100px" }}
     >
-      {/* The strap. The SVG is zero-width and pinned to the centre line, so its
-          user-space origin (0,0) is exactly the anchor point the sim uses. */}
+      {/* The strap. The SVG covers the whole wrapper and the anchor is placed
+          at the measured centre, so nothing depends on overflow behaviour. */}
       <svg
-        className="pointer-events-none absolute top-0 left-1/2 h-full w-0 overflow-visible"
+        className="pointer-events-none absolute inset-0 h-full w-full"
         aria-hidden="true"
       >
         <path
           ref={ropeRef}
-          d="M 0 0 Q 0 84 0 168"
+          d=""
           fill="none"
-          stroke="var(--color-accent)"
+          stroke="var(--accent)"
           strokeWidth="7"
           strokeLinecap="round"
           opacity="0.85"
         />
-        {/* the anchor loop at the top */}
-        <circle cx="0" cy="0" r="7" fill="var(--color-accent)" />
-        <circle cx="0" cy="0" r="3" fill="var(--color-background)" />
+        <g ref={anchorRef}>
+          {/* the loop the lanyard hangs from */}
+          <circle cx="0" cy="0" r="8" fill="var(--accent)" />
+          <circle cx="0" cy="0" r="3.5" fill="var(--background)" />
+        </g>
       </svg>
 
       {/* the card */}
@@ -233,119 +322,123 @@ export default function IdBadge() {
         onKeyDown={onKeyDown}
         role="button"
         tabIndex={0}
-        aria-label={`ID card for ${badge.name}. Drag it, or use the arrow keys to swing it.`}
+        aria-label={`ID card for ${badge.name}. Tap to flip it over, drag to swing it, or use the arrow keys.`}
         className="absolute top-0 left-1/2 w-[12rem] cursor-grab touch-none active:cursor-grabbing sm:w-52"
         style={{ transformOrigin: "50% 0%", transformStyle: "preserve-3d" }}
       >
-        {/* clip */}
-        <div className="border-accent/70 bg-surface mx-auto h-5 w-9 rounded-t-md border-2 border-b-0" />
-
-        {/* Two faces. The front is in normal flow and sets the height; the back
-            is laid over it, pre-flipped, so the card reads right way round
-            whichever side it settles on. */}
+        {/* Everything below flips together, clip included. */}
         <div className="relative" style={{ transformStyle: "preserve-3d" }}>
-          <div
-            className="border-border bg-surface overflow-hidden rounded-2xl border shadow-2xl shadow-black/40 backdrop-blur"
-            style={{ backfaceVisibility: "hidden" }}
-          >
-            {/* header */}
-            <div className="from-accent to-accent-2 bg-linear-to-r px-4 py-2.5">
-              <p className="text-background text-[9px] leading-tight font-bold tracking-[0.14em] uppercase">
-                {badge.orgShort}
-              </p>
-              <p className="text-background/80 text-[7px] leading-tight">
-                {badge.org}
-              </p>
-            </div>
+          {/* front */}
+          <div style={{ backfaceVisibility: "hidden" }}>
+            {/* the clip that grips the card */}
+            <div className="border-accent/70 bg-surface mx-auto -mb-1.5 h-6 w-10 rounded-t-lg border-2 border-b-0" />
 
-            {/* punch hole */}
-            <div className="flex justify-center py-2">
-              <div className="bg-border h-1.5 w-12 rounded-full" />
-            </div>
-
-            {/* photo */}
-            <div className="px-4">
-              <div className="border-border bg-background relative aspect-square w-full overflow-hidden rounded-lg border">
-                <Image
-                  src={badge.photo}
-                  alt={badge.name}
-                  fill
-                  priority
-                  sizes="14rem"
-                  className="object-cover"
-                  draggable={false}
-                />
+            <div className="border-border bg-surface overflow-hidden rounded-2xl border shadow-2xl shadow-black/40">
+              {/* header */}
+              <div className="from-accent to-accent-2 bg-linear-to-r px-4 py-2.5">
+                <p className="text-background text-[9px] leading-tight font-bold tracking-[0.14em] uppercase">
+                  {badge.orgShort}
+                </p>
+                <p className="text-background/80 text-[7px] leading-tight">
+                  {badge.org}
+                </p>
               </div>
-            </div>
 
-            {/* details */}
-            <div className="px-4 pt-3 pb-4">
-              <p className="truncate text-sm font-bold">{badge.name}</p>
-              <p className="text-muted mt-0.5 text-[10px]">{badge.role}</p>
+              {/* punch hole */}
+              <div className="flex justify-center py-2">
+                <div className="bg-border h-1.5 w-12 rounded-full" />
+              </div>
 
-              <dl className="mt-3 space-y-1">
-                {badge.fields.map((f) => (
-                  <div key={f.label} className="flex justify-between gap-2">
-                    <dt className="text-muted text-[8px] tracking-wider uppercase">
-                      {f.label}
-                    </dt>
-                    <dd className="truncate text-[9px] font-medium">
-                      {f.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-
-              {/* barcode */}
-              <div className="mt-3 flex h-6 items-end gap-[2px] overflow-hidden">
-                {BARCODE.map((w, i) => (
-                  <span
-                    key={i}
-                    className="bg-foreground/70 h-full"
-                    style={{ width: `${w}px` }}
+              {/* photo */}
+              <div className="px-4">
+                <div className="border-border bg-background relative aspect-square w-full overflow-hidden rounded-lg border">
+                  <Image
+                    src={badge.photo}
+                    alt={badge.name}
+                    fill
+                    priority
+                    sizes="14rem"
+                    className="object-cover"
+                    draggable={false}
                   />
-                ))}
+                </div>
               </div>
-              <p className="text-muted mt-1.5 text-center text-[7px] tracking-[0.3em]">
-                {badge.backNote.toUpperCase()}
-              </p>
+
+              {/* details */}
+              <div className="px-4 pt-3 pb-4">
+                <p className="truncate text-sm font-bold">{badge.name}</p>
+                <p className="text-muted mt-0.5 text-[10px]">{badge.role}</p>
+
+                <dl className="mt-3 space-y-1">
+                  {badge.fields.map((f) => (
+                    <div key={f.label} className="flex justify-between gap-2">
+                      <dt className="text-muted text-[8px] tracking-wider uppercase">
+                        {f.label}
+                      </dt>
+                      <dd className="truncate text-[9px] font-medium">
+                        {f.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+
+                <div className="mt-3 flex h-6 items-end gap-[2px] overflow-hidden">
+                  {BARCODE.map((w, i) => (
+                    <span
+                      key={i}
+                      className="bg-foreground/70 h-full"
+                      style={{ width: `${w}px` }}
+                    />
+                  ))}
+                </div>
+                <p className="text-muted mt-1.5 text-center text-[7px] tracking-[0.3em]">
+                  TAP TO FLIP
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* back face */}
+          {/* back */}
           <div
-            className="border-border bg-surface absolute inset-0 flex flex-col overflow-hidden rounded-2xl border shadow-2xl shadow-black/40"
+            className="absolute inset-0"
             style={{
               backfaceVisibility: "hidden",
               transform: "rotateY(180deg)",
             }}
           >
-            <div className="from-accent-2 to-accent h-8 bg-linear-to-r" />
-            <div className="bg-foreground/80 mt-4 h-9 w-full" />
-            <div className="flex flex-1 flex-col justify-center px-5 text-center">
-              <p className="text-[10px] font-bold tracking-[0.16em] uppercase">
-                {badge.orgShort}
-              </p>
-              <p className="text-muted mt-2 text-[8px] leading-relaxed">
-                {badge.org}
-              </p>
-              <p className="text-muted mt-4 text-[8px] leading-relaxed">
-                This card is the property of the holder. If found, please return
-                it — or just drag it around some more.
-              </p>
-              <p className="text-accent mt-4 text-[9px] font-medium">
-                {badge.backNote}
-              </p>
-            </div>
-            <div className="px-5 pb-5">
-              <div className="flex h-6 items-end gap-[2px] overflow-hidden">
-                {BARCODE.map((w, i) => (
-                  <span
-                    key={i}
-                    className="bg-foreground/70 h-full"
-                    style={{ width: `${w}px` }}
-                  />
-                ))}
+            <div className="border-accent/70 bg-surface mx-auto -mb-1.5 h-6 w-10 rounded-t-lg border-2 border-b-0" />
+
+            <div className="border-border bg-surface flex h-[calc(100%-1.5rem)] flex-col overflow-hidden rounded-2xl border shadow-2xl shadow-black/40">
+              <div className="from-accent-2 to-accent h-7 bg-linear-to-r" />
+              {/* magnetic stripe */}
+              <div className="bg-foreground/60 mt-3 h-8 w-full" />
+
+              <div className="flex flex-1 flex-col justify-center px-5 text-center">
+                <p className="text-[10px] font-bold tracking-[0.16em] uppercase">
+                  {badge.orgShort}
+                </p>
+                <p className="text-muted mt-2 text-[8px] leading-relaxed">
+                  {badge.org}
+                </p>
+                <p className="text-muted mt-3 text-[8px] leading-relaxed">
+                  Property of the holder. If found, please return it — or just
+                  drag it around some more.
+                </p>
+                <p className="text-accent mt-3 text-[9px] font-medium">
+                  {badge.backNote}
+                </p>
+              </div>
+
+              <div className="px-5 pb-4">
+                <div className="flex h-5 items-end gap-[2px] overflow-hidden">
+                  {BARCODE.map((w, i) => (
+                    <span
+                      key={i}
+                      className="bg-foreground/70 h-full"
+                      style={{ width: `${w}px` }}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -358,7 +451,7 @@ export default function IdBadge() {
           hinted ? "opacity-0" : "opacity-100"
         }`}
       >
-        drag me
+        drag me · tap to flip
       </p>
     </div>
   );

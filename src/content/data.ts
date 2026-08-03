@@ -32,7 +32,7 @@ export const hero = {
   tagline:
     "CS student at the University of the Philippines Manila. I build things that ship — multi-agent clinical AI, a triage system aimed at shortening hospital lines, and a 4-player Filipino street game.",
   // Your photo. Drop a square image in public/images/ and point here.
-  photo: "/images/profile-placeholder.svg", // TODO: replace with your photo
+  photo: "/images/profile.jpg",
   primaryCta: { label: "Get in Touch", href: "#contact" },
   secondaryCta: { label: "View Projects", href: "#projects" },
 };
@@ -51,7 +51,7 @@ export const badge = {
     { label: "Program", value: "BSCS '29" },
     { label: "Status", value: "University Scholar" },
   ],
-  photo: "/images/profile-placeholder.svg", // TODO: replace with your photo
+  photo: "/images/profile.jpg",
   // Text on the back of the card.
   backNote: "DOST Undergraduate Scholar",
 };
@@ -169,7 +169,7 @@ export const projects: Project[] = [
     featured: true,
     blurb:
       "An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team for the EGOV 2026 hackathon. Patients are assessed and routed before they queue, so the line itself gets shorter. Integrates the government's eGov API stack — AI triage, messaging, reporting, identity, and payments.",
-    image: "/images/project-egovmed.svg", // TODO: screenshot of the app
+    image: "/images/project-egovmed.png",
     tags: ["Next.js", "Node.js", "eGov APIs", "AI Triage", "Vercel"],
     links: {
       github: "https://github.com/Bisaya-Hackers/egovmed",
@@ -182,7 +182,7 @@ export const projects: Project[] = [
     featured: true,
     blurb:
       "A 4-player online multiplayer take on the Filipino street game, built in Godot for DOST-GameDev. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once. Networked with an authoritative host — contact is resolved by distance on the host so tags and throws agree across every peer.",
-    image: "/images/project-tumbang-preso.svg", // TODO: gameplay screenshot
+    image: "/images/project-tumbang-preso.jpg",
     tags: ["Godot 4", "GDScript", "Multiplayer", "Blender", "Game Design"],
     links: {
       github: "https://github.com/DOST-GameDEV/DOST-GameDev",
