@@ -68,8 +68,8 @@ export default function Header() {
           href="#home"
           className="group flex items-center gap-2 text-base font-bold tracking-tight"
         >
-          <span className="from-accent to-accent-2 text-background grid h-8 w-8 place-items-center rounded-lg bg-linear-to-br text-sm font-bold">
-            M
+          <span className="from-accent to-accent-2 text-background grid h-8 w-8 place-items-center rounded-lg bg-linear-to-br text-sm font-bold tracking-tight">
+            ML
           </span>
           <span className="hidden sm:inline">{hero.name}</span>
         </a>

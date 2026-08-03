@@ -66,11 +66,12 @@ export default function OpengraphImage() {
             alignItems: "center",
             justifyContent: "center",
             color: "#08090c",
-            fontSize: 30,
+            fontSize: 24,
             fontWeight: 700,
+            letterSpacing: -1,
           }}
         >
-          M
+          ML
         </div>
         <div style={{ color: "#99a1b3", fontSize: 26 }}>
           {site.url.replace(/^https?:\/\//, "")}

@@ -394,7 +394,7 @@ export const awards = [
   "Champion, eGov Hackathon PH 2026 (₱100,000 grand prize)",
   "DOST Undergraduate Scholar (2025 – Present)",
   "Top 5 Finalist, Olymphysics NCR (2025)",
-  "5th Place, Philippine Statistics Quiz NCR (2024)",
+  "5th Place, Philippine Statistics Quiz NCR (2025)",
   "Class Valedictorian & Gold Medalist, PAREF Southridge (2025)",
 ];
 

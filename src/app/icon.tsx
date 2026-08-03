@@ -16,12 +16,13 @@ export default function Icon() {
         justifyContent: "center",
         background: "linear-gradient(135deg, #5eead4, #a78bfa)",
         color: "#08090c",
-        fontSize: 22,
+        fontSize: 14,
         fontWeight: 700,
+        letterSpacing: -0.5,
         borderRadius: 7,
       }}
     >
-      M
+      ML
     </div>,
     size,
   );
