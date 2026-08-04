@@ -53,8 +53,9 @@ export default function Chip8Embed() {
         The 16 buttons under the screen are the CHIP-8 keypad, labelled with
         the keys they stand in for. Brix and Catch move with <Key>A</Key> and{" "}
         <Key>D</Key>; Pong is <Key>1</Key>/<Key>Q</Key> and <Key>4</Key>/
-        <Key>R</Key>. Use <em>Next ROM</em> to cycle through them. The debugger
-        panel down the right-hand side is legible on a wider screen.
+        <Key>R</Key>. Use <em>Next ROM</em> to cycle through them.{" "}
+        <em>Show debugger</em> reveals the machine state behind the game, though
+        it needs a wider screen to be legible.
       </figcaption>
 
       <figcaption className="text-muted mt-3 text-xs leading-relaxed [@media(pointer:coarse)]:hidden">
@@ -65,7 +66,8 @@ export default function Chip8Embed() {
         <Key>R</Key>. <Key>Space</Key> pauses, <Key>N</Key> steps one
         instruction, <Key>Tab</Key> cycles ROMs, <Key>Backspace</Key> resets,{" "}
         <Key>[</Key> and <Key>]</Key> change speed, and <Key>F1</Key>–
-        <Key>F5</Key> toggle the hardware quirks.
+        <Key>F5</Key> toggle the hardware quirks. It opens on the game alone;{" "}
+        <Key>H</Key> folds the debugger in and out.
       </figcaption>
     </figure>
   );

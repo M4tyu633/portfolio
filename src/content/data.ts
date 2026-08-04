@@ -329,6 +329,7 @@ export const projects: Project[] = [
           heading: "How to drive it",
           body: [
             "Click the screen first — the keyboard only reaches the emulator while it has focus. It opens on Brix, a brick breaker: A and D move the paddle. Tab loads the next ROM. There are six, all written by hand for this project: Brix, Pong (two players, 1 and Q on the left, 4 and R on the right), Catch (A and D again), then Bounce, Counter and Keypad, three smaller ROMs that exercise specific instructions rather than being games.",
+            "The panel above opens on the game alone. H, or the Show debugger button, folds the machine state in and out — none of it is needed to play, and six panels of hex handed to you unasked is a lot to walk into.",
             "The debugger has its own keys. Space pauses and resumes, N runs exactly one instruction while paused, Backspace restarts the current ROM, and the bracket keys change how many instructions run per frame — the emulator's clock speed, eleven by default. F1 through F5 toggle the five hardware quirks described further down.",
             "The keypad panel on the right reads CHIP-8 value / your key, and the two rarely agree. The original COSMAC VIP had a sixteen-key hex pad laid out 1 2 3 C / 4 5 6 D / 7 8 9 E / A 0 B F, mapped here onto the left block of a QWERTY keyboard, so pressing A lights CHIP-8 key 7. Showing only the hex value made the panel look like it was responding to the wrong key entirely.",
           ],

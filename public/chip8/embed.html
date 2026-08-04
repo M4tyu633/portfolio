@@ -178,6 +178,7 @@
       <button id="btn-pause" type="button">Pause / resume &middot; Space</button>
       <button id="btn-next" type="button">Next ROM &middot; Tab</button>
       <button id="btn-reset" type="button">Reset &middot; Backspace</button>
+      <button id="btn-debug" type="button">Show debugger &middot; H</button>
       <label class="file desktop-only">
         Load a .ch8 file
         <input
@@ -301,6 +302,27 @@
       document.getElementById("btn-pause").onclick = () => command(0);
       document.getElementById("btn-next").onclick = () => command(1);
       document.getElementById("btn-reset").onclick = () => command(2);
+
+      // Starts false, matching the C++ side, which opens with the debugger
+      // folded away. The label always says what pressing it will do, and H
+      // does the same thing from the keyboard, so it is corrected on that too.
+      const debugButton = document.getElementById("btn-debug");
+      let debuggerShown = false;
+      function setDebugLabel() {
+        debugButton.textContent =
+          (debuggerShown ? "Hide debugger" : "Show debugger") + " · H";
+      }
+      debugButton.onclick = () => {
+        debuggerShown = !debuggerShown;
+        setDebugLabel();
+        command(3);
+      };
+      window.addEventListener("keydown", function (event) {
+        if (event.key === "h" || event.key === "H") {
+          debuggerShown = !debuggerShown;
+          setDebugLabel();
+        }
+      });
 
       document
         .getElementById("rom-input")
