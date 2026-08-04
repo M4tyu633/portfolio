@@ -92,8 +92,20 @@ the DOM.
 ## Deploying
 
 Pushing to `main` deploys. The Vercel project is connected to this repo, so
-there is nothing to run by hand and no alias to move — `matthewlabrador.vercel.app`
-follows production automatically.
+the build runs on its own.
+
+The alias is less reliable than it looks. Twice now the new deployment has gone
+`● Ready` while `matthewlabrador.vercel.app` still served the previous one more
+than two minutes later. Check what production actually serves rather than
+assuming, and move it by hand if it is stale:
+
+```bash
+vercel ls --prod
+vercel alias set <newest-ready-url> matthewlabrador.vercel.app
+```
+
+Check with a request, not with `vercel project inspect`, which never prints the
+git link. A cache-busting query string avoids reading a stale CDN entry.
 
 It was not always so. Deploys used to be `vercel deploy --prod --yes` followed
 by `vercel alias set <new-url> matthewlabrador.vercel.app`, which still works
