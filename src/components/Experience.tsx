@@ -14,10 +14,22 @@ export default function Experience() {
 
         <ol className="border-border relative mt-14 border-l pl-8 sm:pl-10">
           {timeline.map((item, i) => (
-            <Reveal as="li" key={`${item.org}-${item.period}`} delay={i * 60}>
+            <Reveal
+              as="li"
+              key={`${item.org}-${item.period}`}
+              delay={i * 60}
+              className="relative"
+            >
               <div className="pb-12 last:pb-0">
-                {/* the dot on the line */}
-                <span className="border-accent bg-background absolute -left-[7px] mt-2 grid h-3.5 w-3.5 place-items-center rounded-full border-2" />
+                {/* The dot on the line. It is positioned against THIS li, not
+                    the ol, and the offset therefore has to clear the ol's own
+                    left padding: 2rem + half the dot, and 2.5rem from sm up.
+                    Anchoring it to the ol instead looks correct until the row
+                    reveals — `.reveal` animates `transform`, and a transformed
+                    ancestor becomes the containing block, so the dot would sit
+                    over the period text until the transform resolved to none
+                    and then jump to the line. */}
+                <span className="border-accent bg-background absolute -left-[39px] mt-2 grid h-3.5 w-3.5 place-items-center rounded-full border-2 sm:-left-[47px]" />
 
                 <p className="text-accent text-xs font-medium tracking-[0.16em] uppercase">
                   {item.period}

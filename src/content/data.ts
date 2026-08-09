@@ -486,6 +486,12 @@ export type TimelineItem = {
   bullets: string[];
 };
 
+/* Order: school first, because it dates everything else. Then the three 2026
+ * competitions in the SAME order as the project grid above — Tumbang Preso,
+ * eGovMed, GlycoSwarm — so the two sections agree and reading one after the
+ * other doesn't feel like two different lists. Then independent work, then the
+ * pre-university years. Every competition here has a project card above it; if
+ * you add one to `projects`, add it here too or the sections drift apart. */
 export const timeline: TimelineItem[] = [
   {
     period: "2025 – Present",
@@ -509,7 +515,18 @@ export const timeline: TimelineItem[] = [
   },
   {
     period: "2026",
-    role: "Team Lead",
+    role: "Full-Stack Developer · Pitch Lead",
+    org: "eGov Hackathon PH — Champion (₱100,000)",
+    bullets: [
+      "Won the ₱100,000 grand prize with Bisaya Hackers for eGovMed, an AI triage system that assesses and routes patients before they queue.",
+      "Built full-stack across the React front end and the Node/Express services behind it.",
+      "Owned the integration of eight national eGov APIs: triage, SSO identity, National ID eVerify, face liveness, messaging, payments, reporting and chain anchoring.",
+      "Delivered the pitch and the live product demo to the judging panel.",
+    ],
+  },
+  {
+    period: "2026",
+    role: "Lead Developer",
     org: "AMD Developer Hackathon ACT II, Track 3",
     bullets: [
       "Led an international, cross-timezone team building GlycoSwarm AI, a four-agent clinical screening prototype.",
