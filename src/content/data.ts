@@ -33,7 +33,7 @@ export const hero = {
     "CS student at the University of the Philippines Manila. I build things that ship: multi-agent clinical AI, a triage system aimed at shortening hospital lines, and a 4-player Filipino street game.",
   // The two small pills above your name. Set either to "" to hide it.
   status: "Open to internships & research",
-  highlight: "🏆 1st Place · Gear Up NCR Game Dev 2026 · On to Nationals",
+  highlight: "🏆 1st Place · DOST Gear Up NCR 2026 · Representing NCR at Nationals",
   // Your photo. Drop a square image in public/images/ and point here.
   photo: "/images/profile.jpg",
   primaryCta: { label: "Get in Touch", href: "#contact" },
@@ -187,9 +187,11 @@ export type Project = {
   // Optional. Renders a gold ribbon on the card. Leave it out for no ribbon.
   award?: string;
   /* Any you leave out simply won't render. `trailer` and `gameplay` are for
-   * projects that can't be deployed, like the game. */
+   * projects that can't be deployed, like the game; `download` is for one that
+   * ships as a build you run rather than a URL you visit. */
   links?: {
     demo?: string;
+    download?: string;
     trailer?: string;
     gameplay?: string;
     more?: string;
@@ -210,13 +212,101 @@ export const projectFilters: string[] = [
 
 export const projects: Project[] = [
   {
+    title: "Tumbang Preso",
+    slug: "tumbang-preso",
+    year: "2026",
+    featured: true,
+    award: "🏆 1st Place · DOST Gear Up NCR Game Dev Challenge 2026",
+    blurb:
+      "1st place at the DOST Gear Up NCR Esports Game Dev Challenge 2026, now representing the National Capital Region at the national finals in General Santos City. A 4-player networked take on the Filipino street game, built in Godot in five days — every model, character, map, menu, sound, bot, physics rule and line of netcode by one person, plus the pitch that won it. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once.",
+    image: "/images/project-tumbang-preso.jpg",
+    tags: ["Godot 4", "GDScript", "Multiplayer", "Blender"],
+    links: {
+      download:
+        "https://drive.google.com/drive/folders/1vbfB_JqTbfrG5mT_SyqvXXy4LsM6LHTy?usp=sharing",
+      trailer:
+        "https://drive.google.com/file/d/15yPUlkaltsnbQn5zuD2bBwSrXgxYpo9n/view?usp=drive_link",
+      gameplay:
+        "https://drive.google.com/file/d/1zadxFIYe46-x3y5XQiFOI0cB80uuZlGs/view?usp=drive_link",
+    },
+    caseStudy: {
+      intro:
+        "Tumbang Preso is the Filipino street game: one kid guards a tin can inside a chalk box, everyone else throws a slipper at it from outside. This is that game as a 4-player networked build in Godot 4. A studio would normally split the work across a 3D artist, a UI designer, an SFX designer, a gameplay programmer, someone on AI and physics, and a marketing lead for the pitch. Here that was one person and five days. It won 1st place at the DOST Gear Up NCR Esports Game Dev Challenge 2026, and is going to the national finals in General Santos City.",
+      facts: [
+        { label: "Role", value: "Lead developer — sole developer" },
+        { label: "Event", value: "DOST Gear Up NCR — Esports Game Dev Challenge 2026" },
+        { label: "Result", value: "1st Place · representing NCR at Nationals" },
+        { label: "Nationals", value: "General Santos City, Mindanao — ongoing" },
+        { label: "Built in", value: "Five days, empty project to shipped build" },
+        { label: "Stack", value: "Godot 4.7 · Forward+ · GDScript · Blender" },
+      ],
+      sections: [
+        {
+          heading: "One person, every layer",
+          body: [
+            "Every 3D model, every character, the map, the interface, the sound design, the bots, the physics and the netcode — and the codebase underneath all of it. Past the build I also handled the marketing, delivered the pitch, and led the presentation and the Q&A in front of the judges. The whole pipeline, from an empty Godot project to a shipped build and a winning pitch.",
+            "Five days is the constraint that shaped the rest of this page. Most of what follows is not the clever version of a problem — it is the version that could be verified quickly and then left alone.",
+          ],
+        },
+        {
+          heading: "What a match actually is",
+          body: [
+            "One player is the taya, locked inside a chalk box guarding the lata. The other three are attackers throwing tsinelas at it from outside. Four rounds of 90 seconds, one per player, so everyone is taya exactly once — the round count is definitional rather than a setting, because there are four seats and the role rotates. Scoring is cumulative and personal: highest total after the fourth round wins, and there is no per-round winner.",
+            "The tension is not the throw, it's the retrieval. Throwing is free, but the slipper lands inside the taya's box, and going in to pick it up is exactly what puts you in range of being tagged. Knock the lata over and the taya has to spend time standing it back up, which is the one window they cannot defend.",
+          ],
+        },
+        {
+          heading: "Contact is resolved by distance, not by overlap",
+          body: [
+            "Tags, slipper contact and the reset ring are all decided by measuring distance on the host, never by Godot's area-overlap callbacks. That reads like the naive choice and it is the opposite: a probe over the real contact cases measured 16 of 36 overlaps silently failing to fire, and the failures were split by target rather than random, so the bug would have looked like a balance complaint about one character instead of a physics fault.",
+            "Because the host decides, every peer agrees. A tag that lands on one screen cannot be a miss on another, which is the whole reason the authority sits there rather than with whoever threw.",
+          ],
+        },
+        {
+          heading: "The character picks are not cosmetic",
+          body: [
+            "You pick three things — your person, your lata and your tsinelas — and all three reach gameplay. Each carries three meters, and each tab names its meters after what they actually do, because a can does not walk and a slipper does not get stunned. The lata's three are three different routes to one goal: the taya wants the can upright, so STANCE refuses the knockdown, RESET shortens the recovery, and REBOUND punishes the attempt.",
+            "The spread is deliberately narrow — roughly ±10–14% across the full range. This is a party game about hitting a can with a slipper, and a pick that is 40% better than the others is not a personality, it's the correct answer. Two rules keep it honest: the number has to be readable off the description, since a stat nobody can predict from the lore is just a random modifier; and any competitive difference between cosmetic picks has to be declared. The four cans differ in collider radius by 32%, so the scoring window is derived from the STANCE meter rather than that geometry — otherwise the prettiest can would quietly be the hardest to hit with nothing on screen saying so.",
+          ],
+        },
+        {
+          heading: "A host cannot reliably know its own address",
+          body: [
+            "Hosts broadcast a UDP packet and the browse screen lists what it hears. The trap is that a machine asked for its own address offers a LAN card, a Hamachi 25.x, a Radmin 26.x and a few link-local 169.254s in no promised order, and picking wrong sends everyone to an address that only exists on the host. The receiver has no such problem, so the beacon's payload carries only the port and the listener takes the host half from the datagram's own source. Anything that later helpfully puts an address in the payload has put the bug back.",
+            "Clicking a discovered game selects it, it does not join — it fills the address field and leaves the press to JOIN. That keeps the typed field the single source of truth, so there is never a second hidden way to open a connection.",
+          ],
+        },
+        {
+          heading: "Getting it played across the country",
+          body: [
+            "LAN was never going to be enough for a game whose whole pitch is the friends who moved away. Online runs on dedicated lobbies on a VPS in Singapore, discovered with join codes over a small UDP status protocol separate from the game ports.",
+            "The reason it needed a real server is worth stating plainly: many Philippine ISPs put subscribers behind carrier-grade NAT, where no port-forwarding rule on your own router is reachable from outside at all. A traceroute landing on a 100.64.x.x address at the second hop is the tell. Under CGNAT the options are an overlay network, a tunnel, or a server with a public address — so the game got one.",
+          ],
+        },
+        {
+          heading: "The pitch counted as much as the build",
+          body: [
+            "The deck was built out of the game's own nine-patch UI art and the game's own font, so the slides and the product read as one thing rather than a product next to a template. Slides carry keywords only — the judges should be listening, not reading — and every video clip runs muted and looping underneath narration instead of being handed its own airtime.",
+            "The spine is a childhood memory, and it runs through the technical half rather than just topping and tailing it: the contextual controls hang on nobody handing you a rulebook, the fairness work on the kid who was always taya and swore it was rigged, the dedicated servers on everybody moving away. The deeper technical material — probe tables, network measurements, server specs, AI disclosure — sits in an appendix behind the closing slide, never presented, jumped to when a judge asks.",
+          ],
+        },
+        {
+          heading: "Nationals, still running",
+          body: [
+            "The competition is not over. As NCR's representative the game goes to the national finals in General Santos City, with DOST and partner companies backing the entry. The build shown there will not be the build that won the region.",
+          ],
+        },
+      ],
+    },
+  },
+  {
     title: "eGovMed",
     slug: "egovmed",
     year: "2026",
     featured: true,
     award: "🏆 Champion · eGov Hackathon PH 2026 · ₱100,000",
     blurb:
-      "Winner of the eGov Hackathon PH 2026 and its ₱100,000 grand prize. An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team. Patients are assessed and routed before they queue, so the line itself gets shorter. Integrates the government's eGov API stack: AI triage, messaging, reporting, identity, and payments.",
+      "Winner of the eGov Hackathon PH 2026 and its ₱100,000 grand prize. An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team: patients are assessed and routed before they queue, so the line itself gets shorter. I worked full-stack and owned the integration of eight government eGov APIs — triage, identity, face liveness, messaging, payments and reporting — then built the pitch and presented it to the judges.",
     image: "/images/project-egovmed.png",
     fit: "contain", // a logo, so cropping it just cuts the wordmark in half
     tags: ["Next.js", "Node.js", "eGov APIs", "AI Triage"],
@@ -227,6 +317,10 @@ export const projects: Project[] = [
       intro:
         "A patient at a Philippine public hospital re-enters the same details at every counter, repeats labs another facility already ran, and queues a second time to pay. eGovMed puts one login, one record and one payment in front of all of it, built on the government's own eGov API stack. It won the eGov Hackathon PH 2026 and its ₱100,000 grand prize.",
       facts: [
+        {
+          label: "My role",
+          value: "Full-stack dev · API integrations · pitch & presentation",
+        },
         { label: "Team", value: "Bisaya-Hackers, UP Manila" },
         { label: "Event", value: "eGov Hackathon PH 2026" },
         { label: "Result", value: "Champion · ₱100,000" },
@@ -267,25 +361,6 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "Tumbang Preso",
-    slug: "tumbang-preso",
-    year: "2026",
-    featured: true,
-    // TODO: no case study yet. Copy the `caseStudy` block from eGovMed above,
-    // fill it in, and the card grows a "Case study" link on its own.
-    award: "🏆 1st Place · Gear Up NCR Esports Game Dev Challenge 2026",
-    blurb:
-      "1st place at the Gear Up NCR Esports Game Dev Challenge 2026, advancing to the national finals in General Santos City. A 4-player online multiplayer take on the Filipino street game, built in Godot. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once. Networked with an authoritative host, so contact is resolved by distance on the host and tags and throws agree across every peer.",
-    image: "/images/project-tumbang-preso.jpg",
-    tags: ["Godot 4", "GDScript", "Multiplayer", "Blender"],
-    links: {
-      trailer:
-        "https://drive.google.com/file/d/15yPUlkaltsnbQn5zuD2bBwSrXgxYpo9n/view?usp=drive_link",
-      gameplay:
-        "https://drive.google.com/file/d/1zadxFIYe46-x3y5XQiFOI0cB80uuZlGs/view?usp=drive_link",
-    },
-  },
-  {
     title: "GlycoSwarm AI",
     slug: "glycoswarm-ai",
     year: "2026",
@@ -293,7 +368,7 @@ export const projects: Project[] = [
     // TODO: no case study yet. Copy the `caseStudy` block from eGovMed above,
     // fill it in, and the card grows a "Case study" link on its own.
     blurb:
-      "A multi-agent early-warning system for diabetic complications. A LangGraph StateGraph runs four specialist agents in parallel (renal, neuropathy, retinal and cardiovascular), each writing and executing its own Python scoring code against real NHANES lab data, then fanning into a synthesis agent that ranks the risks and returns one clinical referral. Built as team Snowfall for the AMD Developer Hackathon 2026, Track 3: Unicorn, with an international cross-timezone team I led. I also designed and delivered the live demo and slide deck to the judges.",
+      "A multi-agent early-warning system for diabetic complications. A LangGraph StateGraph runs four specialist agents in parallel (renal, neuropathy, retinal and cardiovascular), each writing and executing its own Python scoring code against real NHANES lab data, then fanning into a synthesis agent that ranks the risks and returns one clinical referral. Built as team Snowfall for the AMD Developer Hackathon 2026, Track 3: Unicorn. I was lead developer of an international cross-timezone team and built it full-stack — the agent graph, the FastAPI service and the Next.js front end — served live inference on an AMD MI300X, and designed and delivered the demo and pitch to the judges.",
     image: "/images/project-glycoswarm.png",
     tags: ["LangGraph", "FastAPI", "Gemma 4", "GLM 5.2", "Next.js"],
     links: {
@@ -423,12 +498,13 @@ export const timeline: TimelineItem[] = [
   },
   {
     period: "2026",
-    role: "Game Developer", // TODO: change if "Team Lead" is the accurate title
-    org: "Gear Up NCR — Esports Game Dev Challenge",
+    role: "Lead Developer",
+    org: "DOST Gear Up NCR — Esports Game Dev Challenge",
     bullets: [
-      "Won 1st place in the NCR regional finals and advanced to the national finals in General Santos City, Mindanao.",
-      "Built Tumbang Preso in Godot 4: four-player online multiplayer over an authoritative host, with the taya role rotating so every player defends exactly once.",
-      "Designed and delivered the pitch deck presented to the judges.",
+      "Won 1st place and now represent NCR at the national finals in General Santos City, backed by DOST and partner companies.",
+      "Sole developer on Tumbang Preso, start to finish in five days: 3D models and characters, the map, the UI, sound design, bots, physics, netcode and the codebase under all of it.",
+      "Shipped four-player networked play — an authoritative host that resolves contact by distance, LAN discovery over UDP, and dedicated online lobbies on a Singapore VPS.",
+      "Ran the marketing, built the deck out of the game's own art, and delivered the pitch, presentation and Q&A to the judges.",
     ],
   },
   {
@@ -524,7 +600,7 @@ export const certifications = [
 ];
 
 export const awards = [
-  "1st Place, Gear Up NCR Esports Game Dev Challenge 2026 — representing NCR at the nationals in General Santos City",
+  "1st Place, DOST Gear Up NCR Esports Game Dev Challenge 2026 — representing NCR at the nationals in General Santos City",
   "Champion, eGov Hackathon PH 2026 (₱100,000 grand prize)",
   "DOST Undergraduate Scholar (2025 – Present)",
   "Top 5 Finalist, Olymphysics NCR (2025)",

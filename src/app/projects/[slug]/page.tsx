@@ -5,7 +5,12 @@ import { notFound } from "next/navigation";
 import Chip8Embed from "@/components/Chip8Embed";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { IconExternal, IconFilm, IconPlay } from "@/components/Icons";
+import {
+  IconDownload,
+  IconExternal,
+  IconFilm,
+  IconPlay,
+} from "@/components/Icons";
 import Reveal from "@/components/Reveal";
 import { projects, site } from "@/content/data";
 
@@ -45,9 +50,10 @@ export default async function CaseStudyPage(
   if (!project) notFound();
 
   const study = project.caseStudy!;
-  const { demo, trailer, gameplay, more } = project.links ?? {};
+  const { demo, download, trailer, gameplay, more } = project.links ?? {};
   const links = [
     { href: demo, label: "Live demo", icon: <IconExternal /> },
+    { href: download, label: "Download the game", icon: <IconDownload /> },
     { href: trailer, label: "Trailer", icon: <IconPlay /> },
     { href: gameplay, label: "Gameplay", icon: <IconFilm /> },
     { href: more, label: "Read more", icon: <IconExternal /> },

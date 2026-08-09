@@ -4,7 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { projectFilters, projects, type Project } from "@/content/data";
-import { IconArrow, IconExternal, IconFilm, IconPlay } from "./Icons";
+import {
+  IconArrow,
+  IconDownload,
+  IconExternal,
+  IconFilm,
+  IconPlay,
+} from "./Icons";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
@@ -233,13 +239,14 @@ function TagRow({ tags }: { tags: string[] }) {
 /* Ordered deliberately: the thing you can actually click into first, then the
  * things you can only watch. Anything without a URL drops out. */
 function LinkRow({ project }: { project: Project }) {
-  const { demo, trailer, gameplay, more } = project.links ?? {};
+  const { demo, download, trailer, gameplay, more } = project.links ?? {};
   const hasStudy = Boolean(project.caseStudy);
 
   // flatMap rather than filter: it narrows `href` to a string for free, where
   // a filter would need a type predicate to do the same.
   const links = [
     { href: demo, label: "Live demo", icon: <IconExternal /> },
+    { href: download, label: "Download the game", icon: <IconDownload /> },
     { href: trailer, label: "Trailer", icon: <IconPlay /> },
     { href: gameplay, label: "Gameplay", icon: <IconFilm /> },
     { href: more, label: "Read more", icon: <IconExternal /> },

@@ -138,6 +138,13 @@ export const IconPin = () => (
   </svg>
 );
 
+export const IconDownload = () => (
+  <svg {...base}>
+    <path d="M12 3.5v11M7.5 10.5 12 15l4.5-4.5" />
+    <path d="M4 17v2.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V17" />
+  </svg>
+);
+
 export const IconDoc = () => (
   <svg {...base}>
     <path d="M14 2.5H7A2 2 0 0 0 5 4.5v15a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-12Z" />
