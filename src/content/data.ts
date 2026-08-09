@@ -30,7 +30,7 @@ export const hero = {
   // The line under your name. Keep it short — it's big on screen.
   roles: ["AI & Multi-Agent Systems", "Civic Tech", "Games"],
   tagline:
-    "CS student at the University of the Philippines Manila. I build things that ship: multi-agent clinical AI, a triage system aimed at shortening hospital lines, and a 4-player Filipino street game.",
+    "CS student at the University of the Philippines Manila. I build things that ship, and win: a 4-player online game I built alone in five days and took to 1st place in NCR, an AI triage system for public hospitals, and a four-agent clinical screening swarm.",
   // The two small pills above your name. Set either to "" to hide it.
   status: "Open to internships & research",
   highlight: "🏆 1st Place · Gear Up NCR 2026 · Representing NCR at Nationals",
@@ -90,7 +90,7 @@ export const about = {
   heading: "About Me",
   // Each string is its own paragraph.
   paragraphs: [
-    "I'm a BS Computer Science student and University Scholar at UP Manila, and a DOST Undergraduate Scholar. Before that I was class valedictorian at PAREF Southridge School.",
+    "I'm a BS Computer Science student and University Scholar at UP Manila, and a DOST Undergraduate Scholar. In 2026 I took 1st place at the Gear Up NCR Esports Game Dev Challenge as sole developer, and a ₱100,000 prize at the eGov Hackathon PH. Before that I was class valedictorian at PAREF Southridge School.",
     "Most of my work sits where AI meets something physical and messy: hospital queues, patient lab data, a street game played with a tin can. I like problems where the model is only half the answer and the rest is systems design.",
     "Outside of code I spent three years as a competitive debater, which is still the most useful thing I've done for explaining technical work to people who don't share my context.",
   ],
@@ -98,7 +98,7 @@ export const about = {
   stats: [
     { value: "1.0375", label: "Cumulative GWA" },
     { value: "2029", label: "Expected BSCS" },
-    { value: "6+", label: "Shipped projects" },
+    { value: "1st", label: "Gear Up NCR 2026" },
     { value: "₱100k", label: "Hackathon prize" },
   ],
 };
@@ -218,7 +218,7 @@ export const projects: Project[] = [
     featured: true,
     award: "🏆 1st Place · Gear Up NCR Game Dev Challenge 2026",
     blurb:
-      "1st place at the Gear Up NCR Esports Game Dev Challenge 2026, now representing the National Capital Region at the national finals in General Santos City. A 4-player networked take on the Filipino street game, built in Godot in five days: every model, character, map, menu, sound, bot, physics rule and line of netcode by one person, plus the pitch that won it. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once.",
+      "1st place at the Gear Up NCR Esports Game Dev Challenge 2026, now representing the National Capital Region at the national finals in General Santos City. A 4-player networked take on the Filipino street game, built in Godot in five days. I was lead developer and made all of it myself: every model, character, map, menu, sound, bot, physics rule and line of netcode, plus the pitch that won it. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once.",
     image: "/images/project-tumbang-preso.jpg",
     tags: ["Godot 4", "GDScript", "Multiplayer", "Blender"],
     links: {
@@ -231,9 +231,9 @@ export const projects: Project[] = [
     },
     caseStudy: {
       intro:
-        "Tumbang Preso is the Filipino street game: one kid guards a tin can inside a chalk box, everyone else throws a slipper at it from outside. This is that game as a 4-player networked build in Godot 4. A studio would normally split the work across a 3D artist, a UI designer, an SFX designer, a gameplay programmer, someone on AI and physics, and a marketing lead for the pitch. Here that was one person and five days. It won 1st place at the Gear Up NCR Esports Game Dev Challenge 2026, and is going to the national finals in General Santos City.",
+        "Tumbang Preso is the Filipino street game: one kid guards a tin can inside a chalk box, everyone else throws a slipper at it from outside. This is that game as a 4-player networked build in Godot 4. A studio would normally split the work across a 3D artist, a UI designer, an SFX designer, a gameplay programmer, someone on AI and physics, and a marketing lead for the pitch. I did all of it, in five days. It won 1st place at the Gear Up NCR Esports Game Dev Challenge 2026, and is going to the national finals in General Santos City.",
       facts: [
-        { label: "Role", value: "Lead developer, working solo" },
+        { label: "Role", value: "Lead developer, built it solo" },
         { label: "Event", value: "Gear Up NCR Esports Game Dev Challenge 2026" },
         { label: "Result", value: "1st Place · representing NCR at Nationals" },
         { label: "Nationals", value: "General Santos City, Mindanao (ongoing)" },
@@ -242,9 +242,9 @@ export const projects: Project[] = [
       ],
       sections: [
         {
-          heading: "One person, every layer",
+          heading: "I built every layer of it",
           body: [
-            "Every 3D model, every character, the map, the interface, the sound design, the bots, the physics and the netcode, plus the codebase underneath all of it. Past the build I also handled the marketing, delivered the pitch, and led the presentation and the Q&A in front of the judges. The whole pipeline, from an empty Godot project to a shipped build and a winning pitch.",
+            "I made every 3D model and character, the map, the interface, the sound design, the bots, the physics and the netcode, plus the codebase underneath all of it. Past the build I also ran the marketing, delivered the pitch, and led the presentation and the Q&A in front of the judges. The whole pipeline, from an empty Godot project to a shipped build and a winning pitch.",
             "Five days is the constraint that shaped the rest of this page. Most of what follows is not the clever version of a problem. It is the version that could be verified quickly and then left alone.",
           ],
         },
@@ -380,7 +380,7 @@ export const projects: Project[] = [
     slug: "chip-8-emulator",
     year: "2026",
     blurb:
-      "A CHIP-8 emulator written from scratch in C/C++: the full core instruction set, memory management, delay and sound timers, and a custom Raylib visual debugger that tracks registers, the stack, and live memory while a ROM runs. Compiled to WebAssembly so it plays in the browser.",
+      "I wrote a CHIP-8 emulator from scratch in C/C++: the full core instruction set, memory management, delay and sound timers, and a custom Raylib visual debugger I built to track registers, the stack, and live memory while a ROM runs. I compiled it to WebAssembly so it plays in the browser.",
     image: "/images/project-chip8.svg", // TODO
     tags: ["C/C++", "Raylib", "WebAssembly", "Emulation"],
     links: {
@@ -452,7 +452,7 @@ export const projects: Project[] = [
     slug: "heart-disease-prediction",
     year: "2025",
     blurb:
-      "A supervised learning model predicting heart disease from patient features, taken end-to-end: data cleaning and feature engineering in pandas, handling missing values and categorical variables, then evaluation past raw accuracy.",
+      "I trained a supervised learning model to predict heart disease from patient features and took it end to end: data cleaning and feature engineering in pandas, handling missing values and categorical variables, then evaluation past raw accuracy.",
     image: "/images/project-heart.svg", // TODO
     tags: ["Python", "pandas", "Supervised Learning"],
     // TODO: this card has nowhere to go — no demo, no repo link, no case study.
