@@ -55,6 +55,12 @@ export const badge = {
     { label: "Status", value: "University Scholar" },
   ],
   photo: "/images/profile.jpg",
+  /* The UP seal, shown in the badge header and next to UP Manila in the
+   * timeline. Save the seal as public/images/up-seal.png (a transparent PNG
+   * sits best on the coloured header) and set this to "/images/up-seal.png".
+   * Left empty it renders nothing at all, so the card never shows a broken
+   * image while the file is missing. */
+  seal: "",
   // Text on the back of the card.
   backNote: "DOST Undergraduate Scholar",
 };
@@ -231,69 +237,82 @@ export const projects: Project[] = [
     },
     caseStudy: {
       intro:
-        "Tumbang Preso is the Filipino street game: one kid guards a tin can inside a chalk box, everyone else throws a slipper at it from outside. This is that game as a 4-player networked build in Godot 4. A studio would normally split the work across a 3D artist, a UI designer, an SFX designer, a gameplay programmer, someone on AI and physics, and a marketing lead for the pitch. I did all of it, in five days. It won 1st place at the Gear Up NCR Esports Game Dev Challenge 2026, and is going to the national finals in General Santos City.",
+        "Tumbang Preso is the street game every Filipino kid knows: one person guards a tin can inside a chalk box, everybody else throws a slipper at it from outside. I rebuilt it as a 4-player networked game in Godot 4. A studio would split that across a 3D artist, a UI designer, an SFX designer, a gameplay programmer, someone on AI and physics, and a marketing lead for the pitch. I did all of it, in five days, and then pitched it. It won 1st place at the Gear Up NCR Esports Game Dev Challenge 2026 and is going to the national finals in General Santos City.",
       facts: [
         { label: "Role", value: "Lead developer, built it solo" },
-        { label: "Event", value: "Gear Up NCR Esports Game Dev Challenge 2026" },
-        { label: "Result", value: "1st Place · representing NCR at Nationals" },
+        { label: "Team", value: "BH Studios" },
+        { label: "Event", value: "Gear Up NCR Esports Game Dev Challenge, 6 to 8 August 2026" },
+        { label: "Result", value: "1st Place, representing NCR at Nationals" },
         { label: "Nationals", value: "General Santos City, Mindanao (ongoing)" },
         { label: "Built in", value: "Five days, empty project to shipped build" },
         { label: "Stack", value: "Godot 4.7 · Forward+ · GDScript · Blender" },
       ],
       sections: [
         {
-          heading: "I built every layer of it",
+          heading: "Every layer of it was mine",
           body: [
-            "I made every 3D model and character, the map, the interface, the sound design, the bots, the physics and the netcode, plus the codebase underneath all of it. Past the build I also ran the marketing, delivered the pitch, and led the presentation and the Q&A in front of the judges. The whole pipeline, from an empty Godot project to a shipped build and a winning pitch.",
-            "Five days is the constraint that shaped the rest of this page. Most of what follows is not the clever version of a problem. It is the version that could be verified quickly and then left alone.",
+            "Every 3D model and character, the map, the interface, the sound design, the bots, the physics, the netcode, and the codebase under all of it. Then the marketing, the deck, the pitch, and the Q&A in front of the judges.",
+            "Five days is why a lot of what follows looks blunt. I did not have time for the clever version of any of these problems. I had time for the version I could measure, confirm, and then stop thinking about. Most of the decisions below are really decisions about what I could verify fast.",
+          ],
+        },
+        {
+          heading: "We got to the venue through the flood",
+          body: [
+            "The competition ran 6 to 8 August, in the middle of a typhoon. We waded in through knee-deep floodwater every morning, shoes soaked, laptops held up over the water. Nobody on the team ever raised missing a day as an option, which is not nothing when the water is at your knees at 7am.",
+            "I built the game alone. I did not get through those three days alone. BH Studios is Paul Andrei Recio, Clarence Pagaduan, Harry Gomez and Hans Xavier Lao, and they carried everything that was not the codebase.",
           ],
         },
         {
           heading: "What a match actually is",
           body: [
-            "One player is the taya, locked inside a chalk box guarding the lata. The other three are attackers throwing tsinelas at it from outside. Four rounds of 90 seconds, one per player, so everyone is taya exactly once. The round count is definitional rather than a setting, because there are four seats and the role rotates. Scoring is cumulative and personal: highest total after the fourth round wins, and there is no per-round winner.",
-            "The tension is not the throw, it's the retrieval. Throwing is free, but the slipper lands inside the taya's box, and going in to pick it up is exactly what puts you in range of being tagged. Knock the lata over and the taya has to spend time standing it back up, which is the one window they cannot defend.",
+            "One player is the taya, stuck inside a chalk box guarding the lata. The other three are attackers throwing tsinelas at it from outside. Four rounds of 90 seconds, one per player, so everyone is taya exactly once. The round count is not a setting I chose, it falls out of having four seats and rotating the role. Scoring is cumulative and personal, so the highest total after the fourth round wins and there is no per-round winner.",
+            "The interesting part is not the throw, it is the retrieval. Throwing is free. But your slipper lands inside the taya's box, and walking in to pick it up is exactly what puts you in range of being tagged. Knock the lata over and the taya has to stop and stand it back up, which is the one window they cannot defend.",
           ],
         },
         {
-          heading: "Contact is resolved by distance, not by overlap",
+          heading: "I stopped trusting the engine's collision callbacks",
           body: [
-            "Tags, slipper contact and the reset ring are all decided by measuring distance on the host, never by Godot's area-overlap callbacks. That reads like the naive choice and it is the opposite: a probe over the real contact cases measured 16 of 36 overlaps silently failing to fire, and the failures were split by target rather than random, so the bug would have looked like a balance complaint about one character instead of a physics fault.",
-            "Because the host decides, every peer agrees. A tag that lands on one screen cannot be a miss on another, which is the whole reason the authority sits there rather than with whoever threw.",
+            "Tags, slipper contact and the reset ring are all decided by measuring distance on the host. Not by Godot's area-overlap callbacks, which is what I built first and what any tutorial would tell you to use.",
+            "I only caught it because I wrote a probe that ran every contact case and counted what actually fired. 16 of 36 overlaps never fired at all. They were not random misses either, they clustered by target. That is the part that would have hurt: if I had shipped it, the bug would have reached me as \"this character feels unfair\", and with the time I had I would have gone and rebalanced a number instead of fixing the physics underneath it.",
+            "Deciding on the host also means every peer agrees. A tag that lands on my screen cannot be a miss on yours. That is the whole reason authority sits with the host and not with whoever threw.",
           ],
         },
         {
-          heading: "The character picks are not cosmetic",
+          heading: "The picks change how you play, but only a little",
           body: [
-            "You pick three things: your person, your lata and your tsinelas. All three reach gameplay. Each carries three meters, and each tab names its meters after what they actually do, because a can does not walk and a slipper does not get stunned. The lata's three are three different routes to one goal: the taya wants the can upright, so STANCE refuses the knockdown, RESET shortens the recovery, and REBOUND punishes the attempt.",
-            "The spread is deliberately narrow, roughly ±10–14% across the full range. This is a party game about hitting a can with a slipper, and a pick that is 40% better than the others is not a personality, it's the correct answer. Two rules keep it honest: the number has to be readable off the description, since a stat nobody can predict from the lore is just a random modifier; and any competitive difference between cosmetic picks has to be declared. The four cans differ in collider radius by 32%, so the scoring window is derived from the STANCE meter rather than that geometry. Otherwise the prettiest can would quietly be the hardest to hit with nothing on screen saying so.",
+            "You pick three things: your person, your lata and your tsinelas. All three reach gameplay. Each carries three meters, and I named the meters per tab after what they actually do, because a can does not walk and a slipper does not get stunned. The lata's three are three answers to the same question. The taya wants the can upright, so STANCE refuses the knockdown, RESET shortens the recovery, and REBOUND punishes you for trying.",
+            "I kept the spread deliberately narrow, roughly ±10 to 14% across the full range. This is a party game about hitting a can with a slipper. A pick that is 40% better than the others is not a personality, it is just the right answer, and then nobody picks anything else.",
+            "Two rules kept me honest. The number has to be readable off the description, because a stat you cannot predict from the lore is a random modifier wearing a costume. And any competitive difference between cosmetic picks has to be declared. My four cans differ in collider radius by 32%, so I derived the scoring window from the STANCE meter instead of from that geometry. Otherwise the best-looking can is quietly the hardest to hit and nothing on screen tells you.",
           ],
         },
         {
           heading: "A host cannot reliably know its own address",
           body: [
-            "Hosts broadcast a UDP packet and the browse screen lists what it hears. The trap is that a machine asked for its own address offers a LAN card, a Hamachi 25.x, a Radmin 26.x and a few link-local 169.254s in no promised order, and picking wrong sends everyone to an address that only exists on the host. The receiver has no such problem, so the beacon's payload carries only the port and the listener takes the host half from the datagram's own source. Anything that later helpfully puts an address in the payload has put the bug back.",
-            "Clicking a discovered game selects it, it does not join. It fills the address field and leaves the press to JOIN. That keeps the typed field the single source of truth, so there is never a second hidden way to open a connection.",
+            "Hosts broadcast a UDP packet and the browse screen lists whatever it hears. I learned the trap on my own machine: ask it for its address and it offers a LAN card, a Hamachi 25.x, a Radmin 26.x and a few link-local 169.254s, in no promised order. Pick wrong and you send everyone to an address that only exists on the host.",
+            "The receiver has no such problem, so the beacon payload carries only the port and the listener takes the host half from the datagram's own source. If anyone later helpfully puts an address back in the payload, the bug is back.",
+            "Clicking a discovered game selects it, it does not join. It fills the address field and leaves the press to JOIN. I wanted the typed field to be the only source of truth, so there is never a second hidden way to open a connection.",
           ],
         },
         {
           heading: "Getting it played across the country",
           body: [
-            "LAN was never going to be enough for a game whose whole pitch is the friends who moved away. Online runs on dedicated lobbies on a VPS in Singapore, discovered with join codes over a small UDP status protocol separate from the game ports.",
-            "The reason it needed a real server is worth stating plainly: many Philippine ISPs put subscribers behind carrier-grade NAT, where no port-forwarding rule on your own router is reachable from outside at all. A traceroute landing on a 100.64.x.x address at the second hop is the tell. Under CGNAT the options are an overlay network, a tunnel, or a server with a public address, so the game got one.",
+            "LAN was never going to be enough for a game whose entire pitch is the friends who moved away. Online runs on dedicated lobbies on a VPS in Singapore, found with join codes over a small UDP status protocol that sits separately from the game ports.",
+            "I needed a real server because of my own connection. Like a lot of people on Philippine ISPs, I am behind carrier-grade NAT, where no port-forwarding rule on your own router is reachable from outside at all. The tell is a traceroute landing on a 100.64.x.x address at the second hop. Once you see that, your options are an overlay network, a tunnel, or a machine with a public address. I went and got the machine.",
           ],
         },
         {
           heading: "The pitch counted as much as the build",
           body: [
-            "The deck was built out of the game's own nine-patch UI art and the game's own font, so the slides and the product read as one thing rather than a product next to a template. Slides carry keywords only, because the judges should be listening rather than reading, and every video clip runs muted and looping underneath narration instead of being handed its own airtime.",
-            "The spine is a childhood memory, and it runs through the technical half rather than just topping and tailing it: the contextual controls hang on nobody handing you a rulebook, the fairness work on the kid who was always taya and swore it was rigged, the dedicated servers on everybody moving away. The deeper technical material (probe tables, network measurements, server specs, AI disclosure) sits in an appendix behind the closing slide, never presented, jumped to when a judge asks.",
+            "I built the deck out of the game's own nine-patch UI art and the game's own font, so the slides and the product read as one thing instead of a product sitting next to a template. Slides carry keywords only, because I wanted the judges listening rather than reading, and every clip runs muted and looping under narration instead of being given its own airtime.",
+            "The spine is a childhood memory and I ran it through the technical half instead of just topping and tailing with it. The contextual controls hang on nobody ever handing you a rulebook. The fairness work hangs on the kid who was always taya and swore it was rigged. The dedicated servers hang on everybody moving away. My first draft kept the memory at the front and the numbers at the back, and it went cold in the middle.",
+            "The deeper technical material (probe tables, network measurements, server specs, AI disclosure) sits in an appendix behind the closing slide. I never present it. It is there so that when a judge asks, the receipts are already in the room.",
           ],
         },
         {
-          heading: "Nationals, still running",
+          heading: "What happens next",
           body: [
-            "The competition is not over. As NCR's representative the game goes to the national finals in General Santos City, with DOST and partner companies backing the entry. The build shown there will not be the build that won the region.",
+            "The competition is not over. As NCR's representative the game goes to the national finals in General Santos City. DOST and several partner companies are backing the entry from here and are connecting us with industry professionals to take it further.",
+            "The build I show there will not be the build that won the region.",
           ],
         },
       ],
@@ -306,7 +325,7 @@ export const projects: Project[] = [
     featured: true,
     award: "🏆 Winner (1 of 10) · eGov Hackathon PH 2026 · ₱100,000",
     blurb:
-      "One of ten winning teams at the eGov Hackathon PH 2026, with a ₱100,000 prize. An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team: patients are assessed and routed before they queue, so the line itself gets shorter. I worked full-stack and owned the integration of eight government eGov APIs: triage, identity, face liveness, messaging, payments and reporting. I also built the pitch and presented it to the judges.",
+      "One of ten winning teams at the eGov Hackathon PH 2026, with a ₱100,000 prize. An AI triage system for Philippine public healthcare, built with BH Studios: patients are assessed and routed before they queue, so the line itself gets shorter. I worked full-stack and owned the integration of eight government eGov APIs: triage, identity, face liveness, messaging, payments and reporting. I also built the pitch and presented it to the judges.",
     image: "/images/project-egovmed.png",
     fit: "contain", // a logo, so cropping it just cuts the wordmark in half
     tags: ["Next.js", "Node.js", "eGov APIs", "AI Triage"],
@@ -315,13 +334,13 @@ export const projects: Project[] = [
     },
     caseStudy: {
       intro:
-        "A patient at a Philippine public hospital re-enters the same details at every counter, repeats labs another facility already ran, and queues a second time to pay. eGovMed puts one login, one record and one payment in front of all of it, built on the government's own eGov API stack. It was picked as one of the ten winning entries at the eGov Hackathon PH 2026, with a ₱100,000 prize.",
+        "Go to a Philippine public hospital and you will re-enter the same details at every counter, repeat labs another facility already ran, and queue a second time just to pay. We built eGovMed to put one login, one record and one payment in front of all of that, on the government's own eGov API stack. I worked full-stack on it and owned the API integrations, then pitched it. It was picked as one of ten winning entries at the eGov Hackathon PH 2026, with a ₱100,000 prize.",
       facts: [
         {
           label: "My role",
           value: "Full-stack dev · API integrations · pitch & presentation",
         },
-        { label: "Team", value: "Bisaya-Hackers, UP Manila" },
+        { label: "Team", value: "BH Studios, UP Manila" },
         { label: "Event", value: "eGov Hackathon PH 2026" },
         { label: "Result", value: "Winner, 1 of 10 teams · ₱100,000" },
         { label: "Pilot target", value: "Philippine General Hospital" },
@@ -338,23 +357,23 @@ export const projects: Project[] = [
         {
           heading: "Eight government APIs, two modes each",
           body: [
-            "The build integrates eGovPH SSO, eGov AI, National ID eVerify, Face Liveness, eMessage, eGovChain, eGovPay and eReport. Every adapter carries both a mock and a live path, chosen per service by an environment variable, so the whole product runs offline with no credentials and a sandbox outage never takes the demo down.",
-            "That switch is also a safety gate. With mocks disallowed in production the app refuses to boot if any integration is still mocked or missing credentials, and it names the offender. A silent mock cannot quietly serve fake triage or fake payment data to a real patient.",
-            "The two portal docs contradicted each other on where the face liveness session ID comes from. We settled it by testing instead of reading: querying eVerify with a real completed hosted session, and again with a random UUID as a control, produced byte-identical error responses. Without the control query the first result would have been unreadable, because a rejection could just as easily have meant a bad demographic match.",
+            "I integrated eight of them: eGovPH SSO, eGov AI, National ID eVerify, Face Liveness, eMessage, eGovChain, eGovPay and eReport. I gave every adapter both a mock and a live path, picked per service by an environment variable, so the whole product runs offline with no credentials and a sandbox going down cannot take the demo with it.",
+            "That switch doubles as a safety gate. With mocks disallowed in production the app refuses to boot if any integration is still mocked or missing credentials, and it tells you which one. I did not want a forgotten mock quietly serving fake triage or fake payment data to a real patient.",
+            "The two portal docs flatly contradicted each other about where the face liveness session ID comes from. I stopped reading and tested it instead: I queried eVerify with a real completed hosted session, then again with a random UUID as a control, and got byte-identical error responses. The control is the only reason that meant anything. On its own, a rejection could just as easily have been a bad demographic match.",
           ],
         },
         {
           heading: "Built for real patient data",
           body: [
-            "The threat model assumes real health information, so most of the engineering went here rather than into features. Records are encrypted at rest with a versioned envelope, and the decryptor reads both formats so a schema change never orphans existing data. On-chain anchoring is hash-only. Payloads are stripped to a type and a timestamp before submission, so no patient ID, facility or clinical content ever reaches the chain, which is what the Data Privacy Act requires.",
+            "I assumed real health information from the start, so most of my time went here instead of into features. Records are encrypted at rest with a versioned envelope, and the decryptor reads both formats so a schema change never orphans existing data. On-chain anchoring is hash-only. Payloads are stripped to a type and a timestamp before submission, so no patient ID, facility or clinical content ever reaches the chain, which is what the Data Privacy Act requires.",
             "Liveness sessions are single-use, patient-bound and expire in ten minutes, claimed through a Redis compare-and-set so two simultaneous replays resolve to exactly one success and one rejection. Payment callbacks are treated as non-authoritative: a forged one returns 202 and writes nothing. The SSRF guard lives at the transport rather than the call site, so a later refactor cannot reintroduce the hole by forgetting it in one place.",
-            "Failure behaviour is chosen rather than inherited. Anchor writes fail closed, so an unverifiable record is never stored. Anchor verification fails safe, so an RPC error shows unverified rather than a green badge. A failed SMS never fails a booking. The triage classifier keeps a rule-based floor that can only raise urgency and never lower it, in live mode as well as mock, so a degraded or hostile model response cannot downgrade an emergency.",
+            "I picked the failure behaviour rather than inheriting it. Anchor writes fail closed, so an unverifiable record is never stored. Anchor verification fails safe, so an RPC error shows unverified rather than a green badge. A failed SMS never fails a booking. The triage classifier keeps a rule-based floor that can only raise urgency and never lower it, in live mode as well as mock, so a degraded or hostile model response cannot downgrade an emergency.",
           ],
         },
         {
           heading: "Verification",
           body: [
-            "Thirty backend security regression tests have to pass before a merge, including a concurrency test for the replay path and one asserting that message bodies never reach the audit log. CI runs the suite, dependency audits on both packages, CodeQL on the security-extended query set, and a secret scan. Branch protection on main requires all of it and blocks force-pushes.",
+            "I gated merges on thirty backend security regression tests, including a concurrency test for the replay path and one asserting that message bodies never reach the audit log. CI runs the suite, dependency audits on both packages, CodeQL on the security-extended query set, and a secret scan. Branch protection on main requires all of it and blocks force-pushes.",
           ],
         },
       ],
@@ -389,7 +408,7 @@ export const projects: Project[] = [
     caseStudy: {
       embed: "chip8",
       intro:
-        "CHIP-8 is a virtual machine from 1977, built so hobbyists could write a game once and run it on any 8-bit micro with an interpreter. Thirty-five instructions, 4 KB of memory, sixteen 8-bit registers and a 64×32 monochrome display, small enough to hold in your head and awkward enough to stay interesting. This is a full interpreter in C++17 with a Raylib front end that doubles as a live debugger, running natively and in the browser through WebAssembly.",
+        "CHIP-8 is a virtual machine from 1977, built so hobbyists could write a game once and run it on any 8-bit micro with an interpreter. Thirty-five instructions, 4 KB of memory, sixteen 8-bit registers and a 64×32 monochrome display, small enough to hold in your head and awkward enough to stay interesting. I wrote a full interpreter for it in C++17, with a Raylib front end that doubles as a live debugger, running natively and in the browser through WebAssembly.",
       facts: [
         { label: "Language", value: "C++17, no dependencies in the core" },
         { label: "Front end", value: "Raylib, doubling as a debugger" },
@@ -410,7 +429,7 @@ export const projects: Project[] = [
         {
           heading: "The core knows nothing about a window",
           body: [
-            "The interpreter has no platform dependencies and no idea what a window is. Everything it does is visible in its own state, and the front end reads that state once a frame. That split is what lets the test suite and a headless ASCII runner build and run in CI on a machine with no GPU and no X11 headers at all. The front end is simply switched off at configure time and nothing is fetched or linked.",
+            "I gave the interpreter no platform dependencies and no idea what a window is. Everything it does is visible in its own state, and the front end reads that state once a frame. That split is what lets the test suite and a headless ASCII runner build and run in CI on a machine with no GPU and no X11 headers at all. The front end is simply switched off at configure time and nothing is fetched or linked.",
           ],
         },
         {
@@ -418,13 +437,13 @@ export const projects: Project[] = [
           body: [
             "The right-hand panel is live machine state. V0 to VF in hex and decimal, with a register flashing amber for a moment after it is written. PC, I and SP, plus both timers highlighted while they count down. The call stack, which is the thing that tells you a ROM is about to overflow it. And the eight bytes around I, because I is almost always pointing at whatever matters next: a sprite, a BCD result, or a block of registers about to be loaded.",
             "Under the display is a live disassembly. CHIP-8 instructions are a fixed two bytes, so the listing can be walked from any even address without the usual guesswork about where an instruction actually starts.",
-            "Making it follow the program counter turned out to be the wrong instinct. A single frame is eleven instructions scattered across the main loop, every subroutine it calls, and whatever busy-wait the ROM is parked in, so scrolling to wherever the PC stopped picks a different region almost every frame. Brix rewrote all eighteen rows on 110 frames out of 139, which reads as a flicker and cannot be read at all. It now parks over the busiest stretch of code, measured from a decaying histogram of executed addresses, and may move at most twice a second. Fifteen seconds of play settles to three moves. A green wash on a row means it ran recently, so the listing still shows what is executing without anything moving. Pause and it follows the PC exactly again, which is when N single-stepping needs it.",
+            "My first instinct was to make the listing follow the program counter, and it was wrong. A single frame is eleven instructions scattered across the main loop, every subroutine it calls, and whatever busy-wait the ROM is parked in, so scrolling to wherever the PC stopped picks a different region almost every frame. Brix rewrote all eighteen rows on 110 frames out of 139, which reads as a flicker and cannot be read at all. It now parks over the busiest stretch of code, measured from a decaying histogram of executed addresses, and may move at most twice a second. Fifteen seconds of play settles to three moves. A green wash on a row means it ran recently, so the listing still shows what is executing without anything moving. Pause and it follows the PC exactly again, which is when N single-stepping needs it.",
           ],
         },
         {
           heading: "The quirks are switches, not decisions",
           body: [
-            "Programs were written against one specific interpreter, and the popular ones disagreed with each other. A ROM that renders perfectly under one set of rules can be unplayable under another, so the five contested behaviours are toggles bound to F1 through F5 rather than choices baked into the code: whether the shift opcodes read Vy or shift in place, whether load and store leave I incremented, whether the bitwise ops reset VF as a side effect, whether draws wait for vertical blank, and whether sprites clip or wrap at the edge.",
+            "Programs back then were written against one specific interpreter, and the popular ones disagreed with each other. A ROM that renders perfectly under one set of rules can be unplayable under another, so the five contested behaviours are toggles bound to F1 through F5 rather than choices baked into the code: whether the shift opcodes read Vy or shift in place, whether load and store leave I incremented, whether the bitwise ops reset VF as a side effect, whether draws wait for vertical blank, and whether sprites clip or wrap at the edge.",
             "The defaults are original COSMAC VIP behaviour, which is what the bundled ROMs assume. Most ROMs written after about 1990 want the first two flipped.",
           ],
         },
@@ -440,7 +459,7 @@ export const projects: Project[] = [
         {
           heading: "The ROMs are original",
           body: [
-            "The repository carries no third-party binaries. Every bundled ROM was written for this project in CHIP-8 assembly, with readable source kept alongside it and a small assembler in the tools directory to build it. Brix is a brick breaker, Pong is two-player, and Catch is a one-button reaction game; three smaller ROMs exercise specific instructions. Bounce paces a ball off the display-wait quirk rather than the delay timer and checks its bounds by equality, since CHIP-8 has no signed comparison and a one-pixel step can only ever overshoot an edge by one. Counter walks 0 to 255 in decimal, where the awkward part is that the load instruction always reads from V0 upwards, so reading the digits back necessarily clobbers the counter. Keypad is a test for the blocking key-wait.",
+            "There are no third-party binaries in the repository. I wrote every bundled ROM myself in CHIP-8 assembly, kept the readable source next to it, and wrote a small assembler in the tools directory to build them. Brix is a brick breaker, Pong is two-player, and Catch is a one-button reaction game; three smaller ROMs exercise specific instructions. Bounce paces a ball off the display-wait quirk rather than the delay timer and checks its bounds by equality, since CHIP-8 has no signed comparison and a one-pixel step can only ever overshoot an edge by one. Counter walks 0 to 255 in decimal, where the awkward part is that the load instruction always reads from V0 upwards, so reading the digits back necessarily clobbers the counter. Keypad is a test for the blocking key-wait.",
             "The web build bakes them into a data file next to the WebAssembly, so the page issues no network requests at all once it has loaded.",
           ],
         },
@@ -484,6 +503,9 @@ export type TimelineItem = {
   role: string;
   org: string;
   bullets: string[];
+  /* Optional logo beside the org name. Same rule as `badge.seal`: an empty or
+   * missing value renders nothing rather than a broken image. */
+  logo?: string;
 };
 
 /* Order: school first, because it dates everything else. Then the three 2026
@@ -497,6 +519,7 @@ export const timeline: TimelineItem[] = [
     period: "2025 – Present",
     role: "BS Computer Science, University Scholar",
     org: "University of the Philippines Manila",
+    logo: badge.seal,
     bullets: [
       "DOST Undergraduate Scholar. Cumulative GWA 1.0375.",
       "Active in Google Developer Group and UP Socomsci, coordinating cross-functional teams on operations and event setup.",
@@ -518,7 +541,7 @@ export const timeline: TimelineItem[] = [
     role: "Full-Stack Developer · Pitch Lead",
     org: "eGov Hackathon PH, 1 of 10 winners (₱100,000)",
     bullets: [
-      "Picked as one of ten winning teams, with a ₱100,000 prize, building eGovMed with Bisaya Hackers, an AI triage system that assesses and routes patients before they queue.",
+      "Picked as one of ten winning teams, with a ₱100,000 prize, building eGovMed with BH Studios, an AI triage system that assesses and routes patients before they queue.",
       "Built full-stack across the React front end and the Node/Express services behind it.",
       "Owned the integration of eight national eGov APIs: triage, SSO identity, National ID eVerify, face liveness, messaging, payments, reporting and chain anchoring.",
       "Delivered the pitch and the live product demo to the judging panel.",

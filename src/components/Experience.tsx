@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { timeline } from "@/content/data";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
@@ -37,7 +38,18 @@ export default function Experience() {
                 <h3 className="mt-2 text-lg font-bold sm:text-xl">
                   {item.role}
                 </h3>
-                <p className="text-muted mt-0.5 text-sm">{item.org}</p>
+                <p className="text-muted mt-0.5 flex items-center gap-2 text-sm">
+                  {item.logo && (
+                    <Image
+                      src={item.logo}
+                      alt=""
+                      width={40}
+                      height={40}
+                      className="h-5 w-5 shrink-0 object-contain"
+                    />
+                  )}
+                  {item.org}
+                </p>
 
                 <ul className="mt-4 space-y-2">
                   {item.bullets.map((bullet, b) => (

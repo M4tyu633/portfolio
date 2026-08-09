@@ -73,7 +73,7 @@ export default async function CaseStudyPage(
             </Link>
 
             <p className="text-accent mt-8 mb-3 text-xs font-medium tracking-[0.2em] uppercase">
-              Case study · {project.year}
+              More info · {project.year}
             </p>
             <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
               {project.title}

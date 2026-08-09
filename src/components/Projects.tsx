@@ -266,7 +266,7 @@ function LinkRow({ project }: { project: Project }) {
           <span className="h-4 w-4">
             <IconArrow />
           </span>
-          Case study
+          More info
         </Link>
       )}
       {links.map(({ href, label, icon }) => (

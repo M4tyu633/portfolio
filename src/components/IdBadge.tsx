@@ -334,14 +334,27 @@ export default function IdBadge() {
             <div className="border-accent/70 bg-surface mx-auto -mb-1.5 h-6 w-10 rounded-t-lg border-2 border-b-0" />
 
             <div className="border-border bg-surface overflow-hidden rounded-2xl border shadow-2xl shadow-black/40">
-              {/* header */}
-              <div className="from-accent to-accent-2 bg-linear-to-r px-4 py-2.5">
-                <p className="text-background text-[9px] leading-tight font-bold tracking-[0.14em] uppercase">
-                  {badge.orgShort}
-                </p>
-                <p className="text-background/80 text-[7px] leading-tight">
-                  {badge.org}
-                </p>
+              {/* header. The seal renders only once badge.seal points at a real
+                  file, so an empty string leaves the original text header
+                  exactly as it was rather than a broken image. */}
+              <div className="from-accent to-accent-2 flex items-center gap-2 bg-linear-to-r px-4 py-2.5">
+                {badge.seal && (
+                  <Image
+                    src={badge.seal}
+                    alt=""
+                    width={64}
+                    height={64}
+                    className="h-7 w-7 shrink-0 object-contain"
+                  />
+                )}
+                <div className="min-w-0">
+                  <p className="text-background text-[9px] leading-tight font-bold tracking-[0.14em] uppercase">
+                    {badge.orgShort}
+                  </p>
+                  <p className="text-background/80 text-[7px] leading-tight">
+                    {badge.org}
+                  </p>
+                </div>
               </div>
 
               {/* punch hole */}
