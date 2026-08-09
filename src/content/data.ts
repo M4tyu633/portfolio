@@ -33,7 +33,7 @@ export const hero = {
     "CS student at the University of the Philippines Manila. I build things that ship: multi-agent clinical AI, a triage system aimed at shortening hospital lines, and a 4-player Filipino street game.",
   // The two small pills above your name. Set either to "" to hide it.
   status: "Open to internships & research",
-  highlight: "", // set a string here to show a gold pill above your name
+  highlight: "🏆 1st Place · Gear Up NCR Game Dev 2026 · On to Nationals",
   // Your photo. Drop a square image in public/images/ and point here.
   photo: "/images/profile.jpg",
   primaryCta: { label: "Get in Touch", href: "#contact" },
@@ -273,11 +273,9 @@ export const projects: Project[] = [
     featured: true,
     // TODO: no case study yet. Copy the `caseStudy` block from eGovMed above,
     // fill it in, and the card grows a "Case study" link on its own.
-    // Built for the DOST-GameDev competition. Results are not out yet; when
-    // they are, add an `award:` line here and it renders as a gold ribbon,
-    // the same as eGovMed's above.
+    award: "🏆 1st Place · Gear Up NCR Esports Game Dev Challenge 2026",
     blurb:
-      "A 4-player online multiplayer take on the Filipino street game, built in Godot for DOST-GameDev. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once. Networked with an authoritative host, so contact is resolved by distance on the host and tags and throws agree across every peer.",
+      "1st place at the Gear Up NCR Esports Game Dev Challenge 2026, advancing to the national finals in General Santos City. A 4-player online multiplayer take on the Filipino street game, built in Godot. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once. Networked with an authoritative host, so contact is resolved by distance on the host and tags and throws agree across every peer.",
     image: "/images/project-tumbang-preso.jpg",
     tags: ["Godot 4", "GDScript", "Multiplayer", "Blender"],
     links: {
@@ -425,6 +423,16 @@ export const timeline: TimelineItem[] = [
   },
   {
     period: "2026",
+    role: "Game Developer", // TODO: change if "Team Lead" is the accurate title
+    org: "Gear Up NCR — Esports Game Dev Challenge",
+    bullets: [
+      "Won 1st place in the NCR regional finals and advanced to the national finals in General Santos City, Mindanao.",
+      "Built Tumbang Preso in Godot 4: four-player online multiplayer over an authoritative host, with the taya role rotating so every player defends exactly once.",
+      "Designed and delivered the pitch deck presented to the judges.",
+    ],
+  },
+  {
+    period: "2026",
     role: "Team Lead",
     org: "AMD Developer Hackathon ACT II, Track 3",
     bullets: [
@@ -516,6 +524,7 @@ export const certifications = [
 ];
 
 export const awards = [
+  "1st Place, Gear Up NCR Esports Game Dev Challenge 2026 — representing NCR at the nationals in General Santos City",
   "Champion, eGov Hackathon PH 2026 (₱100,000 grand prize)",
   "DOST Undergraduate Scholar (2025 – Present)",
   "Top 5 Finalist, Olymphysics NCR (2025)",
