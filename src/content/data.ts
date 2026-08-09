@@ -33,7 +33,7 @@ export const hero = {
     "CS student at the University of the Philippines Manila. I build things that ship: multi-agent clinical AI, a triage system aimed at shortening hospital lines, and a 4-player Filipino street game.",
   // The two small pills above your name. Set either to "" to hide it.
   status: "Open to internships & research",
-  highlight: "🏆 1st Place · DOST Gear Up NCR 2026 · Representing NCR at Nationals",
+  highlight: "🏆 1st Place · Gear Up NCR 2026 · Representing NCR at Nationals",
   // Your photo. Drop a square image in public/images/ and point here.
   photo: "/images/profile.jpg",
   primaryCta: { label: "Get in Touch", href: "#contact" },
@@ -99,7 +99,7 @@ export const about = {
     { value: "1.0375", label: "Cumulative GWA" },
     { value: "2029", label: "Expected BSCS" },
     { value: "6+", label: "Shipped projects" },
-    { value: "₱100k", label: "Hackathon grand prize" },
+    { value: "₱100k", label: "Hackathon prize" },
   ],
 };
 
@@ -216,9 +216,9 @@ export const projects: Project[] = [
     slug: "tumbang-preso",
     year: "2026",
     featured: true,
-    award: "🏆 1st Place · DOST Gear Up NCR Game Dev Challenge 2026",
+    award: "🏆 1st Place · Gear Up NCR Game Dev Challenge 2026",
     blurb:
-      "1st place at the DOST Gear Up NCR Esports Game Dev Challenge 2026, now representing the National Capital Region at the national finals in General Santos City. A 4-player networked take on the Filipino street game, built in Godot in five days — every model, character, map, menu, sound, bot, physics rule and line of netcode by one person, plus the pitch that won it. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once.",
+      "1st place at the Gear Up NCR Esports Game Dev Challenge 2026, now representing the National Capital Region at the national finals in General Santos City. A 4-player networked take on the Filipino street game, built in Godot in five days — every model, character, map, menu, sound, bot, physics rule and line of netcode by one person, plus the pitch that won it. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once.",
     image: "/images/project-tumbang-preso.jpg",
     tags: ["Godot 4", "GDScript", "Multiplayer", "Blender"],
     links: {
@@ -231,10 +231,10 @@ export const projects: Project[] = [
     },
     caseStudy: {
       intro:
-        "Tumbang Preso is the Filipino street game: one kid guards a tin can inside a chalk box, everyone else throws a slipper at it from outside. This is that game as a 4-player networked build in Godot 4. A studio would normally split the work across a 3D artist, a UI designer, an SFX designer, a gameplay programmer, someone on AI and physics, and a marketing lead for the pitch. Here that was one person and five days. It won 1st place at the DOST Gear Up NCR Esports Game Dev Challenge 2026, and is going to the national finals in General Santos City.",
+        "Tumbang Preso is the Filipino street game: one kid guards a tin can inside a chalk box, everyone else throws a slipper at it from outside. This is that game as a 4-player networked build in Godot 4. A studio would normally split the work across a 3D artist, a UI designer, an SFX designer, a gameplay programmer, someone on AI and physics, and a marketing lead for the pitch. Here that was one person and five days. It won 1st place at the Gear Up NCR Esports Game Dev Challenge 2026, and is going to the national finals in General Santos City.",
       facts: [
         { label: "Role", value: "Lead developer — sole developer" },
-        { label: "Event", value: "DOST Gear Up NCR — Esports Game Dev Challenge 2026" },
+        { label: "Event", value: "Gear Up NCR — Esports Game Dev Challenge 2026" },
         { label: "Result", value: "1st Place · representing NCR at Nationals" },
         { label: "Nationals", value: "General Santos City, Mindanao — ongoing" },
         { label: "Built in", value: "Five days, empty project to shipped build" },
@@ -304,9 +304,9 @@ export const projects: Project[] = [
     slug: "egovmed",
     year: "2026",
     featured: true,
-    award: "🏆 Champion · eGov Hackathon PH 2026 · ₱100,000",
+    award: "🏆 Winner (Top 10) · eGov Hackathon PH 2026 · ₱100,000",
     blurb:
-      "Winner of the eGov Hackathon PH 2026 and its ₱100,000 grand prize. An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team: patients are assessed and routed before they queue, so the line itself gets shorter. I worked full-stack and owned the integration of eight government eGov APIs — triage, identity, face liveness, messaging, payments and reporting — then built the pitch and presented it to the judges.",
+      "One of ten winning teams at the eGov Hackathon PH 2026, with a ₱100,000 prize. An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team: patients are assessed and routed before they queue, so the line itself gets shorter. I worked full-stack and owned the integration of eight government eGov APIs — triage, identity, face liveness, messaging, payments and reporting — then built the pitch and presented it to the judges.",
     image: "/images/project-egovmed.png",
     fit: "contain", // a logo, so cropping it just cuts the wordmark in half
     tags: ["Next.js", "Node.js", "eGov APIs", "AI Triage"],
@@ -315,7 +315,7 @@ export const projects: Project[] = [
     },
     caseStudy: {
       intro:
-        "A patient at a Philippine public hospital re-enters the same details at every counter, repeats labs another facility already ran, and queues a second time to pay. eGovMed puts one login, one record and one payment in front of all of it, built on the government's own eGov API stack. It won the eGov Hackathon PH 2026 and its ₱100,000 grand prize.",
+        "A patient at a Philippine public hospital re-enters the same details at every counter, repeats labs another facility already ran, and queues a second time to pay. eGovMed puts one login, one record and one payment in front of all of it, built on the government's own eGov API stack. It was picked as one of the ten winning entries at the eGov Hackathon PH 2026, with a ₱100,000 prize.",
       facts: [
         {
           label: "My role",
@@ -323,7 +323,7 @@ export const projects: Project[] = [
         },
         { label: "Team", value: "Bisaya-Hackers, UP Manila" },
         { label: "Event", value: "eGov Hackathon PH 2026" },
-        { label: "Result", value: "Champion · ₱100,000" },
+        { label: "Result", value: "Winner, top 10 of the field · ₱100,000" },
         { label: "Pilot target", value: "Philippine General Hospital" },
         { label: "Stack", value: "React + Vite · Node/Express · Redis · Besu" },
       ],
@@ -505,7 +505,7 @@ export const timeline: TimelineItem[] = [
   {
     period: "2026",
     role: "Lead Developer",
-    org: "DOST Gear Up NCR — Esports Game Dev Challenge",
+    org: "Gear Up NCR — Esports Game Dev Challenge",
     bullets: [
       "Won 1st place and now represent NCR at the national finals in General Santos City, backed by DOST and partner companies.",
       "Sole developer on Tumbang Preso, start to finish in five days: 3D models and characters, the map, the UI, sound design, bots, physics, netcode and the codebase under all of it.",
@@ -516,9 +516,9 @@ export const timeline: TimelineItem[] = [
   {
     period: "2026",
     role: "Full-Stack Developer · Pitch Lead",
-    org: "eGov Hackathon PH — Champion (₱100,000)",
+    org: "eGov Hackathon PH — Winner, Top 10 (₱100,000)",
     bullets: [
-      "Won the ₱100,000 grand prize with Bisaya Hackers for eGovMed, an AI triage system that assesses and routes patients before they queue.",
+      "Picked as one of ten winning teams, with a ₱100,000 prize, building eGovMed with Bisaya Hackers — an AI triage system that assesses and routes patients before they queue.",
       "Built full-stack across the React front end and the Node/Express services behind it.",
       "Owned the integration of eight national eGov APIs: triage, SSO identity, National ID eVerify, face liveness, messaging, payments, reporting and chain anchoring.",
       "Delivered the pitch and the live product demo to the judging panel.",
@@ -617,8 +617,8 @@ export const certifications = [
 ];
 
 export const awards = [
-  "1st Place, DOST Gear Up NCR Esports Game Dev Challenge 2026 — representing NCR at the nationals in General Santos City",
-  "Champion, eGov Hackathon PH 2026 (₱100,000 grand prize)",
+  "1st Place, Gear Up NCR Esports Game Dev Challenge 2026 — representing NCR at the nationals in General Santos City",
+  "Winner (Top 10), eGov Hackathon PH 2026 (₱100,000 prize)",
   "DOST Undergraduate Scholar (2025 – Present)",
   "Top 5 Finalist, Olymphysics NCR (2025)",
   "5th Place, Philippine Statistics Quiz NCR (2025)",
