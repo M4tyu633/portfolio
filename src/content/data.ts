@@ -218,7 +218,7 @@ export const projects: Project[] = [
     featured: true,
     award: "🏆 1st Place · Gear Up NCR Game Dev Challenge 2026",
     blurb:
-      "1st place at the Gear Up NCR Esports Game Dev Challenge 2026, now representing the National Capital Region at the national finals in General Santos City. A 4-player networked take on the Filipino street game, built in Godot in five days — every model, character, map, menu, sound, bot, physics rule and line of netcode by one person, plus the pitch that won it. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once.",
+      "1st place at the Gear Up NCR Esports Game Dev Challenge 2026, now representing the National Capital Region at the national finals in General Santos City. A 4-player networked take on the Filipino street game, built in Godot in five days: every model, character, map, menu, sound, bot, physics rule and line of netcode by one person, plus the pitch that won it. Four rounds, one taya defending the can against three attackers, with the defender role rotating so everyone defends exactly once.",
     image: "/images/project-tumbang-preso.jpg",
     tags: ["Godot 4", "GDScript", "Multiplayer", "Blender"],
     links: {
@@ -233,10 +233,10 @@ export const projects: Project[] = [
       intro:
         "Tumbang Preso is the Filipino street game: one kid guards a tin can inside a chalk box, everyone else throws a slipper at it from outside. This is that game as a 4-player networked build in Godot 4. A studio would normally split the work across a 3D artist, a UI designer, an SFX designer, a gameplay programmer, someone on AI and physics, and a marketing lead for the pitch. Here that was one person and five days. It won 1st place at the Gear Up NCR Esports Game Dev Challenge 2026, and is going to the national finals in General Santos City.",
       facts: [
-        { label: "Role", value: "Lead developer — sole developer" },
-        { label: "Event", value: "Gear Up NCR — Esports Game Dev Challenge 2026" },
+        { label: "Role", value: "Lead developer, working solo" },
+        { label: "Event", value: "Gear Up NCR Esports Game Dev Challenge 2026" },
         { label: "Result", value: "1st Place · representing NCR at Nationals" },
-        { label: "Nationals", value: "General Santos City, Mindanao — ongoing" },
+        { label: "Nationals", value: "General Santos City, Mindanao (ongoing)" },
         { label: "Built in", value: "Five days, empty project to shipped build" },
         { label: "Stack", value: "Godot 4.7 · Forward+ · GDScript · Blender" },
       ],
@@ -244,14 +244,14 @@ export const projects: Project[] = [
         {
           heading: "One person, every layer",
           body: [
-            "Every 3D model, every character, the map, the interface, the sound design, the bots, the physics and the netcode — and the codebase underneath all of it. Past the build I also handled the marketing, delivered the pitch, and led the presentation and the Q&A in front of the judges. The whole pipeline, from an empty Godot project to a shipped build and a winning pitch.",
-            "Five days is the constraint that shaped the rest of this page. Most of what follows is not the clever version of a problem — it is the version that could be verified quickly and then left alone.",
+            "Every 3D model, every character, the map, the interface, the sound design, the bots, the physics and the netcode, plus the codebase underneath all of it. Past the build I also handled the marketing, delivered the pitch, and led the presentation and the Q&A in front of the judges. The whole pipeline, from an empty Godot project to a shipped build and a winning pitch.",
+            "Five days is the constraint that shaped the rest of this page. Most of what follows is not the clever version of a problem. It is the version that could be verified quickly and then left alone.",
           ],
         },
         {
           heading: "What a match actually is",
           body: [
-            "One player is the taya, locked inside a chalk box guarding the lata. The other three are attackers throwing tsinelas at it from outside. Four rounds of 90 seconds, one per player, so everyone is taya exactly once — the round count is definitional rather than a setting, because there are four seats and the role rotates. Scoring is cumulative and personal: highest total after the fourth round wins, and there is no per-round winner.",
+            "One player is the taya, locked inside a chalk box guarding the lata. The other three are attackers throwing tsinelas at it from outside. Four rounds of 90 seconds, one per player, so everyone is taya exactly once. The round count is definitional rather than a setting, because there are four seats and the role rotates. Scoring is cumulative and personal: highest total after the fourth round wins, and there is no per-round winner.",
             "The tension is not the throw, it's the retrieval. Throwing is free, but the slipper lands inside the taya's box, and going in to pick it up is exactly what puts you in range of being tagged. Knock the lata over and the taya has to spend time standing it back up, which is the one window they cannot defend.",
           ],
         },
@@ -265,29 +265,29 @@ export const projects: Project[] = [
         {
           heading: "The character picks are not cosmetic",
           body: [
-            "You pick three things — your person, your lata and your tsinelas — and all three reach gameplay. Each carries three meters, and each tab names its meters after what they actually do, because a can does not walk and a slipper does not get stunned. The lata's three are three different routes to one goal: the taya wants the can upright, so STANCE refuses the knockdown, RESET shortens the recovery, and REBOUND punishes the attempt.",
-            "The spread is deliberately narrow — roughly ±10–14% across the full range. This is a party game about hitting a can with a slipper, and a pick that is 40% better than the others is not a personality, it's the correct answer. Two rules keep it honest: the number has to be readable off the description, since a stat nobody can predict from the lore is just a random modifier; and any competitive difference between cosmetic picks has to be declared. The four cans differ in collider radius by 32%, so the scoring window is derived from the STANCE meter rather than that geometry — otherwise the prettiest can would quietly be the hardest to hit with nothing on screen saying so.",
+            "You pick three things: your person, your lata and your tsinelas. All three reach gameplay. Each carries three meters, and each tab names its meters after what they actually do, because a can does not walk and a slipper does not get stunned. The lata's three are three different routes to one goal: the taya wants the can upright, so STANCE refuses the knockdown, RESET shortens the recovery, and REBOUND punishes the attempt.",
+            "The spread is deliberately narrow, roughly ±10–14% across the full range. This is a party game about hitting a can with a slipper, and a pick that is 40% better than the others is not a personality, it's the correct answer. Two rules keep it honest: the number has to be readable off the description, since a stat nobody can predict from the lore is just a random modifier; and any competitive difference between cosmetic picks has to be declared. The four cans differ in collider radius by 32%, so the scoring window is derived from the STANCE meter rather than that geometry. Otherwise the prettiest can would quietly be the hardest to hit with nothing on screen saying so.",
           ],
         },
         {
           heading: "A host cannot reliably know its own address",
           body: [
             "Hosts broadcast a UDP packet and the browse screen lists what it hears. The trap is that a machine asked for its own address offers a LAN card, a Hamachi 25.x, a Radmin 26.x and a few link-local 169.254s in no promised order, and picking wrong sends everyone to an address that only exists on the host. The receiver has no such problem, so the beacon's payload carries only the port and the listener takes the host half from the datagram's own source. Anything that later helpfully puts an address in the payload has put the bug back.",
-            "Clicking a discovered game selects it, it does not join — it fills the address field and leaves the press to JOIN. That keeps the typed field the single source of truth, so there is never a second hidden way to open a connection.",
+            "Clicking a discovered game selects it, it does not join. It fills the address field and leaves the press to JOIN. That keeps the typed field the single source of truth, so there is never a second hidden way to open a connection.",
           ],
         },
         {
           heading: "Getting it played across the country",
           body: [
             "LAN was never going to be enough for a game whose whole pitch is the friends who moved away. Online runs on dedicated lobbies on a VPS in Singapore, discovered with join codes over a small UDP status protocol separate from the game ports.",
-            "The reason it needed a real server is worth stating plainly: many Philippine ISPs put subscribers behind carrier-grade NAT, where no port-forwarding rule on your own router is reachable from outside at all. A traceroute landing on a 100.64.x.x address at the second hop is the tell. Under CGNAT the options are an overlay network, a tunnel, or a server with a public address — so the game got one.",
+            "The reason it needed a real server is worth stating plainly: many Philippine ISPs put subscribers behind carrier-grade NAT, where no port-forwarding rule on your own router is reachable from outside at all. A traceroute landing on a 100.64.x.x address at the second hop is the tell. Under CGNAT the options are an overlay network, a tunnel, or a server with a public address, so the game got one.",
           ],
         },
         {
           heading: "The pitch counted as much as the build",
           body: [
-            "The deck was built out of the game's own nine-patch UI art and the game's own font, so the slides and the product read as one thing rather than a product next to a template. Slides carry keywords only — the judges should be listening, not reading — and every video clip runs muted and looping underneath narration instead of being handed its own airtime.",
-            "The spine is a childhood memory, and it runs through the technical half rather than just topping and tailing it: the contextual controls hang on nobody handing you a rulebook, the fairness work on the kid who was always taya and swore it was rigged, the dedicated servers on everybody moving away. The deeper technical material — probe tables, network measurements, server specs, AI disclosure — sits in an appendix behind the closing slide, never presented, jumped to when a judge asks.",
+            "The deck was built out of the game's own nine-patch UI art and the game's own font, so the slides and the product read as one thing rather than a product next to a template. Slides carry keywords only, because the judges should be listening rather than reading, and every video clip runs muted and looping underneath narration instead of being handed its own airtime.",
+            "The spine is a childhood memory, and it runs through the technical half rather than just topping and tailing it: the contextual controls hang on nobody handing you a rulebook, the fairness work on the kid who was always taya and swore it was rigged, the dedicated servers on everybody moving away. The deeper technical material (probe tables, network measurements, server specs, AI disclosure) sits in an appendix behind the closing slide, never presented, jumped to when a judge asks.",
           ],
         },
         {
@@ -304,9 +304,9 @@ export const projects: Project[] = [
     slug: "egovmed",
     year: "2026",
     featured: true,
-    award: "🏆 Winner (Top 10) · eGov Hackathon PH 2026 · ₱100,000",
+    award: "🏆 Winner (1 of 10) · eGov Hackathon PH 2026 · ₱100,000",
     blurb:
-      "One of ten winning teams at the eGov Hackathon PH 2026, with a ₱100,000 prize. An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team: patients are assessed and routed before they queue, so the line itself gets shorter. I worked full-stack and owned the integration of eight government eGov APIs — triage, identity, face liveness, messaging, payments and reporting — then built the pitch and presented it to the judges.",
+      "One of ten winning teams at the eGov Hackathon PH 2026, with a ₱100,000 prize. An AI triage system for Philippine public healthcare, built with the Bisaya Hackers team: patients are assessed and routed before they queue, so the line itself gets shorter. I worked full-stack and owned the integration of eight government eGov APIs: triage, identity, face liveness, messaging, payments and reporting. I also built the pitch and presented it to the judges.",
     image: "/images/project-egovmed.png",
     fit: "contain", // a logo, so cropping it just cuts the wordmark in half
     tags: ["Next.js", "Node.js", "eGov APIs", "AI Triage"],
@@ -323,7 +323,7 @@ export const projects: Project[] = [
         },
         { label: "Team", value: "Bisaya-Hackers, UP Manila" },
         { label: "Event", value: "eGov Hackathon PH 2026" },
-        { label: "Result", value: "Winner, top 10 of the field · ₱100,000" },
+        { label: "Result", value: "Winner, 1 of 10 teams · ₱100,000" },
         { label: "Pilot target", value: "Philippine General Hospital" },
         { label: "Stack", value: "React + Vite · Node/Express · Redis · Besu" },
       ],
@@ -346,7 +346,7 @@ export const projects: Project[] = [
         {
           heading: "Built for real patient data",
           body: [
-            "The threat model assumes real health information, so most of the engineering went here rather than into features. Records are encrypted at rest with a versioned envelope, and the decryptor reads both formats so a schema change never orphans existing data. On-chain anchoring is hash-only — payloads are stripped to a type and a timestamp before submission, so no patient ID, facility or clinical content ever reaches the chain, which is what the Data Privacy Act requires.",
+            "The threat model assumes real health information, so most of the engineering went here rather than into features. Records are encrypted at rest with a versioned envelope, and the decryptor reads both formats so a schema change never orphans existing data. On-chain anchoring is hash-only. Payloads are stripped to a type and a timestamp before submission, so no patient ID, facility or clinical content ever reaches the chain, which is what the Data Privacy Act requires.",
             "Liveness sessions are single-use, patient-bound and expire in ten minutes, claimed through a Redis compare-and-set so two simultaneous replays resolve to exactly one success and one rejection. Payment callbacks are treated as non-authoritative: a forged one returns 202 and writes nothing. The SSRF guard lives at the transport rather than the call site, so a later refactor cannot reintroduce the hole by forgetting it in one place.",
             "Failure behaviour is chosen rather than inherited. Anchor writes fail closed, so an unverifiable record is never stored. Anchor verification fails safe, so an RPC error shows unverified rather than a green badge. A failed SMS never fails a booking. The triage classifier keeps a rule-based floor that can only raise urgency and never lower it, in live mode as well as mock, so a degraded or hostile model response cannot downgrade an emergency.",
           ],
@@ -368,7 +368,7 @@ export const projects: Project[] = [
     // TODO: no case study yet. Copy the `caseStudy` block from eGovMed above,
     // fill it in, and the card grows a "Case study" link on its own.
     blurb:
-      "A multi-agent early-warning system for diabetic complications. A LangGraph StateGraph runs four specialist agents in parallel (renal, neuropathy, retinal and cardiovascular), each writing and executing its own Python scoring code against real NHANES lab data, then fanning into a synthesis agent that ranks the risks and returns one clinical referral. Built as team Snowfall for the AMD Developer Hackathon 2026, Track 3: Unicorn. I was lead developer of an international cross-timezone team and built it full-stack — the agent graph, the FastAPI service and the Next.js front end — served live inference on an AMD MI300X, and designed and delivered the demo and pitch to the judges.",
+      "A multi-agent early-warning system for diabetic complications. A LangGraph StateGraph runs four specialist agents in parallel (renal, neuropathy, retinal and cardiovascular), each writing and executing its own Python scoring code against real NHANES lab data, then fanning into a synthesis agent that ranks the risks and returns one clinical referral. Built as team Snowfall for the AMD Developer Hackathon 2026, Track 3: Unicorn. I was lead developer of an international cross-timezone team and built it full-stack: the agent graph, the FastAPI service and the Next.js front end. I served live inference on an AMD MI300X, and designed and delivered the demo and pitch to the judges.",
     image: "/images/project-glycoswarm.png",
     tags: ["LangGraph", "FastAPI", "Gemma 4", "GLM 5.2", "Next.js"],
     links: {
@@ -389,7 +389,7 @@ export const projects: Project[] = [
     caseStudy: {
       embed: "chip8",
       intro:
-        "CHIP-8 is a virtual machine from 1977, built so hobbyists could write a game once and run it on any 8-bit micro with an interpreter. Thirty-five instructions, 4 KB of memory, sixteen 8-bit registers and a 64×32 monochrome display — small enough to hold in your head, and awkward enough to stay interesting. This is a full interpreter in C++17 with a Raylib front end that doubles as a live debugger, running natively and in the browser through WebAssembly.",
+        "CHIP-8 is a virtual machine from 1977, built so hobbyists could write a game once and run it on any 8-bit micro with an interpreter. Thirty-five instructions, 4 KB of memory, sixteen 8-bit registers and a 64×32 monochrome display, small enough to hold in your head and awkward enough to stay interesting. This is a full interpreter in C++17 with a Raylib front end that doubles as a live debugger, running natively and in the browser through WebAssembly.",
       facts: [
         { label: "Language", value: "C++17, no dependencies in the core" },
         { label: "Front end", value: "Raylib, doubling as a debugger" },
@@ -401,16 +401,16 @@ export const projects: Project[] = [
         {
           heading: "How to drive it",
           body: [
-            "Click the screen first — the keyboard only reaches the emulator while it has focus. It opens on Brix, a brick breaker: A and D move the paddle. Tab loads the next ROM. There are six, all written by hand for this project: Brix, Pong (two players, 1 and Q on the left, 4 and R on the right), Catch (A and D again), then Bounce, Counter and Keypad, three smaller ROMs that exercise specific instructions rather than being games.",
-            "The panel above opens on the game alone. H, or the Show debugger button, folds the machine state in and out — none of it is needed to play, and six panels of hex handed to you unasked is a lot to walk into.",
-            "The debugger has its own keys. Space pauses and resumes, N runs exactly one instruction while paused, Backspace restarts the current ROM, and the bracket keys change how many instructions run per frame — the emulator's clock speed, eleven by default. F1 through F5 toggle the five hardware quirks described further down.",
+            "Click the screen first, because the keyboard only reaches the emulator while it has focus. It opens on Brix, a brick breaker: A and D move the paddle. Tab loads the next ROM. There are six, all written by hand for this project: Brix, Pong (two players, 1 and Q on the left, 4 and R on the right), Catch (A and D again), then Bounce, Counter and Keypad, three smaller ROMs that exercise specific instructions rather than being games.",
+            "The panel above opens on the game alone. H, or the Show debugger button, folds the machine state in and out. None of it is needed to play, and six panels of hex handed to you unasked is a lot to walk into.",
+            "The debugger has its own keys. Space pauses and resumes, N runs exactly one instruction while paused, Backspace restarts the current ROM, and the bracket keys change how many instructions run per frame, which is the emulator's clock speed, eleven by default. F1 through F5 toggle the five hardware quirks described further down.",
             "The keypad panel on the right reads CHIP-8 value / your key, and the two rarely agree. The original COSMAC VIP had a sixteen-key hex pad laid out 1 2 3 C / 4 5 6 D / 7 8 9 E / A 0 B F, mapped here onto the left block of a QWERTY keyboard, so pressing A lights CHIP-8 key 7. Showing only the hex value made the panel look like it was responding to the wrong key entirely.",
           ],
         },
         {
           heading: "The core knows nothing about a window",
           body: [
-            "The interpreter has no platform dependencies and no idea what a window is. Everything it does is visible in its own state, and the front end reads that state once a frame. That split is what lets the test suite and a headless ASCII runner build and run in CI on a machine with no GPU and no X11 headers at all — the front end is simply switched off at configure time and nothing is fetched or linked.",
+            "The interpreter has no platform dependencies and no idea what a window is. Everything it does is visible in its own state, and the front end reads that state once a frame. That split is what lets the test suite and a headless ASCII runner build and run in CI on a machine with no GPU and no X11 headers at all. The front end is simply switched off at configure time and nothing is fetched or linked.",
           ],
         },
         {
@@ -418,7 +418,7 @@ export const projects: Project[] = [
           body: [
             "The right-hand panel is live machine state. V0 to VF in hex and decimal, with a register flashing amber for a moment after it is written. PC, I and SP, plus both timers highlighted while they count down. The call stack, which is the thing that tells you a ROM is about to overflow it. And the eight bytes around I, because I is almost always pointing at whatever matters next: a sprite, a BCD result, or a block of registers about to be loaded.",
             "Under the display is a live disassembly. CHIP-8 instructions are a fixed two bytes, so the listing can be walked from any even address without the usual guesswork about where an instruction actually starts.",
-            "Making it follow the program counter turned out to be the wrong instinct. A single frame is eleven instructions scattered across the main loop, every subroutine it calls, and whatever busy-wait the ROM is parked in, so scrolling to wherever the PC stopped picks a different region almost every frame — Brix rewrote all eighteen rows on 110 frames out of 139, which reads as a flicker and cannot be read at all. It now parks over the busiest stretch of code, measured from a decaying histogram of executed addresses, and may move at most twice a second. Fifteen seconds of play settles to three moves. A green wash on a row means it ran recently, so the listing still shows what is executing without anything moving. Pause and it follows the PC exactly again, which is when N single-stepping needs it.",
+            "Making it follow the program counter turned out to be the wrong instinct. A single frame is eleven instructions scattered across the main loop, every subroutine it calls, and whatever busy-wait the ROM is parked in, so scrolling to wherever the PC stopped picks a different region almost every frame. Brix rewrote all eighteen rows on 110 frames out of 139, which reads as a flicker and cannot be read at all. It now parks over the busiest stretch of code, measured from a decaying histogram of executed addresses, and may move at most twice a second. Fifteen seconds of play settles to three moves. A green wash on a row means it ran recently, so the listing still shows what is executing without anything moving. Pause and it follows the PC exactly again, which is when N single-stepping needs it.",
           ],
         },
         {
@@ -434,7 +434,7 @@ export const projects: Project[] = [
             "VF is written last. Every arithmetic opcode that sets a flag computes the flag, stores the result, then writes VF. The other order is correct for fifteen of the sixteen registers and wrong for VF itself.",
             "Display wait rewinds the PC. When a draw is held back to the next frame the instruction has already been fetched and the PC has already advanced, so the step rewinds it and the same draw is retried rather than skipped.",
             "Fx0A completes on release, not on press. Waiting for the press is the obvious reading and it is wrong: one held key would satisfy several consecutive Fx0A instructions, which breaks any menu asking for two inputs in a row.",
-            "Sprite positions wrap even when the body clips. The starting coordinate is taken modulo the screen size, but a sprite that then runs off the edge is cut off. That asymmetry is real hardware behaviour rather than an oversight — and it, along with the flag-order and release cases, is what the test suite concentrates on.",
+            "Sprite positions wrap even when the body clips. The starting coordinate is taken modulo the screen size, but a sprite that then runs off the edge is cut off. That asymmetry is real hardware behaviour rather than an oversight, and it, along with the flag-order and release cases, is what the test suite concentrates on.",
           ],
         },
         {
@@ -505,20 +505,20 @@ export const timeline: TimelineItem[] = [
   {
     period: "2026",
     role: "Lead Developer",
-    org: "Gear Up NCR — Esports Game Dev Challenge",
+    org: "Gear Up NCR Esports Game Dev Challenge",
     bullets: [
       "Won 1st place and now represent NCR at the national finals in General Santos City, backed by DOST and partner companies.",
       "Sole developer on Tumbang Preso, start to finish in five days: 3D models and characters, the map, the UI, sound design, bots, physics, netcode and the codebase under all of it.",
-      "Shipped four-player networked play — an authoritative host that resolves contact by distance, LAN discovery over UDP, and dedicated online lobbies on a Singapore VPS.",
+      "Shipped four-player networked play: an authoritative host that resolves contact by distance, LAN discovery over UDP, and dedicated online lobbies on a Singapore VPS.",
       "Ran the marketing, built the deck out of the game's own art, and delivered the pitch, presentation and Q&A to the judges.",
     ],
   },
   {
     period: "2026",
     role: "Full-Stack Developer · Pitch Lead",
-    org: "eGov Hackathon PH — Winner, Top 10 (₱100,000)",
+    org: "eGov Hackathon PH, 1 of 10 winners (₱100,000)",
     bullets: [
-      "Picked as one of ten winning teams, with a ₱100,000 prize, building eGovMed with Bisaya Hackers — an AI triage system that assesses and routes patients before they queue.",
+      "Picked as one of ten winning teams, with a ₱100,000 prize, building eGovMed with Bisaya Hackers, an AI triage system that assesses and routes patients before they queue.",
       "Built full-stack across the React front end and the Node/Express services behind it.",
       "Owned the integration of eight national eGov APIs: triage, SSO identity, National ID eVerify, face liveness, messaging, payments, reporting and chain anchoring.",
       "Delivered the pitch and the live product demo to the judging panel.",
@@ -617,8 +617,8 @@ export const certifications = [
 ];
 
 export const awards = [
-  "1st Place, Gear Up NCR Esports Game Dev Challenge 2026 — representing NCR at the nationals in General Santos City",
-  "Winner (Top 10), eGov Hackathon PH 2026 (₱100,000 prize)",
+  "1st Place, Gear Up NCR Esports Game Dev Challenge 2026, representing NCR at the nationals in General Santos City",
+  "Winner (1 of 10 teams), eGov Hackathon PH 2026 (₱100,000 prize)",
   "DOST Undergraduate Scholar (2025 – Present)",
   "Top 5 Finalist, Olymphysics NCR (2025)",
   "5th Place, Philippine Statistics Quiz NCR (2025)",
