@@ -73,7 +73,7 @@ export const contact = {
   location: "Manila, Philippines",
   // Set to "" to hide a link entirely.
   github: "https://github.com/M4tyu633",
-  linkedin: "https://www.linkedin.com/in/matthew-emmanuel-labrador-6b52703a4/",
+  linkedin: "https://www.linkedin.com/in/m4tyuuu1/",
   facebook: "https://www.facebook.com/matthewtlabrador/",
   // The Resume button. Set to "" to hide it.
   // To update: replace public/Matthew_Labrador_Resume.pdf with a new export.
