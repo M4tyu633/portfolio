@@ -563,7 +563,7 @@ export const timeline: TimelineItem[] = [
     org: "Independent",
     bullets: [
       "Deployed open LLMs locally to study end-to-end setup, inference, and multi-agent performance.",
-      "Built automated summarizer applications on the Anthropic API using RAG and agent-to-agent architectures.",
+      "Built automated summarizer applications on hosted LLM APIs using RAG and agent-to-agent architectures.",
       "Ran structured prompt evaluations across model versions and documented the findings.",
     ],
   },
@@ -572,7 +572,7 @@ export const timeline: TimelineItem[] = [
     role: "Competitive Debater",
     org: "National Tournaments, Philippines",
     bullets: [
-      "Quarterfinalist at the Ateneo Peace Debate; competed at UP Diliman Debates, XSDC, and ASDC.",
+      "Quarterfinalist at the Ateneo Peace Debate; competed at NASH DC (DLSU), PSDC (Ateneo), UP Diliman Debates, XSDC, and ASDC.",
       "Three years of presenting technical arguments clearly under time pressure.",
     ],
   },
@@ -593,7 +593,30 @@ export const timeline: TimelineItem[] = [
 export const skillGroups: { label: string; items: string[] }[] = [
   {
     label: "Languages",
-    items: ["Python", "C", "C++", "SQL", "GDScript", "TypeScript", "HTML"],
+    items: [
+      "Python",
+      "C",
+      "C++",
+      "TypeScript",
+      "JavaScript",
+      "SQL",
+      "GDScript",
+      "HTML",
+    ],
+  },
+  {
+    label: "Web & Mobile",
+    items: [
+      "React",
+      "Next.js",
+      "Vite",
+      "Tailwind CSS",
+      "Node.js",
+      "Express",
+      "Capacitor (Android / iOS)",
+      "PWA & Web Push",
+      "GSAP",
+    ],
   },
   {
     label: "Agentic AI & Orchestration",
@@ -607,6 +630,30 @@ export const skillGroups: { label: string; items: string[] }[] = [
     ],
   },
   {
+    label: "Systems & Games",
+    items: [
+      "Godot 4",
+      "ENet Authoritative-Host Netcode",
+      "Raylib",
+      "CMake",
+      "WebAssembly / Emscripten",
+      "Blender",
+    ],
+  },
+  {
+    label: "Data & Infrastructure",
+    items: [
+      "PostgreSQL (Neon)",
+      "Drizzle ORM",
+      "Redis",
+      "JWT Auth",
+      "ONNX Runtime",
+      "Vercel",
+      "Linux VPS",
+      "Git",
+    ],
+  },
+  {
     label: "ML & Data",
     items: [
       "pandas",
@@ -615,18 +662,6 @@ export const skillGroups: { label: string; items: string[] }[] = [
       "Data Preprocessing",
       "Prompt Engineering",
       "Model Deployment",
-    ],
-  },
-  {
-    label: "Tools",
-    items: [
-      "Git",
-      "Linux / CLI",
-      "Google Colab",
-      "Godot",
-      "Blender",
-      "Raylib",
-      "Vercel",
     ],
   },
 ];
