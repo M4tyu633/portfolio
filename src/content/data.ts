@@ -538,7 +538,6 @@ export const projects: Project[] = [
     tags: ["Python", "scikit-learn", "Next.js", "Gradient Boosting", "SHAP"],
     links: {
       demo: "https://heart-disease-prediction-matthew.vercel.app",
-      repo: "https://github.com/M4tyu633/heart-disease-prediction",
     },
     caseStudy: {
       intro:
