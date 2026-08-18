@@ -318,7 +318,7 @@
 
   <body>
     <!-- CRT Monitor Frame -->
-    <div id="frame">
+    <div id="frame" class="crt-off">
       <canvas
         id="canvas"
         width="1280"
@@ -333,20 +333,20 @@
 
     <!-- Controls Toolbar -->
     <div class="controls">
-      <button id="btn-pause" type="button">▶⏸ Pause</button>
+      <button id="btn-pause" type="button">Pause</button>
       <button id="btn-next" type="button">Next ROM &middot; Tab</button>
-      <button id="btn-reset" type="button">⟲ Reset</button>
-      <button id="btn-debug" type="button">🔍 Show debugger</button>
+      <button id="btn-reset" type="button">Reset</button>
+      <button id="btn-debug" type="button">Show debugger</button>
       <label class="file desktop-only">
-        📁 Load .ch8
+        Load .ch8
         <input
           id="rom-input"
           type="file"
           accept=".ch8,.c8,.rom,application/octet-stream"
         />
       </label>
-      <button id="btn-mute" type="button">🔊 Mute</button>
-      <button id="btn-crt" type="button" class="active">📺 CRT FX: ON</button>
+      <button id="btn-mute" type="button">Mute</button>
+      <button id="btn-crt" type="button">CRT FX: OFF</button>
     </div>
 
     <!-- Touch Keypad (Mobile Only) -->
@@ -504,7 +504,7 @@
       let debuggerShown = false;
       function setDebugLabel() {
         debugButton.textContent =
-          (debuggerShown ? "🔍 Hide debugger" : "🔍 Show debugger") + " · H";
+          (debuggerShown ? "Hide debugger" : "Show debugger") + " · H";
       }
       debugButton.onclick = () => {
         debuggerShown = !debuggerShown;
@@ -519,7 +519,7 @@
       });
 
       // CRT Effects Toggle
-      let crtEnabled = true;
+      let crtEnabled = false;
       const frameEl = document.getElementById("frame");
       const crtBtn = document.getElementById("btn-crt");
 
@@ -527,7 +527,7 @@
         crtEnabled = !crtEnabled;
         frameEl.classList.toggle("crt-off", !crtEnabled);
         crtBtn.classList.toggle("active", crtEnabled);
-        crtBtn.textContent = crtEnabled ? "📺 CRT FX: ON" : "📺 CRT FX: OFF";
+        crtBtn.textContent = crtEnabled ? "CRT FX: ON" : "CRT FX: OFF";
       };
 
       // Synthetic keyboard events

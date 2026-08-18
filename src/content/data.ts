@@ -465,7 +465,7 @@ export const projects: Project[] = [
     image: "/images/project-chip8.png",
     tags: ["C/C++", "Raylib", "WebAssembly", "Emulation"],
     links: {
-      demo: "https://chip8-emulator-matthew.vercel.app",
+      demo: "https://chip8-debugger.vercel.app",
     },
     caseStudy: {
       embed: "chip8",
@@ -537,7 +537,7 @@ export const projects: Project[] = [
     image: "/images/project-heart.png",
     tags: ["Python", "scikit-learn", "Next.js", "Gradient Boosting", "SHAP"],
     links: {
-      demo: "https://heart-disease-prediction-matthew.vercel.app",
+      demo: "https://cardiosense-app.vercel.app",
     },
     caseStudy: {
       intro:
