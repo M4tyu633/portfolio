@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Knee MRI Reader">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.08"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="750" fill="#0b0d12"/>
+  <rect width="1200" height="750" fill="url(#grid)"/>
+  <rect width="1200" height="750" fill="url(#g)"/>
+  <circle cx="180" cy="150" r="260" fill="#10b981" fill-opacity="0.12"/>
+  <circle cx="1020" cy="620" r="240" fill="#06b6d4" fill-opacity="0.10"/>
+  
+  <!-- Medical scan reticle & visual cues -->
+  <g stroke="#10b981" stroke-opacity="0.35" fill="none" stroke-width="1.5">
+    <circle cx="950" cy="220" r="90"/>
+    <circle cx="950" cy="220" r="60" stroke-dasharray="4 6"/>
+    <line x1="830" y1="220" x2="1070" y2="220"/>
+    <line x1="950" y1="100" x2="950" y2="340"/>
+  </g>
+
+  <!-- 12-finding classification matrix visual -->
+  <g transform="translate(120, 460)">
+    <!-- Row 1: Ligaments & Menisci -->
+    <rect x="0" y="0" width="145" height="40" rx="8" fill="#10b981" fill-opacity="0.18" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="72" y="25" fill="#a7f3d0" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="600" text-anchor="middle">ACL · 0.88</text>
+
+    <rect x="160" y="0" width="145" height="40" rx="8" fill="#10b981" fill-opacity="0.18" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="232" y="25" fill="#a7f3d0" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="600" text-anchor="middle">MCL · 0.89</text>
+
+    <rect x="320" y="0" width="145" height="40" rx="8" fill="#10b981" fill-opacity="0.18" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="392" y="25" fill="#a7f3d0" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="600" text-anchor="middle">Medial Meniscus</text>
+
+    <rect x="480" y="0" width="145" height="40" rx="8" fill="#f2f4f8" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1.5"/>
+    <text x="552" y="25" fill="#cbd5e1" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="500" text-anchor="middle">Lateral Meniscus</text>
+
+    <rect x="640" y="0" width="145" height="40" rx="8" fill="#10b981" fill-opacity="0.18" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="712" y="25" fill="#a7f3d0" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="600" text-anchor="middle">Medial OA · 0.96</text>
+
+    <rect x="800" y="0" width="145" height="40" rx="8" fill="#f2f4f8" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1.5"/>
+    <text x="872" y="25" fill="#cbd5e1" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="500" text-anchor="middle">Lateral OA</text>
+
+    <!-- Row 2: Joint pathology -->
+    <rect x="0" y="55" width="145" height="40" rx="8" fill="#f2f4f8" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1.5"/>
+    <text x="72" y="80" fill="#cbd5e1" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="500" text-anchor="middle">PF OA · 0.80</text>
+
+    <rect x="160" y="55" width="145" height="40" rx="8" fill="#10b981" fill-opacity="0.18" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="232" y="80" fill="#a7f3d0" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="600" text-anchor="middle">Effusion · 0.95</text>
+
+    <rect x="320" y="55" width="145" height="40" rx="8" fill="#f2f4f8" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1.5"/>
+    <text x="392" y="80" fill="#cbd5e1" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="500" text-anchor="middle">Synovitis</text>
+
+    <rect x="480" y="55" width="145" height="40" rx="8" fill="#10b981" fill-opacity="0.18" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="552" y="80" fill="#a7f3d0" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="600" text-anchor="middle">Baker's Cyst · 0.95</text>
+
+    <rect x="640" y="55" width="145" height="40" rx="8" fill="#10b981" fill-opacity="0.18" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="712" y="80" fill="#a7f3d0" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="600" text-anchor="middle">Contusion · 0.86</text>
+
+    <rect x="800" y="55" width="145" height="40" rx="8" fill="#10b981" fill-opacity="0.18" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="872" y="80" fill="#a7f3d0" font-family="'Space Grotesk',system-ui,sans-serif" font-size="14" font-weight="600" text-anchor="middle">Fracture · 0.90</text>
+  </g>
+
+  <!-- Typography -->
+  <g font-family="'Space Grotesk',system-ui,sans-serif">
+    <text x="80" y="195" fill="#f2f4f8" font-size="62" font-weight="700">Knee MRI Reader</text>
+    <text x="82" y="248" fill="#6ee7b7" font-size="24" letter-spacing="2">DINOv2 · PyTorch · ONNX · Multi-View DICOM</text>
+    <text x="82" y="310" fill="#94a3b8" font-size="20" font-weight="400">12 Abnormalities · Multi-Plane Attention · 20-Model Ensemble</text>
+  </g>
+
+  <rect x="24" y="24" width="1152" height="702" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.09"/>
+</svg>

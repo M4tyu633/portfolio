@@ -395,6 +395,68 @@ export const projects: Project[] = [
     },
   },
   {
+    title: "Knee MRI Reader",
+    slug: "knee-mri-reader",
+    year: "2026",
+    featured: true,
+    blurb:
+      "An AI reading station that scores twelve knee abnormalities from a multi-plane MRI study. Built on the RSNA dataset with DINOv2 vision transformers, cross-view attention across six anatomical orientations, and an out-of-fold ensemble of twenty models. Trained against weak labels extracted via a 3-LLM consensus pipeline across multilingual radiology reports, and deployed as a live interactive DICOM viewer with serverless ONNX inference.",
+    image: "/images/project-knee-mri.svg",
+    tags: ["Next.js", "Python", "PyTorch", "DINOv2", "ONNX"],
+    links: {
+      demo: "https://knee-mri-reader.vercel.app/",
+      more: "https://github.com/M4tyu633/knee-mri-reader",
+    },
+    caseStudy: {
+      intro:
+        "A knee MRI is not a single photo; it is a set of series shot from several angles with different contrast settings. I built an end-to-end reading station that takes raw, unlabelled DICOM series, runs cross-attention across six anatomical views using DINOv2 encoders, and scores twelve abnormalities simultaneously (ligament tears, cartilage tears, three-compartment osteoarthritis, swelling, cysts, contusions, and fractures). Scored honestly at 0.843 macro AUC on completely unseen test studies, with a live Next.js DICOM station for side-by-side comparison with specialist doctor notes.",
+      facts: [
+        { label: "Domain", value: "Musculoskeletal Radiology & Computer Vision" },
+        { label: "Dataset", value: "RSNA Knee Abnormality Detection (4,407 studies)" },
+        { label: "Architecture", value: "DINOv2 + Cross-View Attention + 20-Model Ensemble" },
+        { label: "Validation", value: "0.843 Macro AUC (Strict Out-of-Fold)" },
+        { label: "Inference", value: "ONNX Runtime with client-side DICOM parser" },
+        { label: "Stack", value: "Next.js 16 · React 19 · Python · PyTorch · Tailwind" },
+      ],
+      sections: [
+        {
+          heading: "Six angles, twelve targets",
+          body: [
+            "Scans arrive unlabelled from hospital scanners with different zoom levels, orientations, and contrast sequences. The first job is sorting them by plane and sequence from their DICOM headers into six canonical slots: sagittal, coronal, and axial fluid-sensitive sequences, sagittal fluid without fat suppression, and T1 sequences. Right knees are mirrored so the medial and lateral compartments always sit on the same side of the tensor.",
+            "The twelve targets are not all visible from any single vantage point. An ACL or PCL tear is clearest on sagittal fluid views, collateral ligament sprains on coronal cuts, and joint effusion or synovitis on axial slices. Trying to force all twelve predictions out of one 2D slice or a generic 3D convnet loses the specific sequence contrast needed for each tissue.",
+          ],
+        },
+        {
+          heading: "The hard part: there is almost no answer key",
+          body: [
+            "Out of 4,407 patient studies, only 58 had direct expert ground-truth labels. The remaining 4,349 arrived with free-text doctor reports written in nine different languages. Anything missed or mislabeled during extraction sets a ceiling on the vision model downstream.",
+            "Instead of a single NLP pass, I ran three distinct language models over each clinical report and took the consensus label. Evaluated against the 58 expert ground-truth studies, this ensemble reached 0.89 agreement compared to 0.87 for single-model extraction, a difference verified under a paired bootstrap test.",
+          ],
+        },
+        {
+          heading: "Cross-view attention and rank pooling",
+          body: [
+            "Each slice is encoded using a DINOv2 vision transformer backbone. Each of the twelve abnormality heads maintains independent cross-attention weights over all six series slots, learning to attend to the sequence and angle relevant to its target (such as weighting sagittal cuts for meniscus tears and axial cuts for joint effusion).",
+            "To prevent single-model overconfidence, twenty models trained across five cross-validation folds vote on every scan. Predictions are aggregated via rank pooling rather than raw average probabilities, preserving relative ordering and clinical calibration.",
+          ],
+        },
+        {
+          heading: "Honest evaluation over memorization",
+          body: [
+            "If scored on the scans it trained on, the ensemble reaches a 0.997 macro AUC. But testing a model on data it has already seen is just testing memorization. Every metric reported on the site is strictly out-of-fold on unseen studies, where the macro AUC is 0.843 across all twelve findings.",
+            "Rare findings like lateral meniscus tears score lower primarily because there are fewer training instances, while high-contrast findings like medial osteoarthritis (0.96 AUC) and joint effusion (0.95 AUC) resolve with high confidence.",
+          ],
+        },
+        {
+          heading: "The reading station",
+          body: [
+            "The web interface is built in Next.js 16 and React 19 as an interactive radiology station. It allows clinicians to scrub through multi-slice DICOM series across all viewports simultaneously, inspect prediction confidences against the radiologist's original text report, and upload local DICOM or image sets for live inference.",
+          ],
+        },
+      ],
+    },
+  },
+  {
     title: "CHIP-8 Emulator",
     slug: "chip-8-emulator",
     year: "2026",
