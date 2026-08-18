@@ -405,7 +405,6 @@ export const projects: Project[] = [
     tags: ["Next.js", "Python", "PyTorch", "DINOv2", "ONNX"],
     links: {
       demo: "https://knee-mri-reader.vercel.app/",
-      more: "https://github.com/M4tyu633/knee-mri-reader",
     },
     caseStudy: {
       intro:
