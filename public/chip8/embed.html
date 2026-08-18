@@ -10,18 +10,21 @@
       index.html from the chip8 repo. Same index.js / .wasm / .data, but without
       the standalone page's header, footer and prose — the case study already
       says all of that, and repeating it inside the frame reads as a mistake.
-
-      Regenerate the three build artefacts by rebuilding the web target in
-      ~/chip8 and copying build-web/index.{js,wasm,data} here. This file is
-      hand-written and is not overwritten by that copy.
     -->
     <style>
       :root {
+        --bg: #0e1117;
         --panel: #0f1117;
-        --line: #1d202a;
+        --panel-light: #161a24;
+        --line: #1c212d;
+        --line-bright: #2d3748;
         --text: #f2f4f8;
         --dim: #99a1b3;
         --accent: #5eead4;
+        --accent-glow: rgba(94, 234, 212, 0.35);
+        --accent-soft: rgba(94, 234, 212, 0.12);
+        --warn: #f0b464;
+        --error: #e97070;
       }
 
       * {
@@ -37,25 +40,40 @@
         margin: 0;
         background: transparent;
         color: var(--text);
-        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "JetBrains Mono", monospace;
         display: flex;
         flex-direction: column;
         gap: 10px;
       }
 
-      /* The canvas is a fixed 1280x720 internally. Letterboxing it inside a
-         flexible box keeps the emulated pixels square at any frame height,
-         rather than stretching the backing store to whatever the parent is. */
+      /* CRT Monitor Frame */
       #frame {
         flex: 1;
         min-height: 0;
         display: grid;
         place-items: center;
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: 12px;
+        background: #090c12;
+        border: 3px solid #232b3c;
+        border-radius: 14px;
         overflow: hidden;
         position: relative;
+        box-shadow: 
+          0 0 0 1px #141923,
+          0 12px 36px -8px rgba(0, 0, 0, 0.9),
+          0 0 30px rgba(94, 234, 212, 0.12),
+          inset 0 0 28px rgba(0, 0, 0, 0.85);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      }
+
+      #frame.crt-off {
+        box-shadow: 
+          0 0 0 1px #141923,
+          0 8px 24px rgba(0, 0, 0, 0.7);
+      }
+
+      #frame.crt-off .scanlines,
+      #frame.crt-off .crt-vignette {
+        display: none;
       }
 
       canvas {
@@ -67,6 +85,32 @@
         height: auto;
         outline: none;
         image-rendering: pixelated;
+        position: relative;
+        z-index: 1;
+      }
+
+      .scanlines {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          transparent 2px,
+          rgba(0, 0, 0, 0.32) 2px,
+          rgba(0, 0, 0, 0.32) 4px
+        );
+        opacity: 0.75;
+        z-index: 2;
+      }
+
+      .crt-vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.45) 100%);
+        box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.75);
+        z-index: 3;
       }
 
       #loading {
@@ -75,8 +119,10 @@
         display: grid;
         place-items: center;
         font-size: 13px;
-        color: var(--dim);
-        background: var(--panel);
+        font-weight: 600;
+        color: var(--accent);
+        background: #090c12;
+        z-index: 10;
         transition: opacity 0.3s;
       }
 
@@ -85,84 +131,193 @@
         pointer-events: none;
       }
 
+      /* Control Toolbar */
       .controls {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
         justify-content: center;
-      }
-
-      /* The touch pad only exists for devices with no keyboard to press.
-         A mouse-driven browser at a narrow width still has the real keys. */
-      #pad {
-        display: none;
-      }
-
-      @media (pointer: coarse) {
-        #pad {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 6px;
-          max-width: 320px;
-          width: 100%;
-          margin: 0 auto;
-        }
-
-        /* Nothing below should try to be clever on a phone: the file picker
-           needs a file manager, and single-stepping needs the debugger text
-           to be legible, which it isn't at this size. */
-        .desktop-only {
-          display: none;
-        }
-      }
-
-      #pad button {
-        padding: 0;
-        aspect-ratio: 1;
-        font-size: 13px;
-        font-weight: 700;
-        /* Stops the long-press callout, the double-tap zoom, and the grey
-           tap flash — all three read as the game being broken. */
-        touch-action: manipulation;
-        -webkit-user-select: none;
-        user-select: none;
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      #pad button:active {
-        border-color: var(--accent);
-        color: var(--accent);
-        background: #171c26;
+        align-items: center;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 8px 12px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
       }
 
       button,
       label.file {
         font: inherit;
         font-size: 12px;
-        padding: 7px 14px;
-        border-radius: 999px;
-        border: 1px solid var(--line);
-        background: var(--panel);
+        padding: 7px 13px;
+        border-radius: 8px;
+        border: 1px solid var(--line-bright);
+        background: linear-gradient(180deg, #1b212e 0%, #131720 100%);
         color: var(--text);
         cursor: pointer;
-        transition:
-          border-color 0.15s,
-          color 0.15s;
+        transition: all 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        user-select: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
       }
 
       button:hover,
       label.file:hover {
         border-color: var(--accent);
         color: var(--accent);
+        box-shadow: 0 0 10px var(--accent-soft);
+      }
+
+      button:active,
+      label.file:active {
+        transform: translateY(1px);
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
+      }
+
+      button.active {
+        border-color: var(--accent);
+        background: linear-gradient(180deg, #162428 0%, #101c1f 100%);
+        color: var(--accent);
+        box-shadow: 0 0 10px var(--accent-soft), inset 0 0 6px rgba(94, 234, 212, 0.2);
       }
 
       input[type="file"] {
         display: none;
       }
+
+      /* Touch Keypad (Mobile Only) */
+      #touch-controls {
+        display: none;
+        width: 100%;
+        max-width: 340px;
+        margin: 4px auto 0;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      @media (pointer: coarse) {
+        #touch-controls {
+          display: flex;
+        }
+
+        .desktop-only {
+          display: none;
+        }
+      }
+
+      .pad-modes {
+        display: flex;
+        gap: 6px;
+        justify-content: center;
+      }
+
+      .pad-mode-btn {
+        font-size: 11px;
+        padding: 4px 9px;
+        border-radius: 6px;
+      }
+
+      .pad-view {
+        display: none;
+      }
+
+      .pad-view.active {
+        display: block;
+      }
+
+      /* 4x4 Grid */
+      .pad-grid-4x4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+      }
+
+      /* D-Pad Layout */
+      .pad-grid-dpad {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .pad-grid-dpad .keycap {
+        height: 56px;
+        font-size: 14px;
+      }
+
+      /* 2P Pong Layout */
+      .pad-grid-pong {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .pong-col {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .pong-col .keycap {
+        height: 48px;
+        font-size: 12px;
+      }
+
+      /* 3D Keycaps */
+      .keycap {
+        font: inherit;
+        font-size: 13px;
+        font-weight: 700;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1px;
+        padding: 8px 4px;
+        background: linear-gradient(180deg, #1d2330 0%, #131720 100%);
+        border: 1px solid #283244;
+        border-bottom: 3px solid #0d1017;
+        border-radius: 8px;
+        color: var(--text);
+        box-shadow: 0 3px 5px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+        touch-action: manipulation;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        cursor: pointer;
+        transition: transform 0.05s, box-shadow 0.05s, border-color 0.05s, background 0.05s;
+      }
+
+      .keycap .sub {
+        font-size: 9px;
+        font-weight: 400;
+        color: var(--dim);
+      }
+
+      .keycap:hover {
+        border-color: var(--accent);
+      }
+
+      .keycap:active,
+      .keycap.pressed {
+        transform: translateY(2px);
+        border-bottom-width: 1px;
+        border-color: var(--accent);
+        background: linear-gradient(180deg, #162428 0%, #101c1f 100%);
+        color: var(--accent);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.6), 0 0 14px var(--accent-glow), inset 0 0 8px rgba(94, 234, 212, 0.3);
+      }
+
+      .keycap:active .sub,
+      .keycap.pressed .sub {
+        color: var(--accent);
+      }
     </style>
   </head>
 
   <body>
+    <!-- CRT Monitor Frame -->
     <div id="frame">
       <canvas
         id="canvas"
@@ -171,33 +326,138 @@
         tabindex="0"
         oncontextmenu="event.preventDefault()"
       ></canvas>
+      <div class="scanlines" aria-hidden="true"></div>
+      <div class="crt-vignette" aria-hidden="true"></div>
       <div id="loading">loading WebAssembly&hellip;</div>
     </div>
 
+    <!-- Controls Toolbar -->
     <div class="controls">
-      <button id="btn-pause" type="button">Pause / resume &middot; Space</button>
+      <button id="btn-pause" type="button">▶⏸ Pause</button>
       <button id="btn-next" type="button">Next ROM &middot; Tab</button>
-      <button id="btn-reset" type="button">Reset &middot; Backspace</button>
-      <button id="btn-debug" type="button">Show debugger &middot; H</button>
+      <button id="btn-reset" type="button">⟲ Reset</button>
+      <button id="btn-debug" type="button">🔍 Show debugger</button>
       <label class="file desktop-only">
-        Load a .ch8 file
+        📁 Load .ch8
         <input
           id="rom-input"
           type="file"
           accept=".ch8,.c8,.rom,application/octet-stream"
         />
       </label>
+      <button id="btn-mute" type="button">🔊 Mute</button>
+      <button id="btn-crt" type="button" class="active">📺 CRT FX: ON</button>
     </div>
 
-    <!-- The CHIP-8 pad, labelled with the keyboard keys it stands in for, so
-         it lines up with the instructions on the page around it: Brix and
-         Catch move with A and D, Pong uses 1/Q and 4/R. -->
-    <div id="pad" aria-label="On-screen keypad"></div>
+    <!-- Touch Keypad (Mobile Only) -->
+    <div id="touch-controls">
+      <div class="pad-modes">
+        <button type="button" class="pad-mode-btn active" data-pad-mode="full">Full Pad</button>
+        <button type="button" class="pad-mode-btn" data-pad-mode="dpad">D-Pad</button>
+        <button type="button" class="pad-mode-btn" data-pad-mode="pong">2P Pong</button>
+      </div>
+
+      <!-- Full 4x4 Pad -->
+      <div id="pad-full" class="pad-view pad-grid-4x4 active">
+        <button class="keycap" type="button" data-key="49"><span>1</span><span class="sub">1</span></button>
+        <button class="keycap" type="button" data-key="50"><span>2</span><span class="sub">2</span></button>
+        <button class="keycap" type="button" data-key="51"><span>3</span><span class="sub">3</span></button>
+        <button class="keycap" type="button" data-key="52"><span>C</span><span class="sub">4</span></button>
+
+        <button class="keycap" type="button" data-key="81"><span>4</span><span class="sub">Q</span></button>
+        <button class="keycap" type="button" data-key="87"><span>5</span><span class="sub">W</span></button>
+        <button class="keycap" type="button" data-key="69"><span>6</span><span class="sub">E</span></button>
+        <button class="keycap" type="button" data-key="82"><span>D</span><span class="sub">R</span></button>
+
+        <button class="keycap" type="button" data-key="65"><span>7</span><span class="sub">A</span></button>
+        <button class="keycap" type="button" data-key="83"><span>8</span><span class="sub">S</span></button>
+        <button class="keycap" type="button" data-key="68"><span>9</span><span class="sub">D</span></button>
+        <button class="keycap" type="button" data-key="70"><span>E</span><span class="sub">F</span></button>
+
+        <button class="keycap" type="button" data-key="90"><span>A</span><span class="sub">Z</span></button>
+        <button class="keycap" type="button" data-key="88"><span>0</span><span class="sub">X</span></button>
+        <button class="keycap" type="button" data-key="67"><span>B</span><span class="sub">C</span></button>
+        <button class="keycap" type="button" data-key="86"><span>F</span><span class="sub">V</span></button>
+      </div>
+
+      <!-- D-Pad -->
+      <div id="pad-dpad" class="pad-view pad-grid-dpad">
+        <button class="keycap" type="button" data-key="65"><span>◀ LEFT</span><span class="sub">Key A</span></button>
+        <button class="keycap" type="button" data-key="68"><span>RIGHT ▶</span><span class="sub">Key D</span></button>
+      </div>
+
+      <!-- 2P Pong -->
+      <div id="pad-pong" class="pad-view pad-grid-pong">
+        <div class="pong-col">
+          <button class="keycap" type="button" data-key="49"><span>P1 ▲ UP</span><span class="sub">Key 1</span></button>
+          <button class="keycap" type="button" data-key="81"><span>P1 ▼ DOWN</span><span class="sub">Key Q</span></button>
+        </div>
+        <div class="pong-col">
+          <button class="keycap" type="button" data-key="52"><span>P2 ▲ UP</span><span class="sub">Key 4</span></button>
+          <button class="keycap" type="button" data-key="82"><span>P2 ▼ DOWN</span><span class="sub">Key R</span></button>
+        </div>
+      </div>
+    </div>
 
     <script>
       const canvas = document.getElementById("canvas");
 
-      // Emscripten looks for this object.
+      // AudioContext interception for volume mute toggle
+      let isMuted = false;
+      const audioContexts = [];
+      const OrigAudioContext = window.AudioContext || window.webkitAudioContext;
+      if (OrigAudioContext) {
+        window.AudioContext = class extends OrigAudioContext {
+          constructor(...args) {
+            super(...args);
+            audioContexts.push(this);
+            if (isMuted) {
+              try { this.suspend(); } catch (e) {}
+            }
+          }
+        };
+        if (window.webkitAudioContext) {
+          window.webkitAudioContext = window.AudioContext;
+        }
+      }
+
+      function getAllAudioContexts() {
+        const list = [...audioContexts];
+        if (window.Module && Module.SDL2 && Module.SDL2.audioContext && !list.includes(Module.SDL2.audioContext)) {
+          list.push(Module.SDL2.audioContext);
+        }
+        if (typeof SDL2 !== "undefined" && SDL2.audioContext && !list.includes(SDL2.audioContext)) {
+          list.push(SDL2.audioContext);
+        }
+        return list;
+      }
+
+      function updateMuteState() {
+        const btn = document.getElementById("btn-mute");
+        if (btn) {
+          btn.innerHTML = isMuted ? "🔇 Unmute" : "🔊 Mute";
+          btn.classList.toggle("active", isMuted);
+          btn.setAttribute("aria-label", isMuted ? "Unmute audio" : "Mute audio");
+        }
+        const contexts = getAllAudioContexts();
+        contexts.forEach((ctx) => {
+          try {
+            if (isMuted) {
+              if (ctx.state === "running") ctx.suspend();
+            } else {
+              if (ctx.state === "suspended") ctx.resume();
+            }
+          } catch (e) {}
+        });
+      }
+
+      function toggleMute() {
+        isMuted = !isMuted;
+        updateMuteState();
+      }
+      document.getElementById("btn-mute").onclick = toggleMute;
+
+      // Emscripten Module configuration
       var Module = {
         canvas: canvas,
         preRun: [],
@@ -208,6 +468,7 @@
             command(3);
             debuggerShown = true;
             setDebugLabel();
+            updateMuteState();
           },
         ],
         print: function (text) {
@@ -218,9 +479,7 @@
         },
       };
 
-      // Space, Tab and Backspace all mean something to the emulator. Left
-      // alone they would scroll the frame, move focus, or trigger a history
-      // navigation in the embedding page.
+      // Space, Tab and Backspace navigation prevention
       canvas.addEventListener("keydown", function (event) {
         if ([" ", "Tab", "Backspace"].includes(event.key)) {
           event.preventDefault();
@@ -228,72 +487,6 @@
       });
       canvas.addEventListener("click", function () {
         canvas.focus();
-      });
-
-      /* ---------------------------------------------------------------
-         Touch keypad.
-
-         Raylib's GLFW shim listens on `window` with capture, and its handler
-         reads exactly one property off the event: `keyCode`. So a synthetic
-         KeyboardEvent is enough to drive the emulator, and no rebuild of the
-         WebAssembly is needed to make a phone work.
-
-         `keyCode` can't be set through the KeyboardEvent constructor — it
-         isn't part of KeyboardEventInit — so it's defined on the instance.
-         --------------------------------------------------------------- */
-      const PAD = [
-        ["1", 49], ["2", 50], ["3", 51], ["4", 52],
-        ["Q", 81], ["W", 87], ["E", 69], ["R", 82],
-        ["A", 65], ["S", 83], ["D", 68], ["F", 70],
-        ["Z", 90], ["X", 88], ["C", 67], ["V", 86],
-      ];
-
-      function synthKey(type, keyCode) {
-        const event = new KeyboardEvent(type, {
-          bubbles: true,
-          cancelable: true,
-        });
-        Object.defineProperty(event, "keyCode", { get: () => keyCode });
-        Object.defineProperty(event, "which", { get: () => keyCode });
-        window.dispatchEvent(event);
-      }
-
-      const pad = document.getElementById("pad");
-      for (const [label, keyCode] of PAD) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.textContent = label;
-        button.setAttribute("aria-label", "Key " + label);
-
-        let held = false;
-        const press = (event) => {
-          // Without this the browser follows up with a synthetic mouse event
-          // and fires the whole sequence a second time.
-          event.preventDefault();
-          if (held) return;
-          held = true;
-          synthKey("keydown", keyCode);
-        };
-        const release = (event) => {
-          event.preventDefault();
-          if (!held) return;
-          held = false;
-          synthKey("keyup", keyCode);
-        };
-
-        button.addEventListener("pointerdown", press);
-        // pointercancel and pointerleave matter as much as pointerup: a finger
-        // that slides off the button never sends pointerup, and the key would
-        // stay held down for the rest of the session.
-        button.addEventListener("pointerup", release);
-        button.addEventListener("pointercancel", release);
-        button.addEventListener("pointerleave", release);
-        pad.appendChild(button);
-      }
-
-      // A backgrounded tab gets no pointerup either.
-      window.addEventListener("blur", () => {
-        for (const [, keyCode] of PAD) synthKey("keyup", keyCode);
       });
 
       function command(id) {
@@ -306,14 +499,12 @@
       document.getElementById("btn-next").onclick = () => command(1);
       document.getElementById("btn-reset").onclick = () => command(2);
 
-      // Starts false, matching the C++ side, which opens with the debugger
-      // folded away. The label always says what pressing it will do, and H
-      // does the same thing from the keyboard, so it is corrected on that too.
+      // Debugger toggle
       const debugButton = document.getElementById("btn-debug");
       let debuggerShown = false;
       function setDebugLabel() {
         debugButton.textContent =
-          (debuggerShown ? "Hide debugger" : "Show debugger") + " · H";
+          (debuggerShown ? "🔍 Hide debugger" : "🔍 Show debugger") + " · H";
       }
       debugButton.onclick = () => {
         debuggerShown = !debuggerShown;
@@ -327,6 +518,78 @@
         }
       });
 
+      // CRT Effects Toggle
+      let crtEnabled = true;
+      const frameEl = document.getElementById("frame");
+      const crtBtn = document.getElementById("btn-crt");
+
+      crtBtn.onclick = () => {
+        crtEnabled = !crtEnabled;
+        frameEl.classList.toggle("crt-off", !crtEnabled);
+        crtBtn.classList.toggle("active", crtEnabled);
+        crtBtn.textContent = crtEnabled ? "📺 CRT FX: ON" : "📺 CRT FX: OFF";
+      };
+
+      // Synthetic keyboard events
+      function synthKey(type, keyCode) {
+        const event = new KeyboardEvent(type, {
+          bubbles: true,
+          cancelable: true,
+        });
+        Object.defineProperty(event, "keyCode", { get: () => keyCode });
+        Object.defineProperty(event, "which", { get: () => keyCode });
+        window.dispatchEvent(event);
+      }
+
+      // Touch Keypad Handling
+      function attachKeyButton(btn, keyCode) {
+        let held = false;
+        const press = (event) => {
+          event.preventDefault();
+          if (held) return;
+          held = true;
+          btn.classList.add("pressed");
+          synthKey("keydown", keyCode);
+        };
+        const release = (event) => {
+          event.preventDefault();
+          if (!held) return;
+          held = false;
+          btn.classList.remove("pressed");
+          synthKey("keyup", keyCode);
+        };
+        btn.addEventListener("pointerdown", press);
+        btn.addEventListener("pointerup", release);
+        btn.addEventListener("pointercancel", release);
+        btn.addEventListener("pointerleave", release);
+      }
+
+      document.querySelectorAll(".keycap").forEach((btn) => {
+        const keyCode = parseInt(btn.dataset.key, 10);
+        if (keyCode) attachKeyButton(btn, keyCode);
+      });
+
+      // Pad Layout Mode Selector
+      const modeButtons = document.querySelectorAll(".pad-mode-btn");
+      const padViews = document.querySelectorAll(".pad-view");
+
+      modeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const mode = btn.dataset.padMode;
+          modeButtons.forEach((b) => b.classList.toggle("active", b === btn));
+          padViews.forEach((view) => {
+            view.classList.toggle("active", view.id === `pad-${mode}`);
+          });
+        });
+      });
+
+      const ALL_KEY_CODES = [49, 50, 51, 52, 81, 87, 69, 82, 65, 83, 68, 70, 90, 88, 67, 86];
+      window.addEventListener("blur", () => {
+        for (const kc of ALL_KEY_CODES) synthKey("keyup", kc);
+        document.querySelectorAll(".keycap").forEach((b) => b.classList.remove("pressed"));
+      });
+
+      // File Input ROM Loading
       document
         .getElementById("rom-input")
         .addEventListener("change", function (event) {
@@ -336,10 +599,6 @@
           const reader = new FileReader();
           reader.onload = function () {
             const bytes = new Uint8Array(reader.result);
-
-            // The ROM has to live in the WASM heap for the C++ side to read
-            // it, so copy it across and free the block once the core has taken
-            // its own copy.
             const romPtr = Module._malloc(bytes.length);
             Module.HEAPU8.set(bytes, romPtr);
 
