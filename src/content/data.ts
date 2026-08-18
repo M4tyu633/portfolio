@@ -461,7 +461,7 @@ export const projects: Project[] = [
     year: "2026",
     blurb:
       "I wrote a CHIP-8 emulator from scratch in C/C++: the full core instruction set, memory management, delay and sound timers, and a custom Raylib visual debugger I built to track registers, the stack, and live memory while a ROM runs. I compiled it to WebAssembly so it plays in the browser.",
-    image: "/images/project-chip8.svg", // TODO
+    image: "/images/project-chip8.png",
     tags: ["C/C++", "Raylib", "WebAssembly", "Emulation"],
     links: {
       demo: "https://chip8-emulator-matthew.vercel.app",
