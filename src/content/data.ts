@@ -197,6 +197,7 @@ export type Project = {
    * ships as a build you run rather than a URL you visit. */
   links?: {
     demo?: string;
+    repo?: string;
     download?: string;
     trailer?: string;
     gameplay?: string;
@@ -532,13 +533,55 @@ export const projects: Project[] = [
     slug: "heart-disease-prediction",
     year: "2025",
     blurb:
-      "I trained a supervised learning model to predict heart disease from patient features and took it end to end: data cleaning and feature engineering in pandas, handling missing values and categorical variables, then evaluation past raw accuracy.",
-    image: "/images/project-heart.svg", // TODO
-    tags: ["Python", "pandas", "Supervised Learning"],
-    // TODO: this card has nowhere to go — no demo, no repo link, no case study.
-    // Filling in a `caseStudy` block (copy eGovMed's above) is what fixes that.
-    // Which dataset, which models compared, and what the evaluation actually
-    // showed would be enough.
+      "I built a clinical decision support system that predicts coronary artery disease risk from patient biomarkers. Trained on the 920-patient UCI dataset across 4 clinical hospitals, comparing Random Forest, Gradient Boosting, and Logistic Regression with 0.919 ROC-AUC and 89.2% recall, deployed with live SHAP feature attributions.",
+    image: "/images/project-heart.png",
+    tags: ["Python", "scikit-learn", "Next.js", "Gradient Boosting", "SHAP"],
+    links: {
+      demo: "https://heart-disease-prediction-matthew.vercel.app",
+      repo: "https://github.com/M4tyu633/heart-disease-prediction",
+    },
+    caseStudy: {
+      intro:
+        "Coronary artery disease is the leading cause of premature mortality worldwide. Early detection of >50% diameter stenosis in major coronary arteries enables timely intervention with statin therapies, stress echocardiography, or diagnostic angiography. I developed an end-to-end clinical risk prediction system: cleaning and imputing the 920-patient UCI multi-center dataset, evaluating an ensemble of linear and tree-based classifiers (0.919 ROC-AUC, 89.2% recall), extracting global and local SHAP feature attributions, and deploying an interactive Next.js risk station with zero-latency client inference.",
+      facts: [
+        { label: "Domain", value: "Clinical Machine Learning & Cardiology" },
+        { label: "Dataset", value: "UCI Heart Disease (920 patients across 4 hospitals)" },
+        { label: "Model Stack", value: "Random Forest, Gradient Boosting, Calibrated Logistic Regression" },
+        { label: "Validation", value: "0.919 ROC-AUC · 89.2% Recall (5-Fold Stratified CV)" },
+        { label: "Explainability", value: "Permutation Feature Importance & Local SHAP/Logit Drivers" },
+        { label: "Deployment", value: "Next.js 16 · React 19 · TypeScript · Vercel" },
+      ],
+      sections: [
+        {
+          heading: "The multi-hospital clinical missingness challenge",
+          body: [
+            "The UCI Heart Disease dataset aggregates 920 patient records from four international medical centers: the Cleveland Clinic Foundation (USA), Hungarian Institute of Cardiology (Budapest), University Hospital (Zurich), and VA Medical Center (Long Beach).",
+            "Because different hospitals followed distinct diagnostic protocols, several key tests—such as fluoroscopy vessel count (ca, missing in 611 records) and thallium scintigraphy (thal, missing in 486 records)—exhibited non-random missingness. I implemented a robust preprocessing pipeline using median imputation and standardized scaling for continuous vitals, combined with one-hot categorical encoding and missing-indicator trackers, preserving crucial diagnostic signals without data leakage across cross-validation splits.",
+          ],
+        },
+        {
+          heading: "Optimizing for clinical recall over raw accuracy",
+          body: [
+            "In diagnostic cardiology, a false negative (failing to detect an ischemic patient) is far more dangerous than a false positive. Standard accuracy is deceptive on imbalanced cohorts.",
+            "I benchmarked Logistic Regression, Support Vector Machines, Random Forest, and Gradient Boosting under 5-fold stratified cross-validation. Random Forest and Gradient Boosting achieved the strongest diagnostic sensitivity: 89.2% and 90.2% recall respectively, with a holdout ROC-AUC of 0.919 (0.891 ± 0.018 5-fold CV AUC). Probability calibration via sigmoid scaling ensured predicted risk scores mapped accurately to real-world disease prevalence.",
+          ],
+        },
+        {
+          heading: "Decoding black-box predictions with SHAP feature attributions",
+          body: [
+            "Clinicians will not adopt AI models without clear physiological justification. I computed global permutation importance and local SHAP attributions to identify the primary drivers of coronary stenosis.",
+            "The model highlighted asymptomatic chest pain (silent ischemia, 22.4% relative importance), number of colored vessels on fluoroscopy (16.5%), reversible thallium perfusion defects (14.2%), exercise-induced ST depression (11.8%), and chronotropic incompetence (max heart rate achieved, 9.8%) as the top risk determinants—aligning precisely with established cardiology guidelines.",
+          ],
+        },
+        {
+          heading: "Interactive clinical workstation with zero-latency inference",
+          body: [
+            "I built and deployed a production web station in Next.js 16 and Tailwind CSS. Clinicians and researchers can dynamically manipulate patient hemodynamics, resting ECG parameters, and stress test markers to see instant risk calculations and localized biomarker attribution waterfalls.",
+            "Precomputed model weights and matrix transformations run entirely client-side, eliminating server cold-starts and ensuring complete patient data privacy.",
+          ],
+        },
+      ],
+    },
   },
   // UPLB Code Wars used to sit here. It's a competition rather than a project,
   // so it lives in `awards` below instead.

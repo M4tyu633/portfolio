@@ -9,6 +9,7 @@ import {
   IconDownload,
   IconExternal,
   IconFilm,
+  IconGithub,
   IconPlay,
 } from "@/components/Icons";
 import Reveal from "@/components/Reveal";
@@ -50,9 +51,10 @@ export default async function CaseStudyPage(
   if (!project) notFound();
 
   const study = project.caseStudy!;
-  const { demo, download, trailer, gameplay, more } = project.links ?? {};
+  const { demo, repo, download, trailer, gameplay, more } = project.links ?? {};
   const links = [
     { href: demo, label: "Live demo", icon: <IconExternal /> },
+    { href: repo, label: "GitHub", icon: <IconGithub /> },
     { href: download, label: "Download the game", icon: <IconDownload /> },
     { href: trailer, label: "Trailer", icon: <IconPlay /> },
     { href: gameplay, label: "Gameplay", icon: <IconFilm /> },

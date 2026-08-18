@@ -13,7 +13,7 @@ export default function Experience() {
           sub="School, hackathons, and the years of debate that taught me to explain any of it."
         />
 
-        <ol className="border-border relative mt-14 border-l pl-8 sm:pl-10">
+        <ol className="border-border relative mt-14 border-l pl-8 sm:pl-10 space-y-14">
           {timeline.map((item, i) => (
             <Reveal
               as="li"
@@ -21,24 +21,17 @@ export default function Experience() {
               delay={i * 60}
               className="relative"
             >
-              <div className="pb-12 last:pb-0">
-                {/* The dot on the line. It is positioned against THIS li, not
-                    the ol, and the offset therefore has to clear the ol's own
-                    left padding: 2rem + half the dot, and 2.5rem from sm up.
-                    Anchoring it to the ol instead looks correct until the row
-                    reveals — `.reveal` animates `transform`, and a transformed
-                    ancestor becomes the containing block, so the dot would sit
-                    over the period text until the transform resolved to none
-                    and then jump to the line. */}
-                <span className="border-accent bg-background absolute -left-[39px] mt-2 grid h-3.5 w-3.5 place-items-center rounded-full border-2 sm:-left-[47px]" />
+              <div>
+                {/* The dot on the timeline line, aligned precisely with the period text */}
+                <span className="border-accent bg-background absolute -left-[39px] top-0.5 grid h-3.5 w-3.5 place-items-center rounded-full border-2 sm:-left-[47px]" />
 
-                <p className="text-accent text-xs font-medium tracking-[0.16em] uppercase">
+                <p className="text-accent text-xs font-semibold tracking-[0.16em] uppercase">
                   {item.period}
                 </p>
-                <h3 className="mt-2 text-lg font-bold sm:text-xl">
+                <h3 className="mt-1.5 text-lg font-bold sm:text-xl tracking-tight">
                   {item.role}
                 </h3>
-                <p className="text-muted mt-0.5 flex items-center gap-2 text-sm">
+                <p className="text-muted mt-1 flex items-center gap-2 text-sm">
                   {item.logo && (
                     <Image
                       src={item.logo}
@@ -51,7 +44,7 @@ export default function Experience() {
                   {item.org}
                 </p>
 
-                <ul className="mt-4 space-y-2">
+                <ul className="mt-4 space-y-2.5">
                   {item.bullets.map((bullet, b) => (
                     <li
                       key={b}

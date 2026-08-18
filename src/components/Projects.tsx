@@ -9,6 +9,7 @@ import {
   IconDownload,
   IconExternal,
   IconFilm,
+  IconGithub,
   IconPlay,
 } from "./Icons";
 import Reveal from "./Reveal";
@@ -239,13 +240,14 @@ function TagRow({ tags }: { tags: string[] }) {
 /* Ordered deliberately: the thing you can actually click into first, then the
  * things you can only watch. Anything without a URL drops out. */
 function LinkRow({ project }: { project: Project }) {
-  const { demo, download, trailer, gameplay, more } = project.links ?? {};
+  const { demo, repo, download, trailer, gameplay, more } = project.links ?? {};
   const hasStudy = Boolean(project.caseStudy);
 
   // flatMap rather than filter: it narrows `href` to a string for free, where
   // a filter would need a type predicate to do the same.
   const links = [
     { href: demo, label: "Live demo", icon: <IconExternal /> },
+    { href: repo, label: "GitHub", icon: <IconGithub /> },
     { href: download, label: "Download the game", icon: <IconDownload /> },
     { href: trailer, label: "Trailer", icon: <IconPlay /> },
     { href: gameplay, label: "Gameplay", icon: <IconFilm /> },
