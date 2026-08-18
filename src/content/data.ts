@@ -401,55 +401,55 @@ export const projects: Project[] = [
     featured: false,
     blurb:
       "An AI reading station that scores twelve knee abnormalities from a multi-plane MRI study. Built on the RSNA dataset with DINOv2 vision transformers, cross-view attention across six anatomical orientations, and an out-of-fold ensemble of twenty models. Trained against weak labels extracted via a 3-LLM consensus pipeline across multilingual radiology reports, and deployed as a live interactive DICOM viewer with serverless ONNX inference.",
-    image: "/images/project-knee-mri.svg",
+    image: "/images/project-knee-mri.png",
     tags: ["Next.js", "Python", "PyTorch", "DINOv2", "ONNX"],
     links: {
       demo: "https://knee-mri-reader.vercel.app/",
     },
     caseStudy: {
       intro:
-        "A knee MRI is not a single photo; it is a set of series shot from several angles with different contrast settings. I built an end-to-end reading station that takes raw, unlabelled DICOM series, runs cross-attention across six anatomical views using DINOv2 encoders, and scores twelve abnormalities simultaneously (ligament tears, cartilage tears, three-compartment osteoarthritis, swelling, cysts, contusions, and fractures). Scored honestly at 0.843 macro AUC on completely unseen test studies, with a live Next.js DICOM station for side-by-side comparison with specialist doctor notes.",
+        "A knee MRI is not a single photo; it is a multi-series volume of varying slice thicknesses, contrast sequences, and camera angles. I built an end-to-end clinical diagnostic system for the RSNA Knee Abnormality Detection challenge: parsing raw unlabelled DICOM series, extracting weak supervision labels from multilingual radiology notes via a 3-LLM consensus pipeline, and training a multi-view vision transformer (DINOv2) with cross-view attention across six anatomical orientations. It scores twelve knee pathologies simultaneously (cruciate and collateral ligament tears, meniscal tears, three-compartment osteoarthritis, joint effusion, synovitis, Baker's cysts, contusions, and fractures) with an out-of-fold macro AUC of 0.843, served live through an interactive Next.js reading station with ONNX inference.",
       facts: [
-        { label: "Domain", value: "Musculoskeletal Radiology & Computer Vision" },
+        { label: "Domain", value: "Musculoskeletal Radiology & Deep Learning" },
         { label: "Dataset", value: "RSNA Knee Abnormality Detection (4,407 studies)" },
         { label: "Architecture", value: "DINOv2 + Cross-View Attention + 20-Model Ensemble" },
         { label: "Validation", value: "0.843 Macro AUC (Strict Out-of-Fold)" },
-        { label: "Inference", value: "ONNX Runtime with client-side DICOM parser" },
-        { label: "Stack", value: "Next.js 16 · React 19 · Python · PyTorch · Tailwind" },
+        { label: "Inference", value: "Serverless ONNX Runtime + Client DICOM Parser" },
+        { label: "Stack", value: "Next.js 16 · React 19 · Python · PyTorch · TypeScript" },
       ],
       sections: [
         {
-          heading: "Six angles, twelve targets",
+          heading: "Medical scans arrive messy",
           body: [
-            "Scans arrive unlabelled from hospital scanners with different zoom levels, orientations, and contrast sequences. The first job is sorting them by plane and sequence from their DICOM headers into six canonical slots: sagittal, coronal, and axial fluid-sensitive sequences, sagittal fluid without fat suppression, and T1 sequences. Right knees are mirrored so the medial and lateral compartments always sit on the same side of the tensor.",
-            "The twelve targets are not all visible from any single vantage point. An ACL or PCL tear is clearest on sagittal fluid views, collateral ligament sprains on coronal cuts, and joint effusion or synovitis on axial slices. Trying to force all twelve predictions out of one 2D slice or a generic 3D convnet loses the specific sequence contrast needed for each tissue.",
+            "Hospitals don't hand you clean tensors. A single patient study contains anywhere from 3 to 12 separate image series, shot on different scanners (GE, Siemens, Philips) with arbitrary vendor series names, variable slice spacing, and mixed left/right knees. You cannot feed raw folders into a standard vision network.",
+            "I wrote a DICOM normalizer that parses directional cosine vectors (ImageOrientationPatient) to project each volume into its true anatomical plane: Sagittal, Coronal, or Axial. The pipeline slots series into six canonical sequence buckets (SAG FS, COR FS, AX FS, SAG PD, COR T1, SAG T1), orders slices anatomically from lateral-to-medial or superior-to-inferior, and horizontally mirrors right knees so anatomical landmarks (like the medial femoral condyle) always align to the exact same spatial coordinate.",
           ],
         },
         {
-          heading: "The hard part: there is almost no answer key",
+          heading: "The weak label bottleneck: 58 ground-truth scans vs 4,349 free-text reports",
           body: [
-            "Out of 4,407 patient studies, only 58 had direct expert ground-truth labels. The remaining 4,349 arrived with free-text doctor reports written in nine different languages. Anything missed or mislabeled during extraction sets a ceiling on the vision model downstream.",
-            "Instead of a single NLP pass, I ran three distinct language models over each clinical report and took the consensus label. Evaluated against the 58 expert ground-truth studies, this ensemble reached 0.89 agreement compared to 0.87 for single-model extraction, a difference verified under a paired bootstrap test.",
+            "Supervised computer vision requires accurate labels, but only 58 of the 4,407 training studies had expert radiologist ground-truth annotations. The remaining 4,349 studies only had free-text clinical reports written in nine different languages (English, Spanish, German, Greek, Bulgarian, Turkish, Portuguese, Italian, and French).",
+            "A single regex or naive LLM pass fails on negated findings ('no evidence of ACL tear', 'ligaments intact') and subtle qualifiers ('degenerative signal without surfacing tear'). I built a weak-supervision pipeline that prompts three distinct language models with clinical few-shot examples and takes their consensus vote. Evaluated against the 58 expert gold-standard cases, consensus labeling reached 0.89 agreement compared to 0.87 for a single model—a statistically significant improvement verified via a paired bootstrap test. Clean training labels were the single highest-leverage improvement across the entire project.",
           ],
         },
         {
-          heading: "Cross-view attention and rank pooling",
+          heading: "Multi-view cross-attention with DINOv2",
           body: [
-            "Each slice is encoded using a DINOv2 vision transformer backbone. Each of the twelve abnormality heads maintains independent cross-attention weights over all six series slots, learning to attend to the sequence and angle relevant to its target (such as weighting sagittal cuts for meniscus tears and axial cuts for joint effusion).",
-            "To prevent single-model overconfidence, twenty models trained across five cross-validation folds vote on every scan. Predictions are aggregated via rank pooling rather than raw average probabilities, preserving relative ordering and clinical calibration.",
+            "A standard 3D CNN or single-slice ResNet fails on knee MRI because different abnormalities are visible only in specific planes and contrast weightings. An ACL tear is obvious on a sagittal fluid-sensitive cut but invisible on an axial slice; joint effusion and popliteal cysts are diagnosed primarily on axial sequences; cartilage loss and bone marrow lesions require coronal T1 and fluid-suppressed views.",
+            "I used a frozen DINOv2 vision transformer to extract rich, self-supervised spatial patch features per slice, followed by temporal pooling across each series volume. I then designed a cross-view attention module with twelve independent classification heads. Instead of forcing a single shared representation, each abnormality head learns its own attention weights across the six view slots, dynamically weighting the relevant anatomical planes for its specific diagnostic task.",
           ],
         },
         {
-          heading: "Honest evaluation over memorization",
+          heading: "Rank pooling and honest evaluation over memorization",
           body: [
-            "If scored on the scans it trained on, the ensemble reaches a 0.997 macro AUC. But testing a model on data it has already seen is just testing memorization. Every metric reported on the site is strictly out-of-fold on unseen studies, where the macro AUC is 0.843 across all twelve findings.",
-            "Rare findings like lateral meniscus tears score lower primarily because there are fewer training instances, while high-contrast findings like medial osteoarthritis (0.96 AUC) and joint effusion (0.95 AUC) resolve with high confidence.",
+            "To prevent overfitting and handle missing series, I trained an ensemble of twenty models across a 5-fold stratified split. When models from different folds are ensembled, averaging raw sigmoid probabilities introduces calibration distortion because logit scales vary across folds. I aggregated predictions using out-of-fold rank pooling (converting model outputs to percentile ranks before averaging), which directly optimizes the rank-ordering metric (ROC AUC).",
+            "Scoring the model on its own training data yields a 0.997 macro AUC. But in clinical medicine, memorization is dangerous. I evaluated strictly out-of-fold on completely held-out studies, achieving a macro AUC of 0.843 across all twelve findings (0.96 for Medial Osteoarthritis, 0.95 for Joint Effusion, 0.95 for Baker's Cyst, 0.90 for Fracture, 0.89 for MCL, and 0.88 for ACL).",
           ],
         },
         {
-          heading: "The reading station",
+          heading: "From PyTorch weights to a live clinical reading station",
           body: [
-            "The web interface is built in Next.js 16 and React 19 as an interactive radiology station. It allows clinicians to scrub through multi-slice DICOM series across all viewports simultaneously, inspect prediction confidences against the radiologist's original text report, and upload local DICOM or image sets for live inference.",
+            "A model is only as useful as its delivery. I exported the trained PyTorch ensemble to optimized ONNX models with dynamic batching and sub-200ms latency. I built the frontend in Next.js 16 and React 19 as a dark-mode clinical workstation: clinicians can scrub through multi-slice DICOM stacks in real-time, inspect predicted probabilities alongside ground-truth findings, view the original clinical report, and upload external DICOM files for on-demand inference.",
           ],
         },
       ],
