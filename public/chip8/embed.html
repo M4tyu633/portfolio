@@ -205,6 +205,9 @@
           function () {
             document.getElementById("loading").classList.add("done");
             canvas.focus();
+            command(3);
+            debuggerShown = true;
+            setDebugLabel();
           },
         ],
         print: function (text) {

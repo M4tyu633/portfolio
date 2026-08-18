@@ -400,7 +400,7 @@ export const projects: Project[] = [
     year: "2026",
     featured: false,
     blurb:
-      "An AI reading station that scores twelve knee abnormalities from a multi-plane MRI study. Built on the RSNA dataset with DINOv2 vision transformers, cross-view attention across six anatomical orientations, and an out-of-fold ensemble of twenty models. Trained against weak labels extracted via a 3-LLM consensus pipeline across multilingual radiology reports, and deployed as a live interactive DICOM viewer with serverless ONNX inference.",
+      "I built an AI reading station that scores twelve knee abnormalities from multi-series DICOM MRIs. I designed a multi-view DINOv2 vision transformer with cross-view attention across six anatomical orientations, trained it against weak labels from a 3-LLM consensus pipeline, and deployed it as a live interactive DICOM viewer with serverless ONNX inference.",
     image: "/images/project-knee-mri.png",
     tags: ["Next.js", "Python", "PyTorch", "DINOv2", "ONNX"],
     links: {
