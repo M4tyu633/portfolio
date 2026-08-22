@@ -3,6 +3,7 @@ import IdBadge from "./IdBadge";
 import {
   IconArrow,
   IconDoc,
+  IconFacebook,
   IconGithub,
   IconLinkedin,
   IconMail,
@@ -104,6 +105,11 @@ export default function Hero() {
             {contact.linkedin && (
               <SocialLink href={contact.linkedin} label="LinkedIn">
                 <IconLinkedin />
+              </SocialLink>
+            )}
+            {contact.facebook && (
+              <SocialLink href={contact.facebook} label="Facebook">
+                <IconFacebook />
               </SocialLink>
             )}
             <SocialLink href={`mailto:${contact.email}`} label="Email">

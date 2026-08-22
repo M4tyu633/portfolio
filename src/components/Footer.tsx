@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { contact, hero, navLinks } from "@/content/data";
-import { IconGithub, IconLinkedin, IconMail } from "./Icons";
+import { IconFacebook, IconGithub, IconLinkedin, IconMail } from "./Icons";
 
 export default function Footer() {
   // Server-rendered, so this is baked in at build time — no hydration mismatch.
@@ -60,6 +60,19 @@ export default function Footer() {
             >
               <span className="h-4 w-4">
                 <IconLinkedin />
+              </span>
+            </a>
+          )}
+          {contact.facebook && (
+            <a
+              href={contact.facebook}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Facebook"
+              className="border-border text-muted hover:border-accent hover:text-accent grid h-9 w-9 place-items-center rounded-full border transition-colors"
+            >
+              <span className="h-4 w-4">
+                <IconFacebook />
               </span>
             </a>
           )}

@@ -58,7 +58,7 @@ const personSchema = {
   knowsAbout: about.paragraphs.length
     ? ["Multi-Agent Systems", "Machine Learning", "Game Development", "LLMs"]
     : undefined,
-  sameAs: [contact.github, contact.linkedin].filter(Boolean),
+  sameAs: [contact.github, contact.linkedin, contact.facebook].filter(Boolean),
 };
 
 /**
