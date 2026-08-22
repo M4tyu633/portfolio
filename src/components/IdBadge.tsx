@@ -404,9 +404,6 @@ export default function IdBadge() {
                     />
                   ))}
                 </div>
-                <p className="text-muted mt-1.5 text-center text-[7px] tracking-[0.3em]">
-                  TAP TO FLIP
-                </p>
               </div>
             </div>
           </div>
@@ -460,11 +457,11 @@ export default function IdBadge() {
 
       {/* hint */}
       <p
-        className={`text-muted pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 text-xs transition-opacity duration-500 ${
+        className={`text-muted pointer-events-none absolute -bottom-7 left-1/2 -translate-x-1/2 text-xs transition-opacity duration-500 ${
           hinted ? "opacity-0" : "opacity-100"
         }`}
       >
-        drag me · tap to flip
+        drag me
       </p>
     </div>
   );
