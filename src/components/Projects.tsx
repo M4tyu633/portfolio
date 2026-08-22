@@ -133,15 +133,38 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
             flip ? "lg:order-last" : ""
           } ${contain ? "bg-surface p-6 sm:p-8" : "bg-background"}`}
         >
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className={`transition-transform duration-500 group-hover:scale-105 ${
-              contain ? "object-contain" : "object-cover"
-            }`}
-          />
+          {project.imageDark ? (
+            <>
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className={`dark:hidden transition-transform duration-500 group-hover:scale-105 ${
+                  contain ? "object-contain" : "object-cover"
+                }`}
+              />
+              <Image
+                src={project.imageDark}
+                alt={project.title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className={`hidden dark:block transition-transform duration-500 group-hover:scale-105 ${
+                  contain ? "object-contain" : "object-cover"
+                }`}
+              />
+            </>
+          ) : (
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className={`transition-transform duration-500 group-hover:scale-105 ${
+                contain ? "object-contain" : "object-cover"
+              }`}
+            />
+          )}
         </div>
 
         <div className="flex flex-col justify-center p-7 sm:p-10">
@@ -181,15 +204,38 @@ function SmallCard({ project, index }: { project: Project; index: number }) {
             contain ? "bg-surface p-4" : "bg-background"
           }`}
         >
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className={`transition-transform duration-500 group-hover:scale-105 ${
-              contain ? "object-contain" : "object-cover"
-            }`}
-          />
+          {project.imageDark ? (
+            <>
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className={`dark:hidden transition-transform duration-500 group-hover:scale-105 ${
+                  contain ? "object-contain" : "object-cover"
+                }`}
+              />
+              <Image
+                src={project.imageDark}
+                alt={project.title}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className={`hidden dark:block transition-transform duration-500 group-hover:scale-105 ${
+                  contain ? "object-contain" : "object-cover"
+                }`}
+              />
+            </>
+          ) : (
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className={`transition-transform duration-500 group-hover:scale-105 ${
+                contain ? "object-contain" : "object-cover"
+              }`}
+            />
+          )}
         </div>
 
         <div className="flex flex-1 flex-col p-6">

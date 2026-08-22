@@ -179,6 +179,7 @@ export type Project = {
   blurb: string;
   year: string;
   image: string;
+  imageDark?: string;
   tags: string[];
   featured?: boolean;
   caseStudy?: CaseStudy;
@@ -389,7 +390,8 @@ export const projects: Project[] = [
     // fill it in, and the card grows a "Case study" link on its own.
     blurb:
       "A multi-agent early-warning system for diabetic complications. A LangGraph StateGraph runs four specialist agents in parallel (renal, neuropathy, retinal and cardiovascular), each writing and executing its own Python scoring code against real NHANES lab data, then fanning into a synthesis agent that ranks the risks and returns one clinical referral. Built as team Snowfall for the AMD Developer Hackathon 2026, Track 3: Unicorn. I was lead developer of an international cross-timezone team and built it full-stack: the agent graph, the FastAPI service and the Next.js front end. I served live inference on an AMD MI300X, and designed and delivered the demo and pitch to the judges.",
-    image: "/images/project-glycoswarm.png",
+    image: "/images/project-glycoswarm-light.png",
+    imageDark: "/images/project-glycoswarm.png",
     tags: ["LangGraph", "FastAPI", "Gemma 4", "GLM 5.2", "Next.js"],
     links: {
       demo: "https://glycoswarm-ai.vercel.app/",
@@ -402,7 +404,8 @@ export const projects: Project[] = [
     featured: false,
     blurb:
       "I built an AI reading station that scores twelve knee abnormalities from multi-series DICOM MRIs. I designed a multi-view DINOv2 vision transformer with cross-view attention across six anatomical orientations, trained it against weak labels from a 3-LLM consensus pipeline, and deployed it as a live interactive DICOM viewer with serverless ONNX inference.",
-    image: "/images/project-knee-mri.png",
+    image: "/images/project-knee-mri-light.png",
+    imageDark: "/images/project-knee-mri.png",
     tags: ["Next.js", "Python", "PyTorch", "DINOv2", "ONNX"],
     links: {
       demo: "https://knee-mri-reader.vercel.app/",
@@ -462,7 +465,8 @@ export const projects: Project[] = [
     year: "2026",
     blurb:
       "I wrote a CHIP-8 emulator from scratch in C/C++: the full core instruction set, memory management, delay and sound timers, and a custom Raylib visual debugger I built to track registers, the stack, and live memory while a ROM runs. I compiled it to WebAssembly so it plays in the browser.",
-    image: "/images/project-chip8.png",
+    image: "/images/project-chip8-light.png",
+    imageDark: "/images/project-chip8.png",
     tags: ["C/C++", "Raylib", "WebAssembly", "Emulation"],
     links: {
       demo: "https://chip8-debugger.vercel.app",
@@ -534,7 +538,8 @@ export const projects: Project[] = [
     year: "2025",
     blurb:
       "I built a clinical decision support system that predicts coronary artery disease risk from patient biomarkers. Trained on the 920-patient UCI dataset across 4 clinical hospitals, comparing Random Forest, Gradient Boosting, and Logistic Regression with 0.919 ROC-AUC and 89.2% recall, deployed with live SHAP feature attributions.",
-    image: "/images/project-heart.png",
+    image: "/images/project-heart-light.png",
+    imageDark: "/images/project-heart.png",
     tags: ["Python", "scikit-learn", "Next.js", "Gradient Boosting", "SHAP"],
     links: {
       demo: "https://cardiosense-app.vercel.app",

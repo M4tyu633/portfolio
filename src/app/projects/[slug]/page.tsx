@@ -131,18 +131,47 @@ export default async function CaseStudyPage(
                   project.fit === "contain" ? "bg-surface p-6" : "bg-background"
                 }`}
               >
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 768px"
-                  className={
-                    project.fit === "contain"
-                      ? "object-contain"
-                      : "object-cover"
-                  }
-                  priority
-                />
+                {project.imageDark ? (
+                  <>
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 768px"
+                      className={`dark:hidden ${
+                        project.fit === "contain"
+                          ? "object-contain"
+                          : "object-cover"
+                      }`}
+                      priority
+                    />
+                    <Image
+                      src={project.imageDark}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 768px"
+                      className={`hidden dark:block ${
+                        project.fit === "contain"
+                          ? "object-contain"
+                          : "object-cover"
+                      }`}
+                      priority
+                    />
+                  </>
+                ) : (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 768px"
+                    className={
+                      project.fit === "contain"
+                        ? "object-contain"
+                        : "object-cover"
+                    }
+                    priority
+                  />
+                )}
               </div>
             </Reveal>
           )}
