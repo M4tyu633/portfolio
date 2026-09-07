@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { newsreader, plexMono, plexSans } from "./fonts";
 import Footer from "@/components/chrome/Footer";
+import RouteCurtain from "@/components/chrome/RouteCurtain";
 import { SoundProvider } from "@/lib/sound";
 import { contact, site } from "@/content/site";
 
@@ -100,6 +101,9 @@ export default function RootLayout({
         <SoundProvider>
           {children}
           <Footer />
+          {/* A curtain in the destination world's colour, over a link that is
+              already working. See the component: it never blocks navigation. */}
+          <RouteCurtain />
         </SoundProvider>
         {/* Page views only, no cookies and no cross-site identifier. */}
         <Analytics />

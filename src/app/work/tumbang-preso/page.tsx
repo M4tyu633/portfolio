@@ -102,7 +102,10 @@ export default function TumbangPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            /* ⚠ object-position, not the default centre. The key art is a wide
+               shot and the lata and the tsinelas sit low and right of centre in
+               it; at phone width a centred cover crop shows a wall. */
+            className="object-cover object-[68%_62%] sm:object-center"
           />
           {/* Two gradients, and both are load-bearing. The bottom one gives the
               type somewhere to sit without dimming the art it sits on. The top
@@ -145,7 +148,10 @@ export default function TumbangPage() {
               >
                 1st Place
               </span>
-              <span>Gear Up NCR Esports Game Dev Challenge</span>
+              <span className="hidden sm:inline">
+                Gear Up NCR Esports Game Dev Challenge
+              </span>
+              <span className="sm:hidden">Gear Up NCR</span>
               <span aria-hidden>/</span>
               <span>2026</span>
             </p>
