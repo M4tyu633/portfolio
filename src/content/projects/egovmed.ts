@@ -19,11 +19,12 @@ export const egovmed: Project = {
   oneLiner:
     "Assess and route the patient before they join the queue, on the government's own API stack.",
   media: {
-    // The deployed app's sign-in screen, captured at phone width because
-    // eGovMed is a mobile-first PWA and a desktop shot of it is a narrow column
-    // floating in grey. See scripts/capture-live.sh.
-    src: "/work/egovmed/mobile.webp",
-    alt: "The eGovMed sign-in screen on a phone: the wordmark, a six-digit MPIN entry, and an illustration of a Filipino family.",
+    // ⚠ The SIGNED-IN home screen, not the sign-in wall. Every route on the
+    // deployed app redirects to MPIN entry without a session, so a headless
+    // capture can only ever photograph the door. He supplied this one from a
+    // real session; it is the screen the product actually is.
+    src: "/work/egovmed/home.webp",
+    alt: "The eGovMed home screen: a greeting by name, a Start a visit card, tiles for Records, Payments, Report and Messages, and a bottom tab bar.",
     fit: "contain",
   },
   award: "Winner, 1 of 10 teams · eGov Hackathon PH 2026 · ₱100,000",

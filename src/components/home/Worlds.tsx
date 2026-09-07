@@ -178,32 +178,35 @@ export function TumbangWorld({ project }: { project: Project }) {
           </div>
         </div>
 
-        {/* The entrance, drawn on his own PLAY pennant. */}
+        {/* The entrance, drawn on his own PLAY pennant.
+         *
+         * ⚠ THE IMAGE AND THE LABEL ARE SIZED IN THE SAME em, off one font-size
+         * on the wrapper, so their ratio cannot drift as the viewport changes.
+         * Sized by hand they did drift: the word sat at about 37 per cent of
+         * the pennant's height with a lake of green either side of it, and his
+         * own PLAY button sets its label at about 42 per cent filling roughly
+         * half the width. 8.6em wide against 1.35em of type reproduces that.
+         *
+         * The ink is his dark green, not black. */}
         <Link
           href={`/work/${project.slug}`}
           className="group mt-12 inline-flex items-center"
-          aria-label={`Enter Tumbang Preso`}
+          aria-label="Enter Tumbang Preso"
+          style={{ fontSize: "clamp(1.55rem, 3.6vw, 2.3rem)" }}
         >
           <span className="relative inline-flex items-center">
             <Image
               src="/work/tumbang/pennant-play.webp"
               alt=""
-              width={520}
-              height={140}
-              className="h-auto w-[15rem] transition-transform duration-200 group-hover:scale-[1.04] sm:w-[19rem]"
+              width={954}
+              height={256}
+              className="h-auto w-[8.6em] transition-transform duration-200 group-hover:scale-[1.035]"
             />
-            {/* ⚠ The pennant PNG is a blank chevron; the game draws its own label
-                on top at runtime and this matches HOW. In his PLAY button the
-                word is Darumadrop, all caps, near-black, centred over the whole
-                sprite with a slight right bias, and its cap height is about 42
-                per cent of the pennant. Anything smaller reads as a caption
-                sitting on a button rather than as the button. */}
-            <span className="u-display absolute inset-0 flex items-center justify-center pl-[5%] text-[clamp(1.7rem,4.2vw,2.6rem)] leading-none tracking-[0.01em] text-[#20200f] uppercase">
+            <span className="u-display absolute inset-y-0 left-0 right-[13%] flex items-center justify-center text-[1.35em] leading-none tracking-[0.01em] text-[#15290a] uppercase">
               ENTER
             </span>
           </span>
-        </Link>
-      </div>
+        </Link>      </div>
     </section>
   );
 }
@@ -223,7 +226,7 @@ export function EgovWorld({ project }: { project: Project }) {
           <div
             className="relative w-[min(15rem,58vw)] justify-self-center overflow-hidden rounded-[1.5rem] border-[9px] shadow-[0_20px_50px_-22px_rgba(16,32,58,.45)]"
             style={{
-              aspectRatio: "430 / 932",
+              aspectRatio: "429 / 957",
               borderColor: "var(--w-ink)",
               background: "var(--w-ground-2)",
             }}

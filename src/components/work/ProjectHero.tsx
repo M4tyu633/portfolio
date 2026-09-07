@@ -104,7 +104,9 @@ function Handset({ project }: { project: Project }) {
             <div
               className="relative w-[min(19rem,72vw)] overflow-hidden rounded-[1.75rem] border-[10px] shadow-[0_24px_60px_-24px_rgba(16,32,58,.45)]"
               style={{
-                aspectRatio: "430 / 932",
+                // ⚠ The capture's own aspect, so the frame never crops the app.
+                // At 430/932 it cut the right edge off every row.
+                aspectRatio: "429 / 957",
                 borderColor: "var(--w-ink)",
                 background: "var(--w-ground-2)",
               }}
