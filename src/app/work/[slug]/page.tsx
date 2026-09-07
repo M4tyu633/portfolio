@@ -18,7 +18,7 @@ import type { DisplayId, Project } from "@/content/types";
  *
  * Everything else still uses this shell, which is the right answer for a
  * project whose case study is prose and figures rather than a world. */
-const BESPOKE = new Set(["tumbang-preso"]);
+const BESPOKE = new Set(["tumbang-preso", "egovmed", "glycoswarm-ai"]);
 
 export function generateStaticParams() {
   return projects

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/chrome/Nav";
 import { about, timeline } from "@/content/about";
-import { certifications, contact, stamp } from "@/content/site";
+import { certifications, contact } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "About",
@@ -29,18 +29,28 @@ export default function AboutPage() {
       <Nav />
       <main id="main" className="flex-1">
         <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
-          <header className="py-16 sm:py-24">
-            <p className="u-meta text-ink-3 flex flex-wrap items-center gap-x-3 gap-y-1">
-              {stamp.map((s, i) => (
-                <span key={s} className="flex items-center gap-3">
-                  {i > 0 ? <span aria-hidden>/</span> : null}
-                  {s}
-                </span>
-              ))}
-            </p>
-            <h1 className="u-display mt-8 max-w-[16ch] text-[clamp(2.2rem,6.4vw,5rem)]">
-              {about.heading}
-            </h1>
+          <header className="about-opening">
+            <div>
+              <p>Matthew Labrador · Manila</p>
+              <h1>{about.heading}</h1>
+              <p>
+                Computer science at UP Manila. Games, systems, debate, and a
+                habit of asking one more question.
+              </p>
+            </div>
+            <figure>
+              <Image
+                src={about.portrait.src}
+                alt={about.portrait.alt}
+                width={600}
+                height={750}
+                sizes="(min-width: 768px) 400px, 80vw"
+                priority
+              />
+              <figcaption>
+                Usually building. Sometimes explaining what I built.
+              </figcaption>
+            </figure>
           </header>
 
           <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:items-start">
@@ -64,16 +74,6 @@ export default function AboutPage() {
                   </div>
                 );
               })}
-
-              <div className="border-rule relative mt-10 aspect-[4/5] max-w-[22rem] border">
-                <Image
-                  src={about.portrait.src}
-                  alt={about.portrait.alt}
-                  fill
-                  sizes="22rem"
-                  className="object-cover grayscale"
-                />
-              </div>
             </div>
 
             {/* -------- the gutter -------- */}
@@ -91,7 +91,10 @@ export default function AboutPage() {
 
           {/* -------- the timeline -------- */}
           <section aria-labelledby="timeline" className="py-20 sm:py-28">
-            <h2 id="timeline" className="u-display text-[clamp(1.6rem,3.2vw,2.5rem)]">
+            <h2
+              id="timeline"
+              className="u-display text-[clamp(1.6rem,3.2vw,2.5rem)]"
+            >
               Where the time went
             </h2>
 
@@ -108,7 +111,7 @@ export default function AboutPage() {
                     <p className="text-[1.0625rem] tracking-[-0.01em]">
                       {t.role}
                     </p>
-                    <p className="u-meta text-ink-3 mt-1 normal-case tracking-[0.04em]">
+                    <p className="u-meta text-ink-3 mt-1 tracking-[0.04em] normal-case">
                       {t.org}
                     </p>
                     {t.note ? (

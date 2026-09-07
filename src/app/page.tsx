@@ -71,10 +71,12 @@ export default function Home() {
                     key={a.slug}
                     className="border-rule-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 border-b py-4 sm:grid-cols-[auto_1fr_auto] sm:items-baseline sm:gap-x-6"
                   >
-                    <span className="u-meta text-ink-3 tabular-nums">{a.n}</span>
+                    <span className="u-meta text-ink-3 tabular-nums">
+                      {a.n}
+                    </span>
                     <span className="text-[1.0625rem] tracking-[-0.01em]">
                       {a.title}
-                      <span className="u-meta text-ink-3 mt-1 block normal-case tracking-[0.04em]">
+                      <span className="u-meta text-ink-3 mt-1 block tracking-[0.04em] normal-case">
                         {a.result} · {a.org}
                       </span>
                     </span>

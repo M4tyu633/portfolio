@@ -26,8 +26,14 @@ export const kneeMri: Project = {
   built: ["PyTorch", "DINOv2", "ONNX Runtime", "Next.js 16", "React 19"],
   links: { demo: "https://knee-mri-reader.vercel.app/" },
   facts: [
-    { label: "Dataset", value: "RSNA Knee Abnormality Detection, 4,407 studies" },
-    { label: "Architecture", value: "DINOv2 + cross-view attention, 20-model ensemble" },
+    {
+      label: "Dataset",
+      value: "RSNA Knee Abnormality Detection, 4,407 studies",
+    },
+    {
+      label: "Architecture",
+      value: "DINOv2 + cross-view attention, 20-model ensemble",
+    },
     { label: "Validation", value: "0.843 macro AUC, strict out-of-fold" },
     { label: "Inference", value: "Serverless ONNX, client-side DICOM parsing" },
     { label: "Findings", value: "Twelve, scored simultaneously" },
@@ -57,7 +63,11 @@ export const kneeMri: Project = {
         {
           kind: "figures",
           items: [
-            { value: "58", label: "Studies with expert ground truth", tone: "bad" },
+            {
+              value: "58",
+              label: "Studies with expert ground truth",
+              tone: "bad",
+            },
             { value: "4,349", label: "With only a free-text report" },
             { value: "9", label: "Languages those reports were written in" },
           ],
@@ -97,8 +107,7 @@ export const kneeMri: Project = {
       blocks: [
         {
           kind: "figures",
-          caption:
-            "The same twenty-model ensemble, scored two ways.",
+          caption: "The same twenty-model ensemble, scored two ways.",
           items: [
             {
               value: "0.997",
@@ -145,7 +154,8 @@ export const kneeMri: Project = {
           kind: "image",
           src: "/images/project-knee-mri-station.png",
           alt: "The reading station with a slice stack, per-finding probabilities and the original report.",
-          caption: "The station, with the twelve findings scored down the right.",
+          caption:
+            "The station, with the twelve findings scored down the right.",
         },
       ],
     },

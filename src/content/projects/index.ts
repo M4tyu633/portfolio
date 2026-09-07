@@ -18,12 +18,7 @@ export const projects: Project[] = [
 ];
 
 /** The four that take over the homepage, in homepage order. */
-export const featured: Project[] = [
-  tumbangPreso,
-  egovmed,
-  glycoswarm,
-  chip8,
-];
+export const featured: Project[] = [tumbangPreso, egovmed, glycoswarm, chip8];
 
 export function projectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);

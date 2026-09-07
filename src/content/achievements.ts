@@ -15,11 +15,21 @@ import type { Achievement } from "./types";
 
 export const receipts = {
   title: "Receipts",
-  standfirst:
-    "Competitions, rankings, scholarships, and the work behind them.",
+  standfirst: "Competitions, rankings, scholarships, and the work behind them.",
 };
 
 export const achievements: Achievement[] = [
+  {
+    n: "11",
+    slug: "kaspersky-ctf",
+    title: "Kaspersky International CTF 2026",
+    result: "42nd in Asia & Oceania",
+    org: "BHackers · 1,263 points",
+    year: "2026",
+    tier: "B",
+    summary:
+      "My first international benchmark: a 24-hour regional competition alongside Clarence S. Pagaduan as BHackers. We were invited to represent UP Manila and the Philippines in a field that included experienced CTF players and professionals. We finished 42nd in Asia & Oceania with 1,263 points.",
+  },
   {
     n: "01",
     slug: "gear-up-ncr",

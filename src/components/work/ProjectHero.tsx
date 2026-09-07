@@ -40,7 +40,7 @@ function Stamp({ project }: { project: Project }) {
   return (
     <div className="border-rule flex flex-wrap items-baseline gap-x-5 gap-y-1 border-b py-4">
       <span className="u-meta text-accent tabular-nums">{project.n}</span>
-      <span className="u-meta text-ink-3 normal-case tracking-[0.04em]">
+      <span className="u-meta text-ink-3 tracking-[0.04em] normal-case">
         {project.category}
       </span>
       <span className="u-meta text-ink-3 ml-auto tabular-nums">
@@ -120,7 +120,7 @@ function Handset({ project }: { project: Project }) {
                 className="object-cover object-top"
               />
             </div>
-            <figcaption className="u-meta text-ink-3 mt-4 text-center normal-case tracking-[0.04em]">
+            <figcaption className="u-meta text-ink-3 mt-4 text-center tracking-[0.04em] normal-case">
               The deployed app, on the screen it was designed for
             </figcaption>
           </figure>

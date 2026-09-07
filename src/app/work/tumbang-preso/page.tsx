@@ -170,7 +170,11 @@ export default function TumbangPage() {
          * game's own face at poster scale rather than dropped into a six-cell
          * dossier.
          * ============================================================== */}
-        <section id="m01" aria-labelledby="m01h" className="scroll-mt-[4.25rem]">
+        <section
+          id="m01"
+          aria-labelledby="m01h"
+          className="scroll-mt-[4.25rem]"
+        >
           <div className="mx-auto max-w-[92rem] px-5 py-16 sm:px-8 sm:py-24">
             <h2 id="m01h" className="u-display text-[clamp(2rem,5vw,3.75rem)]">
               This is a party game about hitting a can with a slipper.
@@ -190,7 +194,7 @@ export default function TumbangPage() {
                 ["+100", "points", "for a knockdown, to whoever threw"],
               ].map(([n, unit, note]) => (
                 <div key={unit}>
-                  <dd className="u-display text-[clamp(3rem,7vw,5.5rem)] text-accent leading-[0.8]">
+                  <dd className="u-display text-accent text-[clamp(3rem,7vw,5.5rem)] leading-[0.8]">
                     {n}
                     <span className="text-ink-2 ml-2 text-[0.3em] tracking-normal">
                       {unit}
@@ -216,8 +220,9 @@ export default function TumbangPage() {
             <div className="mx-auto max-w-[92rem] px-5 py-8 sm:px-8">
               <p className="u-prose text-ink text-[1.125rem]">
                 The interesting part is not the throw. Throwing is free. Your
-                slipper lands <em>inside</em> the taya&rsquo;s box, and walking in to
-                pick it up is exactly what puts you in range of being tagged.
+                slipper lands <em>inside</em> the taya&rsquo;s box, and walking
+                in to pick it up is exactly what puts you in range of being
+                tagged.
               </p>
             </div>
           </div>
@@ -228,14 +233,17 @@ export default function TumbangPage() {
          * ============================================================== */}
         <section aria-labelledby="m02h" className="border-rule border-t">
           <div className="mx-auto max-w-[92rem] px-5 py-16 sm:px-8 sm:py-24">
-            <h2 id="m02h" className="u-display text-[clamp(2rem,5.5vw,4.25rem)]">
+            <h2
+              id="m02h"
+              className="u-display text-[clamp(2rem,5.5vw,4.25rem)]"
+            >
               The team built the entry. I built the game.
             </h2>
             <p className="u-prose mt-6 text-[1.1875rem]">
               Every 3D model and character, the map, the interface, the sound
               design, the bots, the physics, the netcode, and the codebase under
-              all of it. Then the marketing, the deck, the pitch, and the Q&amp;A
-              in front of the judges.
+              all of it. Then the marketing, the deck, the pitch, and the
+              Q&amp;A in front of the judges.
             </p>
             <p className="u-prose mt-5">
               Five days is why a lot of what follows looks blunt. I did not have
@@ -252,7 +260,7 @@ export default function TumbangPage() {
                   alt="The taya defending the lata in the plaza while an attacker closes in."
                   className="border-rule border"
                 />
-                <figcaption className="u-meta text-ink-3 mt-3 normal-case tracking-[0.04em]">
+                <figcaption className="u-meta text-ink-3 mt-3 tracking-[0.04em] normal-case">
                   Bayan Plaza. The taya has to hold the box and the can at once.
                 </figcaption>
               </figure>
@@ -263,7 +271,7 @@ export default function TumbangPage() {
                   alt="A wide view of the Eskinita street map during a match."
                   className="border-rule border"
                 />
-                <figcaption className="u-meta text-ink-3 mt-3 normal-case tracking-[0.04em]">
+                <figcaption className="u-meta text-ink-3 mt-3 tracking-[0.04em] normal-case">
                   Eskinita. Every building, prop and character in it is ours.
                 </figcaption>
               </figure>
@@ -290,7 +298,10 @@ export default function TumbangPage() {
         <section aria-labelledby="m03h" className="border-rule border-t">
           <div className="mx-auto max-w-[92rem] px-5 py-16 sm:px-8 sm:py-24">
             <div className="grid gap-x-14 gap-y-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
-              <h2 id="m03h" className="u-display text-[clamp(1.8rem,4vw,3.25rem)]">
+              <h2
+                id="m03h"
+                className="u-display text-[clamp(1.8rem,4vw,3.25rem)]"
+              >
                 The picks change how you play, but only a little.
               </h2>
               <div>
@@ -371,20 +382,20 @@ export default function TumbangPage() {
             </h3>
             <p className="u-prose mt-4">
               Two ways to decide whether a slipper hit the can: is it inside the
-              contact radius at any physics tick, or how close did the swept path
-              actually come? Throw a few and watch them disagree.{" "}
+              contact radius at any physics tick, or how close did the swept
+              path actually come? Throw a few and watch them disagree.{" "}
               <strong>
-                The diagram below is a browser simulation of the failure mode, not
-                the game engine.
+                The diagram below is a browser simulation of the failure mode,
+                not the game engine.
               </strong>
             </p>
             <div className="mt-8">
               <ThrowFigure />
             </div>
             <p className="u-prose mt-5">
-              Deciding on the host also means every peer agrees. A tag that lands
-              on my screen cannot be a miss on yours. That is the whole reason
-              authority sits with the host and not with whoever threw.
+              Deciding on the host also means every peer agrees. A tag that
+              lands on my screen cannot be a miss on yours. That is the whole
+              reason authority sits with the host and not with whoever threw.
             </p>
           </div>
         </section>
@@ -392,17 +403,24 @@ export default function TumbangPage() {
         {/* =================================================================
          * 05 — networking.
          * ============================================================== */}
-        <section id="s05" aria-labelledby="m05h" className="scroll-mt-[4.25rem]">
+        <section
+          id="s05"
+          aria-labelledby="m05h"
+          className="scroll-mt-[4.25rem]"
+        >
           <div className="mx-auto max-w-[92rem] px-5 py-16 sm:px-8 sm:py-24">
-            <h2 id="m05h" className="u-display max-w-[22ch] text-[clamp(1.8rem,4.6vw,3.5rem)]">
+            <h2
+              id="m05h"
+              className="u-display max-w-[22ch] text-[clamp(1.8rem,4.6vw,3.5rem)]"
+            >
               A host cannot reliably know its own address.
             </h2>
             <p className="u-prose mt-6">
               Hosts broadcast a UDP packet and the browse screen lists whatever
               it hears. I learned the trap on my own machine: ask it for its
-              address and it offers a LAN card, a Hamachi 25.x, a Radmin 26.x and
-              a few link-local 169.254s, in no promised order. Pick wrong and you
-              send everyone to an address that only exists on the host.
+              address and it offers a LAN card, a Hamachi 25.x, a Radmin 26.x
+              and a few link-local 169.254s, in no promised order. Pick wrong
+              and you send everyone to an address that only exists on the host.
             </p>
             <NetworkFigure />
             <p className="u-prose">
@@ -419,14 +437,17 @@ export default function TumbangPage() {
          * ============================================================== */}
         <section aria-labelledby="m06h" className="border-rule border-t">
           <div className="mx-auto max-w-[92rem] px-5 py-16 sm:px-8 sm:py-24">
-            <h2 id="m06h" className="u-display text-[clamp(1.8rem,4.6vw,3.5rem)]">
+            <h2
+              id="m06h"
+              className="u-display text-[clamp(1.8rem,4.6vw,3.5rem)]"
+            >
               Then strangers played it in a mall.
             </h2>
             <p className="u-prose mt-5 mb-10">
               PC Express and Intel Gamer Days. Four booth machines, an LED wall,
               and a queue of people who had never heard of it working out the
-              controls without anybody handing them a rulebook. That was the part
-              the contextual controls were designed for.
+              controls without anybody handing them a rulebook. That was the
+              part the contextual controls were designed for.
             </p>
             <PhotoStrip photos={SHOWCASE} label="The PC Express showcase" />
           </div>
@@ -457,8 +478,8 @@ export default function TumbangPage() {
             <p className="u-prose mx-auto mt-5 text-center">
               I built the game alone. I did not get through those three days
               alone. BH Studios is Paul Andrei Recio, Clarence Pagaduan, Harry
-              Gomez and Hans Xavier Lao, and they carried everything that was not
-              the codebase.
+              Gomez and Hans Xavier Lao, and they carried everything that was
+              not the codebase.
             </p>
           </div>
 
@@ -485,7 +506,7 @@ export default function TumbangPage() {
                 </p>
                 <h2
                   id="m08h"
-                  className="u-meta text-ink-2 mt-6 normal-case tracking-[0.05em]"
+                  className="u-meta text-ink-2 mt-6 tracking-[0.05em] normal-case"
                 >
                   Gear Up NCR Esports Game Development Challenge 2026
                 </h2>
@@ -494,7 +515,7 @@ export default function TumbangPage() {
                   game goes to the national finals in General Santos City. DOST
                   and several partner companies are backing the entry from here.
                 </p>
-                <p className="u-prose mt-4 text-ink">
+                <p className="u-prose text-ink mt-4">
                   The build I show there will not be the build that won the
                   region.
                 </p>
@@ -515,7 +536,7 @@ export default function TumbangPage() {
                     className="object-cover"
                   />
                 </div>
-                <figcaption className="u-meta text-ink-3 mt-3 normal-case tracking-[0.04em]">
+                <figcaption className="u-meta text-ink-3 mt-3 tracking-[0.04em] normal-case">
                   The regional trophy, and seven certificates.
                 </figcaption>
               </figure>
@@ -547,7 +568,7 @@ export default function TumbangPage() {
                 </div>
               ))}
             </dl>
-            <p className="u-meta text-ink-3 mt-8 normal-case tracking-[0.04em]">
+            <p className="u-meta text-ink-3 mt-8 tracking-[0.04em] normal-case">
               Built with {p.built.join(" · ")}
             </p>
           </div>
@@ -600,7 +621,7 @@ function Plate({
           className="object-cover"
         />
       </div>
-      <figcaption className="u-meta text-ink-3 mt-3 normal-case tracking-[0.04em]">
+      <figcaption className="u-meta text-ink-3 mt-3 tracking-[0.04em] normal-case">
         {caption}
       </figcaption>
     </figure>

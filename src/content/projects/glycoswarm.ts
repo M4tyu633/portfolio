@@ -1,16 +1,7 @@
 import type { Project } from "../types";
 
-/* ===========================================================================
- * 03 · GLYCOSWARM AI
- *
- * ⚠ This project had no case study in the old data file, only a card blurb.
- * Everything below is drawn from that blurb and from the experience timeline:
- * the four specialist domains, the parallel StateGraph, the agent-written
- * Python, NHANES as the data source, the MI300X with hosted failover, and the
- * team's placement in the event. No metric has been invented to fill it out,
- * and the sections stop where the documented material stops.
- * ======================================================================== */
-
+// Verified against the July 12 source archive: specialists.py, run_pipeline.py,
+// agent_core.py and README. Model-chosen cutoffs are not clinical validation.
 export const glycoswarm: Project = {
   n: "03",
   slug: "glycoswarm-ai",
@@ -41,7 +32,10 @@ export const glycoswarm: Project = {
     { label: "Team", value: "Snowfall, international and cross-timezone" },
     { label: "Event", value: "AMD Developer Hackathon 2026, Track 3: Unicorn" },
     { label: "Data", value: "NHANES laboratory panels" },
-    { label: "Inference", value: "Gemma 4 and GLM 5.2 on an MI300X, via Ollama" },
+    {
+      label: "Inference",
+      value: "Gemma 4 on MI300X / Ollama; Fireworks GLM 5.2 fallback",
+    },
     { label: "Topology", value: "Four specialists in parallel, one synthesis" },
   ],
 
@@ -100,7 +94,7 @@ export const glycoswarm: Project = {
       blocks: [
         {
           kind: "p",
-          text: "Live inference ran on an AMD MI300X through Ollama, with Gemma 4 and GLM 5.2 as the served models and automatic failover to a hosted provider when the GPU was unreachable. The graph sits behind a FastAPI service; the front end is Next.js.",
+          text: "Live inference ran Gemma 4 on an AMD MI300X through Ollama, with Fireworks GLM 5.2 as the hosted fallback when the GPU was unreachable. The graph sits behind a FastAPI service; the front end is Next.js.",
         },
         {
           kind: "p",

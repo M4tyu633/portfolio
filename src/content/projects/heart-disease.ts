@@ -23,8 +23,15 @@ export const heartDisease: Project = {
   links: { demo: "https://cardiosense-app.vercel.app" },
   facts: [
     { label: "Dataset", value: "UCI Heart Disease, 920 patients, 4 hospitals" },
-    { label: "Models", value: "Random Forest · Gradient Boosting · calibrated Logistic Regression" },
-    { label: "Validation", value: "0.919 ROC-AUC · 89.2% recall, 5-fold stratified" },
+    {
+      label: "Models",
+      value:
+        "Random Forest · Gradient Boosting · calibrated Logistic Regression",
+    },
+    {
+      label: "Validation",
+      value: "0.919 ROC-AUC · 89.2% recall, 5-fold stratified",
+    },
     { label: "Explainability", value: "Permutation importance and local SHAP" },
     { label: "Inference", value: "Entirely client-side" },
   ],
@@ -88,11 +95,19 @@ export const heartDisease: Project = {
         {
           kind: "ledger",
           rows: [
-            { key: "Asymptomatic chest pain", value: "22.4%", note: "silent ischemia" },
+            {
+              key: "Asymptomatic chest pain",
+              value: "22.4%",
+              note: "silent ischemia",
+            },
             { key: "Vessels coloured on fluoroscopy", value: "16.5%" },
             { key: "Reversible thallium perfusion defect", value: "14.2%" },
             { key: "Exercise-induced ST depression", value: "11.8%" },
-            { key: "Max heart rate achieved", value: "9.8%", note: "chronotropic incompetence" },
+            {
+              key: "Max heart rate achieved",
+              value: "9.8%",
+              note: "chronotropic incompetence",
+            },
           ],
         },
         {

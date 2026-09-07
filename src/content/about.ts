@@ -6,7 +6,7 @@ import type { LabEntry } from "./types";
  * ======================================================================== */
 
 export const about = {
-  heading: "The part that doesn't fit in the project cards.",
+  heading: "There’s a person behind all this.",
   paragraphs: [
     "I'm a BS Computer Science student at UP Manila and a DOST undergraduate scholar. Most of my projects end up crossing boundaries I wasn't planning to cross: networking in a game, security in a healthcare system, deployment around an AI model. I like that part.",
     "I also like having receipts. If a collision system feels unreliable, I measure it. If two API documents contradict each other, I test both. If software can fail in a dangerous way, I want to decide what failure should look like before I make the happy path pretty.",
@@ -98,7 +98,8 @@ export const labEntries: LabEntry[] = [
     title: "CHIP-8, running",
     blurb:
       "The full interpreter and its debugger, compiled to WebAssembly. Six ROMs, all written by hand for this project.",
-    affordance: "Play it, pause it, single-step it, watch the registers change.",
+    affordance:
+      "Play it, pause it, single-step it, watch the registers change.",
     href: "/lab/chip-8",
     status: "live",
   },

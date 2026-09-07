@@ -1,47 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { daruma, franklin } from "@/app/fonts";
+import { daruma } from "@/app/fonts";
 import InteractiveFigure from "@/components/figures";
 import GameClip from "@/components/media/GameClip";
 import type { Project } from "@/content/types";
 
-/* ===========================================================================
- * THE FOUR HOMEPAGE WORLDS.
- *
- * Deliberately four separate components rather than one parameterised panel.
- * The brief for this site is that the rooms are not identical, and a single
- * template with a colour prop is exactly how you end up with the same Tailwind
- * component in twelve places wearing different paint.
- *
- * So each one has its own LAYOUT LOGIC, not just its own palette:
- *
- *   01 asphalt   a court. Title top-left at poster scale, the range below it,
- *                everything drawn on a ground with grain.
- *   02 form      a printed document. Two columns, ruled, with the route
- *                running across the page like a wayfinding sign.
- *   03 trace     a chart. Narrow centred column over a baseline grid, and the
- *                graph given the full width because it IS the content.
- *   04 machine   an instrument panel. Label column down the left, readouts
- *                down the right, and the door to the running machine.
- *
- * What they share is `WorldFrame`: the catalogue number, the classification,
- * and the way in. That is the building.
- *
- * ⚠⚠ A WORLD PANEL SUBSTITUTES ITS DISPLAY FACE, IT DOES NOT ADD ONE.
- * The rule is at most two families in front of a reader at a time, and that is
- * what happens here: inside the Tumbang panel the building's serif is replaced
- * by the game's own Darumadrop, inside eGovMed by Libre Franklin, and outside
- * them the serif comes back. At no point are three display faces on screen
- * together.
- *
- * The first version inherited the serif into these panels, and it put the word
- * ENTER in Times on top of a hand-painted green pennant out of the game. A
- * button drawn by hand deserves the lettering it was drawn for.
- *
- * Both faces are preload:false (see app/fonts.ts), so they are fetched when
- * the panel that draws them scrolls into reach rather than on first paint.
- * ======================================================================== */
-
+// Home uses media compositions; the full systems live on their own routes.
 function WorldFrame({
   project,
   children,
@@ -66,7 +30,7 @@ function WorldFrame({
         <div className="border-rule flex flex-wrap items-baseline gap-x-5 gap-y-1 border-b py-4">
           <span className="u-meta text-accent tabular-nums">{project.n}</span>
           <span className="u-meta">{project.title}</span>
-          <span className="u-meta text-ink-3 normal-case tracking-[0.04em]">
+          <span className="u-meta text-ink-3 tracking-[0.04em] normal-case">
             {project.category}
           </span>
           <span className="u-meta text-ink-3 ml-auto tabular-nums">
@@ -177,7 +141,6 @@ export function TumbangWorld({ project }: { project: Project }) {
             ) : null}
           </div>
         </div>
-
         {/* The entrance, drawn on his own PLAY pennant.
          *
          * ⚠ THE IMAGE AND THE LABEL ARE SIZED IN THE SAME em, off one font-size
@@ -202,11 +165,12 @@ export function TumbangWorld({ project }: { project: Project }) {
               height={256}
               className="h-auto w-[8.6em] transition-transform duration-200 group-hover:scale-[1.035]"
             />
-            <span className="u-display absolute inset-y-0 left-0 right-[13%] flex items-center justify-center text-[1.35em] leading-none tracking-[0.01em] text-[#15290a] uppercase">
+            <span className="u-display absolute inset-y-0 right-[13%] left-0 flex items-center justify-center text-[1.35em] leading-none tracking-[0.01em] text-[#15290a] uppercase">
               ENTER
             </span>
           </span>
-        </Link>      </div>
+        </Link>{" "}
+      </div>
     </section>
   );
 }
@@ -215,123 +179,94 @@ export function TumbangWorld({ project }: { project: Project }) {
  * 02 · FORM
  * ------------------------------------------------------------------------ */
 export function EgovWorld({ project }: { project: Project }) {
-  const h = project.home!;
   return (
-    <WorldFrame project={project} display="franklin" className={franklin.variable}>
-      <div className="py-12 sm:py-16">
-        {/* ⚠ The product first. eGovMed is a phone app and it looks like one,
-            so the panel is built around a handset rather than around a grid of
-            ruled boxes pretending to be a government form. */}
-        <div className="grid items-center gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1fr)]">
-          <div
-            className="relative w-[min(15rem,58vw)] justify-self-center overflow-hidden rounded-[1.5rem] border-[9px] shadow-[0_20px_50px_-22px_rgba(16,32,58,.45)]"
-            style={{
-              aspectRatio: "429 / 957",
-              borderColor: "var(--w-ink)",
-              background: "var(--w-ground-2)",
-            }}
-          >
-            <Image
-              src={project.media.src}
-              alt={project.media.alt}
-              fill
-              sizes="15rem"
-              className="object-cover object-top"
-            />
-          </div>
-
-          <div>
-            <h2
-              id={`w${project.n}-title`}
-              className="u-display text-[clamp(2.2rem,5.6vw,4.5rem)] uppercase"
-            >
-              {h.headline}
-            </h2>
-            <p className="u-prose mt-6">{h.body}</p>
-            {h.coda ? (
-              <p
-                className="mt-6 border-l-[3px] pl-4 text-[0.9375rem] leading-relaxed"
-                style={{
-                  borderColor: "var(--eg-teal)",
-                  color: "var(--w-ink-2)",
-                }}
-              >
-                {h.coda}
-              </p>
-            ) : null}
-          </div>
-        </div>
-
-        {h.figure ? <InteractiveFigure id={h.figure} /> : null}
-        {h.figureCaption ? (
-          <p className="u-meta text-ink-3 -mt-8 normal-case tracking-[0.04em]">
-            {h.figureCaption}
-          </p>
-        ) : null}
+    <section
+      id="w02"
+      data-world="egov"
+      data-display="plex"
+      data-world-panel
+      className="home-civic media-scene"
+      aria-labelledby="w02-title"
+    >
+      <div className="home-civic-copy">
+        <p>eGovMed / Full-stack + API integrations</p>
+        <h2 id="w02-title">
+          One visit.
+          <br />A lot happening
+          <br />
+          <em>underneath.</em>
+        </h2>
+        <p>
+          Eight government integrations, from sign-in to payment. I made them
+          behave like one system.
+        </p>
+        <Link href="/work/egovmed" className="scene-link">
+          Enter eGovMed <span aria-hidden>↗</span>
+        </Link>
       </div>
-    </WorldFrame>
-  );
-}
-
-/* ---------------------------------------------------------------------------
- * 03 · TRACE
- * ------------------------------------------------------------------------ */
-export function GlycoWorld({ project }: { project: Project }) {
-  const h = project.home!;
-  return (
-    <WorldFrame project={project} display="plex" className="m-trace">
-      <div className="py-12 sm:py-16">
-        <div className="mx-auto max-w-[52rem] text-center">
-          <h2
-            id={`w${project.n}-title`}
-            className="u-display text-[clamp(2.2rem,5.6vw,4.5rem)]"
-          >
-            {h.headline}
-          </h2>
-          <p className="u-prose mx-auto mt-7 text-center">{h.body}</p>
-          {h.coda ? (
-            <p className="text-accent mt-6 font-mono text-[0.9375rem]">
-              {h.coda}
-            </p>
-          ) : null}
-        </div>
-
-        {/* The deployed dashboard, then the topology it draws. The diagram is
-            the argument, but it is an argument ABOUT something, and this is the
-            something. */}
-        <div className="border-rule relative mt-12 aspect-[16/9] overflow-hidden border">
+      <div className="civic-art">
+        <span aria-hidden className="civic-eight">
+          08
+        </span>
+        <div className="civic-phone">
           <Image
             src={project.media.src}
             alt={project.media.alt}
             fill
-            sizes="(min-width: 1024px) 88rem, 100vw"
-            className={
-              project.media.fit === "contain"
-                ? "object-contain p-6"
-                : "object-cover object-top"
-            }
+            sizes="(min-width: 768px) 320px, 230px"
+            className="object-contain"
           />
         </div>
-
-        {h.figure ? <InteractiveFigure id={h.figure} /> : null}
-        {h.figureCaption ? (
-          <p className="u-meta text-ink-3 -mt-8 text-center normal-case tracking-[0.04em]">
-            {h.figureCaption}
-          </p>
-        ) : null}
+        <p>
+          SSO · AI · eVerify · Liveness
+          <br />
+          Message · Chain · Pay · Report
+        </p>
       </div>
-    </WorldFrame>
+    </section>
+  );
+}
+export function GlycoWorld({ project }: { project: Project }) {
+  return (
+    <section
+      id="w03"
+      data-world="glyco"
+      data-display="plex"
+      data-world-panel
+      className="home-swarm media-scene"
+      aria-labelledby="w03-title"
+    >
+      <div className="home-swarm-top">
+        <p>GlycoSwarm AI / Lead developer</p>
+        <span>Renal / Retinal / Neuropathy / Cardiovascular</span>
+      </div>
+      <h2 id="w03-title">
+        Four perspectives.
+        <br />
+        <span>One patient.</span>
+      </h2>
+      <div className="swarm-home-image">
+        <Image
+          src={project.media.src}
+          alt={project.media.alt}
+          fill
+          sizes="(min-width: 1024px) 1100px, 100vw"
+          className="object-contain"
+        />
+      </div>
+      <div className="home-swarm-bottom">
+        <p>
+          Parallel specialists, executable scoring code, inspectable evidence.
+          The graph is where the interesting decisions happen.
+        </p>
+        <Link href="/work/glycoswarm-ai" className="scene-link">
+          Enter GlycoSwarm <span aria-hidden>↗</span>
+        </Link>
+      </div>
+    </section>
   );
 }
 
-/* ---------------------------------------------------------------------------
- * 04 · MACHINE
- *
- * The one world with no interactive figure on the homepage, on purpose. The
- * emulator is 540 KB of WebAssembly and it lives one click away, in the lab and
- * on its own page. Putting it here would make the homepage the heaviest
- * document on the site to show something nobody asked for yet.
- * ------------------------------------------------------------------------ */
 export function Chip8World({ project }: { project: Project }) {
   const h = project.home!;
   const specs = [
@@ -359,28 +294,13 @@ export function Chip8World({ project }: { project: Project }) {
               {h.coda}
             </p>
           ) : null}
-          <Link
-            href="/lab/chip-8"
-            className="u-meta border-accent text-accent hover:bg-accent hover:text-accent-ink mt-8 inline-block border px-4 py-2.5 transition-colors"
-          >
-            ▶ Run it
-          </Link>
         </div>
-
         <div>
-          <div className="border-rule bg-ground-2 relative aspect-[16/10] border">
-            <Image
-              src={project.media.src}
-              alt={project.media.alt}
-              fill
-              sizes="(min-width: 1024px) 44rem, 100vw"
-              className="object-cover"
-            />
-          </div>
+          <InteractiveFigure id="c8-machine" />
           <dl className="border-rule mt-px grid grid-cols-2 gap-px border-t">
             {specs.map(([k, v]) => (
               <div key={k} className="bg-ground py-3">
-                <dt className="u-meta text-ink-3 normal-case tracking-[0.04em]">
+                <dt className="u-meta text-ink-3 tracking-[0.04em] normal-case">
                   {k}
                 </dt>
                 <dd className="mt-1 font-mono text-[0.9375rem] tabular-nums">

@@ -25,71 +25,69 @@ const MUTED = "rgba(22,19,15,0.5)";
 
 export default function OpengraphImage() {
   return new ImageResponse(
-    (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        background: PAPER,
+        color: INK,
+        padding: "56px 64px",
+      }}
+    >
       <div
         style={{
-          width: "100%",
-          height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          background: PAPER,
-          color: INK,
-          padding: "56px 64px",
+          gap: 18,
+          fontSize: 19,
+          letterSpacing: 3,
+          textTransform: "uppercase",
+          color: MUTED,
         }}
       >
+        {stamp.map((s, i) => (
+          <div key={s} style={{ display: "flex", gap: 18 }}>
+            {i > 0 ? <span>/</span> : null}
+            <span>{s}</span>
+          </div>
+        ))}
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          fontSize: 74,
+          lineHeight: 1.06,
+          letterSpacing: -2.4,
+          maxWidth: 940,
+        }}
+      >
+        {opening.statement}
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", height: 1, background: RULE }} />
         <div
           style={{
             display: "flex",
-            gap: 18,
-            fontSize: 19,
-            letterSpacing: 3,
-            textTransform: "uppercase",
+            justifyContent: "space-between",
+            paddingTop: 20,
+            fontSize: 21,
+            letterSpacing: 1.4,
             color: MUTED,
           }}
         >
-          {stamp.map((s, i) => (
-            <div key={s} style={{ display: "flex", gap: 18 }}>
-              {i > 0 ? <span>/</span> : null}
-              <span>{s}</span>
+          {worldIndex.map((w) => (
+            <div key={w.n} style={{ display: "flex", gap: 12 }}>
+              <span>{w.n}</span>
+              <span style={{ color: INK }}>{w.title}</span>
             </div>
           ))}
         </div>
-
-        <div
-          style={{
-            display: "flex",
-            fontSize: 74,
-            lineHeight: 1.06,
-            letterSpacing: -2.4,
-            maxWidth: 940,
-          }}
-        >
-          {opening.statement}
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", height: 1, background: RULE }} />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              paddingTop: 20,
-              fontSize: 21,
-              letterSpacing: 1.4,
-              color: MUTED,
-            }}
-          >
-            {worldIndex.map((w) => (
-              <div key={w.n} style={{ display: "flex", gap: 12 }}>
-                <span>{w.n}</span>
-                <span style={{ color: INK }}>{w.title}</span>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
-    ),
+    </div>,
     size,
   );
 }

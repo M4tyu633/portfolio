@@ -28,13 +28,7 @@ export const egovmed: Project = {
     fit: "contain",
   },
   award: "Winner, 1 of 10 teams · eGov Hackathon PH 2026 · ₱100,000",
-  built: [
-    "React + Vite",
-    "Node / Express",
-    "Redis",
-    "Besu",
-    "eGov API stack",
-  ],
+  built: ["React + Vite", "Node / Express", "Redis", "Besu", "eGov API stack"],
   related: ["egov-hackathon"],
   links: { demo: "https://egovmed-frontend.vercel.app/" },
   facts: [
@@ -69,7 +63,7 @@ export const egovmed: Project = {
       blocks: [
         {
           kind: "p",
-          text: "A patient signs in with an eGovPH account and the profile auto-fills from SSO. They describe symptoms in English, Tagalog or Taglish, and triage returns a specialty, an urgency level and any red flags. Identity is confirmed with consent through a face liveness capture and a PhilSys demographic match, then the appointment is booked and a queue number issued with an SMS confirmation. The bill settles through the unified government gateway with statutory discounts already applied.",
+          text: "A patient signs in with an eGovPH account and the profile auto-fills from SSO. They describe symptoms in English, Tagalog or Taglish, and triage returns a specialty, an urgency level and any red flags. Identity is confirmed with consent through a face liveness capture and a PhilSys demographic match, then the appointment is booked and a queue number issued with an SMS confirmation. The bill settles through the unified government gateway with demo benefit estimates clearly labelled.",
         },
         {
           kind: "p",
@@ -108,7 +102,7 @@ export const egovmed: Project = {
           kind: "decision",
           situation: "A chain can prove that a record existed.",
           constraint:
-            "Clinical data should not live on-chain, and the Data Privacy Act says so.",
+            "Clinical data should stay private; an immutable chain is the wrong place for its payload.",
           decision:
             "Anchor a hash only. Payloads are stripped to a type and a timestamp before submission, so no patient ID, facility or clinical content ever reaches the chain.",
         },
@@ -153,7 +147,7 @@ export const egovmed: Project = {
           kind: "figures",
           items: [
             {
-              value: "30",
+              value: "38",
               label: "Backend security regression tests gating merges",
             },
             { value: "2", label: "Package trees under dependency audit" },

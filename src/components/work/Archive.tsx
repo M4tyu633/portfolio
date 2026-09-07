@@ -52,7 +52,7 @@ export default function Archive({ projects }: { projects: Project[] }) {
                 </span>
                 <span
                   id={`cat-${p.slug}`}
-                  className="u-meta text-ink-3 hidden normal-case tracking-[0.04em] sm:block"
+                  className="u-meta text-ink-3 hidden tracking-[0.04em] normal-case sm:block"
                 >
                   {p.category}
                 </span>
@@ -112,7 +112,9 @@ export default function Archive({ projects }: { projects: Project[] }) {
           {projects[active].facts.slice(0, 3).map((f) => (
             <div key={f.label} className="bg-ground py-3">
               <dt className="u-meta text-ink-3">{f.label}</dt>
-              <dd className="mt-1.5 text-[0.9375rem] leading-snug">{f.value}</dd>
+              <dd className="mt-1.5 text-[0.9375rem] leading-snug">
+                {f.value}
+              </dd>
             </div>
           ))}
         </dl>

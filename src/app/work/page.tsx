@@ -31,7 +31,10 @@ export default function WorkPage() {
            * capability with no work under it does not appear.
            * ------------------------------------------------------------- */}
           <section aria-labelledby="tech-index" className="py-20 sm:py-28">
-            <h2 id="tech-index" className="u-display text-[clamp(1.6rem,3.2vw,2.5rem)]">
+            <h2
+              id="tech-index"
+              className="u-display text-[clamp(1.6rem,3.2vw,2.5rem)]"
+            >
               What it was built with
             </h2>
             <p className="u-prose mt-4">

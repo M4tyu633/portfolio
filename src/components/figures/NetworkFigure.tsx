@@ -56,14 +56,16 @@ export default function NetworkFigure() {
       <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
         {/* -------- the candidates -------- */}
         <div className="border-rule border-b p-4 sm:p-5 lg:border-r lg:border-b-0">
-          <h3 className="u-meta text-ink-3">
-            Ask the host for its address
-          </h3>
+          <h3 className="u-meta text-ink-3">Ask the host for its address</h3>
           <p className="text-ink-3 mt-2 text-[0.8125rem] leading-relaxed">
             It offers all four, in no promised order.
           </p>
 
-          <ul className="mt-4 space-y-px" role="listbox" aria-label="Candidate interfaces">
+          <ul
+            className="mt-4 space-y-px"
+            role="listbox"
+            aria-label="Candidate interfaces"
+          >
             {INTERFACES.map((iface, i) => (
               <li key={iface.prefix}>
                 <button
@@ -74,7 +76,7 @@ export default function NetworkFigure() {
                   className={`flex w-full items-baseline gap-3 border px-3 py-2.5 text-left transition-colors ${
                     selected === i
                       ? "border-focus bg-ground"
-                      : "border-transparent hover:bg-ground"
+                      : "hover:bg-ground border-transparent"
                   }`}
                 >
                   <span
@@ -88,7 +90,7 @@ export default function NetworkFigure() {
                     {selected === i ? "▸" : "·"}
                   </span>
                   <span className="font-mono text-sm">{iface.prefix}</span>
-                  <span className="u-meta text-ink-3 ml-auto normal-case tracking-[0.04em]">
+                  <span className="u-meta text-ink-3 ml-auto tracking-[0.04em] normal-case">
                     {iface.name}
                   </span>
                 </button>
@@ -100,7 +102,9 @@ export default function NetworkFigure() {
             aria-live="polite"
             className="border-rule text-ink-2 mt-4 border-t pt-4 text-[0.875rem] leading-relaxed"
           >
-            <span className="u-meta text-focus mr-2">If the beacon carried it</span>
+            <span className="u-meta text-focus mr-2">
+              If the beacon carried it
+            </span>
             {chosen.verdict}
           </p>
         </div>
@@ -115,8 +119,8 @@ export default function NetworkFigure() {
             </div>
             <p className="text-ink-2 text-[0.875rem] leading-relaxed">
               The receiver has no such problem, so the payload carries only the
-              port and the listener takes the host half from the datagram&rsquo;s own
-              source address.
+              port and the listener takes the host half from the
+              datagram&rsquo;s own source address.
             </p>
           </div>
 
@@ -135,10 +139,11 @@ export default function NetworkFigure() {
   3   ...`}
           </pre>
           <p className="text-ink-2 mt-3 text-[0.875rem] leading-relaxed">
-            A second hop in <code className="font-mono">100.64.0.0/10</code> means
-            the address the internet sees is not yours, and no port-forwarding
-            rule on your own router is reachable from outside. Options: an
-            overlay network, a tunnel, or a machine with a public address.
+            A second hop in <code className="font-mono">100.64.0.0/10</code>{" "}
+            means the address the internet sees is not yours, and no
+            port-forwarding rule on your own router is reachable from outside.
+            Options: an overlay network, a tunnel, or a machine with a public
+            address.
           </p>
 
           <div className="border-rule bg-ground mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1 border px-3 py-2.5">

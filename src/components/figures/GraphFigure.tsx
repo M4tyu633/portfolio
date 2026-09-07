@@ -66,7 +66,7 @@ export default function GraphFigure() {
     <figure className="border-rule bg-ground-2 my-12 border">
       <div className="border-rule flex items-baseline gap-3 border-b px-4 py-2.5">
         <span className="u-meta text-ink-3">StateGraph</span>
-        <span className="u-meta text-ink-3 ml-auto normal-case tracking-[0.04em] opacity-70">
+        <span className="u-meta text-ink-3 ml-auto tracking-[0.04em] normal-case opacity-70">
           Select a specialist to isolate it
         </span>
       </div>
@@ -82,7 +82,10 @@ export default function GraphFigure() {
           />
 
           {/* ---- the fan out ---- */}
-          <Bus side="left" focusedIndex={SPECIALISTS.findIndex((s) => s.id === focused)} />
+          <Bus
+            side="left"
+            focusedIndex={SPECIALISTS.findIndex((s) => s.id === focused)}
+          />
 
           {/* ---- specialists ---- */}
           <ul className="border-rule my-4 border lg:row-span-4 lg:my-0">
@@ -111,7 +114,7 @@ export default function GraphFigure() {
                     <span className="block text-[1.0625rem] leading-tight font-medium tracking-[-0.01em]">
                       {s.name}
                     </span>
-                    <span className="u-meta text-ink-3 mt-1 block normal-case tracking-[0.04em]">
+                    <span className="u-meta text-ink-3 mt-1 block tracking-[0.04em] normal-case">
                       {s.domain}
                     </span>
                   </span>
@@ -121,7 +124,10 @@ export default function GraphFigure() {
           </ul>
 
           {/* ---- the fan in ---- */}
-          <Bus side="right" focusedIndex={SPECIALISTS.findIndex((s) => s.id === focused)} />
+          <Bus
+            side="right"
+            focusedIndex={SPECIALISTS.findIndex((s) => s.id === focused)}
+          />
 
           {/* ---- synthesis ---- */}
           <div className="lg:row-span-4 lg:self-center">
@@ -147,16 +153,19 @@ export default function GraphFigure() {
         >
           {active ? (
             <div className="grid gap-5 sm:grid-cols-3">
-              <Field label="Input" value="The patient's NHANES laboratory panel." />
+              <Field
+                label="Input"
+                value="The patient's NHANES laboratory panel."
+              />
               <Field label="Responsibility" value={active.job} />
               <Field label="Into synthesis" value={active.gives} />
             </div>
           ) : (
             <p className="text-ink-2 text-[0.9375rem] leading-relaxed">
-              The four run at the same time and none of them can see another&rsquo;s
-              output. If they ran in sequence, the fourth would be agreeing with
-              the first three, and the synthesis stage would have nothing to
-              rank.
+              The four run at the same time and none of them can see
+              another&rsquo;s output. If they ran in sequence, the fourth would
+              be agreeing with the first three, and the synthesis stage would
+              have nothing to rank.
             </p>
           )}
         </div>

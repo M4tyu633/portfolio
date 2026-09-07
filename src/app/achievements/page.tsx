@@ -74,7 +74,7 @@ function Row({ a }: { a: Achievement }) {
         <span className="u-display block text-[clamp(1.25rem,2.8vw,2rem)]">
           {a.title}
         </span>
-        <span className="u-meta text-ink-3 mt-1.5 block normal-case tracking-[0.04em]">
+        <span className="u-meta text-ink-3 mt-1.5 block tracking-[0.04em] normal-case">
           {a.org}
         </span>
       </span>

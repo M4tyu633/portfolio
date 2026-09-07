@@ -100,7 +100,7 @@ export default function RouteFigure() {
     <figure className="border-rule bg-ground my-12 border">
       <div className="border-rule flex items-baseline gap-3 border-b px-4 py-2.5">
         <span className="u-meta text-ink-3">Patient route</span>
-        <span className="u-meta text-ink-3 ml-auto normal-case tracking-[0.04em] opacity-70">
+        <span className="u-meta text-ink-3 ml-auto tracking-[0.04em] normal-case opacity-70">
           Arrow keys to step
         </span>
       </div>
@@ -151,7 +151,7 @@ export default function RouteFigure() {
               >
                 {s.name}
               </span>
-              <span className="u-meta text-ink-3 mt-2 block normal-case tracking-[0.04em] opacity-70">
+              <span className="u-meta text-ink-3 mt-2 block tracking-[0.04em] normal-case opacity-70">
                 {s.services.join(" · ")}
               </span>
             </button>

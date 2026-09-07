@@ -36,7 +36,7 @@ export default function PhotoStrip({
     <section aria-label={label} className="relative">
       <ul
         ref={railRef}
-        className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto pb-4 [&::-webkit-scrollbar]:hidden"
       >
         {photos.map((p) => (
           <li
@@ -53,7 +53,7 @@ export default function PhotoStrip({
                   className="object-cover"
                 />
               </div>
-              <figcaption className="u-meta text-ink-3 mt-3 normal-case tracking-[0.04em]">
+              <figcaption className="u-meta text-ink-3 mt-3 tracking-[0.04em] normal-case">
                 {p.caption}
               </figcaption>
             </figure>

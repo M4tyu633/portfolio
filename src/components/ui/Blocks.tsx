@@ -48,7 +48,7 @@ function BlockView({ block }: { block: Block }) {
         <div className="not-prose">
           <InteractiveFigure id={block.id} />
           {block.caption ? (
-            <p className="u-meta text-ink-3 -mt-8 mb-12 normal-case tracking-[0.04em]">
+            <p className="u-meta text-ink-3 -mt-8 mb-12 tracking-[0.04em] normal-case">
               {block.caption}
             </p>
           ) : null}
@@ -124,11 +124,13 @@ function BlockView({ block }: { block: Block }) {
               alt={block.alt}
               fill
               sizes="(min-width: 1024px) 46rem, 100vw"
-              className={block.fit === "contain" ? "object-contain p-6" : "object-cover"}
+              className={
+                block.fit === "contain" ? "object-contain p-6" : "object-cover"
+              }
             />
           </div>
           {block.caption ? (
-            <figcaption className="u-meta text-ink-3 mt-3 normal-case tracking-[0.04em]">
+            <figcaption className="u-meta text-ink-3 mt-3 tracking-[0.04em] normal-case">
               {block.caption}
             </figcaption>
           ) : null}

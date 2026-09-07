@@ -203,7 +203,8 @@ export const chip8: Project = {
             { key: "Catch", value: "One-button reaction game" },
             {
               key: "Bounce",
-              value: "Paces a ball off the display-wait quirk rather than the delay timer",
+              value:
+                "Paces a ball off the display-wait quirk rather than the delay timer",
               note: "checks its bounds by equality, since CHIP-8 has no signed comparison and a one-pixel step can only overshoot an edge by one",
             },
             {

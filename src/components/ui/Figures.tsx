@@ -55,14 +55,14 @@ export default function Figures({
                 </span>
               ) : null}
             </dd>
-            <dt className="u-meta text-ink-3 mt-3 leading-[1.5] normal-case tracking-[0.04em]">
+            <dt className="u-meta text-ink-3 mt-3 leading-[1.5] tracking-[0.04em] normal-case">
               {f.label}
             </dt>
           </div>
         ))}
       </dl>
       {caption ? (
-        <figcaption className="u-meta text-ink-3 mt-3 normal-case tracking-[0.04em]">
+        <figcaption className="u-meta text-ink-3 mt-3 tracking-[0.04em] normal-case">
           {caption}
         </figcaption>
       ) : null}
@@ -101,7 +101,7 @@ export function BigFigure({
           </span>
         ) : null}
       </div>
-      <p className="u-meta text-ink-3 mt-4 normal-case tracking-[0.04em]">
+      <p className="u-meta text-ink-3 mt-4 tracking-[0.04em] normal-case">
         {label}
       </p>
     </div>

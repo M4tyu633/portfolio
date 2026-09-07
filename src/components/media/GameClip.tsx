@@ -36,6 +36,7 @@ export default function GameClip({
   const ref = useRef<HTMLVideoElement>(null);
   const [armed, setArmed] = useState(false);
   const [forced, setForced] = useState(false);
+  const [paused, setPaused] = useState(false);
   const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
@@ -46,18 +47,19 @@ export default function GameClip({
       ([entry]) => {
         if (entry.isIntersecting) {
           setArmed(true);
-          if (el.readyState > 0) void el.play().catch(() => {});
+          if (el.readyState > 0 && (!reduced || forced) && !paused)
+            void el.play().catch(() => {});
         } else {
           el.pause();
         }
       },
-      { rootMargin: "100% 0px" },
+      { rootMargin: "0px" },
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [reduced, forced, paused]);
 
-  const play = reduced ? forced : armed;
+  const play = !paused && (reduced ? forced : armed);
 
   return (
     <div
@@ -67,12 +69,13 @@ export default function GameClip({
       <video
         ref={ref}
         muted
+        autoPlay={play}
         loop
         playsInline
         preload="none"
         poster={poster}
         aria-label={alt}
-        src={play ? src : undefined}
+        src={armed || forced ? src : undefined}
         onLoadedData={(e) => {
           if (play) void e.currentTarget.play().catch(() => {});
         }}
@@ -86,7 +89,21 @@ export default function GameClip({
         >
           Play clip
         </button>
-      ) : null}
+      ) : (
+        <button
+          type="button"
+          onClick={() => {
+            const next = !paused;
+            setPaused(next);
+            if (next) ref.current?.pause();
+            else void ref.current?.play().catch(() => {});
+          }}
+          className="clip-toggle"
+          aria-label={paused ? "Play video" : "Pause video"}
+        >
+          {paused ? "Play" : "Pause"}
+        </button>
+      )}
     </div>
   );
 }

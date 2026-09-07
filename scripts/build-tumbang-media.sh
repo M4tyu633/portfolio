@@ -29,15 +29,19 @@
 # =============================================================================
 set -euo pipefail
 
-FF="${FFMPEG_BIN:-/c/Users/matth/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-9.0-full_build/bin}"
-DL="/c/Users/matth/Downloads"
-GODOT="/c/Users/matth/Documents/GitHub/DOST-GameDev/assets"
-PICS="${PICS_DIR:-$DL/TUMP FOLDER/PICS}"
-EVENT="${EVENT_DIR:-}"   # the PC EXPRESS folder, once it has been unpacked
-
-TRAILER="$DL/TUMP Trailer BHStudios.mp4"
-DEMO="$DL/TUMP Game Demo.mp4"
+FF="${FFMPEG_BIN:-ffmpeg}"
+GODOT="${GODOT_DIR:-../DOST-GameDev/assets}"
+PICS="${PICS_DIR:-}"
+EVENT="${EVENT_DIR:-}"
+TRAILER="${TRAILER_FILE:-}"
+DEMO="${DEMO_FILE:-}"
 OUT="public/work/tumbang"
+
+# Validate required sources before touching curated outputs. Photos are optional.
+command -v "$FF" >/dev/null 2>&1 || { echo "FFmpeg not found. Set FFMPEG_BIN to the executable path." >&2; exit 1; }
+[ -d "$GODOT/ui/main-menu" ] || { echo "Set GODOT_DIR to the Godot assets directory (containing ui/ and audio/)." >&2; exit 1; }
+[ -f "$DEMO" ] || { echo "Set DEMO_FILE to the original TUMP Game Demo.mp4." >&2; exit 1; }
+[ -f "$TRAILER" ] || { echo "Set TRAILER_FILE to the original TUMP Trailer BHStudios.mp4." >&2; exit 1; }
 
 mkdir -p "$OUT"
 
@@ -52,12 +56,12 @@ mkdir -p "$OUT"
 clip () {          # clip <src> <start> <duration> <name>
   local src="$1" ss="$2" dur="$3" name="$4"
   echo "  clip $name  ($ss +${dur}s)"
-  "$FF/ffmpeg" -y -v error -ss "$ss" -i "$src" -t "$dur" -an \
+  "$FF" -y -v error -ss "$ss" -i "$src" -t "$dur" -an \
     -vf "scale=960:-2,fps=24" \
     -c:v libx264 -crf 30 -preset slow -pix_fmt yuv420p -movflags +faststart \
     "$OUT/$name.mp4"
   # The poster is the clip's own first frame, so nothing flashes before play.
-  "$FF/ffmpeg" -y -v error -ss "$ss" -i "$src" -frames:v 1 \
+  "$FF" -y -v error -ss "$ss" -i "$src" -frames:v 1 \
     -vf "scale=960:-2" -q:v 82 "$OUT/$name-poster.webp"
 }
 
@@ -75,7 +79,7 @@ clip "$DEMO" 00:02:20 8 "taya"
 still () {         # still <src> <start> <name> [width]
   local src="$1" ss="$2" name="$3" w="${4:-1600}"
   echo "  still $name"
-  "$FF/ffmpeg" -y -v error -ss "$ss" -i "$src" -frames:v 1 \
+  "$FF" -y -v error -ss "$ss" -i "$src" -frames:v 1 \
     -vf "scale=$w:-2" -q:v 80 "$OUT/$name.webp"
 }
 
@@ -91,13 +95,13 @@ echo "art"
 # The menu backdrop is the game's own key art: the lata and a tsinelas on the
 # asphalt inside the chalk circle. 3840x2160 and 15 MB at source; the site never
 # draws it above 2000, so that is where it is capped.
-"$FF/ffmpeg" -y -v error -i "$GODOT/ui/main-menu/MENU BACKDROP.png" \
+"$FF" -y -v error -i "$GODOT/ui/main-menu/MENU BACKDROP.png" \
   -vf "scale=2000:-1" -q:v 82 "$OUT/backdrop.webp"
 
 # Transparency matters on these: they are drawn over the page, not inside a box.
 art () {           # art <src> <name> <width>
   echo "  art $2"
-  "$FF/ffmpeg" -y -v error -i "$1" -vf "scale=$3:-1" \
+  "$FF" -y -v error -i "$1" -vf "scale=$3:-1" \
     -c:v libwebp -lossless 1 -compression_level 6 "$OUT/$2.webp"
 }
 art "$GODOT/ui/main-menu/TUMP.png"            "wordmark"      1100
@@ -113,7 +117,7 @@ art "$GODOT/ui/brand/bh_studios_logo.png"     "bh-studios"     420
 photo () {         # photo <src> <name> [width]
   [ -f "$1" ] || { echo "  skip $2 (source missing)"; return 0; }
   echo "  photo $2"
-  "$FF/ffmpeg" -y -v error -i "$1" -vf "scale=${3:-1600}:-2" -q:v 78 "$OUT/$2.webp"
+  "$FF" -y -v error -i "$1" -vf "scale=${3:-1600}:-2" -q:v 78 "$OUT/$2.webp"
 }
 
 echo "photos"
@@ -153,7 +157,7 @@ GA="$GODOT/audio"
 
 cue () {           # cue <src> <name> [gain dB]
   echo "  cue $2"
-  "$FF/ffmpeg" -y -v error -i "$1" -ac 1 -ar 44100 \
+  "$FF" -y -v error -i "$1" -ac 1 -ar 44100 \
     -af "volume=${3:-0}dB" -c:a libmp3lame -b:a 96k "$SND/$2.mp3"
 }
 
@@ -168,7 +172,7 @@ cue "$GA/sfx/throw_whoosh.wav"   "throw-whoosh"
 # The street ambience, trimmed to a 12 s bed with a short fade at each end so it
 # loops without a seam. It is the map's own ambience track.
 echo "  loop street"
-"$FF/ffmpeg" -y -v error -ss 2 -t 12 -i "$GA/ambience/eskinita_street.wav" \
+"$FF" -y -v error -ss 2 -t 12 -i "$GA/ambience/eskinita_street.wav" \
   -ac 1 -ar 44100 -af "afade=t=in:st=0:d=1.2,afade=t=out:st=10.8:d=1.2" \
   -c:a libmp3lame -b:a 72k "$SND/street.mp3"
 
@@ -180,6 +184,6 @@ echo "sound:"; du -ch "$SND"/* | tail -1
 # loop has no seam. ⚠ It is fetched only when the sound toggle is ON and only on
 # the Tumbang pages, so no other route pays for it.
 echo "  music tumbang-theme"
-"$FF/ffmpeg" -y -v error -ss 8 -t 45 -i "$GA/music/ost_menu.mp3" \
+"$FF" -y -v error -ss 8 -t 45 -i "$GA/music/ost_menu.mp3" \
   -ac 1 -ar 44100 -af "afade=t=in:st=0:d=2,afade=t=out:st=43:d=2,volume=-3dB" \
   -c:a libmp3lame -b:a 64k "$SND/tumbang-theme.mp3"

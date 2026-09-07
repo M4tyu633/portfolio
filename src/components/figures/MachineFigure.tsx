@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 /* ===========================================================================
@@ -21,10 +22,10 @@ export default function MachineFigure() {
     <figure className="border-rule bg-ground-2 my-12 border">
       <div className="border-rule flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b px-4 py-2.5">
         <span className="u-meta text-accent">CHIP-8</span>
-        <span className="u-meta text-ink-3 normal-case tracking-[0.04em]">
+        <span className="u-meta text-ink-3 tracking-[0.04em] normal-case">
           35 instructions · 4 KB · 16 registers · 64 x 32
         </span>
-        <span className="u-meta text-ink-3 ml-auto normal-case tracking-[0.04em] opacity-70">
+        <span className="u-meta text-ink-3 ml-auto tracking-[0.04em] normal-case opacity-70">
           {started ? "running" : "540 KB, on request"}
         </span>
       </div>
@@ -43,19 +44,26 @@ export default function MachineFigure() {
           <button
             type="button"
             onClick={() => setStarted(true)}
-            className="group flex h-full w-full flex-col items-center justify-center gap-4"
+            className="group relative flex h-full w-full flex-col items-center justify-center gap-4"
           >
+            <Image
+              src="/work/chip8/debugger.webp"
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 800px, 100vw"
+              className="object-cover opacity-50"
+            />
             <span
               aria-hidden
-              className="font-mono text-[clamp(2.5rem,9vw,5rem)] leading-none tracking-[-0.05em] transition-colors"
+              className="relative font-mono text-[clamp(2.5rem,9vw,5rem)] leading-none tracking-[-0.05em] transition-colors"
               style={{ color: "var(--w-accent)" }}
             >
               ▶
             </span>
-            <span className="u-meta border-accent text-accent group-hover:bg-accent group-hover:text-accent-ink border px-4 py-2 transition-colors">
+            <span className="u-meta border-accent text-accent group-hover:bg-accent group-hover:text-accent-ink relative border px-4 py-2 transition-colors">
               Load the machine
             </span>
-            <span className="text-ink-3 max-w-sm px-6 text-center text-[0.8125rem] leading-relaxed">
+            <span className="text-ink relative max-w-sm px-6 text-center text-[0.8125rem] leading-relaxed">
               540 KB of WebAssembly, fetched only when you ask. It opens on
               Brix.
             </span>

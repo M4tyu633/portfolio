@@ -15,13 +15,7 @@
 /** Which visual world a surface belongs to. Drives every colour on the page
  *  through the `[data-world]` blocks in globals.css. */
 export type WorldId =
-  | "index"
-  | "tumbang"
-  | "egov"
-  | "glyco"
-  | "chip8"
-  | "reading"
-  | "cardio";
+  "index" | "tumbang" | "egov" | "glyco" | "chip8" | "reading" | "cardio";
 
 /** Which display family a page loads. Never more than one per page, and two of
  *  the worlds deliberately choose the utility family instead. */

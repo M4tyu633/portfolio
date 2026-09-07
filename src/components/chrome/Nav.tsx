@@ -134,7 +134,9 @@ export default function Nav({
               >
                 <span
                   className={
-                    isActive(item.href) ? "text-ink" : "text-ink-2 hover:text-ink"
+                    isActive(item.href)
+                      ? "text-ink"
+                      : "text-ink-2 hover:text-ink"
                   }
                 >
                   {item.label}
@@ -203,7 +205,10 @@ export default function Nav({
       >
         <ul className="px-5 pt-1 pb-2">
           {nav.map((item) => (
-            <li key={item.href} className="border-rule-2 border-b last:border-0">
+            <li
+              key={item.href}
+              className="border-rule-2 border-b last:border-0"
+            >
               <Link
                 href={item.href}
                 onClick={() => {

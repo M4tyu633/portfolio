@@ -19,7 +19,10 @@ const SERVICES = [
   { name: "eGovPH SSO", role: "Identity, and the profile that auto-fills" },
   { name: "eGov AI", role: "Symptom triage: specialty, urgency, red flags" },
   { name: "National ID eVerify", role: "PhilSys demographic verification" },
-  { name: "Face Liveness", role: "Proof that a person was present, with consent" },
+  {
+    name: "Face Liveness",
+    role: "Proof that a person was present, with consent",
+  },
   { name: "eMessage", role: "Queue number and appointment confirmation" },
   { name: "eGovChain", role: "Integrity anchor, hash only" },
   { name: "eGovPay", role: "Payment, with statutory discounts applied" },
@@ -44,7 +47,7 @@ export default function LedgerFigure() {
     <figure className="border-rule bg-ground my-12 border">
       <div className="border-rule flex items-baseline gap-3 border-b px-4 py-2.5">
         <span className="u-meta text-ink-3">Integration ledger</span>
-        <span className="u-meta text-ink-3 ml-auto normal-case tracking-[0.04em] opacity-70">
+        <span className="u-meta text-ink-3 ml-auto tracking-[0.04em] normal-case opacity-70">
           Switch a path and watch the boot gate
         </span>
       </div>

@@ -62,7 +62,11 @@ type Tally = { throws: number; area: number; host: number; disagree: number };
 
 const HZ_CHOICES = [60, 30, 20] as const;
 
-export default function ThrowFigure({ compact = false }: { compact?: boolean }) {
+export default function ThrowFigure({
+  compact = false,
+}: {
+  compact?: boolean;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -160,7 +164,10 @@ export default function ThrowFigure({ compact = false }: { compact?: boolean }) 
 
       const speedNow = Math.hypot(vel.x, vel.y);
       const out =
-        pos.x < -0.5 || pos.x > COURT_W + 0.5 || pos.y < -0.5 || pos.y > COURT_H + 0.5;
+        pos.x < -0.5 ||
+        pos.x > COURT_W + 0.5 ||
+        pos.y < -0.5 ||
+        pos.y > COURT_H + 0.5;
       if (speedNow < 1.2 || out) break;
     }
 
@@ -171,7 +178,8 @@ export default function ThrowFigure({ compact = false }: { compact?: boolean }) 
     const hostFired = closest <= CONTACT_R;
     const rest = s.samples[s.samples.length - 1];
     const restedInBox =
-      Math.abs(rest.x - BOX_CX) <= BOX / 2 && Math.abs(rest.y - BOX_CY) <= BOX / 2;
+      Math.abs(rest.x - BOX_CX) <= BOX / 2 &&
+      Math.abs(rest.y - BOX_CY) <= BOX / 2;
 
     s.resolved = {
       speed,
@@ -193,7 +201,9 @@ export default function ThrowFigure({ compact = false }: { compact?: boolean }) 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     let w = 0;
     let h = 0;
@@ -231,7 +241,10 @@ export default function ThrowFigure({ compact = false }: { compact?: boolean }) 
     const Y = (my: number) => oy + my * scale;
 
     // Precomputed chalk jitter, so the hand-drawn line does not shimmer.
-    const jitter = Array.from({ length: 96 }, () => (Math.random() - 0.5) * 2.4);
+    const jitter = Array.from(
+      { length: 96 },
+      () => (Math.random() - 0.5) * 2.4,
+    );
 
     let raf = 0;
     let last = performance.now();
@@ -544,9 +557,7 @@ export default function ThrowFigure({ compact = false }: { compact?: boolean }) 
         <Verd
           label="A · Area overlap"
           sub={verdict ? `sampled at ${verdict.hz} Hz` : "trigger volume"}
-          state={
-            verdict ? (verdict.areaFired ? "fired" : "missed") : "waiting"
-          }
+          state={verdict ? (verdict.areaFired ? "fired" : "missed") : "waiting"}
         />
         <Verd
           label="B · Host distance"
@@ -564,11 +575,7 @@ export default function ThrowFigure({ compact = false }: { compact?: boolean }) 
         />
         <Readout
           label="Your probe"
-          value={
-            tally.throws
-              ? `${tally.area}/${tally.throws}`
-              : "0/0"
-          }
+          value={tally.throws ? `${tally.area}/${tally.throws}` : "0/0"}
           note={
             tally.disagree
               ? `${tally.disagree} disagreement${tally.disagree === 1 ? "" : "s"}`
@@ -610,7 +617,7 @@ export default function ThrowFigure({ compact = false }: { compact?: boolean }) 
 
         <p
           aria-live="polite"
-          className="u-meta text-ink-3 min-h-[1.2em] flex-1 normal-case tracking-[0.04em]"
+          className="u-meta text-ink-3 min-h-[1.2em] flex-1 tracking-[0.04em] normal-case"
         >
           {!verdict
             ? "Two contact tests run on every throw."
@@ -656,7 +663,7 @@ function Verd({
       >
         {state === "waiting" ? "—" : state === "fired" ? "FIRED" : "MISSED"}
       </div>
-      <div className="u-meta text-ink-3 mt-1 normal-case tracking-[0.04em] opacity-70">
+      <div className="u-meta text-ink-3 mt-1 tracking-[0.04em] normal-case opacity-70">
         {sub}
       </div>
     </div>
@@ -678,7 +685,7 @@ function Readout({
       <div className="mt-1.5 font-mono text-lg tracking-tight tabular-nums">
         {value}
       </div>
-      <div className="u-meta text-ink-3 mt-1 normal-case tracking-[0.04em] opacity-70">
+      <div className="u-meta text-ink-3 mt-1 tracking-[0.04em] normal-case opacity-70">
         {note}
       </div>
     </div>

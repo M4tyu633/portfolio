@@ -35,7 +35,11 @@ export default function ContactFigure() {
         <span id={id} className="u-meta text-ink-3">
           Contact resolver
         </span>
-        <div role="radiogroup" aria-labelledby={id} className="border-rule flex border">
+        <div
+          role="radiogroup"
+          aria-labelledby={id}
+          className="border-rule flex border"
+        >
           <Choice
             checked={resolver === "area"}
             onSelect={() => setResolver("area")}
@@ -58,7 +62,7 @@ export default function ContactFigure() {
           </span>
           <span className="text-ink-3"> / 36</span>
         </span>
-        <span className="u-meta text-ink-3 normal-case tracking-[0.04em]">
+        <span className="u-meta text-ink-3 tracking-[0.04em] normal-case">
           contacts resolved
         </span>
       </div>
@@ -88,8 +92,10 @@ export default function ContactFigure() {
                 );
               })}
             </div>
-            <div className="u-meta text-ink-3 mt-2 normal-case tracking-[0.04em] tabular-nums opacity-70">
-              {resolver === "area" ? CASES_PER_TARGET - misses : CASES_PER_TARGET}
+            <div className="u-meta text-ink-3 mt-2 tracking-[0.04em] normal-case tabular-nums opacity-70">
+              {resolver === "area"
+                ? CASES_PER_TARGET - misses
+                : CASES_PER_TARGET}
               /{CASES_PER_TARGET}
             </div>
           </div>
