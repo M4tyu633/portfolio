@@ -1403,7 +1403,7 @@
     }
   }
 }
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .home-civic {
     grid-template-columns: 1fr;
     padding: 3rem 5vw;
@@ -1430,8 +1430,8 @@
     margin: 2rem 0 0;
   }
   .swarm-home-image {
-    width: 115%;
-    margin: 1rem -7.5%;
+    width: 100%;
+    margin: 1.5rem 0;
     aspect-ratio: 16/10;
   }
   .home-swarm-bottom {
@@ -1821,7 +1821,7 @@
     font-size: 15vw;
   }
 }
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .cinema-opening {
     min-height: calc(100svh - 64px);
     padding: 1.5rem 5vw 0.75rem;
@@ -1833,13 +1833,13 @@
     display: none;
   }
   .cinema-opening h1 {
-    font-size: 18vw;
+    font-size: clamp(3.2rem, 15vw, 8rem);
     margin-top: 3.5rem;
     line-height: 0.9;
   }
   .cinema-bottom {
     display: block;
-    padding-top: 4rem;
+    padding-top: 3rem;
     padding-bottom: 1.5rem;
   }
   .cinema-bottom > p {

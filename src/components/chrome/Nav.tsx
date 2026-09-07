@@ -122,7 +122,7 @@ export default function Nav({
         <div className="flex-1" />
 
         {/* ---- 1 · the destinations ---- */}
-        <ul className="hidden items-center gap-7 md:flex">
+        <ul className="hidden items-center gap-7 lg:flex">
           {nav.map((item) => (
             <li key={item.href}>
               <Link
@@ -156,7 +156,7 @@ export default function Nav({
         </ul>
 
         {/* ---- 2 · the profiles ---- */}
-        <ul className="hidden items-center md:flex">
+        <ul className="hidden items-center lg:flex">
           {SOCIALS.map((s) => (
             <li key={s.label}>
               <IconLink href={s.href} label={s.label}>
@@ -172,15 +172,15 @@ export default function Nav({
         </ul>
 
         {/* ---- 3 · the utilities ---- */}
-        <span aria-hidden className="bg-rule hidden h-5 w-px md:block" />
-        <div className="hidden items-center md:flex">
+        <span aria-hidden className="bg-rule hidden h-5 w-px lg:block" />
+        <div className="hidden items-center lg:flex">
           <IconLink href={contact.resume} label="Resume">
             <ResumeIcon className="h-[1.15rem] w-[1.15rem]" />
           </IconLink>
           <SoundToggle />
         </div>
 
-        <div className="flex items-center md:hidden">
+        <div className="flex items-center lg:hidden">
           <SoundToggle />
           <button
             type="button"
@@ -197,11 +197,11 @@ export default function Nav({
         </div>
       </nav>
 
-      {/* ---- under 768px ---- */}
+      {/* ---- mobile / tablet drawer ---- */}
       <div
         id="nav-index"
         hidden={!open}
-        className="border-rule bg-ground border-t md:hidden"
+        className="border-rule bg-ground border-t lg:hidden"
       >
         <ul className="px-5 pt-1 pb-2">
           {nav.map((item) => (
