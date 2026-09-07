@@ -19,8 +19,9 @@ export const kneeMri: Project = {
   oneLiner:
     "Twelve knee findings scored from a multi-series DICOM study, in a reading station you can scrub.",
   media: {
-    src: "/images/project-knee-mri.png",
-    alt: "The Knee MRI reading station: a DICOM slice stack beside twelve scored findings.",
+    // A capture of the deployed reading station. See scripts/capture-live.sh.
+    src: "/work/knee-mri/station.webp",
+    alt: "The Knee MRI Reader's opening screen: twelve findings from one knee MRI, with the out-of-fold score beside the scan count.",
   },
   built: ["PyTorch", "DINOv2", "ONNX Runtime", "Next.js 16", "React 19"],
   links: { demo: "https://knee-mri-reader.vercel.app/" },

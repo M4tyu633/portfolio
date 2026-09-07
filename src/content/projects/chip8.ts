@@ -19,8 +19,9 @@ export const chip8: Project = {
   oneLiner:
     "A CHIP-8 interpreter in C++17 with a debugger that shows the machine changing while a ROM runs.",
   media: {
-    src: "/images/project-chip8.png",
-    alt: "The CHIP-8 debugger: the pixel display beside register, stack and memory panels.",
+    // A capture of the deployed debugger, mid-frame, running Brix.
+    src: "/work/chip8/debugger.webp",
+    alt: "The CHIP-8 debugger running Brix: the pixel display, the live disassembly, the sixteen registers and the hex keypad matrix.",
   },
   built: [
     "C++17",

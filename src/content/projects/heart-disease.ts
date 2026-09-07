@@ -10,13 +10,14 @@ export const heartDisease: Project = {
   title: "Heart Disease Prediction",
   category: "ML / Clinical",
   year: "2025",
-  world: "reading",
+  world: "cardio",
   display: "plex",
   oneLiner:
     "Coronary risk from biomarkers, tuned for recall rather than accuracy, with the attributions on screen.",
   media: {
-    src: "/images/project-heart.png",
-    alt: "The CardioSense risk station, showing a predicted risk and its biomarker attributions.",
+    // A capture of the deployed risk station itself. See scripts/capture-live.sh.
+    src: "/work/heart/station.webp",
+    alt: "The CardioSense risk station: a 98% predicted probability of stenosis beside a list of SHAP feature drivers.",
   },
   built: ["Python", "scikit-learn", "SHAP", "Next.js 16", "TypeScript"],
   links: { demo: "https://cardiosense-app.vercel.app" },

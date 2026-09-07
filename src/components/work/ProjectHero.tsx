@@ -4,30 +4,35 @@ import type { Project } from "@/content/types";
 /* ===========================================================================
  * PROJECT HEROES.
  *
- * Four compositions, not one template with a colour prop. Which one a project
- * gets is a property of the project, and the difference is layout rather than
- * paint:
+ * Three compositions for the five projects that use the shared shell. Tumbang
+ * Preso has its own route and none of this.
  *
- *   POSTER      title at the top of the page at maximum scale, over asphalt,
- *               with the plate full-bleed underneath. It is a game.
- *   DOCUMENT    a ruled header block. Reference number, classification and
- *               date across the top, title and lede in a two-column form.
- *   INSTRUMENT  a specification panel. The title is small, the facts are the
- *               composition, and the plate is one readout among several.
- *   PLATE       the reading-room default: image first, at size, then the text.
+ * ⚠⚠ EVERY ONE OF THEM LEADS WITH A PHOTOGRAPH OF THE RUNNING PRODUCT. That is
+ * the correction: the first pass opened four of these on a title and a ruled
+ * facts grid, with the screenshot somewhere below, so a visitor had to read
+ * three paragraphs before finding out what the thing looks like. The captures
+ * come from `scripts/capture-live.sh`, which photographs the deployed URLs.
+ *
+ *   HANDSET     for a product that is a phone app. eGovMed is a mobile-first
+ *               PWA, so a desktop screenshot of it is a narrow column floating
+ *               in grey. It gets a device frame and the page is built around
+ *               the shape of a phone.
+ *   INSTRUMENT  a wide screenshot directly under the title, edge to edge on the
+ *               container. For the two dark dashboards.
+ *   STATION     the screenshot FIRST, full-bleed and cinematic, then the title.
+ *               For the two clinical stations, whose own opening screens are
+ *               already designed to be looked at.
  * ======================================================================== */
 
 export default function ProjectHero({ project }: { project: Project }) {
   switch (project.world) {
-    case "tumbang":
-      return <Poster project={project} />;
     case "egov":
-      return <Document project={project} />;
+      return <Handset project={project} />;
     case "glyco":
     case "chip8":
       return <Instrument project={project} />;
     default:
-      return <Plate project={project} />;
+      return <Station project={project} />;
   }
 }
 
@@ -45,15 +50,13 @@ function Stamp({ project }: { project: Project }) {
   );
 }
 
-function Facts({ project, cols = 3 }: { project: Project; cols?: number }) {
+/* Facts as a flat run of label/value pairs rather than a boxed grid of
+ * identical cells. Same data, less dossier. */
+function Facts({ project }: { project: Project }) {
   return (
-    <dl
-      className={`border-rule bg-rule mt-px grid gap-px border-t sm:grid-cols-2 ${
-        cols === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
-      }`}
-    >
+    <dl className="border-rule mt-10 grid gap-x-12 gap-y-5 border-t pt-6 sm:grid-cols-2 lg:grid-cols-3">
       {project.facts.map((f) => (
-        <div key={f.label} className="bg-ground px-4 py-3.5">
+        <div key={f.label}>
           <dt className="u-meta text-ink-3">{f.label}</dt>
           <dd className="mt-1.5 text-[0.9375rem] leading-snug">{f.value}</dd>
         </div>
@@ -75,65 +78,50 @@ function Award({ project }: { project: Project }) {
 }
 
 /* ---------------------------------------------------------------------------
- * POSTER
+ * HANDSET
  * ------------------------------------------------------------------------ */
-function Poster({ project }: { project: Project }) {
+function Handset({ project }: { project: Project }) {
   return (
-    <header className="m-asphalt">
-      <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
-        <Stamp project={project} />
-        <h1 className="u-display py-8 text-[clamp(2.75rem,10vw,8.5rem)] sm:py-12">
-          {project.title}
-        </h1>
-      </div>
-
-      <div className="relative aspect-[16/9] max-h-[70vh] w-full sm:aspect-[2/1]">
-        <Image
-          src={project.media.src}
-          alt={project.media.alt}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-      </div>
-
-      <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
-        <div className="grid gap-x-14 gap-y-6 py-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-          <div>
-            <p className="u-prose text-ink text-[1.1875rem] leading-[1.55]">
-              {project.lede}
-            </p>
-            <Award project={project} />
-          </div>
-        </div>
-        <Facts project={project} />
-      </div>
-    </header>
-  );
-}
-
-/* ---------------------------------------------------------------------------
- * DOCUMENT
- * ------------------------------------------------------------------------ */
-function Document({ project }: { project: Project }) {
-  return (
-    <header className="m-formgrid">
-      <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
+    <header>
+      <div className="mx-auto max-w-[92rem] px-5 sm:px-8">
         <Stamp project={project} />
 
-        <div className="grid gap-x-14 gap-y-8 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+        <div className="grid items-center gap-x-16 gap-y-12 py-12 sm:py-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
           <div>
-            <h1 className="u-display text-[clamp(2.5rem,7.5vw,6rem)] uppercase">
+            <h1 className="u-display text-[clamp(2.6rem,8vw,6.5rem)] uppercase">
               {project.title}
             </h1>
-            <Award project={project} />
-          </div>
-          <div className="lg:pt-4">
-            <p className="u-prose text-ink text-[1.1875rem] leading-[1.55]">
+            <p className="u-prose text-ink mt-7 text-[1.1875rem] leading-[1.55]">
               {project.lede}
             </p>
+            <Award project={project} />
           </div>
+
+          {/* The device. A 12px radius and a hairline, not a photorealistic
+              iPhone render: it exists so the screenshot reads as a phone
+              screen rather than as a cropped desktop page. */}
+          <figure className="m-0 justify-self-center">
+            <div
+              className="relative w-[min(19rem,72vw)] overflow-hidden rounded-[1.75rem] border-[10px] shadow-[0_24px_60px_-24px_rgba(16,32,58,.45)]"
+              style={{
+                aspectRatio: "430 / 932",
+                borderColor: "var(--w-ink)",
+                background: "var(--w-ground-2)",
+              }}
+            >
+              <Image
+                src={project.media.src}
+                alt={project.media.alt}
+                fill
+                priority
+                sizes="19rem"
+                className="object-cover object-top"
+              />
+            </div>
+            <figcaption className="u-meta text-ink-3 mt-4 text-center normal-case tracking-[0.04em]">
+              The deployed app, on the screen it was designed for
+            </figcaption>
+          </figure>
         </div>
 
         <Facts project={project} />
@@ -148,36 +136,36 @@ function Document({ project }: { project: Project }) {
 function Instrument({ project }: { project: Project }) {
   return (
     <header>
-      <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
+      <div className="mx-auto max-w-[92rem] px-5 sm:px-8">
         <Stamp project={project} />
 
-        <div className="grid gap-x-14 gap-y-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
-          <div>
-            <h1 className="u-display text-[clamp(2.2rem,5.6vw,4.25rem)]">
-              {project.title}
-            </h1>
-            <p className="u-prose mt-6">{project.lede}</p>
-            <Award project={project} />
-          </div>
-
-          <div className="relative aspect-[16/10] self-start">
-            <div className="border-rule bg-ground-2 absolute inset-0 border">
-              <Image
-                src={project.media.src}
-                alt={project.media.alt}
-                fill
-                priority
-                sizes="(min-width: 1024px) 46rem, 100vw"
-                className={
-                  project.media.fit === "contain"
-                    ? "object-contain p-8"
-                    : "object-cover"
-                }
-              />
-            </div>
-          </div>
+        <div className="grid gap-x-16 gap-y-6 py-12 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-end">
+          <h1 className="u-display text-[clamp(2.4rem,6vw,4.75rem)]">
+            {project.title}
+          </h1>
+          <p className="u-prose text-ink text-[1.125rem] leading-[1.55]">
+            {project.lede}
+          </p>
         </div>
+      </div>
 
+      <div className="border-rule relative aspect-[16/9] w-full border-y sm:aspect-[21/9]">
+        <Image
+          src={project.media.src}
+          alt={project.media.alt}
+          fill
+          priority
+          sizes="100vw"
+          className={
+            project.media.fit === "contain"
+              ? "object-contain p-6"
+              : "object-cover object-top"
+          }
+        />
+      </div>
+
+      <div className="mx-auto max-w-[92rem] px-5 sm:px-8">
+        <Award project={project} />
         <Facts project={project} />
       </div>
     </header>
@@ -185,41 +173,44 @@ function Instrument({ project }: { project: Project }) {
 }
 
 /* ---------------------------------------------------------------------------
- * PLATE
+ * STATION
  * ------------------------------------------------------------------------ */
-function Plate({ project }: { project: Project }) {
+function Station({ project }: { project: Project }) {
   return (
     <header>
-      <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
+      <div className="mx-auto max-w-[92rem] px-5 sm:px-8">
         <Stamp project={project} />
+      </div>
 
-        <div className="border-rule relative mt-8 aspect-[16/9] border sm:aspect-[21/9]">
-          <Image
-            src={project.media.src}
-            alt={project.media.alt}
-            fill
-            priority
-            sizes="100vw"
-            className={
-              project.media.fit === "contain"
-                ? "object-contain p-8"
-                : "object-cover"
-            }
-          />
-        </div>
+      <div className="relative aspect-[16/10] w-full sm:aspect-[2/1]">
+        <Image
+          src={project.media.src}
+          alt={project.media.alt}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-top"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to top, var(--w-ground) 0%, transparent 42%)",
+          }}
+        />
+      </div>
 
-        <div className="grid gap-x-14 gap-y-6 py-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
-          <h1 className="u-display text-[clamp(2.2rem,5.2vw,4rem)]">
+      <div className="mx-auto -mt-16 max-w-[92rem] px-5 sm:-mt-24 sm:px-8">
+        <div className="relative grid gap-x-16 gap-y-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-end">
+          <h1 className="u-display text-[clamp(2.4rem,6vw,4.75rem)]">
             {project.title}
           </h1>
-          <div>
-            <p className="u-prose text-ink text-[1.1875rem] leading-[1.55]">
-              {project.lede}
-            </p>
-            <Award project={project} />
-          </div>
+          <p className="u-prose text-ink text-[1.125rem] leading-[1.55]">
+            {project.lede}
+          </p>
         </div>
-
+        <Award project={project} />
         <Facts project={project} />
       </div>
     </header>

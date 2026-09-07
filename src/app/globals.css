@@ -111,24 +111,39 @@
 }
 
 /* --------------------------------------------------------------------------
- * 02 · eGOVMED — a printed form. Office white, ink, one stamp, one routing rule.
+ * 02 · eGOVMED — the product, which is a mobile-first PWA.
+ *
+ * ⚠⚠ THIS WAS A GREY "GOVERNMENT FORM" WORLD AND IT WAS AN INVENTION.
+ * eGovMed does not look like a printed circular. It looks like the app it is:
+ * white cards on a pale blue-grey ground, one strong blue primary, a teal
+ * secondary taken from the MED in its own wordmark, rounded controls, and an
+ * illustration of a Filipino family at the foot of the sign-in screen. Every
+ * value below is sampled from a headless capture of the live deployment; see
+ * scripts/capture-live.sh.
+ *
+ * "Public sector" is not a colour scheme. The product is the reference.
  * ------------------------------------------------------------------------ */
 [data-world="egov"] {
-  --w-ground: #f4f4f2;
-  --w-ground-2: #e8eaec;
-  --w-ground-3: #dcdfe3;
-  --w-ink: #141719;
-  --w-ink-2: #141719a8;
-  --w-ink-3: #14171978;
-  --w-rule: #14171930;
-  --w-rule-2: #14171916;
-  --w-accent: #1b4b73; /* the routing rule */
-  --w-accent-ink: #f4f4f2;
-  --w-focus: #a8281e;
+  --w-ground: #f4f6fb;
+  --w-ground-2: #ffffff;
+  --w-ground-3: #e6ebf6;
+  --w-ink: #10203a;
+  --w-ink-2: #10203aa8;
+  --w-ink-3: #10203a7a;
+  --w-rule: #10203a26;
+  --w-rule-2: #10203a12;
+  --w-accent: #1355d6;
+  --w-accent-ink: #ffffff;
+  --w-focus: #c0362c;
 
-  --eg-stamp: #a8281e;
-  --eg-route: #1b4b73;
-  --eg-ok: #2f6b4f;
+  --eg-blue: #1355d6;
+  --eg-teal: #12a594;
+  --eg-amber: #f5b400;
+  --eg-red: #d93025;
+  --eg-green: #1e8e3e;
+  --eg-ok: #1e8e3e;
+  --eg-stamp: #c0362c;
+  --eg-route: #1355d6;
   --eg-hold: #9a6b12;
 
   color-scheme: light;
@@ -140,16 +155,16 @@
  * to sit next to each other in one diagram without any of them shouting.
  * ------------------------------------------------------------------------ */
 [data-world="glyco"] {
-  --w-ground: #0e1114;
-  --w-ground-2: #161b20;
-  --w-ground-3: #1e242a;
+  --w-ground: #080d12;
+  --w-ground-2: #101820;
+  --w-ground-3: #17212b;
   --w-ink: #dfe5e8;
   --w-ink-2: #dfe5e8a8;
   --w-ink-3: #dfe5e874;
   --w-rule: #dfe5e828;
   --w-rule-2: #dfe5e814;
-  --w-accent: #7fc4bb;
-  --w-accent-ink: #0e1114;
+  --w-accent: #10b981; /* the dashboard's own green primary */
+  --w-accent-ink: #080d12;
   --w-focus: #e0b64a;
 
   --gs-renal: #5fa8a0;
@@ -162,46 +177,75 @@
 }
 
 /* --------------------------------------------------------------------------
- * 04 · CHIP-8 — the instrument. Near black, amber phosphor, no second family.
+ * 04 · CHIP-8 — the instrument, drawn in the debugger's own colours.
+ *
+ * ⚠ The phosphor is MINT, not amber. That was a guess in the first pass and the
+ * deployed debugger settles it: the display, the register highlights and the
+ * ROM chips are all a green-cyan on near-black, with one warm amber reserved
+ * for a register that was just written. Sampled from a live capture.
  * ------------------------------------------------------------------------ */
 [data-world="chip8"] {
-  --w-ground: #0a0a0b;
-  --w-ground-2: #121214;
-  --w-ground-3: #1a1a1d;
-  --w-ink: #d7d5cf;
-  --w-ink-2: #d7d5cfa0;
-  --w-ink-3: #d7d5cf70;
-  --w-rule: #d7d5cf24;
-  --w-rule-2: #d7d5cf12;
-  --w-accent: #ffb000; /* amber terminal */
+  --w-ground: #06090a;
+  --w-ground-2: #0e1416;
+  --w-ground-3: #151d20;
+  --w-ink: #d5e3de;
+  --w-ink-2: #d5e3dea0;
+  --w-ink-3: #d5e3de70;
+  --w-rule: #7ee0b826;
+  --w-rule-2: #d5e3de12;
+  --w-accent: #7ee0b8; /* the debugger's phosphor */
   --w-accent-ink: #0a0a0b;
-  --w-focus: #ffb000;
+  --w-focus: #7ee0b8;
 
-  --c8-dim: #6f6a5e;
-  --c8-live: #7ac74f;
+  --c8-dim: #63706b;
+  --c8-write: #e0a54a; /* the amber a register flashes when it is written */
 
   color-scheme: dark;
 }
 
 /* --------------------------------------------------------------------------
- * 05 · READING ROOM — the two clinical-ML projects share one world.
- * Cool grey rather than the archive's warm paper, because both of them are
- * about looking at a greyscale image and arguing about a number.
+ * 05 · THE READING STATION — Knee MRI.
+ *
+ * ⚠ This was a cool light grey shared by both clinical projects. Both deployed
+ * products are DARK, and dark in two different ways: the MRI reader is
+ * near-black with a warm amber, the risk station is near-black with crimson.
  * ------------------------------------------------------------------------ */
 [data-world="reading"] {
-  --w-ground: #eceded;
-  --w-ground-2: #dfe1e2;
-  --w-ground-3: #d3d5d7;
-  --w-ink: #111315;
-  --w-ink-2: #111315a8;
-  --w-ink-3: #11131578;
-  --w-rule: #1113152b;
-  --w-rule-2: #11131514;
-  --w-accent: #2f6f8f;
-  --w-accent-ink: #eceded;
-  --w-focus: #b4551f;
+  --w-ground: #0b0b0c;
+  --w-ground-2: #131315;
+  --w-ground-3: #1b1b1e;
+  --w-ink: #f2ece4;
+  --w-ink-2: #f2ece4a8;
+  --w-ink-3: #f2ece476;
+  --w-rule: #f2ece426;
+  --w-rule-2: #f2ece412;
+  --w-accent: #e8b57e;
+  --w-accent-ink: #0b0b0c;
+  --w-focus: #e8b57e;
 
-  color-scheme: light;
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+ * 06 · CARDIOSENSE — near black and crimson, mono labels, corner brackets.
+ * Sampled from the deployed risk station. It is a different instrument from the
+ * MRI reader and it is drawn as one: the two used to share a world, and that
+ * flattened two real designs into a single guess.
+ * ------------------------------------------------------------------------ */
+[data-world="cardio"] {
+  --w-ground: #08080b;
+  --w-ground-2: #101018;
+  --w-ground-3: #171722;
+  --w-ink: #eceaf2;
+  --w-ink-2: #eceaf2a8;
+  --w-ink-3: #eceaf276;
+  --w-rule: #ff2d5533;
+  --w-rule-2: #eceaf214;
+  --w-accent: #ff2d55;
+  --w-accent-ink: #08080b;
+  --w-focus: #ff2d55;
+
+  color-scheme: dark;
 }
 
 /* --------------------------------------------------------------------------

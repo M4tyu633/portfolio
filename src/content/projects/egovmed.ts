@@ -19,8 +19,11 @@ export const egovmed: Project = {
   oneLiner:
     "Assess and route the patient before they join the queue, on the government's own API stack.",
   media: {
-    src: "/images/project-egovmed.png",
-    alt: "The eGovMed wordmark.",
+    // The deployed app's sign-in screen, captured at phone width because
+    // eGovMed is a mobile-first PWA and a desktop shot of it is a narrow column
+    // floating in grey. See scripts/capture-live.sh.
+    src: "/work/egovmed/mobile.webp",
+    alt: "The eGovMed sign-in screen on a phone: the wordmark, a six-digit MPIN entry, and an illustration of a Filipino family.",
     fit: "contain",
   },
   award: "Winner, 1 of 10 teams · eGov Hackathon PH 2026 · ₱100,000",

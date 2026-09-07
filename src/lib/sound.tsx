@@ -110,7 +110,14 @@ const VOICES: Record<Exclude<WorldId, "tumbang">, Voice> = {
     enter: { freq: 440, to: 880, type: "square", decay: 0.09, gain: 0.14 },
     impact: { freq: 220, type: "square", decay: 0.14, gain: 0.14 },
   },
-  // The reading room: soft, damped, almost felt.
+  // The CardioSense station: a short crimson pulse, like a monitor beat.
+  cardio: {
+    hover: { freq: 1480, type: "sine", decay: 0.035, gain: 0.09 },
+    click: { freq: 740, type: "sine", decay: 0.1, gain: 0.2 },
+    enter: { freq: 560, to: 340, type: "sine", decay: 0.18, gain: 0.22 },
+    impact: { freq: 300, type: "sine", decay: 0.26, gain: 0.24 },
+  },
+  // The reading station: soft, damped, almost felt.
   reading: {
     hover: { freq: 1800, decay: 0.02, gain: 0.07, noise: true },
     click: { freq: 520, type: "sine", decay: 0.09, gain: 0.18 },

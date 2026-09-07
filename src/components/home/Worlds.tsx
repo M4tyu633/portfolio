@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { daruma, franklin } from "@/app/fonts";
 import InteractiveFigure from "@/components/figures";
 import GameClip from "@/components/media/GameClip";
 import type { Project } from "@/content/types";
@@ -26,27 +27,40 @@ import type { Project } from "@/content/types";
  * What they share is `WorldFrame`: the catalogue number, the classification,
  * and the way in. That is the building.
  *
- * ⚠ The homepage loads TWO type families and no more, which is why the display
- * face does not change here. The type change is what happens when you go
- * through the door.
+ * ⚠⚠ A WORLD PANEL SUBSTITUTES ITS DISPLAY FACE, IT DOES NOT ADD ONE.
+ * The rule is at most two families in front of a reader at a time, and that is
+ * what happens here: inside the Tumbang panel the building's serif is replaced
+ * by the game's own Darumadrop, inside eGovMed by Libre Franklin, and outside
+ * them the serif comes back. At no point are three display faces on screen
+ * together.
+ *
+ * The first version inherited the serif into these panels, and it put the word
+ * ENTER in Times on top of a hand-painted green pennant out of the game. A
+ * button drawn by hand deserves the lettering it was drawn for.
+ *
+ * Both faces are preload:false (see app/fonts.ts), so they are fetched when
+ * the panel that draws them scrolls into reach rather than on first paint.
  * ======================================================================== */
 
 function WorldFrame({
   project,
   children,
+  display,
   className = "",
 }: {
   project: Project;
   children: React.ReactNode;
+  display?: "franklin" | "plex" | "mono";
   className?: string;
 }) {
   return (
     <section
       id={`w${project.n}`}
       data-world={project.world}
+      data-display={display}
       data-world-panel
       aria-labelledby={`w${project.n}-title`}
-      className={`bg-ground text-ink scroll-mt-14 ${className}`}
+      className={`bg-ground text-ink scroll-mt-[4.25rem] ${className}`}
     >
       <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
         <div className="border-rule flex flex-wrap items-baseline gap-x-5 gap-y-1 border-b py-4">
@@ -99,9 +113,10 @@ export function TumbangWorld({ project }: { project: Project }) {
     <section
       id={`w${project.n}`}
       data-world={project.world}
+      data-display="daruma"
       data-world-panel
       aria-labelledby={`w${project.n}-title`}
-      className="bg-ground text-ink scroll-mt-[4.25rem]"
+      className={`${daruma.variable} bg-ground text-ink scroll-mt-[4.25rem]`}
     >
       {/* --- the game, edge to edge --- */}
       <div data-surface="stage" className="bg-ground relative">
@@ -177,7 +192,13 @@ export function TumbangWorld({ project }: { project: Project }) {
               height={140}
               className="h-auto w-[15rem] transition-transform duration-200 group-hover:scale-[1.04] sm:w-[19rem]"
             />
-            <span className="u-display absolute inset-0 flex items-center pl-9 text-[clamp(1.1rem,2.4vw,1.6rem)] text-[#1c3d0e] sm:pl-11">
+            {/* ⚠ The pennant PNG is a blank chevron; the game draws its own label
+                on top at runtime and this matches HOW. In his PLAY button the
+                word is Darumadrop, all caps, near-black, centred over the whole
+                sprite with a slight right bias, and its cap height is about 42
+                per cent of the pennant. Anything smaller reads as a caption
+                sitting on a button rather than as the button. */}
+            <span className="u-display absolute inset-0 flex items-center justify-center pl-[5%] text-[clamp(1.7rem,4.2vw,2.6rem)] leading-none tracking-[0.01em] text-[#20200f] uppercase">
               ENTER
             </span>
           </span>
@@ -193,21 +214,44 @@ export function TumbangWorld({ project }: { project: Project }) {
 export function EgovWorld({ project }: { project: Project }) {
   const h = project.home!;
   return (
-    <WorldFrame project={project} className="m-formgrid">
+    <WorldFrame project={project} display="franklin" className={franklin.variable}>
       <div className="py-12 sm:py-16">
-        <div className="grid gap-x-14 gap-y-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-          <h2
-            id={`w${project.n}-title`}
-            className="u-display text-[clamp(2.2rem,5.6vw,4.5rem)]"
+        {/* ⚠ The product first. eGovMed is a phone app and it looks like one,
+            so the panel is built around a handset rather than around a grid of
+            ruled boxes pretending to be a government form. */}
+        <div className="grid items-center gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1fr)]">
+          <div
+            className="relative w-[min(15rem,58vw)] justify-self-center overflow-hidden rounded-[1.5rem] border-[9px] shadow-[0_20px_50px_-22px_rgba(16,32,58,.45)]"
+            style={{
+              aspectRatio: "430 / 932",
+              borderColor: "var(--w-ink)",
+              background: "var(--w-ground-2)",
+            }}
           >
-            {h.headline}
-          </h2>
-          <div className="lg:pt-3">
-            <p className="u-prose">{h.body}</p>
+            <Image
+              src={project.media.src}
+              alt={project.media.alt}
+              fill
+              sizes="15rem"
+              className="object-cover object-top"
+            />
+          </div>
+
+          <div>
+            <h2
+              id={`w${project.n}-title`}
+              className="u-display text-[clamp(2.2rem,5.6vw,4.5rem)] uppercase"
+            >
+              {h.headline}
+            </h2>
+            <p className="u-prose mt-6">{h.body}</p>
             {h.coda ? (
               <p
-                className="mt-6 border-l-2 pl-4 text-[0.9375rem] leading-relaxed"
-                style={{ borderColor: "var(--eg-stamp)", color: "var(--eg-stamp)" }}
+                className="mt-6 border-l-[3px] pl-4 text-[0.9375rem] leading-relaxed"
+                style={{
+                  borderColor: "var(--eg-teal)",
+                  color: "var(--w-ink-2)",
+                }}
               >
                 {h.coda}
               </p>
@@ -232,7 +276,7 @@ export function EgovWorld({ project }: { project: Project }) {
 export function GlycoWorld({ project }: { project: Project }) {
   const h = project.home!;
   return (
-    <WorldFrame project={project} className="m-trace">
+    <WorldFrame project={project} display="plex" className="m-trace">
       <div className="py-12 sm:py-16">
         <div className="mx-auto max-w-[52rem] text-center">
           <h2
@@ -247,6 +291,23 @@ export function GlycoWorld({ project }: { project: Project }) {
               {h.coda}
             </p>
           ) : null}
+        </div>
+
+        {/* The deployed dashboard, then the topology it draws. The diagram is
+            the argument, but it is an argument ABOUT something, and this is the
+            something. */}
+        <div className="border-rule relative mt-12 aspect-[16/9] overflow-hidden border">
+          <Image
+            src={project.media.src}
+            alt={project.media.alt}
+            fill
+            sizes="(min-width: 1024px) 88rem, 100vw"
+            className={
+              project.media.fit === "contain"
+                ? "object-contain p-6"
+                : "object-cover object-top"
+            }
+          />
         </div>
 
         {h.figure ? <InteractiveFigure id={h.figure} /> : null}
@@ -280,7 +341,7 @@ export function Chip8World({ project }: { project: Project }) {
   ];
 
   return (
-    <WorldFrame project={project}>
+    <WorldFrame project={project} display="mono">
       <div className="grid gap-x-14 gap-y-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
         <div>
           <h2

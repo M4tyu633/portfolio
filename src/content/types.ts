@@ -20,7 +20,8 @@ export type WorldId =
   | "egov"
   | "glyco"
   | "chip8"
-  | "reading";
+  | "reading"
+  | "cardio";
 
 /** Which display family a page loads. Never more than one per page, and two of
  *  the worlds deliberately choose the utility family instead. */
