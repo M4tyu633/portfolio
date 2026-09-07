@@ -1,149 +1,453 @@
 @import "tailwindcss";
 
-/* Dark mode is class-based, toggled by the button in the header. */
-@custom-variant dark (&:where(.dark, .dark *));
+/* ===========================================================================
+ * THE BUILDING AND THE ROOMS
+ *
+ * One skeleton, several worlds. Every colour on this site comes from a `--w-*`
+ * custom property, and a world is one `[data-world="..."]` block that rewrites
+ * them. Nothing below this file needs to know which world it is in: a component
+ * written against `--w-ink` is correct in the archive, on asphalt, and inside
+ * the debugger.
+ *
+ * That indirection is the whole art direction. The alternative, a variant class
+ * per world on every element, was tried in the first pass and produced 300
+ * character utility strings that nobody could read or change.
+ *
+ * The building itself is deliberately monochrome. Colour is a property of the
+ * WORK, not of the site, so an index page has exactly two inks and every hue on
+ * screen belongs to whichever project has taken the viewport.
+ * ======================================================================== */
 
-/* ---------------------------------------------------------------------------
- * 🎨 COLORS — change the accent here and the whole site follows.
+/* --------------------------------------------------------------------------
+ * The building. Archival paper, one ink. Also the fallback for any subtree
+ * that never declares a world.
  * ------------------------------------------------------------------------ */
-:root {
-  --background: #ffffff;
-  --surface: #f5f6f9;
-  --foreground: #0b0d12;
-  --muted: #596072;
-  --border: #e3e6ec;
+:root,
+[data-world="index"] {
+  --w-ground: #f0ede6;
+  --w-ground-2: #e7e3d9; /* panels, table stripes, the media stage */
+  --w-ground-3: #dedacd; /* pressed / hovered fills */
+  --w-ink: #16130f;
+  --w-ink-2: #16130fa8; /* secondary prose, 66% */
+  --w-ink-3: #16130f78; /* metadata, 47% */
+  --w-rule: #16130f24; /* hairlines, 14% */
+  --w-rule-2: #16130f14; /* the quieter hairline, 8% */
+  --w-accent: #16130f; /* the building has no accent, on purpose */
+  --w-accent-ink: #f0ede6;
+  --w-focus: #a33a1f;
 
-  /* The accent. Swap these two for any hue you like — but check the contrast
-     against --background stays at or above 4.5:1, since the accent is used for
-     small uppercase labels. This teal is 5.5:1 on white; #0d9488 was 3.7:1. */
-  --accent: #0f766e;
-  --accent-2: #5b46e8;
+  --w-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --w-display-weight: 400;
+  --w-display-tracking: -0.02em;
+
+  color-scheme: light;
 }
 
-.dark {
-  --background: #08090c;
-  --surface: #0f1117;
-  --foreground: #f2f4f8;
-  --muted: #99a1b3;
-  --border: #1d202a;
+/* --------------------------------------------------------------------------
+ * 01 · TUMBANG PRESO — asphalt and chalk.
+ *
+ * These are not colours I picked. `tools/read_brand_palette.py` in the game's
+ * repository clusters the flat fills of the authored logo and reports their
+ * share of the artwork; deep red is 34.3% of it, chartreuse 17.0%, persimmon
+ * 5.7%, golden 4.2%. The ground is the street the game is actually set on.
+ * ------------------------------------------------------------------------ */
+[data-world="tumbang"] {
+  --w-ground: #26241f;
+  --w-ground-2: #302d27;
+  --w-ground-3: #3b3730;
+  --w-ink: #ece5d6; /* chalk */
+  --w-ink-2: #ece5d6b0;
+  --w-ink-3: #ece5d67a;
+  --w-rule: #ece5d633;
+  --w-rule-2: #ece5d61c;
+  --w-accent: #d6ce01; /* chartreuse: the action, one per screen */
+  --w-accent-ink: #26241f;
+  --w-focus: #fd8041;
 
-  --accent: #5eead4;
-  --accent-2: #a78bfa;
+  --tp-red: #980715;
+  --tp-rim: #c32e0d;
+  --tp-honey: #fcd39f;
+  --tp-persimmon: #fd8041;
+  --tp-gold: #f5b521;
+  --tp-defense: #0080e8; /* the taya's colour, and the only blue in the game */
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+ * 02 · eGOVMED — a printed form. Office white, ink, one stamp, one routing rule.
+ * ------------------------------------------------------------------------ */
+[data-world="egov"] {
+  --w-ground: #f4f4f2;
+  --w-ground-2: #e8eaec;
+  --w-ground-3: #dcdfe3;
+  --w-ink: #141719;
+  --w-ink-2: #141719a8;
+  --w-ink-3: #14171978;
+  --w-rule: #14171930;
+  --w-rule-2: #14171916;
+  --w-accent: #1b4b73; /* the routing rule */
+  --w-accent-ink: #f4f4f2;
+  --w-focus: #a8281e;
+
+  --eg-stamp: #a8281e;
+  --eg-route: #1b4b73;
+  --eg-ok: #2f6b4f;
+  --eg-hold: #9a6b12;
+
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+ * 03 · GLYCOSWARM — a clinical trace on a controlled dark ground.
+ * The four specialist hues are chart colours, desaturated on purpose: they have
+ * to sit next to each other in one diagram without any of them shouting.
+ * ------------------------------------------------------------------------ */
+[data-world="glyco"] {
+  --w-ground: #0e1114;
+  --w-ground-2: #161b20;
+  --w-ground-3: #1e242a;
+  --w-ink: #dfe5e8;
+  --w-ink-2: #dfe5e8a8;
+  --w-ink-3: #dfe5e874;
+  --w-rule: #dfe5e828;
+  --w-rule-2: #dfe5e814;
+  --w-accent: #7fc4bb;
+  --w-accent-ink: #0e1114;
+  --w-focus: #e0b64a;
+
+  --gs-renal: #5fa8a0;
+  --gs-retinal: #c9a227;
+  --gs-neuro: #9b7fd4;
+  --gs-cardio: #d0524a;
+  --gs-synth: #e8eef1;
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+ * 04 · CHIP-8 — the instrument. Near black, amber phosphor, no second family.
+ * ------------------------------------------------------------------------ */
+[data-world="chip8"] {
+  --w-ground: #0a0a0b;
+  --w-ground-2: #121214;
+  --w-ground-3: #1a1a1d;
+  --w-ink: #d7d5cf;
+  --w-ink-2: #d7d5cfa0;
+  --w-ink-3: #d7d5cf70;
+  --w-rule: #d7d5cf24;
+  --w-rule-2: #d7d5cf12;
+  --w-accent: #ffb000; /* amber terminal */
+  --w-accent-ink: #0a0a0b;
+  --w-focus: #ffb000;
+
+  --c8-dim: #6f6a5e;
+  --c8-live: #7ac74f;
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+ * 05 · READING ROOM — the two clinical-ML projects share one world.
+ * Cool grey rather than the archive's warm paper, because both of them are
+ * about looking at a greyscale image and arguing about a number.
+ * ------------------------------------------------------------------------ */
+[data-world="reading"] {
+  --w-ground: #eceded;
+  --w-ground-2: #dfe1e2;
+  --w-ground-3: #d3d5d7;
+  --w-ink: #111315;
+  --w-ink-2: #111315a8;
+  --w-ink-3: #11131578;
+  --w-rule: #1113152b;
+  --w-rule-2: #11131514;
+  --w-accent: #2f6f8f;
+  --w-accent-ink: #eceded;
+  --w-focus: #b4551f;
+
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+ * Display type is a per-page decision, never a per-section one. A page sets one
+ * of these on its root and inherits the utility superfamily everywhere else.
+ * See the thesis: maximum two families per page, and two of the five worlds
+ * deliberately use only one.
+ * ------------------------------------------------------------------------ */
+[data-display="daruma"] {
+  --w-display: var(--font-daruma), var(--font-newsreader), sans-serif;
+  --w-display-weight: 400;
+  --w-display-tracking: 0.01em;
+}
+
+[data-display="franklin"] {
+  --w-display: var(--font-franklin), "Helvetica Neue", sans-serif;
+  --w-display-weight: 700;
+  --w-display-tracking: -0.015em;
+}
+
+/* The instruments. No second family at all; the display face IS the utility
+   face, at a scale contrast big enough to do the same job. */
+[data-display="plex"] {
+  --w-display: var(--font-plex-sans), system-ui, sans-serif;
+  --w-display-weight: 600;
+  --w-display-tracking: -0.03em;
+}
+
+[data-display="mono"] {
+  --w-display: var(--font-plex-mono), ui-monospace, monospace;
+  --w-display-weight: 500;
+  --w-display-tracking: -0.04em;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-border: var(--border);
-  --color-accent: var(--accent);
-  --color-accent-2: var(--accent-2);
-  --font-sans: var(--font-space-grotesk);
+  --color-ground: var(--w-ground);
+  --color-ground-2: var(--w-ground-2);
+  --color-ground-3: var(--w-ground-3);
+  --color-ink: var(--w-ink);
+  --color-ink-2: var(--w-ink-2);
+  --color-ink-3: var(--w-ink-3);
+  --color-rule: var(--w-rule);
+  --color-rule-2: var(--w-rule-2);
+  --color-accent: var(--w-accent);
+  --color-accent-ink: var(--w-accent-ink);
+  --color-focus: var(--w-focus);
+
+  --font-sans: var(--font-plex-sans), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  /* ⚠ There is deliberately no `--font-display` alias here. A theme variable is
+   * declared once, at :root, and its own var() is substituted THERE, so an
+   * alias for `--w-display` would freeze to the index world's serif and quietly
+   * defeat every per-page display face. Use `.u-display`, which reads
+   * `--w-display` at the element. */
 }
 
-html {
-  scroll-behavior: smooth;
-  /* so anchor links don't land underneath the sticky header */
-  scroll-padding-top: 5.5rem;
-}
+/* ===========================================================================
+ * BASE
+ * ======================================================================== */
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-::selection {
-  background: var(--accent);
-  color: var(--background);
-}
-
-/* ---------------------------------------------------------------------------
- * Scroll-reveal — see src/components/Reveal.tsx
- * ------------------------------------------------------------------------ */
-.reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* ---------------------------------------------------------------------------
- * Decorative bits used by the hero
- * ------------------------------------------------------------------------ */
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--w-rule);
   }
-  50% {
-    transform: translateY(-14px);
-  }
-}
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes grid-pan {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 56px 56px;
-  }
-}
-
-.grid-bg {
-  background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 56px 56px;
-  animation: grid-pan 24s linear infinite;
-}
-
-.text-gradient {
-  background: linear-gradient(120deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@media (prefers-reduced-motion: reduce) {
   html {
-    scroll-behavior: auto;
+    scroll-padding-top: 4.5rem;
+    -webkit-text-size-adjust: 100%;
   }
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
-  .animate-float,
-  .grid-bg {
-    animation: none;
+
+  body {
+    background: var(--w-ground);
+    color: var(--w-ink);
+    font-family: var(--font-plex-sans), system-ui, sans-serif;
+    font-feature-settings: "cv05" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* A world change is a colour change across the entire page. Transitioning it
+       is what makes scrolling out of a world feel like leaving a room rather than
+       like a background swapping. */
+    transition:
+      background-color 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  ::selection {
+    background: var(--w-ink);
+    color: var(--w-ground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--w-focus);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  /* Squares, not pills. Nothing on this site has a 2xl radius. */
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
   }
 }
 
-/* Thin, unobtrusive scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: var(--background);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+@layer components {
+  /* ===========================================================================
+   * TYPE PRIMITIVES
+   * ======================================================================== */
+
+  .u-display {
+    /* ⚠ `var(--w-display)` directly, NOT the `--font-display` theme alias.
+     * A custom property's value has its own var() substituted where the property
+     * is DECLARED, not where it is used. `--font-display: var(--w-display)` is
+     * declared at :root, so it froze to the index world's serif and every
+     * page-specific display face silently never appeared. Tailwind's own
+     * utilities are unaffected because `@theme inline` inlines `var(--w-*)`
+     * straight into the utility, which is the whole reason that keyword is on
+     * the block. */
+    font-family: var(--w-display);
+    font-weight: var(--w-display-weight);
+    letter-spacing: var(--w-display-tracking);
+    line-height: 0.94;
+    text-wrap: balance;
+  }
+
+  /* The metadata voice: everywhere on the site, in every world, small caps set in
+     the mono at a tracking wide enough to read as a label rather than as text. */
+  .u-meta {
+    font-family: var(--font-plex-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .u-prose {
+    max-width: 34em;
+    font-size: 1.0625rem;
+    line-height: 1.62;
+    color: var(--w-ink-2);
+    text-wrap: pretty;
+  }
+
+  .u-prose strong {
+    color: var(--w-ink);
+    font-weight: 600;
+  }
+
+  .u-prose em {
+    font-style: italic;
+  }
+
+  /* The one hairline. Used as a section divider everywhere in the building. */
+  .u-rule {
+    border: 0;
+    border-top: 1px solid var(--w-rule);
+    margin: 0;
+  }
+
+  /* ===========================================================================
+   * MATERIALS
+   *
+   * Each world has one background material and it is drawn in CSS rather than
+   * shipped as an image, because every one of them is a repeating geometric
+   * figure and a PNG of it would be the largest asset on the page.
+   * ======================================================================== */
+
+  /* Asphalt: fine warm noise plus two very low-contrast diagonal washes, so the
+     ground has grain without a noise PNG over the whole document. */
+  .m-asphalt {
+    background-color: var(--w-ground);
+    background-image:
+      radial-gradient(#ffffff0a 0.5px, transparent 0.5px),
+      radial-gradient(#0000001f 0.5px, transparent 0.5px);
+    background-size:
+      7px 7px,
+      11px 11px;
+    background-position:
+      0 0,
+      3px 5px;
+  }
+
+  /* Chalk: a hand-drawn court line. Dashed, slightly transparent, warm white. */
+  .m-chalk {
+    border: 2px solid var(--w-ink-2);
+    border-radius: 2px;
+    opacity: 0.55;
+  }
+
+  /* The government form's field grid. */
+  .m-formgrid {
+    background-color: var(--w-ground);
+    background-image:
+      linear-gradient(var(--w-rule-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--w-rule-2) 1px, transparent 1px);
+    background-size: 100% 1.75rem, 1.75rem 100%;
+  }
+
+  /* The clinical chart's baseline grid, coarser and only horizontal. */
+  .m-trace {
+    background-color: var(--w-ground);
+    background-image: linear-gradient(var(--w-rule-2) 1px, transparent 1px);
+    background-size: 100% 2.25rem;
+  }
+
+  /* ===========================================================================
+   * MOTION
+   *
+   * There is exactly one entrance animation on this site and it is used for
+   * things that arrive, never for paragraphs. A paragraph does not need
+   * choreography.
+   * ======================================================================== */
+
+  @keyframes u-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes u-wipe {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  .u-rise {
+    animation: u-rise 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ===========================================================================
+   * SCROLLBAR — it is visible in every screenshot, so it is designed.
+   * ======================================================================== */
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--w-rule) transparent;
+  }
+
+  /* Skip link. Present on every page, invisible until it is focused. */
+  .u-skip {
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 100;
+    transform: translateY(-200%);
+    background: var(--w-ink);
+    color: var(--w-ground);
+    padding: 0.5rem 0.875rem;
+    transition: transform 160ms;
+  }
+
+  .u-skip:focus {
+    transform: none;
+  }
 }

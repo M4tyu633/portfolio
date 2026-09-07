@@ -1,0 +1,140 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import Nav from "@/components/chrome/Nav";
+import { achievements, receipts } from "@/content/achievements";
+import type { Achievement } from "@/content/types";
+
+export const metadata: Metadata = {
+  title: "Receipts",
+  description:
+    "Competitions, rankings, scholarships, and the work behind them. First place at Gear Up NCR, one of ten winners at the eGov Hackathon PH.",
+};
+
+/* ===========================================================================
+ * RECEIPTS.
+ *
+ * A result sheet, not a trophy cabinet. Grouped by year, numbered down the
+ * page, and the RESULT is the largest thing in every row because that is what
+ * the page is for.
+ *
+ * Three tiers behave differently in the same list, which is the point: a
+ * competition with a story gets a door, one with a paragraph opens in place,
+ * and one with neither is a row and stays a row. Nothing here is padded out to
+ * match its neighbours.
+ * ======================================================================== */
+
+export default function AchievementsPage() {
+  const years = Array.from(new Set(achievements.map((a) => a.year)));
+
+  return (
+    <>
+      <Nav />
+      <main id="main" className="flex-1">
+        <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
+          <header className="grid gap-x-16 gap-y-6 py-16 sm:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
+            <h1 className="u-display text-[clamp(3rem,10vw,8rem)]">
+              {receipts.title}
+            </h1>
+            <p className="u-prose">{receipts.standfirst}</p>
+          </header>
+
+          {years.map((year) => (
+            <section key={year} aria-labelledby={`y${year}`} className="mb-14">
+              <h2
+                id={`y${year}`}
+                className="border-ink u-meta text-ink-3 border-b-2 pb-2 tabular-nums"
+              >
+                {year}
+              </h2>
+              <ol>
+                {achievements
+                  .filter((a) => a.year === year)
+                  .map((a) => (
+                    <Row key={a.slug} a={a} />
+                  ))}
+              </ol>
+            </section>
+          ))}
+
+          <p className="text-ink-3 border-rule max-w-[46em] border-t py-8 text-[0.875rem] leading-relaxed">
+            Everything on this page is a confirmed result. An entry with no
+            placement is written as an entry.
+          </p>
+        </div>
+      </main>
+    </>
+  );
+}
+
+function Row({ a }: { a: Achievement }) {
+  const inner = (
+    <div className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-4 gap-y-1 py-5 sm:grid-cols-[auto_minmax(0,1fr)_minmax(0,18rem)] sm:gap-x-8">
+      <span className="u-meta text-ink-3 tabular-nums">{a.n}</span>
+      <span>
+        <span className="u-display block text-[clamp(1.25rem,2.8vw,2rem)]">
+          {a.title}
+        </span>
+        <span className="u-meta text-ink-3 mt-1.5 block normal-case tracking-[0.04em]">
+          {a.org}
+        </span>
+      </span>
+      <span className="col-start-2 font-mono text-[clamp(1rem,2vw,1.375rem)] tracking-[-0.02em] sm:col-start-3 sm:text-right">
+        {a.result}
+      </span>
+    </div>
+  );
+
+  if (a.tier === "A") {
+    return (
+      <li className="border-rule border-b">
+        <Link
+          href={`/achievements/${a.slug}`}
+          className="group hover:bg-ground-2 block transition-colors"
+        >
+          {inner}
+          <p className="text-ink-2 -mt-2 pb-5 text-[0.9375rem] leading-relaxed sm:max-w-[60ch] sm:pl-12">
+            {a.summary}
+            <span
+              aria-hidden
+              className="text-ink-3 ml-2 inline-block transition-transform duration-300 group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </p>
+        </Link>
+      </li>
+    );
+  }
+
+  if (a.tier === "B") {
+    return (
+      <li className="border-rule border-b">
+        <details className="group">
+          <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+            {inner}
+            <span className="u-meta text-ink-3 -mt-2 block pb-5 sm:pl-12">
+              <span className="group-open:hidden">More</span>
+              <span className="hidden group-open:inline">Less</span>
+            </span>
+          </summary>
+          <p className="text-ink-2 max-w-[62ch] pb-6 text-[0.9375rem] leading-relaxed sm:pl-12">
+            {a.summary}
+            {a.project ? (
+              <>
+                {" "}
+                <Link
+                  href={`/work/${a.project}`}
+                  className="border-ink hover:bg-ink hover:text-ground border-b transition-colors"
+                >
+                  The project
+                </Link>
+              </>
+            ) : null}
+          </p>
+        </details>
+      </li>
+    );
+  }
+
+  return <li className="border-rule border-b">{inner}</li>;
+}

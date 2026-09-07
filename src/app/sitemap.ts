@@ -1,21 +1,25 @@
 import type { MetadataRoute } from "next";
-import { projects, site } from "@/content/data";
+import { achievementPages } from "@/content/achievements";
+import { projects } from "@/content/projects";
+import { site } from "@/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
+  const page = (path: string, priority: number) => ({
+    url: `${site.url}${path}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority,
+  });
+
   return [
-    {
-      url: site.url,
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    // One entry per project that has a `caseStudy` in data.ts. The others have
-    // no page to list.
-    ...projects
-      .filter((p) => p.caseStudy)
-      .map((p) => ({
-        url: `${site.url}/projects/${p.slug}`,
-        changeFrequency: "monthly" as const,
-        priority: 0.8,
-      })),
+    page("", 1),
+    page("/work", 0.9),
+    page("/achievements", 0.8),
+    page("/lab", 0.7),
+    page("/about", 0.7),
+    page("/lab/chip-8", 0.6),
+    ...projects.map((p) => page(`/work/${p.slug}`, 0.8)),
+    ...achievementPages.map((a) => page(`/achievements/${a.slug}`, 0.6)),
   ];
 }
