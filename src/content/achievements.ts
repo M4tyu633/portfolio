@@ -20,17 +20,6 @@ export const receipts = {
 
 export const achievements: Achievement[] = [
   {
-    n: "11",
-    slug: "kaspersky-ctf",
-    title: "Kaspersky International CTF 2026",
-    result: "42nd in Asia & Oceania",
-    org: "BHackers · 1,263 points",
-    year: "2026",
-    tier: "B",
-    summary:
-      "My first international benchmark: a 24-hour regional competition alongside Clarence S. Pagaduan as BHackers. We were invited to represent UP Manila and the Philippines in a field that included experienced CTF players and professionals. We finished 42nd in Asia & Oceania with 1,263 points.",
-  },
-  {
     n: "01",
     slug: "gear-up-ncr",
     title: "Gear Up NCR Esports Game Dev Challenge",
@@ -195,6 +184,17 @@ export const achievements: Achievement[] = [
   },
   {
     n: "04",
+    slug: "kaspersky-ctf",
+    title: "Kaspersky International CTF 2026",
+    result: "42nd in Asia & Oceania",
+    org: "BHackers · 1,263 points",
+    year: "2026",
+    tier: "B",
+    summary:
+      "My first international benchmark: a 24-hour regional competition alongside Clarence S. Pagaduan as BHackers. We were invited to represent UP Manila and the Philippines in a field that included experienced CTF players and professionals. We finished 42nd in Asia & Oceania with 1,263 points.",
+  },
+  {
+    n: "05",
     slug: "dost-scholar",
     title: "DOST Undergraduate Scholarship",
     result: "Scholar",
@@ -203,7 +203,7 @@ export const achievements: Achievement[] = [
     tier: "C",
   },
   {
-    n: "05",
+    n: "06",
     slug: "university-scholar",
     title: "University Scholar",
     result: "GWA 1.0375",
@@ -212,7 +212,7 @@ export const achievements: Achievement[] = [
     tier: "C",
   },
   {
-    n: "06",
+    n: "07",
     slug: "olymphysics-ncr",
     title: "Olymphysics NCR",
     result: "Top 5 Finalist",
@@ -221,7 +221,7 @@ export const achievements: Achievement[] = [
     tier: "C",
   },
   {
-    n: "07",
+    n: "08",
     slug: "philippine-statistics-quiz",
     title: "Philippine Statistics Quiz",
     result: "5th Place",
@@ -230,7 +230,7 @@ export const achievements: Achievement[] = [
     tier: "C",
   },
   {
-    n: "08",
+    n: "09",
     slug: "uplb-code-wars",
     title: "UPLB Code Wars",
     result: "Competitor",
@@ -239,7 +239,7 @@ export const achievements: Achievement[] = [
     tier: "C",
   },
   {
-    n: "09",
+    n: "10",
     slug: "paref-southridge",
     title: "PAREF Southridge School",
     result: "Valedictorian",
@@ -250,7 +250,7 @@ export const achievements: Achievement[] = [
       "Class Valedictorian and Gold Medalist. Captained the math team, ran tutoring sessions and mentored peers for local competitions.",
   },
   {
-    n: "10",
+    n: "11",
     slug: "competitive-debate",
     title: "Competitive debate",
     result: "Quarterfinalist, Ateneo Peace Debate",

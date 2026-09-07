@@ -23,7 +23,9 @@ import { featured } from "@/content/projects";
 const [tumbang, egov, glyco, chip] = featured;
 
 export default function Home() {
-  const headline = achievements.filter((a) => a.tier === "A" || a.n === "09");
+  const headline = achievements.filter(
+    (a) => a.tier === "A" || a.slug === "paref-southridge",
+  );
 
   return (
     <>
