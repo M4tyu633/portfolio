@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { newsreader, plexMono, plexSans } from "./fonts";
 import Footer from "@/components/chrome/Footer";
+import { SoundProvider } from "@/lib/sound";
 import { contact, site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -93,8 +94,13 @@ export default function RootLayout({
         <a className="u-skip u-meta" href="#main">
           Skip to content
         </a>
-        {children}
-        <Footer />
+        {/* The whole tree is inside the provider so a link anywhere can ask for
+            the current world's voice. It constructs nothing until the toggle in
+            the header is pressed. */}
+        <SoundProvider>
+          {children}
+          <Footer />
+        </SoundProvider>
         {/* Page views only, no cookies and no cross-site identifier. */}
         <Analytics />
       </body>

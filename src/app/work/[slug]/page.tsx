@@ -11,8 +11,19 @@ import { projectBySlug, projects } from "@/content/projects";
 import { site } from "@/content/site";
 import type { DisplayId, Project } from "@/content/types";
 
+/* ⚠ Projects with a BESPOKE route are excluded here. A flagship world cannot be
+ * laid out by the same component that lays out every other project, so it gets
+ * its own static segment under `/work/<slug>/` and that segment wins over this
+ * dynamic one. Listing it here as well would prerender two pages for one path.
+ *
+ * Everything else still uses this shell, which is the right answer for a
+ * project whose case study is prose and figures rather than a world. */
+const BESPOKE = new Set(["tumbang-preso"]);
+
 export function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
+  return projects
+    .filter((p) => !BESPOKE.has(p.slug))
+    .map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({

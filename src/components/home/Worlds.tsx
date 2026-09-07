@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import InteractiveFigure from "@/components/figures";
+import GameClip from "@/components/media/GameClip";
 import type { Project } from "@/content/types";
 
 /* ===========================================================================
@@ -81,38 +82,108 @@ function WorldFrame({
 }
 
 /* ---------------------------------------------------------------------------
- * 01 · ASPHALT
+ * 01 · THE STREET
+ *
+ * ⚠⚠ THIS PANEL USED TO BE A DARK BROWN BLOCK WITH A DIAGRAM IN IT, AND IT WAS
+ * THE WORST THING ON THE SITE. A visitor should not have to wonder what the
+ * game looks like: it looks like this, because this IS it. Full-bleed clip of a
+ * real round, the game's own painted wordmark over it, and the entrance drawn
+ * on his own PLAY pennant.
+ *
+ * The clip is silent, does not load until it is near the viewport, and pauses
+ * the moment it leaves. See `GameClip`.
  * ------------------------------------------------------------------------ */
 export function TumbangWorld({ project }: { project: Project }) {
   const h = project.home!;
   return (
-    <WorldFrame project={project} className="m-asphalt py-2">
-      <div className="grid gap-x-12 gap-y-8 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-end">
-        <div>
+    <section
+      id={`w${project.n}`}
+      data-world={project.world}
+      data-world-panel
+      aria-labelledby={`w${project.n}-title`}
+      className="bg-ground text-ink scroll-mt-[4.25rem]"
+    >
+      {/* --- the game, edge to edge --- */}
+      <div data-surface="stage" className="bg-ground relative">
+        <GameClip
+          src="/work/tumbang/match.mp4"
+          poster="/work/tumbang/match-poster.webp"
+          alt="A round of Tumbang Preso: the scoreboard, the timer, the lata standing in the middle of the road."
+          ratio="16 / 9"
+          className="max-h-[68vh] w-full"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(20,14,8,.9) 0%, rgba(20,14,8,.35) 30%, rgba(20,14,8,0) 62%)",
+          }}
+        />
+        <div className="absolute inset-x-0 bottom-0 mx-auto max-w-[92rem] px-5 pb-7 sm:px-8 sm:pb-10">
+          <Image
+            src="/work/tumbang/wordmark.webp"
+            alt="TÜMP"
+            width={1100}
+            height={316}
+            className="h-auto w-[min(34vw,15rem)]"
+          />
+          <p className="u-meta mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[#fcd39f]">
+            <span className="text-[#f5b521]">01</span>
+            <span>{project.title}</span>
+            <span aria-hidden>/</span>
+            <span>{project.category}</span>
+            <span aria-hidden className="hidden sm:inline">
+              /
+            </span>
+            <span className="hidden sm:inline">{project.year}</span>
+          </p>
+        </div>
+      </div>
+
+      {/* --- the claim --- */}
+      <div className="mx-auto max-w-[92rem] px-5 py-14 sm:px-8 sm:py-20">
+        <div className="grid gap-x-14 gap-y-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-end">
           <h2
             id={`w${project.n}-title`}
-            className="u-display text-[clamp(2.4rem,6.6vw,5.5rem)]"
+            className="u-display text-[clamp(2.4rem,6.4vw,5.5rem)]"
           >
             {h.headline}
           </h2>
-          <p className="u-prose mt-7">{h.body}</p>
-          {h.coda ? (
-            <p className="mt-6 inline-block border-b-2 pb-1 text-[1.0625rem]" style={{ borderColor: "var(--tp-gold)" }}>
-              {h.coda}
-            </p>
-          ) : null}
+          <div>
+            <p className="u-prose">{h.body}</p>
+            {h.coda ? (
+              <p
+                className="mt-6 inline-block border-b-[3px] pb-1 text-[1.125rem]"
+                style={{ borderColor: "var(--tp-gold)" }}
+              >
+                {h.coda}
+              </p>
+            ) : null}
+          </div>
         </div>
 
-        <div>
-          {h.figure ? <InteractiveFigure id={h.figure} /> : null}
-          {h.figureCaption ? (
-            <p className="u-meta text-ink-3 mt-3 normal-case tracking-[0.04em]">
-              {h.figureCaption}
-            </p>
-          ) : null}
-        </div>
+        {/* The entrance, drawn on his own PLAY pennant. */}
+        <Link
+          href={`/work/${project.slug}`}
+          className="group mt-12 inline-flex items-center"
+          aria-label={`Enter Tumbang Preso`}
+        >
+          <span className="relative inline-flex items-center">
+            <Image
+              src="/work/tumbang/pennant-play.webp"
+              alt=""
+              width={520}
+              height={140}
+              className="h-auto w-[15rem] transition-transform duration-200 group-hover:scale-[1.04] sm:w-[19rem]"
+            />
+            <span className="u-display absolute inset-0 flex items-center pl-9 text-[clamp(1.1rem,2.4vw,1.6rem)] text-[#1c3d0e] sm:pl-11">
+              ENTER
+            </span>
+          </span>
+        </Link>
       </div>
-    </WorldFrame>
+    </section>
   );
 }
 

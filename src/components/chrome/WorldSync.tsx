@@ -2,9 +2,11 @@
 
 import { useEffect } from "react";
 import type { WorldId } from "@/content/types";
+import { useSound } from "@/lib/sound";
 
 /* ===========================================================================
- * Writes the current world onto <body>.
+ * Writes the current world onto <body>, and tells the sound engine which voice
+ * to use.
  *
  * The page's own sections already carry `data-world`, so their colours are
  * correct without this. What this buys is everything OUTSIDE the section: the
@@ -18,20 +20,23 @@ import type { WorldId } from "@/content/types";
  * ======================================================================== */
 
 export default function WorldSync({ world }: { world: WorldId }) {
+  const { setWorld } = useSound();
+
   useEffect(() => {
     const previous = document.body.dataset.world;
     document.body.dataset.world = world;
+    setWorld(world);
     return () => {
       document.body.dataset.world = previous ?? "index";
     };
-  }, [world]);
+  }, [world, setWorld]);
 
   return null;
 }
 
 /* ---------------------------------------------------------------------------
- * The homepage version. Watches every `[data-world]` panel and hands the body
- * whichever one owns the top third of the viewport.
+ * The homepage version. Watches every `[data-world-panel]` and hands the body
+ * whichever one owns the middle of the viewport.
  *
  * A single IntersectionObserver with a top-heavy rootMargin rather than a
  * scroll handler doing getBoundingClientRect on five nodes per frame: the
@@ -39,6 +44,8 @@ export default function WorldSync({ world }: { world: WorldId }) {
  * per crossing is the right trade.
  * ------------------------------------------------------------------------ */
 export function WorldScrollSync() {
+  const { setWorld } = useSound();
+
   useEffect(() => {
     const panels = Array.from(
       document.querySelectorAll<HTMLElement>("[data-world-panel]"),
@@ -52,7 +59,11 @@ export function WorldScrollSync() {
     const apply = () => {
       let chosen: HTMLElement | undefined;
       for (const p of panels) if (visible.has(p)) chosen = p;
-      document.body.dataset.world = chosen?.dataset.world ?? "index";
+      const world = (chosen?.dataset.world as WorldId) ?? "index";
+      if (document.body.dataset.world !== world) {
+        document.body.dataset.world = world;
+        setWorld(world);
+      }
     };
 
     const io = new IntersectionObserver(
@@ -75,7 +86,7 @@ export function WorldScrollSync() {
       io.disconnect();
       document.body.dataset.world = "index";
     };
-  }, []);
+  }, [setWorld]);
 
   return null;
 }

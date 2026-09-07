@@ -37,7 +37,10 @@ export const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${enc
 
 export const nav = [
   { label: "Work", href: "/work" },
-  { label: "Receipts", href: "/achievements" },
+  // ⚠ The LABEL is "Achievements" and the PAGE TITLE is "Receipts". Navigation
+  // optimises for clarity; a page title can carry personality. Calling the nav
+  // item "Receipts" made a real destination read as a joke.
+  { label: "Achievements", href: "/achievements" },
   { label: "Lab", href: "/lab" },
   { label: "About", href: "/about" },
 ];
