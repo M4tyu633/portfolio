@@ -1,0 +1,284 @@
+/* ===========================================================================
+ * /WORK — the archive.
+ *
+ * A collection catalogue: typed rows on the left, one plate on the right that
+ * follows the selection down the page. What makes it not a list of links is
+ * that every row states ownership and outcome at reading size, so the page is
+ * legible in ten seconds without opening anything.
+ * ======================================================================== */
+
+.archive {
+  display: grid;
+  gap: 0 clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .archive {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
+  }
+}
+
+/* --- the catalogue ------------------------------------------------------ */
+.archive-list {
+  border-top: 1px solid var(--w-rule);
+}
+
+.archive-list li {
+  border-bottom: 1px solid var(--w-rule);
+  position: relative;
+}
+
+/* The selected row is marked by a rule in the accent running down its left
+   edge, drawn outside the text column so nothing shifts when it appears. */
+.archive-list li::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: 0;
+  width: 2px;
+  background: var(--w-accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.archive-list li[data-active]::before {
+  transform: scaleY(1);
+}
+
+.archive-row {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  align-items: baseline;
+  row-gap: 0.4rem;
+  padding: clamp(1.25rem, 2.4vw, 1.75rem) 0 clamp(1.4rem, 2.6vw, 1.9rem);
+  transition: padding-left 340ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.archive-list li[data-active] .archive-row {
+  padding-left: 1rem;
+}
+
+.arc-n {
+  grid-row: 1;
+  color: var(--w-ink-3);
+  transition: color 240ms;
+}
+
+.archive-list li[data-active] .arc-n {
+  color: var(--w-accent);
+}
+
+.arc-head {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+}
+
+.arc-title {
+  font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.arc-class {
+  color: var(--w-ink-3);
+  letter-spacing: 0.05em;
+  text-transform: none;
+}
+
+.arc-year {
+  color: var(--w-ink-3);
+}
+
+/* Ownership. The loudest small type in the row on purpose. */
+.arc-did {
+  grid-column: 2;
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  color: var(--w-ink);
+  text-wrap: pretty;
+}
+
+.arc-outcome {
+  grid-column: 2;
+  color: var(--w-accent-2);
+  font-size: 0.6875rem;
+  letter-spacing: 0.09em;
+}
+
+.arc-line {
+  grid-column: 2;
+  margin-top: 0.35rem;
+  max-width: 48ch;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--w-ink-3);
+  text-wrap: pretty;
+}
+
+.arc-plate {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .arc-plate {
+    grid-column: 2;
+    display: block;
+    position: relative;
+    margin-top: 1rem;
+    aspect-ratio: 16 / 10;
+    background: var(--w-ground-2);
+    border: 1px solid var(--w-rule);
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 560px) {
+  .archive-row {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+}
+
+/* --- the stage ---------------------------------------------------------- */
+.archive-stage {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .archive-stage {
+    display: block;
+    position: sticky;
+    top: 5.5rem;
+  }
+}
+
+.archive-frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--w-ground-2);
+  border: 1px solid var(--w-rule);
+  overflow: hidden;
+}
+
+.archive-shot {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 420ms ease-out;
+  pointer-events: none;
+}
+
+.archive-shot[data-on] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.archive-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  padding: 1.1rem 0 1.25rem;
+  border-bottom: 1px solid var(--w-rule);
+}
+
+.archive-facts dd {
+  margin-top: 0.4rem;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+/* --- the utility rail --------------------------------------------------- */
+.link-rail {
+  display: grid;
+}
+
+.link-rail a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--w-rule-2);
+  font-size: 0.9375rem;
+  transition:
+    color 180ms,
+    padding-left 180ms;
+}
+
+.link-rail a:hover {
+  color: var(--w-accent);
+  padding-left: 0.35rem;
+}
+
+.link-rail-mark {
+  margin-left: auto;
+  color: var(--w-ink-3);
+  font-size: 0.8125rem;
+}
+
+.link-rail a:hover .link-rail-mark {
+  color: var(--w-accent);
+}
+
+/* On a case study the rail sits beside the hero and wants to be horizontal. */
+.link-rail--inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.5rem;
+}
+
+.link-rail--inline a {
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--w-rule);
+}
+
+.link-rail--inline .link-rail-mark {
+  margin-left: 0;
+}
+
+/* --- the technical index ------------------------------------------------ */
+.tech-index {
+  display: grid;
+  border-top: 1px solid var(--w-rule);
+}
+
+@media (min-width: 640px) {
+  .tech-index {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(2rem, 4vw, 3.5rem);
+  }
+}
+
+.tech-index > div {
+  display: grid;
+  grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+  column-gap: 1.5rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--w-rule-2);
+}
+
+.tech-index dt {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--w-ink);
+}
+
+.tech-index dd {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--w-ink-3);
+  text-wrap: pretty;
+}
+
+@media (max-width: 480px) {
+  .tech-index > div {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.2rem;
+  }
+}

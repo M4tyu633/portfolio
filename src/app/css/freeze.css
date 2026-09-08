@@ -1,0 +1,288 @@
+/* ===========================================================================
+ * THE FREEZE FRAME — Tumbang's signature moment.
+ *
+ * A photograph with four annotation layers that arrive in order, and a reading
+ * column beside it. Every mark is keyed off `[data-step]` on the figure, so the
+ * whole choreography is one number changing: nothing here animates on its own.
+ * ======================================================================== */
+
+.freeze {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  align-items: center;
+  margin: clamp(2.5rem, 5vw, 4rem) 0;
+}
+
+.freeze-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--w-rule);
+  background: #0d0c0b;
+}
+
+.freeze-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: filter 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* From step 2 the photograph steps back so the annotation can be read over it.
+   It is desaturated, not darkened to nothing: the reader has to still be able
+   to see that this is the game. */
+.freeze[data-step="2"] .freeze-frame img,
+.freeze[data-step="3"] .freeze-frame img {
+  filter: saturate(0.42) brightness(0.62);
+}
+
+.freeze-marks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fz-path,
+.fz-ring,
+.fz-pin circle,
+.fz-pin line {
+  opacity: 0;
+  transition: opacity 420ms ease-out;
+}
+
+.fz-pin circle {
+  fill: none;
+  stroke: var(--tp-gold);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.fz-pin line {
+  stroke: var(--tp-gold);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.fz-path {
+  stroke: var(--tp-persimmon);
+  stroke-width: 3;
+  stroke-dasharray: 10 9;
+  vector-effect: non-scaling-stroke;
+  /* Drawn rather than faded: the path is a thing that happened over time. */
+  stroke-dashoffset: 0;
+}
+
+.fz-ring {
+  fill: color-mix(in srgb, var(--tp-chartreuse) 12%, transparent);
+  stroke: var(--tp-chartreuse);
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+}
+
+/* step 1: the two objects */
+.freeze[data-step="1"] .fz-pin circle,
+.freeze[data-step="1"] .fz-pin line,
+.freeze[data-step="2"] .fz-pin circle,
+.freeze[data-step="2"] .fz-pin line,
+.freeze[data-step="3"] .fz-pin circle,
+.freeze[data-step="3"] .fz-pin line {
+  opacity: 1;
+}
+
+/* step 2: the radius and the path the engine was not asked about */
+.freeze[data-step="2"] .fz-ring,
+.freeze[data-step="3"] .fz-ring {
+  opacity: 1;
+}
+
+.freeze[data-step="2"] .fz-path,
+.freeze[data-step="3"] .fz-path {
+  opacity: 1;
+  animation: fz-draw 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fz-draw {
+  from {
+    stroke-dashoffset: 620;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* --- the labels --------------------------------------------------------- */
+.freeze-tag {
+  position: absolute;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  background: #100f0de0;
+  opacity: 0;
+  transition: opacity 420ms ease-out;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.freeze-tag-slipper {
+  left: 66.5%;
+  top: 20%;
+  color: var(--tp-gold);
+}
+
+.freeze-tag-can {
+  left: 12%;
+  top: 95.5%;
+  color: var(--tp-gold);
+}
+
+.freeze-tag-radius {
+  left: 30%;
+  top: 88%;
+  color: var(--tp-chartreuse);
+}
+
+.freeze[data-step="1"] .freeze-tag-slipper,
+.freeze[data-step="1"] .freeze-tag-can,
+.freeze[data-step="2"] .freeze-tag-slipper,
+.freeze[data-step="2"] .freeze-tag-can,
+.freeze[data-step="2"] .freeze-tag-radius,
+.freeze[data-step="3"] .freeze-tag-slipper,
+.freeze[data-step="3"] .freeze-tag-can,
+.freeze[data-step="3"] .freeze-tag-radius {
+  opacity: 1;
+}
+
+/* --- the verdict -------------------------------------------------------- */
+.freeze-verdict {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.85rem 1.1rem;
+  background: #100f0dee;
+  border-top: 1px solid var(--w-rule);
+  border-left: 1px solid var(--w-rule);
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 420ms ease-out,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.freeze[data-step="3"] .freeze-verdict {
+  opacity: 1;
+  transform: none;
+}
+
+.freeze-verdict > span:first-child {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 2.25rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--tp-rim);
+}
+
+.freeze-verdict > span:last-child {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--w-ink-3);
+}
+
+/* --- the reading column ------------------------------------------------- */
+.freeze-kicker {
+  color: var(--w-accent);
+}
+
+.freeze-title {
+  margin-top: 0.85rem;
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 1.02;
+}
+
+.freeze-body {
+  margin-top: 1rem;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--w-ink-2);
+  text-wrap: pretty;
+  min-height: 9.5rem;
+}
+
+.freeze-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.freeze-controls button {
+  padding: 0.55rem 1.1rem;
+  min-height: 44px;
+  border: 1px solid var(--w-rule);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    background 180ms,
+    color 180ms,
+    border-color 180ms;
+}
+
+.freeze-controls button:last-of-type {
+  border-color: var(--w-accent);
+  color: var(--w-accent);
+}
+
+.freeze-controls button:hover:not(:disabled) {
+  background: var(--w-accent);
+  border-color: var(--w-accent);
+  color: var(--w-accent-ink);
+}
+
+.freeze-controls button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.freeze-count {
+  margin-left: auto;
+  color: var(--w-ink-3);
+}
+
+.freeze-note {
+  margin-top: 1.25rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--w-rule-2);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--w-ink-3);
+  max-width: 40ch;
+}
+
+@media (max-width: 900px) {
+  .freeze {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .freeze-body {
+    min-height: 7.5rem;
+  }
+  .freeze-tag {
+    font-size: 0.625rem;
+    padding: 0.15rem 0.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fz-path {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

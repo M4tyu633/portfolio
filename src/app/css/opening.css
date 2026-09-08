@@ -1,0 +1,427 @@
+/* ===========================================================================
+ * THE OPENING
+ *
+ * A catalogue cover: nameplate, one sentence at display size, a plate holding
+ * a live artifact, and an index of four things across the foot. It has to be
+ * good with every animation stopped, so the composition does the work — a type
+ * column against a plate that runs to the right edge, one hairline under the
+ * name, and a four-column index whose rule is the only thing that moves when
+ * the selection changes.
+ * ======================================================================== */
+
+.opening {
+  position: relative;
+  min-height: calc(100svh - 4.25rem);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  isolation: isolate;
+  /* The accent is the only palette token the opening takes from the selected
+     project. The GROUND never changes: a hover must not repaint the page. */
+  --op-accent: var(--w-accent);
+}
+
+.opening[data-project="tumbang"] {
+  --op-accent: #fd8041;
+}
+.opening[data-project="egov"] {
+  --op-accent: #62c8ac;
+}
+.opening[data-project="glyco"] {
+  --op-accent: #e0b64a;
+}
+.opening[data-project="chip8"] {
+  --op-accent: #7ee0b8;
+}
+
+/* The plate is a full-height slab that runs off the right edge; the type column
+   sits centred against it with real air above and below. Two different vertical
+   rhythms in one row is what stops the opening reading as a two-up card. */
+.opening-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  align-items: stretch;
+  gap: clamp(2rem, 4vw, 4.5rem);
+  padding-left: clamp(1.25rem, 4.5vw, 4.5rem);
+}
+
+.opening-id {
+  align-self: center;
+  padding: clamp(1.75rem, 4vh, 3.5rem) 0 clamp(1.75rem, 4vh, 3rem);
+}
+
+/* --- the catalogue line ------------------------------------------------- */
+.opening-kicker {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--w-ink-3);
+}
+
+.opening-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--op-accent) 0%,
+    var(--op-accent) 20%,
+    var(--w-rule) 20%
+  );
+  transition: background 480ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --- the sentence, which is the actual hero ----------------------------- */
+.opening h1 {
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+  text-wrap: balance;
+  font-size: clamp(2.35rem, min(4.4vw, 6.4vh), 4.6rem);
+  margin-top: clamp(1.25rem, 3vh, 2.25rem);
+  max-width: 15ch;
+}
+
+.opening h1::after {
+  content: "";
+  display: block;
+  width: 3.25rem;
+  height: 2px;
+  margin-top: clamp(1rem, 2.4vh, 1.75rem);
+  background: var(--op-accent);
+  transition: background 480ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The signature. Set in the display serif at reading size rather than in caps,
+   because it is a name and not a label. */
+.opening-sign {
+  margin-top: clamp(1.1rem, 2.6vh, 1.75rem);
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-size: clamp(1.375rem, 1.9vw, 1.75rem);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  color: var(--w-ink);
+}
+
+.opening-blurb {
+  margin-top: clamp(1rem, 2.4vh, 1.5rem);
+  max-width: 44ch;
+  font-size: clamp(0.9375rem, 1.05vw, 1.0625rem);
+  line-height: 1.6;
+  color: var(--w-ink-2);
+  text-wrap: pretty;
+}
+
+.opening-where {
+  margin-top: 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--w-ink-3);
+}
+
+/* --- the plate ---------------------------------------------------------- */
+.opening-plate {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-width: 0;
+  padding-bottom: clamp(1.25rem, 3vh, 2rem);
+}
+
+.plate-frame {
+  position: relative;
+  flex: 1;
+  min-height: clamp(16rem, 42vh, 34rem);
+  background: var(--w-ground-2);
+  border: 1px solid var(--w-rule);
+  border-top: 0;
+  border-right: 0;
+  overflow: hidden;
+}
+
+/* The plate's own light: a soft radial in the selected project's accent, cast
+   up from below the frame, so the plate is never a flat rectangle on a flat
+   page and the scene change is felt as light rather than as a swap. */
+.plate-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    120% 90% at 50% 122%,
+    color-mix(in srgb, var(--op-accent) 20%, transparent) 0%,
+    transparent 58%
+  );
+  transition: background 480ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.plate-media {
+  position: absolute;
+  inset: 0;
+  animation: plate-in 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes plate-in {
+  from {
+    clip-path: inset(0 0 0 100%);
+    transform: scale(1.04);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+
+.plate-caption {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 1.5rem;
+  padding-right: clamp(1.25rem, 4.5vw, 4.5rem);
+}
+
+.plate-caption > p {
+  font-size: clamp(0.9375rem, 1.05vw, 1.0625rem);
+  line-height: 1.5;
+  color: var(--w-ink-2);
+  max-width: 46ch;
+  text-wrap: pretty;
+  animation: u-rise 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.plate-enter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  white-space: nowrap;
+  font-size: 1.0625rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--op-accent);
+  transition:
+    color 200ms,
+    border-color 480ms cubic-bezier(0.22, 1, 0.36, 1),
+    gap 200ms;
+}
+
+.plate-enter:hover {
+  color: var(--op-accent);
+  gap: 1rem;
+}
+
+/* --- the index ---------------------------------------------------------- */
+.opening-index {
+  border-top: 1px solid var(--w-rule);
+}
+
+.opening-index ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.opening-index li {
+  position: relative;
+  border-left: 1px solid var(--w-rule-2);
+}
+
+.opening-index li:first-child {
+  border-left: 0;
+}
+
+/* The selection mark. One rule drawn over the index's own border, so the only
+   thing that travels across the foot of the page is a 2px line. */
+.opening-index li::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--op-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.opening-index li[data-active]::before {
+  transform: scaleX(1);
+}
+
+.opening-index a {
+  display: grid;
+  gap: 0.3rem;
+  padding: clamp(1rem, 2vh, 1.4rem) clamp(1rem, 1.6vw, 1.75rem)
+    clamp(1.1rem, 2.2vh, 1.5rem);
+  height: 100%;
+  align-content: start;
+  transition: background 260ms;
+}
+
+.opening-index a:hover,
+.opening-index a:focus-visible {
+  background: var(--w-ground-2);
+}
+
+.idx-n {
+  color: var(--w-ink-3);
+  transition: color 260ms;
+}
+
+.opening-index li[data-active] .idx-n {
+  color: var(--op-accent);
+}
+
+.idx-title {
+  font-size: clamp(1.0625rem, 1.35vw, 1.3125rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.idx-did {
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--w-ink);
+  text-wrap: pretty;
+}
+
+.idx-result {
+  color: var(--w-ink-3);
+  font-size: 0.6875rem;
+  letter-spacing: 0.09em;
+  margin-top: 0.2rem;
+}
+
+/* --- tablet ------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .opening-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    padding-right: clamp(1.25rem, 4.5vw, 4.5rem);
+  }
+  .plate-frame {
+    min-height: clamp(15rem, 40vh, 24rem);
+  }
+  .plate-caption {
+    padding-right: 0;
+  }
+  .opening-index ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .opening-index li:nth-child(3),
+  .opening-index li:nth-child(4) {
+    border-top: 1px solid var(--w-rule-2);
+  }
+  .opening-index li:nth-child(odd) {
+    border-left: 0;
+  }
+}
+
+/* --- phone: a real composition, not the desktop with the plate removed ---
+ * The plate becomes a 4:3 crop under the sentence and the index becomes four
+ * full-width entries you read rather than four columns you squint at. Tapping
+ * an entry navigates; the scene under it has already changed on touchstart, so
+ * nothing about the selection depends on hover.
+ * ----------------------------------------------------------------------- */
+@media (max-width: 700px) {
+  .opening {
+    min-height: 0;
+  }
+  .opening-body {
+    padding: 1.75rem 1.25rem 2rem;
+    gap: 1.75rem;
+  }
+  .opening h1 {
+    font-size: clamp(2.25rem, 10.5vw, 3.25rem);
+    max-width: 13ch;
+  }
+  .plate-frame {
+    flex: none;
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+    border-right: 1px solid var(--w-rule);
+    border-top: 1px solid var(--w-rule);
+  }
+  .plate-caption {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+    /* ⚠ Or the entry action's 2px rule runs the full width of the phone and
+       reads as a divider rather than as a link. */
+    justify-items: start;
+  }
+  .opening-index ol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .opening-index li {
+    border-left: 0;
+    border-top: 1px solid var(--w-rule-2);
+  }
+  .opening-index li:first-child {
+    border-top: 0;
+  }
+  .opening-index a {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "n title"
+      ". did"
+      ". result";
+    column-gap: 1rem;
+    padding: 1.1rem 1.25rem 1.25rem;
+  }
+  .idx-n {
+    grid-area: n;
+    padding-top: 0.35rem;
+  }
+  .idx-title {
+    grid-area: title;
+  }
+  .idx-did {
+    grid-area: did;
+  }
+  .idx-result {
+    grid-area: result;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plate-media,
+  .plate-caption > p {
+    animation: none !important;
+  }
+}
+
+/* The pause control that rides on every clip of the real game. Hidden until
+   the clip is hovered or the control is focused, because a permanent button
+   over a video is a player chrome, and this is a plate. */
+.clip-toggle {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 4;
+  padding: 0.4rem 0.7rem;
+  min-height: 34px;
+  color: #fff;
+  background: #0b0908b3;
+  backdrop-filter: blur(6px);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid #ffffff4d;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.clip-toggle:focus-visible,
+*:hover > .clip-toggle {
+  opacity: 1;
+}

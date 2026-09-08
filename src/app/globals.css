@@ -1,149 +1,1361 @@
 @import "tailwindcss";
 
-/* Dark mode is class-based, toggled by the button in the header. */
-@custom-variant dark (&:where(.dark, .dark *));
+/* Composition sheets. globals.css owns the palette, the type primitives, the
+ * materials and the motion vocabulary; anything that is the layout of ONE
+ * surface lives beside it under css/ so this file stays readable. */
+@import "./css/opening.css";
+@import "./css/home.css";
+@import "./css/tail.css";
+@import "./css/work.css";
+@import "./css/freeze.css";
+@import "./css/egov.css";
+@import "./css/receipts.css";
+@import "./css/motion.css";
 
-/* ---------------------------------------------------------------------------
- * 🎨 COLORS — change the accent here and the whole site follows.
+/* ===========================================================================
+ * THE BUILDING AND THE ROOMS
+ *
+ * One skeleton, several worlds. Every colour on this site comes from a `--w-*`
+ * custom property, and a world is one `[data-world="..."]` block that rewrites
+ * them. Nothing below this file needs to know which world it is in: a component
+ * written against `--w-ink` is correct in the archive, on asphalt, and inside
+ * the debugger.
+ *
+ * That indirection is the whole art direction. The alternative, a variant class
+ * per world on every element, was tried in the first pass and produced 300
+ * character utility strings that nobody could read or change.
+ *
+ * ⚠⚠ THE BUILDING USED TO BE MONOCHROME CREAM, ON THE THEORY THAT "COLOUR IS A
+ * PROPERTY OF THE WORK". It made every shared page — Work, Achievements, About
+ * — the same cream / black / hairline worksheet, and the site read as a
+ * competent template rather than as something a person designed. The building
+ * is a designed object too. It now has a ground, a signature and a second mark,
+ * and the worlds still look nothing like it or like each other.
+ * ======================================================================== */
+
+/* --------------------------------------------------------------------------
+ * THE BUILDING — ink stock, bone type, one hot signature, one cold mark.
+ *
+ * Ground is a warm near-black with red left in it (#14100F, hue 15°), not the
+ * blue-grey every dark template ships. Type is bone rather than white so the
+ * page reads as printed rather than as an OS surface.
+ *
+ * Two accents with two jobs, and they never swap:
+ *   --w-accent    vermilion. HUMAN. Live things, the active project, the thing
+ *                 you are meant to press. 6.1:1 on the ground.
+ *   --w-accent-2  acid. MEASURED. Numbers that were counted, states that were
+ *                 observed, anything the site is claiming it checked. 12.9:1.
+ *
+ * The pair is lifted from his own printed identity — the business card runs a
+ * deep oxblood field with an antique-gold rule — pushed to screen brightness
+ * and given a cold partner so measurements do not read as decoration.
  * ------------------------------------------------------------------------ */
-:root {
-  --background: #ffffff;
-  --surface: #f5f6f9;
-  --foreground: #0b0d12;
-  --muted: #596072;
-  --border: #e3e6ec;
+:root,
+[data-world="index"] {
+  --w-ground: #14100f;
+  --w-ground-2: #1d1817; /* raised: plates, cards, the media stage */
+  --w-ground-3: #272120; /* pressed / hovered fills */
+  --w-ink: #f4ece1;
+  --w-ink-2: #f4ece1b8; /* secondary prose, 72% */
+  --w-ink-3: #f4ece182; /* metadata, 51% */
+  --w-rule: #f4ece12e; /* hairlines, 18% */
+  --w-rule-2: #f4ece117; /* the quieter hairline, 9% */
+  --w-accent: #ff5b34;
+  --w-accent-ink: #14100f;
+  --w-accent-2: #c9e253;
+  --w-focus: #c9e253;
 
-  /* The accent. Swap these two for any hue you like — but check the contrast
-     against --background stays at or above 4.5:1, since the accent is used for
-     small uppercase labels. This teal is 5.5:1 on white; #0d9488 was 3.7:1. */
-  --accent: #0f766e;
-  --accent-2: #5b46e8;
+  --w-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --w-display-weight: 400;
+  --w-display-tracking: -0.02em;
+
+  color-scheme: dark;
 }
 
-.dark {
-  --background: #08090c;
-  --surface: #0f1117;
-  --foreground: #f2f4f8;
-  --muted: #99a1b3;
-  --border: #1d202a;
+/* --------------------------------------------------------------------------
+ * 01 · TUMBANG PRESO — the road is the page, the game is the light on it.
+ *
+ * The colours are the game's own. `tools/read_brand_palette.py` in the game's
+ * repository clusters the flat fills of the authored logo and reports their
+ * share of the artwork: deep red 34.3%, honey quartz 23.1%, chartreuse 17.0%,
+ * persimmon 5.7%, golden 4.2%, rim red 3.8%.
+ *
+ * ⚠ WHAT CHANGED, AND WHY IT IS NOT THE OLD MISTAKE. An early pass painted this
+ * world sepia-brown and called it "asphalt", which threw the game's actual
+ * palette away; the correction was to use the real colours, and that pass put
+ * honey quartz on the PAGE, so a screenshot of a night street sat on a cream
+ * worksheet. Both were wrong in the same way: the page was competing with the
+ * artwork. It now runs the road — #1A1917, the value the road actually is in
+ * the build — as the ground, and honey quartz #FCD39F becomes the INK, exactly
+ * as it does in the game's own UI, where cream type sits on a dark HUD over a
+ * bright street. Every bright value below survives as a mark, and the only
+ * things on this page that are actually bright are the screenshots.
+ *
+ * Ink #FCD39F measures 11.3:1 on the ground; gold #F5B521 measures 9.5:1.
+ * ------------------------------------------------------------------------ */
+[data-world="tumbang"] {
+  --w-ground: #1a1917; /* the road */
+  --w-ground-2: #24211e; /* the kerb: plates and panels */
+  --w-ground-3: #2f2b26;
+  --w-ink: #fcd39f; /* honey quartz, the game's own UI type */
+  --w-ink-2: #fcd39fbd;
+  --w-ink-3: #fcd39f85;
+  --w-rule: #fcd39f30;
+  --w-rule-2: #fcd39f17;
+  --w-accent: #fd8041; /* persimmon: the marker, the thing that moved */
+  --w-accent-ink: #1a1917;
+  --w-focus: #f5b521;
+  --w-accent-2: #d6ce01; /* chartreuse: the action colour, one per screen */
 
-  --accent: #5eead4;
-  --accent-2: #a78bfa;
+  --tp-red: #980715;
+  --tp-rim: #c32e0d;
+  --tp-honey: #fcd39f;
+  --tp-chartreuse: #d6ce01;
+  --tp-persimmon: #fd8041;
+  --tp-gold: #f5b521;
+  --tp-army: #b3a828;
+  --tp-asphalt: #1a1917;
+  --tp-defense: #0080e8; /* the taya's colour, and the only blue in the game */
+  --tp-paper: #feebd4; /* survives as a PLATE fill, never as the page */
+
+  color-scheme: dark;
+}
+
+/* The one bright surface left in this world: a torn strip of the game's own
+ * cream UI, used where a block of engineering prose needs to read as a page out
+ * of a design document rather than as more road.
+ *
+ * ⚠⚠ THIS BLOCK MUST RE-APPLY background-color AND color ITSELF, NOT JUST
+ * REDECLARE THE VARIABLES. `color: var(--w-ink)` on an ancestor is COMPUTED
+ * there and inherited as a literal colour, so redefining --w-ink further down
+ * changes nothing for text that already inherited it. That is exactly why the
+ * collision-lab heading came out deep red on near-black, at about 1.4:1, and
+ * was effectively invisible. Any surface that rewrites these variables has to
+ * restate these two properties too. */
+[data-world="tumbang"] [data-surface="paper"] {
+  background-color: var(--w-ground);
+  color: var(--w-ink);
+
+  --w-ground: #feebd4;
+  --w-ground-2: #fddfba;
+  --w-ground-3: #fcd39f;
+  --w-ink: #55290f;
+  --w-ink-2: #97491b;
+  --w-ink-3: #55290f8c;
+  --w-rule: #55290f38;
+  --w-rule-2: #55290f1a;
+  --w-accent: #980715;
+  --w-accent-ink: #feebd4;
+  --w-focus: #c32e0d;
+  --w-accent-2: #97491b;
+}
+
+/* --------------------------------------------------------------------------
+ * 02 · eGOVMED — the product, which is a mobile-first PWA.
+ *
+ * ⚠⚠ TWO PASSES GOT THIS WRONG IN OPPOSITE DIRECTIONS. The first invented a
+ * grey "government form" that the product does not resemble. The second
+ * sampled the deployed PWA and put its white-card ground on the page, which
+ * made the case study look like the app's own marketing site — a white medical
+ * SaaS page, which is the single most anonymous thing a civic project can look
+ * like.
+ *
+ * The product's colours are still the source of truth and every hue below is
+ * sampled from a headless capture of the live deployment (scripts/capture-live.sh).
+ * They now sit on the infrastructure's ground instead of the app's: deep
+ * maritime #08222A, the colour of the night side of a public system. The real
+ * app captures stay white, because they are photographs of a white app, and a
+ * white phone on a dark page is a screenshot rather than a page.
+ *
+ * Seafoam ink #DCE9E4 measures 12.9:1 here; the product blue is never used as
+ * type on this ground, only as route geometry and fills.
+ * ------------------------------------------------------------------------ */
+[data-world="egov"] {
+  --w-ground: #08222a;
+  --w-ground-2: #0e3039; /* the raised panel */
+  --w-ground-3: #16414b;
+  --w-ink: #dce9e4;
+  --w-ink-2: #dce9e4bd;
+  --w-ink-3: #dce9e488;
+  --w-rule: #7fc6b52e;
+  --w-rule-2: #dce9e414;
+  --w-accent: #62c8ac; /* readable seafoam: the live route */
+  --w-accent-ink: #08222a;
+  --w-focus: #e7b363;
+  --w-accent-2: #e7b363; /* amber: a held or unverified state */
+
+  --eg-blue: #3d86ff; /* the product primary, for fills and geometry only */
+  --eg-teal: #2fd0b6;
+  --eg-amber: #e7b363;
+  --eg-red: #e57b68;
+  --eg-green: #62c8ac;
+  --eg-ok: #62c8ac;
+  --eg-stamp: #e57b68;
+  --eg-route: #3d86ff;
+  --eg-hold: #e7b363;
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+ * 03 · GLYCOSWARM — a clinical trace on a controlled dark ground.
+ * The four specialist hues are chart colours, desaturated on purpose: they have
+ * to sit next to each other in one diagram without any of them shouting.
+ * ------------------------------------------------------------------------ */
+[data-world="glyco"] {
+  --w-ground: #080d12;
+  --w-ground-2: #101820;
+  --w-ground-3: #17212b;
+  --w-ink: #dfe5e8;
+  --w-ink-2: #dfe5e8a8;
+  --w-ink-3: #dfe5e874;
+  --w-rule: #dfe5e828;
+  --w-rule-2: #dfe5e814;
+  --w-accent: #10b981; /* the dashboard's own green primary */
+  --w-accent-ink: #080d12;
+  --w-focus: #e0b64a;
+  --w-accent-2: #e0b64a;
+
+  --gs-renal: #5fa8a0;
+  --gs-retinal: #c9a227;
+  --gs-neuro: #9b7fd4;
+  --gs-cardio: #d0524a;
+  --gs-synth: #e8eef1;
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+ * 04 · CHIP-8 — the instrument, drawn in the debugger's own colours.
+ *
+ * ⚠ The phosphor is MINT, not amber. That was a guess in the first pass and the
+ * deployed debugger settles it: the display, the register highlights and the
+ * ROM chips are all a green-cyan on near-black, with one warm amber reserved
+ * for a register that was just written. Sampled from a live capture.
+ * ------------------------------------------------------------------------ */
+[data-world="chip8"] {
+  --w-ground: #06090a;
+  --w-ground-2: #0e1416;
+  --w-ground-3: #151d20;
+  --w-ink: #d5e3de;
+  --w-ink-2: #d5e3dea0;
+  --w-ink-3: #d5e3de70;
+  --w-rule: #7ee0b826;
+  --w-rule-2: #d5e3de12;
+  --w-accent: #7ee0b8; /* the debugger's phosphor */
+  --w-accent-ink: #0a0a0b;
+  --w-focus: #7ee0b8;
+  --w-accent-2: #e0a54a;
+
+  --c8-dim: #63706b;
+  --c8-write: #e0a54a; /* the amber a register flashes when it is written */
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+ * 05 · THE READING STATION — Knee MRI.
+ *
+ * ⚠ This was a cool light grey shared by both clinical projects. Both deployed
+ * products are DARK, and dark in two different ways: the MRI reader is
+ * near-black with a warm amber, the risk station is near-black with crimson.
+ * ------------------------------------------------------------------------ */
+[data-world="reading"] {
+  --w-ground: #0b0b0c;
+  --w-ground-2: #131315;
+  --w-ground-3: #1b1b1e;
+  --w-ink: #f2ece4;
+  --w-ink-2: #f2ece4a8;
+  --w-ink-3: #f2ece476;
+  --w-rule: #f2ece426;
+  --w-rule-2: #f2ece412;
+  --w-accent: #e8b57e;
+  --w-accent-ink: #0b0b0c;
+  --w-focus: #e8b57e;
+  --w-accent-2: #8ba8bc;
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+ * 06 · CARDIOSENSE — near black and crimson, mono labels, corner brackets.
+ * Sampled from the deployed risk station. It is a different instrument from the
+ * MRI reader and it is drawn as one: the two used to share a world, and that
+ * flattened two real designs into a single guess.
+ * ------------------------------------------------------------------------ */
+[data-world="cardio"] {
+  --w-ground: #08080b;
+  --w-ground-2: #101018;
+  --w-ground-3: #171722;
+  --w-ink: #eceaf2;
+  --w-ink-2: #eceaf2a8;
+  --w-ink-3: #eceaf276;
+  --w-rule: #ff2d5533;
+  --w-rule-2: #eceaf214;
+  --w-accent: #ff2d55;
+  --w-accent-ink: #08080b;
+  --w-focus: #ff2d55;
+  --w-accent-2: #f0b352;
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+ * Display type is a per-page decision, never a per-section one. A page sets one
+ * of these on its root and inherits the utility superfamily everywhere else.
+ * See the thesis: maximum two families per page, and two of the five worlds
+ * deliberately use only one.
+ * ------------------------------------------------------------------------ */
+[data-display="daruma"] {
+  --w-display: var(--font-daruma), var(--font-newsreader), sans-serif;
+  --w-display-weight: 400;
+  --w-display-tracking: 0.01em;
+}
+
+[data-display="franklin"] {
+  --w-display: var(--font-franklin), "Helvetica Neue", sans-serif;
+  --w-display-weight: 700;
+  --w-display-tracking: -0.015em;
+}
+
+/* The instruments. No second family at all; the display face IS the utility
+   face, at a scale contrast big enough to do the same job. */
+[data-display="plex"] {
+  --w-display: var(--font-plex-sans), system-ui, sans-serif;
+  --w-display-weight: 600;
+  --w-display-tracking: -0.03em;
+}
+
+[data-display="mono"] {
+  --w-display: var(--font-plex-mono), ui-monospace, monospace;
+  --w-display-weight: 500;
+  --w-display-tracking: -0.04em;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-border: var(--border);
-  --color-accent: var(--accent);
-  --color-accent-2: var(--accent-2);
-  --font-sans: var(--font-space-grotesk);
+  --color-ground: var(--w-ground);
+  --color-ground-2: var(--w-ground-2);
+  --color-ground-3: var(--w-ground-3);
+  --color-ink: var(--w-ink);
+  --color-ink-2: var(--w-ink-2);
+  --color-ink-3: var(--w-ink-3);
+  --color-rule: var(--w-rule);
+  --color-rule-2: var(--w-rule-2);
+  --color-accent: var(--w-accent);
+  --color-accent-2: var(--w-accent-2);
+  --color-accent-ink: var(--w-accent-ink);
+  --color-focus: var(--w-focus);
+
+  --font-sans: var(--font-plex-sans), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  /* ⚠ There is deliberately no `--font-display` alias here. A theme variable is
+   * declared once, at :root, and its own var() is substituted THERE, so an
+   * alias for `--w-display` would freeze to the index world's serif and quietly
+   * defeat every per-page display face. Use `.u-display`, which reads
+   * `--w-display` at the element. */
 }
 
-html {
-  scroll-behavior: smooth;
-  /* so anchor links don't land underneath the sticky header */
-  scroll-padding-top: 5.5rem;
-}
+/* ===========================================================================
+ * BASE
+ * ======================================================================== */
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-::selection {
-  background: var(--accent);
-  color: var(--background);
-}
-
-/* ---------------------------------------------------------------------------
- * Scroll-reveal — see src/components/Reveal.tsx
- * ------------------------------------------------------------------------ */
-.reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* ---------------------------------------------------------------------------
- * Decorative bits used by the hero
- * ------------------------------------------------------------------------ */
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--w-rule);
   }
-  50% {
-    transform: translateY(-14px);
+
+  html {
+    scroll-padding-top: 4.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--w-ground);
+    color: var(--w-ink);
+    font-family: var(--font-plex-sans), system-ui, sans-serif;
+    font-feature-settings: "cv05" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* A world change is a colour change across the entire page. Transitioning it
+       is what makes scrolling out of a world feel like leaving a room rather than
+       like a background swapping. */
+    transition:
+      background-color 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* ⚠ EVERY DIRECT CHILD OF <body> IS LIFTED ABOVE THE AMBIENCE LAYER.
+   *
+   * Ambience is `position: fixed; z-index: 0`, which puts it in the positioned
+   * layer — above ordinary in-flow content, which paints below it. Without this
+   * rule the drifting fields cover the page's own text. Moving the ambience to
+   * a negative z-index instead does not work either: it would then paint behind
+   * <body>'s own opaque background and be invisible, which is exactly the bug
+   * the first version shipped with. Lifting the content is the fix.
+   *
+   * `:where()` keeps the specificity at zero so any page can override it. */
+  body > :where(header, main, footer, div, nav, section, a) {
+    position: relative;
+    z-index: 1;
+  }
+
+  ::selection {
+    background: var(--w-ink);
+    color: var(--w-ground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--w-focus);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  /* Squares, not pills. Nothing on this site has a 2xl radius. */
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
   }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
+@layer components {
+  /* ===========================================================================
+   * TYPE PRIMITIVES
+   * ======================================================================== */
 
-@keyframes grid-pan {
-  from {
+  .u-display {
+    /* ⚠ `var(--w-display)` directly, NOT the `--font-display` theme alias.
+     * A custom property's value has its own var() substituted where the property
+     * is DECLARED, not where it is used. `--font-display: var(--w-display)` is
+     * declared at :root, so it froze to the index world's serif and every
+     * page-specific display face silently never appeared. Tailwind's own
+     * utilities are unaffected because `@theme inline` inlines `var(--w-*)`
+     * straight into the utility, which is the whole reason that keyword is on
+     * the block. */
+    font-family: var(--w-display);
+    font-weight: var(--w-display-weight);
+    letter-spacing: var(--w-display-tracking);
+    line-height: 0.94;
+    text-wrap: balance;
+  }
+
+  /* The metadata voice: everywhere on the site, in every world, small caps set in
+     the mono at a tracking wide enough to read as a label rather than as text. */
+  .u-meta {
+    font-family: var(--font-plex-mono), ui-monospace, monospace;
+    /* ⚠ 12px, not 11. The first pass set every label at 0.6875rem and the whole
+     * site read as if it had been designed at 80% zoom. Metadata may be small.
+     * It may not be microscopic. */
+    font-size: 0.75rem;
+    line-height: 1.25;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .u-prose {
+    max-width: 34em;
+    font-size: 1.125rem;
+    line-height: 1.62;
+    color: var(--w-ink-2);
+    text-wrap: pretty;
+  }
+
+  .u-prose strong {
+    color: var(--w-ink);
+    font-weight: 600;
+  }
+
+  .u-prose em {
+    font-style: italic;
+  }
+
+  /* The one hairline. Used as a section divider everywhere in the building. */
+  .u-rule {
+    border: 0;
+    border-top: 1px solid var(--w-rule);
+    margin: 0;
+  }
+
+  /* ===========================================================================
+   * MATERIALS
+   *
+   * A material is allowed on this site if it can answer "what is this made of,
+   * and why here". Decorative noise over everything is banned; so is a paper
+   * JPEG. Each one below is drawn in CSS or as a sub-kilobyte inline SVG,
+   * because every one of them is a repeating figure and a bitmap of it would be
+   * the largest asset on the page.
+   *
+   *   .m-grain    capture noise. Everything on this site is a capture of a real
+   *               thing, and a capture has grain. The ground carries a little
+   *               of it so a screenshot does not sit on a surgically clean
+   *               surface, which is what makes a dark page read as a template.
+   *   .m-halftone press dots. Only where the site is quoting printed matter:
+   *               certificates, event posters, the results sheet.
+   *   .m-plot     a plotting grid. Only under a measurement.
+   *   .m-scan     display raster. Only on a machine surface.
+   *   .m-formgrid a form's field ruling. Only under civic paperwork.
+   * ======================================================================== */
+
+  /* Two octaves of fractal noise at 0.9 opacity of a 4% white — invisible as a
+     texture, unmistakable as an absence when you turn it off. Fixed attachment
+     so it belongs to the screen (a capture surface) rather than to the
+     document, which is what stops it swimming while you scroll. */
+  .m-grain::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  }
+
+  /* Press dots. 3px pitch, 45°, at the ink's own colour so it tints rather than
+     greys whatever it is laid over. */
+  .m-halftone {
+    background-image: radial-gradient(
+      var(--w-rule-2) 0.9px,
+      transparent 0.9px
+    );
+    background-size: 4px 4px;
     background-position: 0 0;
   }
-  to {
-    background-position: 56px 56px;
+
+  /* The plotting grid. 8px minor, and the surface it sits on is always showing
+     a number that was measured. */
+  .m-plot {
+    background-image:
+      linear-gradient(var(--w-rule-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--w-rule-2) 1px, transparent 1px);
+    background-size:
+      100% 0.5rem,
+      0.5rem 100%;
   }
-}
 
-.grid-bg {
-  background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 56px 56px;
-  animation: grid-pan 24s linear infinite;
-}
-
-.text-gradient {
-  background: linear-gradient(120deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+  /* Display raster: one dark line every other pixel, the artefact a phone
+     camera picks up off a CRT. Machine surfaces only. */
+  .m-scan {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      #0000 0px,
+      #0000 2px,
+      #00000038 3px
+    );
   }
-  .reveal {
-    opacity: 1;
+
+  /* Registration marks. A printed plate has them at the corners so the passes
+     line up; here they mark the four corners of a real artifact, which is the
+     same claim — this frame contains something that was captured, not drawn. */
+  .m-reg {
+    position: relative;
+  }
+
+  .m-reg::before,
+  .m-reg::after {
+    content: "";
+    position: absolute;
+    width: 0.6rem;
+    height: 0.6rem;
+    pointer-events: none;
+    border: 1px solid var(--w-ink-3);
+  }
+
+  .m-reg::before {
+    top: -1px;
+    left: -1px;
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  .m-reg::after {
+    right: -1px;
+    bottom: -1px;
+    border-top: 0;
+    border-left: 0;
+  }
+
+  /* Asphalt: fine warm noise plus two very low-contrast diagonal washes, so the
+     ground has grain without a noise PNG over the whole document. */
+  .m-asphalt {
+    background-color: var(--w-ground);
+    background-image:
+      radial-gradient(#ffffff0a 0.5px, transparent 0.5px),
+      radial-gradient(#0000001f 0.5px, transparent 0.5px);
+    background-size:
+      7px 7px,
+      11px 11px;
+    background-position:
+      0 0,
+      3px 5px;
+  }
+
+  /* Chalk: a hand-drawn court line. Dashed, slightly transparent, warm white. */
+  .m-chalk {
+    border: 2px solid var(--w-ink-2);
+    border-radius: 2px;
+    opacity: 0.55;
+  }
+
+  /* The government form's field grid. */
+  .m-formgrid {
+    background-color: var(--w-ground);
+    background-image:
+      linear-gradient(var(--w-rule-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--w-rule-2) 1px, transparent 1px);
+    background-size:
+      100% 1.75rem,
+      1.75rem 100%;
+  }
+
+  /* The clinical chart's baseline grid, coarser and only horizontal. */
+  .m-trace {
+    background-color: var(--w-ground);
+    background-image: linear-gradient(var(--w-rule-2) 1px, transparent 1px);
+    background-size: 100% 2.25rem;
+  }
+
+  /* ===========================================================================
+   * MOTION
+   *
+   * There is exactly one entrance animation on this site and it is used for
+   * things that arrive, never for paragraphs. A paragraph does not need
+   * choreography.
+   * ======================================================================== */
+
+  @keyframes u-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes u-wipe {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  .u-rise {
+    animation: u-rise 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ===========================================================================
+   * SCROLLBAR — it is visible in every screenshot, so it is designed.
+   * ======================================================================== */
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--w-rule) transparent;
+  }
+
+  /* Skip link. Present on every page, invisible until it is focused. */
+  .u-skip {
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 100;
+    transform: translateY(-200%);
+    background: var(--w-ink);
+    color: var(--w-ground);
+    padding: 0.5rem 0.875rem;
+    transition: transform 160ms;
+  }
+
+  .u-skip:focus {
     transform: none;
-    transition: none;
   }
-  .animate-float,
-  .grid-bg {
+}
+/* Project compositions. Motion belongs to media and navigation, not every paragraph. */
+@keyframes reveal-artifact {
+  from {
+    clip-path: inset(0 100% 0 0);
+    transform: scale(1.08);
+  }
+  to {
+    clip-path: inset(0);
+    transform: scale(1);
+  }
+}
+.world-kicker {
+  font-size: 0.875rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 1rem;
+}
+.world-note {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  opacity: 0.75;
+  margin-top: 1.5rem;
+}
+.world-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.85rem 1.2rem;
+  border: 1px solid currentColor;
+  font-size: 0.9375rem;
+  transition:
+    background 0.25s,
+    color 0.25s;
+}
+.world-button:hover {
+  background: var(--w-ink);
+  color: var(--w-ground);
+}
+.glyco-header {
+  position: relative;
+  padding: 2rem 5vw 4rem;
+  min-height: 750px;
+  overflow: hidden;
+}
+.glyco-header > a:first-child {
+  font-size: 0.9rem;
+}
+.glyco-header > p:first-of-type {
+  font-size: 0.875rem;
+  margin: 2rem 0;
+}
+.glyco-header h1 {
+  font-size: clamp(4rem, 8vw, 8rem);
+  letter-spacing: -0.065em;
+  line-height: 0.98;
+  position: relative;
+  z-index: 1;
+}
+.glyco-header h1 span {
+  color: #6cdcb3;
+}
+.glyco-header > p:last-of-type {
+  max-width: 31ch;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  margin: 2rem 0;
+  position: relative;
+  z-index: 1;
+}
+.glyco-header > .world-button {
+  position: relative;
+  z-index: 1;
+}
+.glyco-artifact {
+  position: absolute;
+  width: 63%;
+  aspect-ratio: 16/10;
+  right: -5%;
+  top: 27%;
+  transform: perspective(1200px) rotateY(-18deg) rotateZ(5deg);
+  transition: transform 1s;
+  opacity: 0.8;
+}
+.glyco-header:hover .glyco-artifact {
+  transform: perspective(1200px) rotateY(-7deg) rotateZ(2deg);
+  opacity: 1;
+}
+.swarm-system {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.15fr;
+  gap: 2.5rem;
+  padding: 5rem 4vw 3rem;
+  background: #0e1921;
+  color: #e4f1ed;
+  scroll-margin-top: 5rem;
+}
+.swarm-input h2 {
+  font-size: 2.3rem;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  margin-bottom: 1rem;
+}
+.swarm-input > p {
+  line-height: 1.5;
+}
+.swarm-input ul {
+  margin-top: 2rem;
+}
+.swarm-input li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #33444b;
+}
+.swarm-input li span,
+.swarm-input li code {
+  display: block;
+}
+.swarm-input li code {
+  color: #9eb2b5;
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+}
+.swarm-agents {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+.swarm-agents button {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  padding: 1.15rem;
+  text-align: left;
+  border-left: 3px solid var(--agent-colour);
+  background: #13212b;
+  transition:
+    transform 0.4s,
+    background 0.4s;
+}
+.swarm-agents button strong {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+.swarm-agents button > span:first-child {
+  color: var(--agent-colour);
+  font-size: 0.85rem;
+}
+.swarm-agents button > span:last-child {
+  grid-column: 2;
+  font-size: 0.8rem;
+  opacity: 0.65;
+}
+.swarm-agents button[aria-pressed="true"] {
+  transform: translateX(10px);
+  background: #22343e;
+}
+.swarm-contract {
+  border-top: 3px solid #6cdcb3;
+  padding-top: 1.5rem;
+}
+.swarm-contract h3 {
+  font-size: 1.8rem;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  letter-spacing: -0.035em;
+}
+.swarm-contract > p {
+  line-height: 1.6;
+}
+.contract-fields {
+  padding: 1rem 0;
+  margin: 1rem 0;
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 0.8125rem;
+}
+.contract-fields p {
+  padding: 0.35rem 0;
+}
+.swarm-synthesis {
+  grid-column: 1/-1;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 2rem 0;
+  border-top: 1px solid #33444b;
+}
+.swarm-synthesis > span {
+  font-size: 4rem;
+  color: #6cdcb3;
+}
+.swarm-synthesis h3 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+.swarm-synthesis p {
+  max-width: 65ch;
+  line-height: 1.6;
+}
+.swarm-synthesis > strong {
+  margin-left: auto;
+  min-width: 8rem;
+  color: #6cdcb3;
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+.swarm-system > .world-note {
+  grid-column: 1/-1;
+  margin-top: 0;
+}
+.glyco-serving {
+  padding: 6rem 6vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+.glyco-serving h2 {
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+.glyco-serving p {
+  line-height: 1.75;
+  font-size: 1.0625rem;
+  margin-bottom: 1.5rem;
+}
+.lab-heading {
+  padding: 4rem 5vw 3rem;
+}
+.lab-heading h1 {
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  line-height: 1;
+  letter-spacing: -0.055em;
+  margin-top: 1.5rem;
+}
+.lab-heading em {
+  font-family: var(--font-newsreader), serif;
+  font-weight: 400;
+}
+.lab-bench {
+  padding: 0 3vw 4rem;
+}
+.bench-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem 0;
+}
+.bench-picker button {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--w-rule);
+  min-height: 48px;
+}
+.bench-picker button[aria-pressed="true"] {
+  background: var(--w-ink);
+  color: var(--w-ground);
+}
+.bench-surface {
+  background: var(--w-ground);
+  color: var(--w-ink);
+  padding: 1.5rem;
+}
+.bench-surface > header {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  line-height: 1.6;
+  font-size: 0.9375rem;
+}
+.bench-surface > header a {
+  flex-shrink: 0;
+  text-decoration: underline;
+}
+.bench-surface > figure {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}
+.bench-surface .patient-system,
+.bench-surface .swarm-system {
+  margin-top: 1.5rem;
+}
+@supports (animation-timeline: view()) {
+  .glyco-artifact {
+    animation: artifact-drift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+  @keyframes artifact-drift {
+    from {
+      translate: 0 40px;
+      rotate: 5deg;
+    }
+    to {
+      translate: 0 -40px;
+      rotate: -3deg;
+    }
+  }
+}
+@media (min-width: 1600px) {
+  .entrance {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+}
+@media (max-width: 1000px) {
+  .entrance {
+    grid-template-columns: 1fr;
+    padding: 2.5rem 5vw 1.5rem;
+    gap: 2rem;
+  }
+  .entrance-copy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+  }
+  .entrance-copy > p:first-child {
+    grid-column: 1/-1;
+    margin-bottom: 1.5rem;
+  }
+  .entrance h1 {
+    font-size: clamp(3.7rem, 9vw, 6rem);
+  }
+  .entrance-intro {
+    align-self: end;
+    margin-top: 0;
+  }
+  .entrance-image {
+    height: 340px;
+  }
+  .entrance-stage {
+    transform: rotate(-1deg);
+  }
+  .swarm-system {
+    grid-template-columns: 1fr 1fr;
+  }
+  .swarm-contract {
+    grid-column: 1/-1;
+  }
+  .glyco-artifact {
+    top: 38%;
+    width: 62%;
+    opacity: 0.55;
+  }
+  .patient-system {
+    gap: 3rem;
+    padding: 3rem 4vw;
+  }
+}
+@media (max-width: 640px) {
+  .entrance-copy {
+    display: block;
+  }
+  .entrance h1 {
+    font-size: clamp(3.5rem, 13vw, 5rem);
+  }
+  .entrance-intro {
+    margin-top: 1.8rem;
+    max-width: 35ch;
+  }
+  .entrance-image {
+    height: 250px;
+  }
+  .entrance-select {
+    padding: 0.4rem;
+  }
+  .entrance-select button {
+    font-size: 0.8rem;
+    gap: 0.4rem;
+  }
+  .entrance-caption {
+    font-size: 0.8rem;
+    padding: 2.5rem 0.75rem 0.8rem;
+  }
+  .entrance-caption > span {
+    max-width: 24ch;
+  }
+  .entrance-scroll {
+    padding: 0;
+  }
+  .egov-header {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 5vw 2.5rem;
+    gap: 1.5rem;
+  }
+  .egov-header > p {
+    text-align: left;
+  }
+  .egov-header h1 {
+    font-size: clamp(4rem, 18vw, 6rem);
+  }
+  .egov-header > div {
+    max-width: 100%;
+  }
+  .patient-system {
+    grid-template-columns: 1fr;
+    padding: 2.5rem 5vw;
+    gap: 2rem;
+  }
+  .patient-screen {
+    width: 205px;
+    height: 457px;
+  }
+  .patient-device {
+    transform: rotate(-3deg);
+  }
+  .patient-system.is-open .patient-device {
+    transform: rotate(0) scale(0.97);
+  }
+  .patient-underlay h2 {
+    min-height: 0;
+    max-width: none;
+    font-size: 2.5rem;
+  }
+  .patient-rail button {
+    font-size: 0.75rem;
+  }
+  .patient-detail {
+    min-height: 250px;
+  }
+  .egov-principle,
+  .world-ending,
+  .glyco-serving {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 3rem 5vw;
+  }
+  .glyco-header {
+    min-height: 0;
+    padding: 1.5rem 5vw 2.5rem;
+  }
+  .glyco-header h1 {
+    font-size: clamp(3.5rem, 14vw, 5.5rem);
+  }
+  .glyco-header > p:first-of-type {
+    max-width: 32ch;
+  }
+  .glyco-artifact {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 115%;
+    margin: 1.5rem -7.5% 0;
+    opacity: 1;
+  }
+  .swarm-system {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 3rem 5vw;
+  }
+  .swarm-agents button[aria-pressed="true"] {
+    transform: translateX(4px);
+  }
+  .swarm-synthesis {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .swarm-synthesis > strong {
+    margin-left: 0;
+  }
+  .bench-surface {
+    padding: 1rem;
+  }
+  .bench-surface > header {
+    flex-direction: column;
+  }
+  .bench-picker {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .bench-picker button {
+    font-size: 0.875rem;
+    padding: 0.65rem;
+  }
+  .bench-surface .patient-system,
+  .bench-surface .swarm-system {
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .entrance-stage,
+  .entrance-image img,
+  .patient-device,
+  .glyco-artifact,
+  .swarm-agents button {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  .failure-result {
     animation: none;
   }
 }
-
-/* Thin, unobtrusive scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+.event-heading {
+  padding: 2rem 5vw 4rem;
 }
-::-webkit-scrollbar-track {
-  background: var(--background);
+.event-heading > p {
+  font-size: 0.9rem;
+  margin-top: 2rem;
 }
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 999px;
+.event-heading h1 {
+  font-size: clamp(3rem, 6.6vw, 6.7rem);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+  margin-top: 2rem;
+  max-width: 20ch;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+.event-heading h1 em {
+  font-family: var(--font-newsreader), serif;
+  font-weight: 400;
+}
+.event-cover img {
+  width: 100%;
+  max-height: 85vh;
+  object-fit: cover;
+}
+.event-cover figcaption {
+  padding: 1rem 5vw;
+  font-size: 0.875rem;
+}
+.event-account {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7vw;
+  padding: 5rem 8vw;
+  align-items: start;
+}
+.event-pull {
+  font-family: var(--font-newsreader), serif;
+  font-size: clamp(2rem, 3.6vw, 3.8rem);
+  line-height: 1.15;
+}
+.event-account h2 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+.event-account div > p {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+}
+.event-trophy {
+  width: 65%;
+  margin: 0 auto 2rem;
+  transform: rotate(-2deg);
+}
+.event-trophy img {
+  width: 100%;
+  height: auto;
+  max-height: 700px;
+  object-fit: cover;
+}
+.event-trophy figcaption {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+.event-result {
+  background: #154ebe;
+  color: white;
+  padding: 4rem 6vw;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  align-items: center;
+  gap: 4vw;
+}
+.event-result > span {
+  font-size: clamp(5rem, 14vw, 15rem);
+  line-height: 1;
+  letter-spacing: -0.09em;
+  white-space: nowrap;
+}
+.event-result h2 {
+  font-size: 2rem;
+}
+.event-result p {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  line-height: 1.7;
+}
+.about-opening {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: center;
+  gap: 6vw;
+  padding: 4rem 0 5rem;
+}
+.about-opening h1 {
+  font-size: clamp(3rem, 6vw, 6rem);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  margin: 2rem 0;
+}
+.about-opening div > p:last-child {
+  max-width: 32ch;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+.about-opening figure {
+  transform: rotate(3deg);
+  padding: 1rem;
+  background: #fff;
+  color: #252525;
+  width: 90%;
+  justify-self: center;
+}
+.about-opening img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  object-position: top;
+}
+.about-opening figcaption {
+  font-size: 0.8125rem;
+  padding: 0.9rem 0 0.3rem;
+}
+@supports (animation-timeline: view()) {
+  .event-trophy {
+    animation: photo-settle linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+  @keyframes photo-settle {
+    from {
+      rotate: -3deg;
+      translate: 0 30px;
+    }
+    to {
+      rotate: 3deg;
+      translate: 0 -30px;
+    }
+  }
+}
+@media (max-width: 640px) {
+  .event-account,
+  .event-result,
+  .about-opening {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 3rem 5vw;
+  }
+  .event-heading {
+    padding-bottom: 2.5rem;
+  }
+  .event-trophy {
+    width: 85%;
+  }
+  .about-opening {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .about-opening figure {
+    max-width: 330px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .event-trophy {
+    animation: none !important;
+  }
 }

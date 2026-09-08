@@ -45,3 +45,8 @@ next-env.d.ts
 
 # local editor/preview config
 .claude/
+
+# Local visual review artifacts
+.review/
+playwright-report/
+test-results/

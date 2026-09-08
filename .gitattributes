@@ -1,0 +1,22 @@
+# ⚠ WHY THIS FILE EXISTS.
+#
+# GitHub's language bar read this repository as "HTML 68.2%", which is wrong and
+# was actively misleading about what the project is. Two causes, both fixed:
+#
+#   1. public/images/colab_dom.html — a 421 KB saved DOM dump that had nothing
+#      to do with the site. Deleted.
+#   2. public/chip8/ — the Emscripten output of the CHIP-8 emulator: a generated
+#      shell page and a megabyte of generated glue JavaScript. It is a build
+#      artifact of a C++ project, not source of this one.
+#
+# Marking the emulator build vendored keeps it in the repo (the page needs it to
+# boot) while telling Linguist not to count it. The app itself is TypeScript and
+# React, and the bar should say so.
+public/chip8/** linguist-vendored
+
+# The hand-written embed shell is ours, but it is still not representative of
+# what this repository is for.
+public/chip8/embed.html linguist-vendored
+
+# Generated placeholder art.
+public/images/*-light.png linguist-generated

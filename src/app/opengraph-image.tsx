@@ -1,12 +1,27 @@
 import { ImageResponse } from "next/og";
-import { hero, site } from "@/content/data";
+import { opening, site, stamp, worldIndex } from "@/content/site";
 
-/* The card people see when the site is pasted into LinkedIn, Discord, X, etc.
- * Generated at build time — nothing to design in Figma, it just follows data.ts. */
+/* ===========================================================================
+ * The card people see when the site is pasted into a chat.
+ *
+ * It is the homepage's opening, reset for 1200x630: the stamp line, the
+ * statement, and the four-room index. Ink on paper, hairlines, no glow, no
+ * gradient, no accent blob.
+ *
+ * ⚠ No custom font is loaded on purpose. Satori would need the WOFF fetched at
+ * build time, and a build that reaches the network to render a share image is a
+ * build that can fail for a reason nobody will connect to this file. The
+ * composition is doing the work here rather than the typeface.
+ * ======================================================================== */
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = `${hero.name} · portfolio`;
+export const alt = `${site.name}: ${opening.statement}`;
+
+const PAPER = "#f0ede6";
+const INK = "#16130f";
+const RULE = "rgba(22,19,15,0.18)";
+const MUTED = "rgba(22,19,15,0.5)";
 
 export default function OpengraphImage() {
   return new ImageResponse(
@@ -16,101 +31,61 @@ export default function OpengraphImage() {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
-        background: "#08090c",
-        padding: "80px",
-        position: "relative",
+        justifyContent: "space-between",
+        background: PAPER,
+        color: INK,
+        padding: "56px 64px",
       }}
     >
-      {/* accent glows */}
       <div
         style={{
-          position: "absolute",
-          top: -160,
-          left: -120,
-          width: 520,
-          height: 520,
-          borderRadius: "50%",
-          background: "#5eead4",
-          opacity: 0.18,
+          display: "flex",
+          gap: 18,
+          fontSize: 19,
+          letterSpacing: 3,
+          textTransform: "uppercase",
+          color: MUTED,
         }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: -200,
-          right: -100,
-          width: 520,
-          height: 520,
-          borderRadius: "50%",
-          background: "#a78bfa",
-          opacity: 0.18,
-        }}
-      />
+      >
+        {stamp.map((s, i) => (
+          <div key={s} style={{ display: "flex", gap: 18 }}>
+            {i > 0 ? <span>/</span> : null}
+            <span>{s}</span>
+          </div>
+        ))}
+      </div>
 
       <div
         style={{
           display: "flex",
-          alignItems: "center",
-          gap: 16,
-          marginBottom: 32,
+          fontSize: 74,
+          lineHeight: 1.06,
+          letterSpacing: -2.4,
+          maxWidth: 940,
         }}
       >
+        {opening.statement}
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", height: 1, background: RULE }} />
         <div
           style={{
-            width: 56,
-            height: 56,
-            borderRadius: 14,
-            background: "linear-gradient(135deg, #5eead4, #a78bfa)",
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#08090c",
-            fontSize: 24,
-            fontWeight: 700,
-            letterSpacing: -1,
+            justifyContent: "space-between",
+            paddingTop: 20,
+            fontSize: 21,
+            letterSpacing: 1.4,
+            color: MUTED,
           }}
         >
-          ML
+          {worldIndex.map((w) => (
+            <div key={w.n} style={{ display: "flex", gap: 12 }}>
+              <span>{w.n}</span>
+              <span style={{ color: INK }}>{w.title}</span>
+            </div>
+          ))}
         </div>
-        <div style={{ color: "#99a1b3", fontSize: 26 }}>
-          {site.url.replace(/^https?:\/\//, "")}
-        </div>
-      </div>
-
-      <div
-        style={{
-          color: "#f2f4f8",
-          fontSize: 84,
-          fontWeight: 700,
-          lineHeight: 1.05,
-          letterSpacing: -2,
-        }}
-      >
-        {hero.name}
-      </div>
-
-      <div
-        style={{
-          color: "#5eead4",
-          fontSize: 36,
-          marginTop: 20,
-          fontWeight: 500,
-        }}
-      >
-        {site.ogTagline}
-      </div>
-
-      <div
-        style={{
-          color: "#99a1b3",
-          fontSize: 26,
-          marginTop: 28,
-          maxWidth: 900,
-          lineHeight: 1.4,
-        }}
-      >
-        BS Computer Science, University of the Philippines Manila
       </div>
     </div>,
     size,

@@ -1,3 +1,10 @@
 .next
 node_modules
 public/images/*.svg
+
+.review
+public/chip8
+public/fonts
+
+# Captured third-party HTML artifact
+public/images/colab_dom.html

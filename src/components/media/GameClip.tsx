@@ -1,0 +1,113 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { usePrefersReducedMotion } from "@/lib/prefs";
+
+/* ===========================================================================
+ * A silent looping clip of the real game.
+ *
+ * ⚠ Four things this does that a bare <video autoplay loop> does not:
+ *
+ *   1. It does not fetch anything until it is near the viewport. `preload` is
+ *      "none" and the src is not attached until an IntersectionObserver says
+ *      the clip is within a screen of being seen. Three of these on one page
+ *      would otherwise pull 1.8 MB before the visitor scrolls.
+ *   2. It pauses when it leaves. A looping decode in a section nobody is
+ *      looking at is the cheapest frame rate you will ever throw away.
+ *   3. Under `prefers-reduced-motion` it never plays at all: the poster stays,
+ *      and a play control appears so the choice is still available.
+ *   4. It is muted and has no audio track at all, so it can never make noise,
+ *      including on the pages where the site's sound toggle is on.
+ * ======================================================================== */
+
+export default function GameClip({
+  src,
+  poster,
+  alt,
+  className = "",
+  ratio = "16 / 9",
+  /** Fills its positioned parent instead of holding its own aspect ratio. Used
+   *  by the opening plate, whose frame already owns the geometry. */
+  fill = false,
+}: {
+  src: string;
+  poster: string;
+  alt: string;
+  className?: string;
+  ratio?: string;
+  fill?: boolean;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [armed, setArmed] = useState(false);
+  const [forced, setForced] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const reduced = usePrefersReducedMotion();
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setArmed(true);
+          if (el.readyState > 0 && (!reduced || forced) && !paused)
+            void el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
+      },
+      { rootMargin: "0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reduced, forced, paused]);
+
+  const play = !paused && (reduced ? forced : armed);
+
+  return (
+    <div
+      className={`bg-ground-2 overflow-hidden ${fill ? "absolute inset-0" : "relative"} ${className}`}
+      style={fill ? undefined : { aspectRatio: ratio }}
+    >
+      <video
+        ref={ref}
+        muted
+        autoPlay={play}
+        loop
+        playsInline
+        preload="none"
+        poster={poster}
+        aria-label={alt}
+        src={armed || forced ? src : undefined}
+        onLoadedData={(e) => {
+          if (play) void e.currentTarget.play().catch(() => {});
+        }}
+        className="h-full w-full object-cover"
+      />
+      {reduced && !forced ? (
+        <button
+          type="button"
+          onClick={() => setForced(true)}
+          className="u-meta bg-ground text-ink border-ink absolute bottom-3 left-3 border px-3 py-1.5"
+        >
+          Play clip
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={() => {
+            const next = !paused;
+            setPaused(next);
+            if (next) ref.current?.pause();
+            else void ref.current?.play().catch(() => {});
+          }}
+          className="clip-toggle"
+          aria-label={paused ? "Play video" : "Pause video"}
+        >
+          {paused ? "Play" : "Pause"}
+        </button>
+      )}
+    </div>
+  );
+}

@@ -1,18 +1,17 @@
 import { Analytics } from "@vercel/analytics/next";
-import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { about, contact, hero, site } from "@/content/data";
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
+import { newsreader, plexMono, plexSans } from "./fonts";
+import Ambience from "@/components/chrome/Ambience";
+import Choreograph from "@/components/chrome/Choreograph";
+import Footer from "@/components/chrome/Footer";
+import RouteCurtain from "@/components/chrome/RouteCurtain";
+import { SoundProvider } from "@/lib/sound";
+import { contact, site } from "@/content/site";
 
 export const metadata: Metadata = {
-  // Makes the generated OG image and sitemap resolve to absolute URLs.
   metadataBase: new URL(site.url),
-  title: site.title,
+  title: { default: site.title, template: site.titleTemplate },
   description: site.description,
   keywords: [
     "Matthew Labrador",
@@ -20,17 +19,19 @@ export const metadata: Metadata = {
     "Computer Science",
     "Multi-Agent Systems",
     "LangGraph",
-    "AI Engineer",
+    "Godot",
+    "Game Development",
+    "Civic Technology",
     "Philippines",
   ],
-  authors: [{ name: hero.name, url: site.url }],
-  creator: hero.name,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
   openGraph: {
     title: site.title,
     description: site.description,
     url: site.url,
-    siteName: hero.name,
-    locale: "en_PH",
+    siteName: site.name,
+    locale: site.locale,
     type: "website",
   },
   twitter: {
@@ -41,11 +42,16 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-/* Structured data, so Google can show this as a person rather than a page. */
+export const viewport: Viewport = {
+  // The building's ground. A world overrides it live through WorldSync, so the
+  // browser chrome on a phone follows the room you are standing in.
+  themeColor: "#14100f",
+};
+
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: hero.name,
+  name: site.name,
   url: site.url,
   email: `mailto:${contact.email}`,
   jobTitle: "Computer Science Student",
@@ -55,41 +61,59 @@ const personSchema = {
     "@type": "CollegeOrUniversity",
     name: "University of the Philippines Manila",
   },
-  knowsAbout: about.paragraphs.length
-    ? ["Multi-Agent Systems", "Machine Learning", "Game Development", "LLMs"]
-    : undefined,
+  knowsAbout: [
+    "Multi-Agent Systems",
+    "Machine Learning",
+    "Game Development",
+    "Networked Multiplayer",
+    "Civic Technology",
+  ],
   sameAs: [contact.github, contact.linkedin, contact.facebook].filter(Boolean),
 };
 
-/**
- * Runs synchronously while the browser parses the HTML, so the saved theme is
- * applied before the first paint — no flash of the wrong theme on reload.
- * Dark is the default when nothing has been saved.
- */
-const themeScript = `(function(){try{var t=localStorage.getItem("theme");document.documentElement.classList.toggle("dark",t!=="light")}catch(e){}})()`;
-
+/* There is no theme toggle any more, and that is a design decision rather than
+ * a regression. The site's whole structure is a monochrome building holding
+ * rooms with their own palettes; a user-flipped dark mode would have to
+ * override those palettes, which is the same as deleting them. */
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} dark h-full`}
+      className={`${plexSans.variable} ${plexMono.variable} ${newsreader.variable}`}
+      // Next needs this to know it should suppress its own scroll restoration
+      // fighting the smooth scroll in globals.css during a route change.
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
       </head>
-      <body className="flex min-h-full flex-col">
-        {children}
-        {/* Page views only, no cookies and no cross-site identifier. Inert
-            outside a Vercel deployment, so local dev sends nothing. */}
+      <body data-world="index" className="m-grain flex min-h-dvh flex-col">
+        <a className="u-skip u-meta" href="#main">
+          Skip to content
+        </a>
+        {/* The whole tree is inside the provider so a link anywhere can ask for
+            the current world's voice. It constructs nothing until the toggle in
+            the header is pressed. */}
+        <SoundProvider>
+          {/* ⚠ Never a flat ground, on any page. Painted in whichever world's
+              colours the body currently carries. See the component. */}
+          <Ambience />
+          {/* One observer for the whole document; every surface decides for
+              itself what arriving means. See the component. */}
+          <Choreograph />
+          {children}
+          <Footer />
+          {/* A curtain in the destination world's colour, over a link that is
+              already working. See the component: it never blocks navigation. */}
+          <RouteCurtain />
+        </SoundProvider>
+        {/* Page views only, no cookies and no cross-site identifier. */}
         <Analytics />
       </body>
     </html>
