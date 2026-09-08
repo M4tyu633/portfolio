@@ -358,7 +358,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
   gap: clamp(2rem, 5vw, 5rem);
-  padding: clamp(3rem, 6vw, 5rem) var(--eg-pad);
+  padding: clamp(3rem, 6vw, 5rem) var(--eg-pad, clamp(1.5rem, 5vw, 4.5rem));
   border-top: 1px solid var(--w-rule);
   align-items: start;
 }

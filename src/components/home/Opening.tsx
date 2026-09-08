@@ -82,7 +82,7 @@ export default function Opening() {
                frame belongs to the sentence. */
             className={
               active.coverFit === "contain"
-                ? "object-contain object-[67%_50%]"
+                ? "object-contain object-center md:object-[67%_50%]"
                 : "object-cover"
             }
           />

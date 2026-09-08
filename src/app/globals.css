@@ -758,7 +758,7 @@
 .glyco-header {
   position: relative;
   padding: 2rem 5vw 4rem;
-  min-height: 750px;
+  min-height: clamp(680px, 80vh, 840px);
   overflow: hidden;
 }
 .glyco-header > a:first-child {
@@ -792,16 +792,16 @@
 }
 .glyco-artifact {
   position: absolute;
-  width: 63%;
+  width: min(55%, 820px);
   aspect-ratio: 16/10;
-  right: -5%;
-  top: 27%;
-  transform: perspective(1200px) rotateY(-18deg) rotateZ(5deg);
-  transition: transform 1s;
-  opacity: 0.8;
+  right: 1vw;
+  top: 50%;
+  transform: translateY(-50%) perspective(1200px) rotateY(-14deg) rotateZ(3deg);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s;
+  opacity: 0.9;
 }
 .glyco-header:hover .glyco-artifact {
-  transform: perspective(1200px) rotateY(-7deg) rotateZ(2deg);
+  transform: translateY(-50%) perspective(1200px) rotateY(-5deg) rotateZ(1deg);
   opacity: 1;
 }
 .swarm-system {
@@ -1160,6 +1160,7 @@
     position: relative;
     right: auto;
     top: auto;
+    transform: none;
     width: 115%;
     margin: 1.5rem -7.5% 0;
     opacity: 1;

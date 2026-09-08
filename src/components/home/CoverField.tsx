@@ -57,14 +57,14 @@ in vec2 a_cell;          // integer grid position, 0..grid-1
 uniform sampler2D u_src;
 uniform vec2  u_grid;     // columns, rows
 uniform vec2  u_viewport; // css pixels
-uniform vec2  u_cover;    // how the image is fitted into the viewport
+uniform vec2  u_scale;    // UV scale for object-fit mapping
+uniform vec2  u_offset;   // UV offset for object-position mapping
 uniform float u_resolve;  // 0 cloud, 1 picture
 uniform float u_time;
 uniform vec2  u_pointer;  // clip space, -1..1
 uniform float u_pointerOn;
 uniform float u_size;
 uniform float u_contain;  // 0 cover, 1 contain
-uniform float u_bias;     // horizontal offset, source-uv units
 
 out vec4 v_colour;
 
@@ -79,15 +79,9 @@ vec3 hash31(float n) {
 void main() {
   vec2 uv = (a_cell + 0.5) / u_grid;
 
-  /* The image is sampled once per point. Everything after this is geometry.
-     ⚠ NOT CLAMPED WHEN CONTAINED. A contained image does not fill the frame,
-     so the cells outside it have nothing to draw; clamping made them smear the
-     edge pixel across the margin in a long streak. They are dropped instead. */
-  /* ⚠ A CONTAINED IMAGE IS PUSHED RIGHT, NOT CENTRED. The left of this frame
-     is where the sentence lives and is held under a near-solid scrim, so a
-     centred interface spent its first third invisible. Sampling further left
-     for a given screen cell moves the picture right. */
-  vec2 suv = (uv - 0.5) * u_cover + 0.5 - vec2(u_bias, 0.0);
+  /* The image is sampled once per point. Exact pixel-for-pixel alignment with
+     CSS object-fit and object-position. Outside points are dropped when contained. */
+  vec2 suv = uv * u_scale + u_offset;
   float inside =
     step(0.0, suv.x) * step(suv.x, 1.0) * step(0.0, suv.y) * step(suv.y, 1.0);
   suv = clamp(suv, 0.0, 1.0);
@@ -276,14 +270,14 @@ export default function CoverField({
       src: gl.getUniformLocation(prog, "u_src"),
       grid: gl.getUniformLocation(prog, "u_grid"),
       viewport: gl.getUniformLocation(prog, "u_viewport"),
-      cover: gl.getUniformLocation(prog, "u_cover"),
+      scale: gl.getUniformLocation(prog, "u_scale"),
+      offset: gl.getUniformLocation(prog, "u_offset"),
       resolve: gl.getUniformLocation(prog, "u_resolve"),
       time: gl.getUniformLocation(prog, "u_time"),
       pointer: gl.getUniformLocation(prog, "u_pointer"),
       pointerOn: gl.getUniformLocation(prog, "u_pointerOn"),
       size: gl.getUniformLocation(prog, "u_size"),
       contain: gl.getUniformLocation(prog, "u_contain"),
-      bias: gl.getUniformLocation(prog, "u_bias"),
     };
 
     const tex = gl.createTexture();
@@ -307,7 +301,8 @@ export default function CoverField({
     );
     gl.uniform1i(u.src, 0);
     gl.uniform2f(u.grid, cols, rows);
-    gl.uniform2f(u.cover, 1, 1);
+    gl.uniform2f(u.scale, 1, 1);
+    gl.uniform2f(u.offset, 0, 0);
 
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -329,8 +324,8 @@ export default function CoverField({
       fitCover();
     };
 
-    /* The source is a photograph with its own aspect; the field is the cover's.
-       This is `object-fit: cover`, done in UV space. */
+    /* The source is an image with its own aspect; the field matches the cover container.
+       This provides mathematically exact alignment with CSS object-fit and object-position. */
     let imgAspect = 1.6;
     const fitCover = () => {
       const w = canvas.clientWidth || 1;
@@ -338,17 +333,47 @@ export default function CoverField({
       const boxAspect = w / h;
       const contain = fitRef.current === "contain";
       gl.uniform1f(u.contain, contain ? 1 : 0);
-      /* `u_cover` is the span of the source sampled across the frame. Under a
-         unit it crops; over a unit it leaves margin, which is what contain is. */
-      let coverX: number;
-      if (contain === boxAspect > imgAspect) {
-        coverX = boxAspect / imgAspect;
-        gl.uniform2f(u.cover, coverX, 1);
+
+      // Matches CSS: md:object-[67%_50%] object-center for contain, 50% 50% for cover
+      const px = contain ? (w >= 768 ? 0.67 : 0.5) : 0.5;
+      const py = 0.5;
+
+      let scaleX = 1;
+      let scaleY = 1;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      if (contain) {
+        if (boxAspect > imgAspect) {
+          // Box is wider than image (height-constrained)
+          scaleX = boxAspect / imgAspect;
+          offsetX = -(scaleX - 1) * px;
+          scaleY = 1;
+          offsetY = 0;
+        } else {
+          // Box is taller than image (width-constrained)
+          scaleX = 1;
+          offsetX = 0;
+          scaleY = imgAspect / boxAspect;
+          offsetY = -(scaleY - 1) * py;
+        }
       } else {
-        coverX = 1;
-        gl.uniform2f(u.cover, 1, imgAspect / boxAspect);
+        // Cover (centered 50% 50%)
+        if (boxAspect > imgAspect) {
+          scaleX = 1;
+          offsetX = 0;
+          scaleY = imgAspect / boxAspect;
+          offsetY = 0.5 * (1 - scaleY);
+        } else {
+          scaleX = boxAspect / imgAspect;
+          offsetX = 0.5 * (1 - scaleX);
+          scaleY = 1;
+          offsetY = 0;
+        }
       }
-      gl.uniform1f(u.bias, contain ? 0.17 * coverX : 0);
+
+      gl.uniform2f(u.scale, scaleX, scaleY);
+      gl.uniform2f(u.offset, offsetX, offsetY);
     };
 
     /* --- the source image ------------------------------------------------- */
