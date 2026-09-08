@@ -354,6 +354,9 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
     align-items: start;
+    /* ⚠ Or the entry action's 2px rule runs the full width of the phone and
+       reads as a divider rather than as a link. */
+    justify-items: start;
   }
   .opening-index ol {
     grid-template-columns: minmax(0, 1fr);

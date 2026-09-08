@@ -123,7 +123,7 @@ function BlockView({ block }: { block: Block }) {
               src={block.src}
               alt={block.alt}
               fill
-              sizes="(min-width: 1024px) 46rem, 100vw"
+              sizes="(min-width: 1024px) 70rem, 100vw"
               className={
                 block.fit === "contain" ? "object-contain p-6" : "object-cover"
               }

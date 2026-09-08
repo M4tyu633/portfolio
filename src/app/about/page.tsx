@@ -29,9 +29,9 @@ export default function AboutPage() {
       <Nav />
       <main id="main" className="flex-1">
         <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
-          <header className="about-opening">
+          <header className="about-opening" data-seq="rise">
             <div>
-              <p>Matthew Labrador · Manila</p>
+              <p className="u-meta text-accent">Matthew Labrador · Manila</p>
               <h1>{about.heading}</h1>
               <p>
                 Computer science at UP Manila. Games, systems, debate, and a
@@ -52,6 +52,19 @@ export default function AboutPage() {
               </figcaption>
             </figure>
           </header>
+
+          {/* ⚠ THE THREE LINES THAT MAKE THIS PAGE WORTH READING, AT SIZE.
+           * They were buried mid-paragraph at 19px, which is where a claim
+           * about how somebody works goes to be skipped. They are the same
+           * sentences, lifted; see content/about.ts. */}
+          <section className="credo" aria-label="How I work" data-seq="credo">
+            {about.credo.map((line, i) => (
+              <p key={line}>
+                <span className="u-meta">0{i + 1}</span>
+                <span className="u-display">{line}</span>
+              </p>
+            ))}
+          </section>
 
           <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:items-start">
             {/* -------- the prose column -------- */}

@@ -126,3 +126,78 @@
     max-width: 16rem;
   }
 }
+
+/* ===========================================================================
+ * /ABOUT — the credo.
+ *
+ * Three sentences at display scale with a rule between them and nothing else.
+ * It is the only place on the site where Matthew describes his own method
+ * rather than a project, so it gets the largest type on the page and the most
+ * air around it.
+ * ======================================================================== */
+.credo {
+  display: grid;
+  border-top: 1px solid var(--w-rule);
+  margin: clamp(2rem, 5vw, 4rem) 0 clamp(2.5rem, 6vw, 5rem);
+}
+
+.credo p {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0 1rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+  border-bottom: 1px solid var(--w-rule-2);
+}
+
+.credo .u-meta {
+  color: var(--w-accent);
+  padding-top: 0.7em;
+}
+
+.credo .u-display {
+  font-size: clamp(1.5rem, 3.4vw, 2.75rem);
+  max-width: 22ch;
+  text-wrap: balance;
+}
+
+/* The lines arrive one after another, because they are three separate claims
+   and reading them together as a block loses that. */
+.credo[data-seq] p {
+  opacity: 0;
+  transform: translateY(0.6rem);
+  transition:
+    opacity 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.credo[data-seq][data-in] p {
+  opacity: 1;
+  transform: none;
+}
+
+.credo[data-seq][data-in] p:nth-child(2) {
+  transition-delay: 120ms;
+}
+
+.credo[data-seq][data-in] p:nth-child(3) {
+  transition-delay: 240ms;
+}
+
+@media (max-width: 560px) {
+  .credo p {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+  .credo .u-meta {
+    padding-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .credo[data-seq] p {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

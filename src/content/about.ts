@@ -12,6 +12,17 @@ export const about = {
     "I also like having receipts. If a collision system feels unreliable, I measure it. If two API documents contradict each other, I test both. If software can fail in a dangerous way, I want to decide what failure should look like before I make the happy path pretty.",
     "Before computer science, I spent three years competing in debate. It still shows up every time I have five minutes to explain a technical system to judges who weren't there while I built it.",
   ],
+  /* ⚠ NOT NEW COPY. These three lines are lifted verbatim out of the second
+   * paragraph below, because they are the only sentences on the site that say
+   * how he works rather than what he built, and they were buried in the middle
+   * of a paragraph at 19px. Set at display scale they do the job the direction
+   * asks of this page: make someone want to work with him. If the paragraph is
+   * ever reworded, reword these with it. */
+  credo: [
+    "If a collision system feels unreliable, I measure it.",
+    "If two API documents contradict each other, I test both.",
+    "If software can fail in a dangerous way, I decide what failure looks like before I make the happy path pretty.",
+  ],
   portrait: {
     src: "/images/profile.jpg",
     alt: "Matthew Labrador.",
