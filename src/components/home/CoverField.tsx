@@ -179,10 +179,12 @@ export default function CoverField({
    *  frame shows a random corner of itself and identifies nothing, which is
    *  what made three of these covers unreadable. */
   fit = "cover",
+  onSwap,
 }: {
   src: string;
   token: string;
   fit?: "cover" | "contain";
+  onSwap?: () => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -192,8 +194,11 @@ export default function CoverField({
   const srcRef = useRef(src);
   const tokenRef = useRef(token);
   const fitRef = useRef(fit);
+  const onSwapRef = useRef(onSwap);
   srcRef.current = src;
+  tokenRef.current = token;
   fitRef.current = fit;
+  onSwapRef.current = onSwap;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -378,29 +383,43 @@ export default function CoverField({
 
     /* --- the source image ------------------------------------------------- */
     let disposed = false;
-    let pending = "";
-    const loadImage = (url: string) => {
-      if (url === pending) return;
-      pending = url;
+    const cache = new Map<string, HTMLImageElement>();
+
+    const applyImage = (img: HTMLImageElement) => {
+      imgAspect = img.naturalWidth / Math.max(1, img.naturalHeight);
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 0);
+      gl.texImage2D(
+        gl.TEXTURE_2D,
+        0,
+        gl.RGBA,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        img,
+      );
+      fitCover();
+    };
+
+    const loadTexture = (url: string) => {
+      if (cache.has(url)) {
+        const cached = cache.get(url)!;
+        if (cached.complete && cached.naturalWidth > 0) {
+          applyImage(cached);
+          return;
+        }
+      }
       const img = new Image();
       img.crossOrigin = "anonymous";
       img.decoding = "async";
       img.onload = () => {
-        if (disposed || pending !== url) return;
-        imgAspect = img.naturalWidth / Math.max(1, img.naturalHeight);
-        gl.bindTexture(gl.TEXTURE_2D, tex);
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 0);
-        gl.texImage2D(
-          gl.TEXTURE_2D,
-          0,
-          gl.RGBA,
-          gl.RGBA,
-          gl.UNSIGNED_BYTE,
-          img,
-        );
-        fitCover();
+        cache.set(url, img);
+        if (disposed) return;
+        if (current === url) {
+          applyImage(img);
+        }
       };
       img.src = url;
+      cache.set(url, img);
     };
 
     /* --- the pointer ------------------------------------------------------ */
@@ -419,16 +438,12 @@ export default function CoverField({
     };
 
     /* --- the resolve ------------------------------------------------------
-     * ⚠ THE VALUE IS PUBLISHED TO CSS, AND THAT IS WHAT MAKES THE ENDING WORK.
-     * The field alone never becomes the photograph; it becomes a stipple of
-     * it, which is a lovely thing to watch arrive and a poor thing to look at
-     * afterwards. The parent reads `--resolve` and brings the real image up
-     * underneath as the points land, so the sequence is cloud, then points,
-     * then the work itself, with the field still breathing over the top.
-     * ------------------------------------------------------------------- */
+     * State machine: "resolving" -> "idle", and on project switch -> "scattering" -> "resolving".
+     * Swapping only happens at the bottom of the dip (resolve = 0), so fallback
+     * images never flash or animate twice. */
     let resolve = 0;
-    let holding = 0;
-    let current = "";
+    let state: "idle" | "scattering" | "resolving" = "resolving";
+    let current = srcRef.current;
     const stage = canvas.parentElement;
     let published = -1;
     let readoutAt = -1;
@@ -449,28 +464,30 @@ export default function CoverField({
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
 
-      const wanted = srcRef.current;
-      if (wanted !== current) {
-        /* Scatter, swap at the bottom of the dip, then resolve again. */
-        if (resolve > 0.02 && holding === 0) {
-          resolve = Math.max(0, resolve - dt * 3.2);
-          if (resolve <= 0.02) {
-            current = wanted;
-            loadImage(wanted);
-            holding = 1;
-          }
-        } else {
-          current = wanted;
-          loadImage(wanted);
-          holding = 1;
+      const target = srcRef.current;
+      if (target !== current) {
+        if (state !== "scattering") {
+          state = "scattering";
         }
-      } else if (resolve < 1) {
-        /* Slower on the way in than on the way out: the reveal is the event. */
-        /* ⚠ Slow on purpose. This is the only thing on the cover worth
-           watching arrive, and at the old rate it was over before anyone had
-           finished reading the first line of the sentence. */
-        resolve = Math.min(1, resolve + dt * (holding ? 0.6 : 0.42));
-        if (resolve >= 1) holding = 0;
+      }
+
+      if (state === "scattering") {
+        /* Scatter down to 0 */
+        resolve = Math.max(0, resolve - dt * 3.8);
+        if (resolve <= 0.001) {
+          resolve = 0;
+          current = target;
+          loadTexture(current);
+          onSwapRef.current?.();
+          state = "resolving";
+        }
+      } else if (state === "resolving") {
+        /* Deliberate reveal on the way up */
+        resolve = Math.min(1, resolve + dt * 0.52);
+        if (resolve >= 1) {
+          resolve = 1;
+          state = "idle";
+        }
       }
 
       pOn += (pTarget - pOn) * Math.min(1, dt * 6);
@@ -483,16 +500,15 @@ export default function CoverField({
         stage?.style.setProperty("--resolve", shown.toFixed(3));
       }
 
-      /* ⚠ THE READOUT EXISTS BECAUSE THE EFFECT DID NOT EXPLAIN ITSELF. It
-         looked expensive and meant nothing: people watched it and asked what it
-         was doing. It now says so, in the site's own metadata voice, and the
-         number it lands on is the real one. */
+      /* ⚠ THE READOUT EXISTS BECAUSE THE EFFECT DID NOT EXPLAIN ITSELF. */
       const pct = Math.round(shown * 100);
       if (pct !== readoutAt) {
         readoutAt = pct;
         readout.textContent =
           pct >= 100
             ? `${nf.format(count)} points · ${tokenRef.current}`
+            : state === "scattering"
+            ? `Transitioning · ${String(pct).padStart(2, "0")}%`
             : `Reconstructing ${tokenRef.current} · ${String(pct).padStart(2, "0")}%`;
       }
 
@@ -509,8 +525,7 @@ export default function CoverField({
     };
 
     resize();
-    loadImage(srcRef.current);
-    current = srcRef.current;
+    loadTexture(srcRef.current);
     raf = requestAnimationFrame(frame);
 
     /* Stop dead when the cover is off screen. */

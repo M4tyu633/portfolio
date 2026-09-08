@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CoverField from "@/components/home/CoverField";
 import { opening } from "@/content/site";
 import { entrances } from "@/content/worlds";
@@ -33,8 +33,10 @@ import { useSound } from "@/lib/sound";
 
 export default function Opening() {
   const [i, setI] = useState(0);
+  const [displayedI, setDisplayedI] = useState(0);
   const { play } = useSound();
   const active = entrances[i];
+  const displayed = entrances[displayedI] ?? active;
 
   /* ⚠ WRAPPING, NOT CLAMPED, AND NO DISABLED STATE. Four entries in a ring is
    * a carousel of scenes, not a form wizard; a greyed-out arrow at either end
@@ -50,6 +52,20 @@ export default function Opening() {
   const coverSrc =
     active.cover ??
     (active.media.kind === "video" ? active.media.poster : active.media.src);
+
+  const displayedSrc =
+    displayed.cover ??
+    (displayed.media.kind === "video"
+      ? displayed.media.poster
+      : displayed.media.src);
+
+  /* Fallback timer in case WebGL is disabled or tab is backgrounded */
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setDisplayedI(i);
+    }, 600);
+    return () => clearTimeout(t);
+  }, [i]);
 
   return (
     <section
@@ -70,18 +86,18 @@ export default function Opening() {
         * The photograph underneath is the fallback and the alt text. If WebGL2
         * is not available it simply stays, and the cover is a full-bleed
         * photograph with type on it, which is still a cover. */}
-      <div className="opening-stage" data-project={active.world}>
-        <div className="opening-plate-fallback" key={active.title}>
+      <div className="opening-stage" data-project={displayed.world}>
+        <div className="opening-plate-fallback" key={displayed.title}>
           <Image
-            src={coverSrc}
-            alt={active.media.alt}
+            src={displayedSrc}
+            alt={displayed.media.alt}
             fill
             sizes="100vw"
-            priority={i === 0}
+            priority={displayedI === 0}
             /* Pushed right for the same reason the field is: the left of the
                frame belongs to the sentence. */
             className={
-              active.coverFit === "contain"
+              displayed.coverFit === "contain"
                 ? "object-contain object-center md:object-[67%_50%]"
                 : "object-cover"
             }
@@ -91,6 +107,7 @@ export default function Opening() {
           src={coverSrc}
           token={active.title}
           fit={active.coverFit ?? "cover"}
+          onSwap={() => setDisplayedI(i)}
         />
         <div aria-hidden className="opening-scrim" />
       </div>
