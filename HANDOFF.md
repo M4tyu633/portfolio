@@ -9,7 +9,7 @@ with **motion** for choreography and **lenis** available. Fully static, hosted o
 
 - **Live:** https://matthewlabrador.vercel.app
 - **Repo:** https://github.com/M4tyu633/portfolio
-- **Local:** `C:Usersmatthportfolio`, `npm run dev` on port **3100**
+- **Local:** `C:/Users/matth/portfolio`, `npm run dev` on port **3100**
 
 ## Where things are
 
@@ -72,5 +72,5 @@ missing, `rm -rf .next/dev` and restart.
 ## The resume
 
 `public/Matthew_Labrador_Resume.pdf`, generated from
-`C:UsersmatthDownloadsMatthew_Labrador_Resume_UPDATED.docx` via LibreOffice (not on
+`C:/Users/matth/Downloads/Matthew_Labrador_Resume_UPDATED.docx` via LibreOffice (not on
 PATH; call `soffice.exe` directly). Tuned to exactly one page.
