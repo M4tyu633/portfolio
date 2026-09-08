@@ -1,9 +1,4 @@
 import type { Project } from "../types";
-
-/* ===========================================================================
- * 06 · HEART DISEASE PREDICTION
- * ======================================================================== */
-
 export const heartDisease: Project = {
   n: "06",
   slug: "heart-disease-prediction",
@@ -13,121 +8,104 @@ export const heartDisease: Project = {
   world: "cardio",
   display: "plex",
   oneLiner:
-    "Coronary risk from biomarkers, tuned for recall rather than accuracy, with the attributions on screen.",
-  did: "Data work, model selection, and the client-side app.",
-  outcome: "0.919 ROC-AUC · 89.2% recall",
+    "Change a biomarker and follow its signed contribution through to a locally computed model probability.",
+  did: "Data preparation, model comparison, and the browser risk instrument.",
+  outcome: "0.919 holdout AUC · Random Forest recall 89.2%",
   media: {
-    // A capture of the deployed risk station itself. See scripts/capture-live.sh.
     src: "/work/heart/station.webp",
-    alt: "The CardioSense risk station: a 98% predicted probability of stenosis beside a list of SHAP feature drivers.",
+    alt: "CardioSense showing real UCI inputs, signed Logistic Regression contributions and the locally computed model probability.",
   },
-  built: ["Python", "scikit-learn", "SHAP", "Next.js 16", "TypeScript"],
+  built: ["Python", "scikit-learn", "Next.js 16", "TypeScript"],
   links: {
     demo: "https://cardiosense-app.vercel.app",
     repo: "https://github.com/M4tyu633/heart-disease-prediction",
   },
   facts: [
-    { label: "Dataset", value: "UCI Heart Disease, 920 patients, 4 hospitals" },
     {
-      label: "Models",
-      value:
-        "Random Forest · Gradient Boosting · calibrated Logistic Regression",
+      label: "Dataset",
+      value: "UCI Heart Disease · 920 records · four hospitals",
     },
     {
-      label: "Validation",
-      value: "0.919 ROC-AUC · 89.2% recall, 5-fold stratified",
+      label: "Research comparison",
+      value: "Random Forest · Gradient Boosting · Logistic Regression",
     },
-    { label: "Explainability", value: "Permutation importance and local SHAP" },
-    { label: "Inference", value: "Entirely client-side" },
+    { label: "Random Forest holdout", value: "0.919 AUC · 89.2% recall" },
+    {
+      label: "Random Forest cross-validation",
+      value: "0.891 ± 0.019 AUC · five stratified folds",
+    },
+    {
+      label: "Browser model",
+      value: "Exported Logistic Regression · local inference",
+    },
+    {
+      label: "Local explanation",
+      value: "Signed additive log-odds contributions",
+    },
   ],
-
-  lede: "Coronary artery disease is the leading cause of premature death worldwide, and detecting more than 50% stenosis early is what makes intervention possible. I built the whole chain on the 920-patient UCI multi-centre dataset: imputation that survives non-random missingness, model selection tuned for the failure that actually matters, and a risk station where you can move a biomarker and watch the attribution move with it.",
-
+  lede: "I built a model comparison on the 920-record UCI Heart Disease dataset and a browser instrument that exposes how a score is assembled. A visitor can start from an actual cohort record, change a biomarker, and see its contribution and the resulting probability move together. The research benchmarks and the model running in the browser are explicitly identified.",
   sections: [
     {
       n: "01",
-      heading: "Four hospitals, four protocols, four kinds of missing",
+      heading: "Four hospitals, inconsistent records",
       blocks: [
         {
           kind: "p",
-          text: "The dataset aggregates records from the Cleveland Clinic Foundation, the Hungarian Institute of Cardiology in Budapest, University Hospital Zurich, and the VA Medical Center at Long Beach. Because each followed its own diagnostic protocol, the missingness is not random: it correlates with which hospital you walked into.",
-        },
-        {
-          kind: "figures",
-          items: [
-            { value: "611", label: "Records missing fluoroscopy vessel count" },
-            { value: "486", label: "Records missing thallium scintigraphy" },
-            { value: "920", label: "Patients in total" },
-          ],
-        },
-        {
-          kind: "p",
-          text: "Median imputation and standardised scaling for continuous vitals, one-hot encoding for categoricals, and a missing-indicator column alongside each imputed field, so *“this test was not run here”* stays in the feature set instead of being smoothed away. All of it fitted inside the cross-validation split rather than over the whole frame, so nothing leaks.",
+          text: "The dataset combines Cleveland, Hungary, Switzerland and Long Beach. The pipeline imputes numeric values with training-set medians, standardizes them, and one-hot encodes categorical findings. Preprocessing is fitted inside the training pipeline; the saved transform is reused by browser inference.",
         },
       ],
     },
     {
       n: "02",
-      heading: "Recall over accuracy, because the errors are not symmetric",
+      heading: "Keep the evaluation labels attached",
       blocks: [
-        {
-          kind: "p",
-          text: "A false negative here is a patient with ischemia sent home. A false positive is a stress echo they did not need. Optimising accuracy on an imbalanced cohort treats those as the same mistake.",
-        },
         {
           kind: "figures",
           items: [
-            { value: "0.919", label: "Holdout ROC-AUC" },
-            { value: "89.2", unit: "%", label: "Recall, Random Forest" },
-            { value: "90.2", unit: "%", label: "Recall, Gradient Boosting" },
-            { value: "0.891", unit: "±0.018", label: "5-fold CV AUC" },
+            { value: "0.919", label: "Random Forest holdout ROC AUC" },
+            { value: "89.2", unit: "%", label: "Random Forest holdout recall" },
+            {
+              value: "0.891",
+              unit: "±0.019",
+              label: "Random Forest five-fold CV AUC",
+            },
           ],
         },
         {
           kind: "p",
-          text: "Logistic Regression, SVM, Random Forest and Gradient Boosting under 5-fold stratified cross-validation. Sigmoid calibration on top, so a predicted 0.3 corresponds to something like 30% prevalence rather than to an arbitrary position on a decision function.",
+          text: "Random Forest, Gradient Boosting and Logistic Regression are compared separately. The browser uses the exported Logistic Regression model, whose holdout AUC is 0.919 and recall is 88.2%; its five-fold CV AUC is 0.884 ± 0.015. Those are historical cohort results, not clinical validation of the interface.",
         },
       ],
     },
     {
       n: "03",
-      heading: "What the model was actually looking at",
+      heading: "Input → attribution → risk",
       blocks: [
         {
-          kind: "p",
-          text: "Global permutation importance and local SHAP attributions, mostly so I could check the model was not right for the wrong reason.",
-        },
-        {
-          kind: "ledger",
-          rows: [
-            {
-              key: "Asymptomatic chest pain",
-              value: "22.4%",
-              note: "silent ischemia",
-            },
-            { key: "Vessels coloured on fluoroscopy", value: "16.5%" },
-            { key: "Reversible thallium perfusion defect", value: "14.2%" },
-            { key: "Exercise-induced ST depression", value: "11.8%" },
-            {
-              key: "Max heart rate achieved",
-              value: "9.8%",
-              note: "chronotropic incompetence",
-            },
-          ],
+          kind: "image",
+          src: "/work/heart/station.webp",
+          alt: "The CardioSense input, contribution and output columns.",
+          caption:
+            "A real UCI example. Once edited, the interface labels the inputs as a hypothetical variation.",
         },
         {
           kind: "p",
-          text: "That ordering lines up with established cardiology guidance, which is the result I wanted: a model whose top feature was something like resting blood pressure would have been a signal that the pipeline had a leak rather than that cardiology was wrong.",
+          text: "The browser applies the saved numeric means and scales, looks up the active categorical coefficients, and adds all thirteen terms to the intercept. A sigmoid converts the sum to the displayed probability. Every signed term stays visible, including values that lower the score.",
+        },
+        {
+          kind: "aside",
+          label: "What the explanation means",
+          text: "These are additive Logistic Regression terms in log-odds, not SHAP values and not causal effects. The export stores coefficients rounded to four decimals. No tree model, remote inference call, or fabricated ECG is involved.",
         },
       ],
     },
     {
       n: "04",
-      heading: "The risk station",
+      heading: "A research instrument with clear limits",
       blocks: [
         {
           kind: "p",
-          text: "Precomputed model weights and matrix transforms run entirely in the browser. Move a hemodynamic value, a resting ECG parameter or a stress marker and the risk and its attribution waterfall recalculate immediately. No server cold start, and no patient data leaving the machine, which for this kind of tool is the more important half.",
+          text: "The initial examples are records 1 and 5 from the repository's UCI dataset. Reset restores the selected record, and the score change is shown in percentage points. The tool demonstrates a model on a historical cohort; it does not diagnose, prescribe treatment, or estimate future cardiac events.",
         },
       ],
     },

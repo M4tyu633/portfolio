@@ -17,13 +17,13 @@ export const kneeMri: Project = {
   world: "reading",
   display: "plex",
   oneLiner:
-    "Twelve knee findings scored from a multi-series DICOM study, in a reading station you can scrub.",
-  did: "The whole chain, from raw DICOM to browser inference.",
+    "Twelve knee findings scored from a multi-series DICOM study, in a reading station with real series previews.",
+  did: "The whole chain, from raw DICOM to a browser reading station.",
   outcome: "0.843 macro AUC, strict out-of-fold",
   media: {
     // A capture of the deployed reading station. See scripts/capture-live.sh.
     src: "/work/knee-mri/station.webp",
-    alt: "The Knee MRI Reader's opening screen: twelve findings from one knee MRI, with the out-of-fold score beside the scan count.",
+    alt: "The redesigned Knee MRI station: a large sagittal preview, series navigation and held-out scores beside radiologist annotations.",
   },
   built: ["PyTorch", "DINOv2", "ONNX Runtime", "Next.js 16", "React 19"],
   // ⚠ No `repo` here on purpose: M4tyu633/knee-mri-reader is PRIVATE, so a
@@ -39,11 +39,14 @@ export const kneeMri: Project = {
       value: "DINOv2 + cross-view attention, 20-model ensemble",
     },
     { label: "Validation", value: "0.843 macro AUC, strict out-of-fold" },
-    { label: "Inference", value: "Serverless ONNX, client-side DICOM parsing" },
+    {
+      label: "Inference",
+      value: "Single-member serverless ONNX, client-side DICOM parsing",
+    },
     { label: "Findings", value: "Twelve, scored simultaneously" },
   ],
 
-  lede: "A knee MRI is not a photograph. It is a multi-series volume shot on different scanners at different slice thicknesses and contrast weightings, and the finding you are looking for is often visible in exactly one of those series. I built the whole chain: parsing raw unlabelled DICOM, pulling weak supervision out of nine languages of radiology notes, training a multi-view transformer across six anatomical orientations, and serving it as a reading station you can scrub through in the browser.",
+  lede: "A knee MRI is not a photograph. It is a multi-series volume shot on different scanners at different slice thicknesses and contrast weightings, and the finding you are looking for is often visible in exactly one of those series. I built the whole chain: parsing raw unlabelled DICOM, pulling weak supervision out of nine languages of radiology notes, training a multi-view transformer across six anatomical orientations, and serving it as a browser reading station with one real preview frame per acquired series.",
 
   sections: [
     {
@@ -152,12 +155,12 @@ export const kneeMri: Project = {
       blocks: [
         {
           kind: "p",
-          text: "The ensemble is exported to ONNX with dynamic batching and runs under 200 ms. The front end is a dark clinical workstation: scrub through multi-slice DICOM stacks, put predicted probabilities next to the ground-truth findings, read the original clinical report, and drop in an external DICOM study for inference on demand.",
+          text: "The reading station opens on a large real scan preview. Select a study, switch between acquired series, adjust preview zoom and contrast, and compare twelve held-out scores against radiologist annotations. The bundled cases contain one frame per series, not navigable slice stacks. The original report remains available. Upload inference parses DICOM locally and sends the derived image tensor to a single exported ONNX member, separate from the twenty-model ensemble used for the reported evaluation.",
         },
         {
           kind: "image",
-          src: "/images/project-knee-mri-station.png",
-          alt: "The reading station with a slice stack, per-finding probabilities and the original report.",
+          src: "/work/knee-mri/station.webp",
+          alt: "The reading station with a real scan preview, series navigation and per-finding model scores.",
           caption:
             "The station, with the twelve findings scored down the right.",
         },

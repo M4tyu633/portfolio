@@ -4,10 +4,10 @@ import Link from "next/link";
 import { daruma } from "@/app/fonts";
 import Nav from "@/components/chrome/Nav";
 import WorldSync from "@/components/chrome/WorldSync";
-import ContactFigure from "@/components/figures/ContactFigure";
-import FreezeFigure from "@/components/figures/FreezeFigure";
+import ContactEvidence from "@/components/figures/ContactEvidence";
+
 import NetworkFigure from "@/components/figures/NetworkFigure";
-import ThrowFigure from "@/components/figures/ThrowFigure";
+
 import GameClip from "@/components/media/GameClip";
 import PhotoStrip from "@/components/media/PhotoStrip";
 import { tumbangPreso as p } from "@/content/projects/tumbang-preso";
@@ -367,42 +367,7 @@ export default function TumbangPage() {
               every contact case and counted what actually fired.
             </p>
 
-            {/* The signature moment: a real frame, stopped, and then taken
-                apart until it is the question the engine was asked. */}
-            <FreezeFigure />
-
-            <p className="u-prose">
-              That is the count. The probe below is the same 36 cases laid out
-              by target, with the resolver switchable, so the clustering is
-              visible rather than described.
-            </p>
-
-            <ContactFigure />
-
-            <p className="u-prose">
-              They were not random misses either. They clustered by target. That
-              is the part that would have hurt: if I had shipped it, the bug
-              would have reached me as{" "}
-              <em>&ldquo;this character feels unfair&rdquo;</em>, and with the
-              time I had I would have gone and rebalanced a number instead of
-              fixing the physics underneath it.
-            </p>
-
-            <h3 className="u-display mt-16 text-[clamp(1.4rem,3vw,2.25rem)]">
-              The same question, in your hands
-            </h3>
-            <p className="u-prose mt-4">
-              Two ways to decide whether a slipper hit the can: is it inside the
-              contact radius at any physics tick, or how close did the swept
-              path actually come? Throw a few and watch them disagree.{" "}
-              <strong>
-                The diagram below is a browser simulation of the failure mode,
-                not the game engine.
-              </strong>
-            </p>
-            <div className="mt-8">
-              <ThrowFigure />
-            </div>
+            <ContactEvidence />
             <p className="u-prose mt-5">
               Deciding on the host also means every peer agrees. A tag that
               lands on my screen cannot be a miss on yours. That is the whole

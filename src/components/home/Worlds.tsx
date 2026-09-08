@@ -89,7 +89,7 @@ export function TumbangWorld({ project }: { project: Project }) {
           poster="/work/tumbang/match-poster.webp"
           alt="A round of Tumbang Preso: the scoreboard, the timer, the lata standing in the middle of the road."
           ratio="16 / 9"
-          className="max-h-[64vh] w-full"
+          className="max-h-[48svh] w-full"
         />
         <div aria-hidden className="tp-stage-shade" />
         <div className="tp-stage-mark">
@@ -222,6 +222,9 @@ export function EgovWorld({ project }: { project: Project }) {
             {h.headline}
           </h2>
           <p className="u-prose mt-6">{h.body}</p>
+          <p className="u-meta mt-5">
+            Winner · eGov Hackathon PH · 1 of 10 teams
+          </p>
           <RoomExit href={`/work/${project.slug}`} label="Follow the patient" />
         </div>
       </div>
@@ -326,6 +329,9 @@ export function Chip8World({ project }: { project: Project }) {
             {h.headline}
           </h2>
           <p className="u-prose mt-7">{h.body}</p>
+          <p className="c8-proof u-meta">
+            35 instructions · 106 core assertions · 6 original ROMs
+          </p>
           {h.coda ? <p className="c8-coda">{h.coda}</p> : null}
           <dl className="c8-specs">
             {specs.map(([k, v]) => (

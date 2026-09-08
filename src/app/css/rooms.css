@@ -1,0 +1,238 @@
+/* A full usable viewport of neutral ground prevents adjacent environments from
+   appearing together. No wheel listener, snapping, sticky lock or forced step. */
+.world-passage {
+  min-height: 100svh;
+  background: #111426;
+  color: #b9c2dd;
+  display: grid;
+  place-items: center;
+  padding: 3rem 1.5rem;
+  position: relative;
+  isolation: isolate;
+}
+.world-passage p {
+  display: grid;
+  gap: 1.25rem;
+  text-align: center;
+}
+.world-passage span {
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+.world-passage strong {
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-weight: 400;
+  color: #e0e5fa;
+}
+#main > section[data-world-panel] {
+  isolation: isolate;
+  overflow: clip;
+}
+.mri-room {
+  background: #08090b;
+  color: #eeeef0;
+}
+.cardio-room {
+  background: #100b10;
+  color: #f5e9ee;
+}
+.mri-composition {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  align-items: center;
+  min-height: 85svh;
+  gap: 3rem;
+  padding: 3.5rem clamp(1.25rem, 4.5vw, 4.5rem);
+}
+.cardio-composition {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: 3rem;
+  align-items: center;
+  min-height: 85svh;
+  padding: 3.5rem clamp(1.25rem, 4.5vw, 4.5rem);
+  border-bottom: 3px solid #9b2847;
+}
+.mri-copy h2,
+.cardio-copy h2 {
+  font-size: clamp(2.6rem, 4.5vw, 4.7rem);
+  margin: 1.5rem 0;
+  line-height: 1.03;
+}
+.mri-copy > p,
+.cardio-copy > p {
+  max-width: 42ch;
+  line-height: 1.65;
+}
+.mri-score {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0 1rem;
+  color: #e0a458;
+}
+.mri-score strong {
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 400;
+  line-height: 1;
+}
+.mri-score span {
+  font-size: 0.875rem;
+}
+.clinical-note {
+  color: #a9a4b0;
+  font-size: 0.875rem;
+  margin-top: 1.5rem;
+}
+.mri-composition figure,
+.cardio-composition figure {
+  min-width: 0;
+  margin: 0;
+}
+.mri-composition img,
+.cardio-composition img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ffffff25;
+}
+.mri-composition figcaption,
+.cardio-composition figcaption {
+  font-size: 0.8rem;
+  color: #aaa5b0;
+  margin-top: 1rem;
+}
+.cardio-copy > .u-meta {
+  color: #f186a4;
+}
+.contact-evidence {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 2.5rem;
+  margin: 2.5rem 0;
+}
+.contact-evidence img {
+  width: 100%;
+  height: auto;
+}
+.contact-evidence dl {
+  display: flex;
+  gap: 2rem;
+  margin: 1rem 0 2rem;
+}
+.contact-evidence dl div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.contact-evidence dd {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--tp-gold);
+  line-height: 1.15;
+}
+.contact-evidence dt {
+  font-size: 0.875rem;
+}
+.contact-evidence h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.contact-evidence p {
+  line-height: 1.6;
+}
+.contact-evidence small {
+  display: block;
+  color: var(--w-ink-3);
+  margin-top: 1rem;
+}
+/* Keep the homepage a set of introductions; case routes hold the long form. */
+#main .tp-claim {
+  padding-top: 2.5rem;
+  padding-bottom: 3rem;
+}
+#main .tp-credits li {
+  padding: 0.65rem 0;
+}
+#main .eg-top {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+#main .eg-route {
+  display: none;
+}
+@media (max-width: 900px) {
+  .mri-composition,
+  .cardio-composition {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-block: 2.5rem;
+  }
+  .contact-evidence {
+    grid-template-columns: 1fr;
+  }
+  #main .tp-credits {
+    display: none;
+  }
+}
+/* Shorter flagship introductions leave room for the six-world sequence. */
+#main .c8-top {
+  padding-block: 2rem;
+  gap: 1.5rem;
+}
+#main .c8-type {
+  grid-row: 1;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 0 3rem;
+}
+#main .c8-type h2 {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  max-width: 24ch;
+  grid-row: span 3;
+}
+#main .c8-type .room-exit {
+  margin-top: 1rem;
+}
+#main .c8-proof {
+  margin-top: 1rem;
+  line-height: 1.6;
+  color: var(--w-accent);
+}
+#main .c8-specs {
+  display: none;
+}
+#main .c8-machine {
+  grid-row: 2;
+}
+#main .machine-console figcaption {
+  font-size: 0.75rem;
+}
+@media (min-width: 900px) {
+  #main .machine-viewport {
+    height: 500px;
+    min-height: 0;
+  }
+}
+@media (max-width: 760px) {
+  #main .c8-type {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  #main .c8-type h2 {
+    grid-row: auto;
+    margin: 0;
+  }
+  #main .eg-type {
+    grid-row: 1;
+  }
+  #main .eg-device {
+    justify-self: center;
+  }
+  #main .c8-type .room-exit {
+    margin: 0;
+  }
+  .mri-copy h2,
+  .cardio-copy h2 {
+    font-size: 2.7rem;
+  }
+}

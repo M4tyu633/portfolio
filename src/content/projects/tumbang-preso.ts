@@ -143,7 +143,7 @@ export const tumbangPreso: Project = {
             },
           ],
         },
-        { kind: "figure", id: "tp-contact" },
+
         {
           kind: "p",
           text: "They were not random misses either. They clustered by target. That is the part that would have hurt: if I had shipped it, the bug would have reached me as *“this character feels unfair”*, and with the time I had I would have gone and rebalanced a number instead of fixing the physics underneath it.",

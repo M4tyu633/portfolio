@@ -5,6 +5,10 @@ import Nav from "@/components/chrome/Nav";
 import { WorldScrollSync } from "@/components/chrome/WorldSync";
 import Evidence from "@/components/home/Evidence";
 import Opening from "@/components/home/Opening";
+import WorldPassage from "@/components/home/WorldPassage";
+import { KneeWorld, CardioWorld } from "@/components/home/ClinicalWorlds";
+import { kneeMri } from "@/content/projects/knee-mri";
+import { heartDisease } from "@/content/projects/heart-disease";
 import {
   Chip8World,
   EgovWorld,
@@ -40,9 +44,17 @@ export default function Home() {
         <Opening />
 
         <TumbangWorld project={tumbang} />
+        <WorldPassage n="02" title="eGovMed" />
         <EgovWorld project={egov} />
+        <WorldPassage n="03" title="GlycoSwarm" />
         <GlycoWorld project={glyco} />
+        <WorldPassage n="04" title="CHIP-8" />
         <Chip8World project={chip} />
+        <WorldPassage n="05" title="Knee MRI Reader" />
+        <KneeWorld project={kneeMri} />
+        <WorldPassage n="06" title="CardioSense" />
+        <CardioWorld project={heartDisease} />
+        <WorldPassage n="→" title="The work, backed up." />
 
         {/* ---- the evidence ----
          *
