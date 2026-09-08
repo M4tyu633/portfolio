@@ -32,7 +32,7 @@
 :root {
   /* The colour a world dissolves into. Darker than every world ground on the
      site, so it reads as absence rather than as a seventh environment. */
-  --seam-ink: #07070b;
+  --seam-ink: #050506;
   /* ⚠ 18svh, not 14. Tuned against the BRIGHTEST world, not the average one:
      eGov's ground is a saturated blue and glyco's is near-black, so a fade
      that dissolved the dark rooms cleanly still left a hard blue edge on the
@@ -58,10 +58,10 @@
   isolation: isolate;
   background: linear-gradient(
     to bottom,
-    #07070b00 0%,
+    #05050600 0%,
     var(--seam-ink) var(--seam-fade),
     var(--seam-ink) calc(100% - var(--seam-fade)),
-    #07070b00 100%
+    #05050600 100%
   );
   color: #767d92;
   pointer-events: none;

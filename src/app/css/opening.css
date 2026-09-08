@@ -11,6 +11,7 @@
 
 .opening {
   position: relative;
+  isolation: isolate;
   min-height: calc(100svh - 4.25rem);
   display: grid;
   grid-template-rows: 1fr auto;
@@ -36,7 +37,76 @@
 /* The plate is a full-height slab that runs off the right edge; the type column
    sits centred against it with real air above and below. Two different vertical
    rhythms in one row is what stops the opening reading as a two-up card. */
+/* --- the stage ----------------------------------------------------------
+ * The reconstruction, edge to edge, behind everything the cover says.
+ * --------------------------------------------------------------------- */
+.opening-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ⚠ THE CANVAS TAKES THE POINTER BACK. The stage is `pointer-events: none` so
+   the index and the pager underneath it stay clickable; the field itself has
+   to receive move events or the well never follows the cursor. */
+.opening-stage .cover-field {
+  pointer-events: auto;
+  /* ⚠ Below the scrim. `.cover-field` carries `z-index: 3` from its own rule so
+     that it sits over a framed plate; inside the stage that put the canvas
+     ABOVE the scrim and the sentence was printed straight onto the field. */
+  z-index: 1;
+}
+
+.opening-plate-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  animation: plate-in 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Once the field is up the photograph is only a source and a fallback, so it
+   sits well under it. If the canvas never mounts this rule never matches and
+   the photograph is the cover at full strength. */
+.opening-stage:has(.cover-field) .opening-plate-fallback {
+  opacity: 0.26;
+  filter: saturate(0.7);
+}
+
+/* ⚠ THE SCRIM IS LOAD-BEARING, AND IT IS DIRECTIONAL. Display type over a
+   reconstructed photograph is unreadable without it, and a flat 50% wash over
+   the whole frame would kill the thing it is protecting. It is heavy on the
+   left where the sentence lives, and it lets go entirely on the right where
+   the picture is doing the work. */
+.opening-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  /* ⚠ TUNED AGAINST THE SENTENCE, NOT AGAINST THE PICTURE. The first pass
+     eased off at 26% and the display type was sitting on a field of bright
+     points at full strength: legible in a still, unreadable the moment the
+     field started moving. It is now effectively solid across the column the
+     type occupies and only lets go past the halfway line, where there is
+     nothing to read and the reconstruction is the whole point. */
+  background:
+    linear-gradient(
+      100deg,
+      #08080afa 0%,
+      #08080af7 30%,
+      #08080ad9 46%,
+      #08080a75 64%,
+      #08080a1f 84%,
+      #08080a08 100%
+    ),
+    linear-gradient(to top, #08080af7 0%, #08080a99 12%, #08080a00 38%),
+    linear-gradient(to bottom, #08080ad9 0%, #08080a00 26%),
+    radial-gradient(120% 100% at 62% 45%, transparent 30%, #08080a99 100%);
+}
+
 .opening-body {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
   align-items: stretch;
@@ -128,12 +198,16 @@
 }
 
 /* --- the plate ---------------------------------------------------------- */
+/* What is left of the plate is its caption: the line, the pager and the way
+   in. It sits at the foot of the right-hand column, over the picture. */
 .opening-plate {
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: 0.9rem;
   min-width: 0;
+  margin: 0;
   padding-bottom: clamp(1.25rem, 3vh, 2rem);
 }
 
@@ -163,6 +237,28 @@
     transparent 58%
   );
   transition: background 480ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ⚠ THE CANVAS SITS OVER THE PHOTOGRAPH, NOT INSTEAD OF IT. If WebGL2 is
+   unavailable the canvas is never mounted and the plate below is simply the
+   cover, unchanged. `pointer-events` stays on so the field can be pushed
+   around; there is nothing under it to click. */
+.cover-field {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Once the field is mounted the photograph is only there as its source and as
+   the fallback, so it is dimmed rather than removed: it keeps the frame from
+   being an empty black rectangle in the half-second before the first resolve,
+   and it carries the alt text. */
+.plate-frame:has(.cover-field) .plate-media {
+  opacity: 0.3;
+  filter: saturate(0.72);
 }
 
 .plate-media {
@@ -199,6 +295,70 @@
   animation: u-rise 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* --- the pager ----------------------------------------------------------
+ * ⚠ THIS IS THE ONLY WAY TO CHANGE THE PLATE THAT IS VISIBLE. The index at the
+ * foot of the opening drives the same state, but it does so on pointer-enter,
+ * which announces itself to nobody: a reader looking at the plate had no way to
+ * know there were five more behind it and no way to ask for them.
+ *
+ * Sized as real targets, not as decoration. 2.75rem square clears the 44px
+ * minimum on a phone, and the pair sits on the caption line rather than over
+ * the artwork, so it never covers the thing it is paging through.
+ * --------------------------------------------------------------------- */
+.plate-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem 1.5rem;
+}
+
+.plate-pager {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.plate-pager button {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 1.0625rem;
+  line-height: 1;
+  color: var(--w-ink-2);
+  border: 1px solid var(--w-rule);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    color 180ms,
+    border-color 180ms,
+    background 180ms;
+}
+
+.plate-pager button:hover {
+  color: var(--op-accent);
+  border-color: var(--op-accent);
+  background: color-mix(in srgb, var(--op-accent) 10%, transparent);
+}
+
+.plate-pager button:active {
+  transform: translateY(1px);
+}
+
+.plate-count {
+  min-width: 4.25rem;
+  text-align: center;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--w-ink-2);
+}
+
+.plate-count-total {
+  color: var(--w-ink-3);
+}
+
 .plate-enter {
   display: inline-flex;
   align-items: baseline;
@@ -220,12 +380,19 @@
 
 /* --- the index ---------------------------------------------------------- */
 .opening-index {
+  position: relative;
+  z-index: 1;
   border-top: 1px solid var(--w-rule);
+  backdrop-filter: blur(14px) saturate(0.9);
 }
 
+/* ⚠ `auto-fit`, not `repeat(4, ...)`. The opening listed four projects when the
+   homepage had four worlds; it has six. A hard column count silently dropped
+   the last two onto a second row at full width, or off the design entirely.
+   This tracks whatever `entrances` holds. */
 .opening-index ol {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
 }
 
 .opening-index li {

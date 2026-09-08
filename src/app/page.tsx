@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import Boot from "@/components/chrome/Boot";
 import Nav from "@/components/chrome/Nav";
 import { WorldScrollSync } from "@/components/chrome/WorldSync";
 import Evidence from "@/components/home/Evidence";
@@ -36,8 +35,15 @@ export default function Home() {
 
   return (
     <>
-      {/* Once per tab, 1.6s, skippable by anything. See the component. */}
-      <Boot />
+      {/* ⚠ THERE IS NO BOOT SCREEN ANY MORE, AND THAT IS DELIBERATE.
+       *
+       * A full-screen card held a manifest over the page for 1.6 seconds once
+       * per tab. That is long enough to be in the way and far too short to
+       * read, so it cost every visitor a wait in exchange for nothing. The
+       * cover's own resolve replaced it: the page arrives as a cloud of points
+       * and becomes the work. The loading IS the opening.
+       *
+       * See `CoverField`. */}
       <Nav />
       <WorldScrollSync />
       <main id="main" className="flex-1">

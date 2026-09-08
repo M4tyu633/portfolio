@@ -200,4 +200,50 @@ export const entrances: Entrance[] = [
       alt: "The CHIP-8 visual debugger: framebuffer, registers, disassembly and memory.",
     },
   },
+  /* ⚠ 05 AND 06 BELONG HERE. The homepage grew from four project worlds to six,
+   * and this list did not follow, so the opening announced four projects and
+   * then scrolled past two more that a reader had been given no reason to
+   * expect. The index at the foot of the opening is the page's table of
+   * contents; if a world is on the page it has a row here.
+   *
+   * ⚠ AND THE RESULTS BELOW ARE THE MEASURED ONES, NOT THE FLATTERING ONES.
+   * Knee reports the strict out-of-fold macro AUC, which is the honest number;
+   * 0.997 is the in-sample score and it does not go in a headline. CardioSense
+   * reports the holdout AUC of the RESEARCH comparison, and the browser
+   * instrument runs the exported Logistic Regression, which is a different
+   * thing again. Neither distinction may be blurred to make a line shorter. */
+  {
+    n: "05",
+    title: "Knee MRI Reader",
+    line: "Twelve findings scored from a multi-series DICOM study, in a reading station with real series previews.",
+    did: "The whole chain, from raw DICOM to the browser.",
+    result: "0.843 macro AUC · strict out-of-fold",
+    href: "/work/knee-mri-reader",
+    action: "Open the reading station",
+    world: "reading",
+    display: "plex",
+    media: {
+      kind: "image",
+      src: "/work/knee-mri/station.webp",
+      alt: "The Knee MRI reading station: a large sagittal preview, series navigation, and held-out scores beside the radiologist's annotations.",
+      fit: "contain",
+    },
+  },
+  {
+    n: "06",
+    title: "CardioSense",
+    line: "Change a biomarker and follow its signed contribution through to a probability computed in the page.",
+    did: "Data preparation, model comparison, and the browser instrument.",
+    result: "0.919 holdout AUC · research comparison",
+    href: "/work/heart-disease-prediction",
+    action: "Explore the risk instrument",
+    world: "cardio",
+    display: "plex",
+    media: {
+      kind: "image",
+      src: "/work/heart/station.webp",
+      alt: "CardioSense showing real UCI inputs, signed Logistic Regression contributions and the locally computed model probability.",
+      fit: "contain",
+    },
+  },
 ];

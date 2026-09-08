@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/chrome/Nav";
 import WorldSync from "@/components/chrome/WorldSync";
+import PhotoStrip from "@/components/media/PhotoStrip";
 import PatientSystem from "@/components/work/PatientSystem";
 import { projectLinks } from "@/components/work/ProjectLinkRail";
 import { egovmed } from "@/content/projects/egovmed";
@@ -88,6 +89,35 @@ export default function EgovPage() {
               </li>
             ))}
           </ol>
+        </section>
+        {/* ⚠ HIS OWN PHOTOGRAPHS, FROM THE EVENT. The page argued the whole
+            way down from source and architecture and then ended on a sentence
+            claiming a result. These are the room it happened in: the ten
+            medals, the pitch, and the people who were there. */}
+        <section aria-labelledby="egov-room" className="egov-photos">
+          <h2 id="egov-room" className="u-meta">
+            The room it happened in
+          </h2>
+          <PhotoStrip
+            label="eGovPH Hackathon 2026"
+            photos={[
+              {
+                src: "/work/egovmed/medals.webp",
+                alt: "Ten eGovPH Hackathon 2026 medals held up in a circle by the finalists.",
+                caption: "Ten teams. Ten medals.",
+              },
+              {
+                src: "/work/egovmed/pitch.webp",
+                alt: "Matthew presenting eGovMed on stage at the eGovPH Hackathon.",
+                caption: "The pitch, in front of the wall.",
+              },
+              {
+                src: "/work/egovmed/team.webp",
+                alt: "The eGovMed team and other finalists at the eGovPH Hackathon venue.",
+                caption: "The people who were in the room.",
+              },
+            ]}
+          />
         </section>
         <section className="world-ending">
           <div>

@@ -53,47 +53,52 @@
  * deep oxblood field with an antique-gold rule — pushed to screen brightness
  * and given a cold partner so measurements do not read as decoration.
  * ------------------------------------------------------------------------ */
+/* ===========================================================================
+ * THE BUILDING — and why it has no colour.
+ *
+ * ⚠ THIS USED TO BE A MIDNIGHT INDIGO AND THE INDIGO HAD NO ARGUMENT BEHIND IT.
+ * It was a nice dark blue, which is the same thing as saying it was a default.
+ * Worse, it competed: an indigo cover, an indigo receipts sheet and an indigo
+ * about page put a seventh world on a site that already has six, and every one
+ * of the six is defined by its colour.
+ *
+ * The building is now achromatic on purpose. Ground #08080A, ink a warm
+ * off-white, and an accent that is the ink itself. The rule that falls out of
+ * it is worth stating plainly:
+ *
+ *     COLOUR MEANS WORK. If something on this site is coloured, a project is
+ *     speaking. If it is black, white or grey, the building is.
+ *
+ * That is why the cover takes its one accent from whichever project is selected
+ * (`--op-accent`), why the seams disappear into the ground rather than reading
+ * as a seventh environment, and why a photograph or a screenshot is always the
+ * brightest thing in frame. Nothing here is decoration that has to be argued
+ * with later; it is the absence of decoration, which is the argument.
+ *
+ * The one chromatic exception is `--w-focus`, and it is an accessibility
+ * control, not a style: a focus ring has to be findable against every world on
+ * the site, including the ones that are nearly white.
+ * ======================================================================== */
 :root,
 [data-world="index"] {
-  --w-ground: #171b38;
-  --w-ground-2: #22294b;
-  --w-ground-3: #30385d;
-  --w-ink: #f1f2ff;
-  --w-ink-2: #cbd0e8;
-  --w-ink-3: #a1abc9;
-  --w-rule: #f1f2ff38;
-  --w-rule-2: #f1f2ff1c;
-  --w-accent: #b8c4ff;
-  --w-accent-ink: #171b38;
-  --w-accent-2: #b8c4ff;
-  --w-focus: #d2daff;
+  --w-ground: #08080a;
+  --w-ground-2: #111114;
+  --w-ground-3: #1b1b20;
+  --w-ink: #f4f2ee;
+  --w-ink-2: #a8a5a0;
+  --w-ink-3: #74716c;
+  --w-rule: #f4f2ee26;
+  --w-rule-2: #f4f2ee12;
+  --w-accent: #f4f2ee;
+  --w-accent-ink: #08080a;
+  --w-accent-2: #a8a5a0;
+  --w-focus: #ff2d55;
   --w-display: var(--font-newsreader), Georgia, serif;
   --w-display-weight: 400;
   --w-display-tracking: -0.035em;
   color-scheme: dark;
 }
 
-/* --------------------------------------------------------------------------
- * 01 · TUMBANG PRESO — the road is the page, the game is the light on it.
- *
- * The colours are the game's own. `tools/read_brand_palette.py` in the game's
- * repository clusters the flat fills of the authored logo and reports their
- * share of the artwork: deep red 34.3%, honey quartz 23.1%, chartreuse 17.0%,
- * persimmon 5.7%, golden 4.2%, rim red 3.8%.
- *
- * ⚠ WHAT CHANGED, AND WHY IT IS NOT THE OLD MISTAKE. An early pass painted this
- * world sepia-brown and called it "asphalt", which threw the game's actual
- * palette away; the correction was to use the real colours, and that pass put
- * honey quartz on the PAGE, so a screenshot of a night street sat on a cream
- * worksheet. Both were wrong in the same way: the page was competing with the
- * artwork. It now runs the road — #1A1917, the value the road actually is in
- * the build — as the ground, and honey quartz #FCD39F becomes the INK, exactly
- * as it does in the game's own UI, where cream type sits on a dark HUD over a
- * bright street. Every bright value below survives as a mark, and the only
- * things on this page that are actually bright are the screenshots.
- *
- * Ink #FCD39F measures 11.3:1 on the ground; gold #F5B521 measures 9.5:1.
- * ------------------------------------------------------------------------ */
 /* THE SEAM. Not a project world: the darkness two rooms dissolve into. It has
    a palette only so that the navigation bar, the footer and the overscroll
    bounce match what is behind them while a handoff crosses the top of the

@@ -235,8 +235,13 @@ export function EgovWorld({ project }: { project: Project }) {
       aria-labelledby={`w${project.n}-title`}
       className="bg-ground text-ink eg-room scroll-mt-[4.25rem]"
     >
-      {/* The signed-in product itself, as the room's ground. */}
-      <RoomPlate src="/work/egovmed/home.webp" />
+      {/* ⚠ THE VENUE, NOT THE PRODUCT. The ground was the same signed-in home
+          screen that is already in the phone two hundred pixels away, and this
+          room's ground is a bright blue, so the plate did not sink into it: it
+          read as a second, giant, out-of-focus copy of the foreground, with
+          "Records / Payments / Report" ghosted across the headline. A plate has
+          to be material the room does not already show. */}
+      <RoomPlate src="/work/egovmed/team.webp" />
       <RoomHead project={project} />
 
       <div className="eg-top">
@@ -269,9 +274,33 @@ export function EgovWorld({ project }: { project: Project }) {
             {h.headline}
           </h2>
           <p className="u-prose mt-6">{h.body}</p>
-          <p className="u-meta mt-5">
-            Winner · eGov Hackathon PH · 1 of 10 teams
-          </p>
+          {/* ⚠ THE RESULT IS SHOWN, NOT ASSERTED. This was one line of tracked
+              monospace that said "Winner, 1 of 10", which is a claim a reader
+              has no reason to believe and no way to check. These are his own
+              photographs from the event: the medals the ten teams were given,
+              and him at the microphone in front of the wall. Same rule as the
+              Gear Up plaque on the receipts. */}
+          <figure className="eg-proof">
+            <span className="eg-proof-shots">
+              <Image
+                src="/work/egovmed/medals.webp"
+                alt="Ten eGovPH Hackathon 2026 medals held up in a circle by the finalists."
+                width={651}
+                height={688}
+                sizes="140px"
+              />
+              <Image
+                src="/work/egovmed/pitch.webp"
+                alt="Matthew presenting eGovMed on stage at the eGovPH Hackathon."
+                width={559}
+                height={730}
+                sizes="140px"
+              />
+            </span>
+            <figcaption className="u-meta">
+              Winner · eGov Hackathon PH · 1 of 10 teams
+            </figcaption>
+          </figure>
           <RoomExit href={`/work/${project.slug}`} label="Follow the patient" />
         </div>
       </div>

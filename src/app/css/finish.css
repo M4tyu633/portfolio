@@ -50,14 +50,22 @@ body[data-world="cardio"] {
     repeating-linear-gradient(0deg, transparent 0 23px, #e77b8d0d 23px 24px),
     repeating-linear-gradient(90deg, transparent 0 5px, #e77b8d09 5px 6px);
 }
+/* ⚠ THE COVER IS BLACK, AND THE ONLY COLOUR ON IT COMES FROM THE PROJECT YOU
+   ARE POINTING AT. See the palette note in globals.css: colour means work. The
+   soft field in the corner is now the SELECTED project's accent rather than a
+   fixed indigo, so hovering the index actually relights the room. */
 .opening {
-  background-color: #171b38;
+  background-color: #08080a;
   background-image:
-    radial-gradient(ellipse at 0 0, #566bc34d, transparent 65%),
+    radial-gradient(
+      ellipse at 0 0,
+      color-mix(in srgb, var(--op-accent) 16%, transparent),
+      transparent 65%
+    ),
     linear-gradient(
       125deg,
       transparent 44%,
-      #8291d00b 44% 64%,
+      #ffffff08 44% 64%,
       transparent 64%
     ),
     repeating-linear-gradient(96deg, #b6c5ff07 0 1px, transparent 1px 5px),
@@ -89,17 +97,15 @@ body[data-world="cardio"] {
   padding-right: 2rem;
 }
 .opening-index {
-  background: #10152ecc;
+  background: #0c0c0fd9;
 }
 .opening[data-project="egov"] {
   --op-accent: #f5c400;
 }
-.opening[data-project="egov"] .plate-frame {
-  background: #0439c7;
-}
-.opening[data-project="egov"] .plate-media {
-  inset: 1.5rem;
-}
+/* The frame takes the selected world's own ground while its plate is up, so
+   the cover is briefly lit by that project rather than by the building. */
+
+
 .room-head {
   position: relative;
   z-index: 2;
@@ -137,10 +143,10 @@ body[data-world="cardio"] {
   letter-spacing: 0.075em;
 }
 .opening .opening-kicker {
-  color: #bac6e2;
+  color: var(--w-ink-2);
 }
 .opening .opening-sign::before {
-  background: #b8c4ff;
+  background: var(--op-accent);
 }
 .eg-type .u-display {
   font-weight: 600;
@@ -553,17 +559,20 @@ body[data-world="cardio"] {
 }
 
 /* Evidence is composed from the original photographs, not a background effect. */
+/* ⚠ Achromatic, like the rest of the building. The receipts sheet is the one
+   page that is entirely made of other people's colour: seven certificates, a
+   plaque, a stage. A blue ground fought all of it. */
 .receipts,
 .receipts-page {
-  background-color: #141e30;
-  color: #f1f2ff;
-  --w-ground: #141e30;
-  --w-ground-2: #223047;
-  --w-accent: #b8c4ff;
-  --w-accent-2: #b8c4ff;
+  background-color: #0a0a0c;
+  color: #f4f2ee;
+  --w-ground: #0a0a0c;
+  --w-ground-2: #17171b;
+  --w-accent: #f4f2ee;
+  --w-accent-2: #a8a5a0;
   background-image:
-    radial-gradient(ellipse at 50% 0, #758fb12e, transparent 70%),
-    radial-gradient(#d3ddeb14 0.7px, transparent 1px);
+    radial-gradient(ellipse at 50% 0, #ffffff0f, transparent 70%),
+    radial-gradient(#ffffff10 0.7px, transparent 1px);
   background-size:
     auto,
     3px 5px;
@@ -633,7 +642,7 @@ body[data-world="cardio"] {
     0.75rem/1.6 var(--font-plex-mono),
     monospace;
   margin-top: 0.7rem;
-  color: #b6c3d8;
+  color: var(--w-ink-2);
   text-wrap: pretty;
 }
 
@@ -656,7 +665,7 @@ body[data-world="cardio"] {
   font:
     0.75rem/1.5 var(--font-plex-mono),
     monospace;
-  color: #b6c3d8;
+  color: var(--w-ink-2);
 }
 
 .evidence-result strong {
@@ -667,7 +676,7 @@ body[data-world="cardio"] {
     serif;
   letter-spacing: -0.05em;
   margin: 0.55rem 0;
-  color: #f1f2ff;
+  color: #f4f2ee;
 }
 
 /* --- narrow: the plaque is inset and tilted, and overlaps nothing --------- */
@@ -792,16 +801,18 @@ body[data-world="cardio"] {
 }
 
 /* A personal editorial spread, with a portrait breaking the column. */
+/* One step lighter than the receipts, so the person reads as a different room
+   without becoming a different colour. The ruling is the only texture. */
 .person,
 .about-page {
-  --w-ground: #232b4b;
-  --w-ground-2: #303b5d;
-  background-color: #232b4b;
+  --w-ground: #101013;
+  --w-ground-2: #1c1c21;
+  background-color: #101013;
   background-image:
-    linear-gradient(112deg, #6478b52e, transparent 50%),
-    repeating-linear-gradient(96deg, #c9d1ff0d 0 1px, transparent 1px 5px),
-    repeating-linear-gradient(4deg, #02092322 0 1px, transparent 1px 4px);
-  color: #f1f2ff;
+    linear-gradient(112deg, #ffffff0a, transparent 50%),
+    repeating-linear-gradient(96deg, #ffffff0a 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(4deg, #00000026 0 1px, transparent 1px 4px);
+  color: #f4f2ee;
 }
 .person {
   grid-template-columns: 1fr 1.2fr;
@@ -814,9 +825,20 @@ body[data-world="cardio"] {
   margin-left: 5vw;
   position: relative;
 }
+/* ⚠ CONSTRAIN THE WIDTH, NEVER THE HEIGHT. `max-height: 36rem` beat the
+   aspect-ratio the moment the column was wider than 30rem, so on a 1920 screen
+   the frame turned landscape (668x576) and cover-cropped a SQUARE source
+   vertically. That is what cut his chin and shoulders off. Capping the width
+   instead keeps the ratio true at every viewport, and because the box is now
+   always taller than the 1:1 source, cover only ever trims the white margin at
+   the sides. Nothing of him is ever cropped. */
 .person-portrait img {
-  aspect-ratio: 0.85;
-  max-height: 36rem;
+  aspect-ratio: 0.9;
+  width: 100%;
+  max-width: 28rem;
+  max-height: none;
+  object-fit: cover;
+  object-position: 50% 50%;
   filter: saturate(0.75);
   border: 0;
 }
@@ -861,12 +883,12 @@ body[data-world="cardio"] {
   margin-right: 0;
 }
 .about-page .about-opening h1 em {
-  color: #b8c4ff;
+  color: var(--w-ink-2);
 }
 .about-page .about-opening figure {
   transform: none;
   background: transparent;
-  color: #bac6e2;
+  color: var(--w-ink-2);
   padding: 0;
   width: 100%;
   align-self: end;

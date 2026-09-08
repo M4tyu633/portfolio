@@ -563,3 +563,43 @@
     text-align: left;
   }
 }
+
+/* --- the proof ----------------------------------------------------------
+ * Two small photographs from the event, set as a pair of plates with the claim
+ * as their caption. Deliberately small: this is a footnote that happens to be
+ * a photograph, not a gallery, and the room already has a product and a route
+ * competing for the eye.
+ * --------------------------------------------------------------------- */
+.eg-proof {
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 0.7rem;
+  justify-items: start;
+}
+
+.eg-proof-shots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.eg-proof-shots img {
+  width: clamp(5.5rem, 9vw, 8.5rem);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 1px solid #ffffff2e;
+}
+
+.eg-proof figcaption {
+  color: var(--w-ink-2);
+}
+
+.egov-photos {
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.25rem, 4.5vw, 4.5rem)
+    clamp(1rem, 2vw, 2rem);
+}
+
+.egov-photos > .u-meta {
+  color: var(--w-ink-3);
+  margin-bottom: 1.25rem;
+}

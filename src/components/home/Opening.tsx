@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import GameClip from "@/components/media/GameClip";
+import CoverField from "@/components/home/CoverField";
 import { opening } from "@/content/site";
 import { entrances } from "@/content/worlds";
+import { useSound } from "@/lib/sound";
 
 /* ===========================================================================
  * THE OPENING — a catalogue cover with a live plate in it.
@@ -32,7 +33,16 @@ import { entrances } from "@/content/worlds";
 
 export default function Opening() {
   const [i, setI] = useState(0);
+  const { play } = useSound();
   const active = entrances[i];
+
+  /* ⚠ WRAPPING, NOT CLAMPED, AND NO DISABLED STATE. Four entries in a ring is
+   * a carousel of scenes, not a form wizard; a greyed-out arrow at either end
+   * makes a reader think they have reached something. Modulo also means the
+   * two controls are never a dead target, which is the difference between a
+   * pager you press twice and one you press once and give up on. */
+  const step = (d: number) =>
+    setI((n) => (n + d + entrances.length) % entrances.length);
 
   return (
     <section
@@ -41,6 +51,53 @@ export default function Opening() {
       data-display={active.display}
       aria-labelledby="opening-statement"
     >
+      {/* ⚠ THE FIELD IS THE FIRST SCREEN, NOT A PANEL ON IT.
+        *
+        * It used to be a framed plate in the right-hand column, which made the
+        * cover a two-up card: a sentence, and a picture of a project beside it.
+        * Nothing about that said the site itself was built. The reconstruction
+        * now runs edge to edge behind everything, so the first thing that
+        * happens when the page opens is the whole screen deriving the work out
+        * of a cloud of points, with the name and the sentence sitting in it.
+        *
+        * The photograph underneath is the fallback and the alt text. If WebGL2
+        * is not available it simply stays, and the cover is a full-bleed
+        * photograph with type on it, which is still a cover. */}
+      <div className="opening-stage" data-project={active.world}>
+        <div className="opening-plate-fallback" key={active.title}>
+          {active.media.kind === "video" ? (
+            <Image
+              src={active.media.poster!}
+              alt={active.media.alt}
+              fill
+              sizes="100vw"
+              priority
+              className="object-cover"
+            />
+          ) : (
+            <Image
+              src={active.media.src}
+              alt={active.media.alt}
+              fill
+              sizes="100vw"
+              className={
+                active.media.fit === "contain"
+                  ? "object-contain"
+                  : "object-cover"
+              }
+              priority={i === 0}
+            />
+          )}
+        </div>
+        <CoverField
+          src={
+            active.media.kind === "video" ? active.media.poster! : active.media.src
+          }
+          token={active.title}
+        />
+        <div aria-hidden className="opening-scrim" />
+      </div>
+
       <div className="opening-body">
         {/* The order is a claim and then a signature, which is how a piece of
             writing is laid out and not how a résumé is. The name is under the
@@ -70,39 +127,53 @@ export default function Opening() {
             and the video is the only element that ever autoplays: it is muted,
             it is the work, and it pauses itself off-screen. */}
         <figure className="opening-plate">
-          <div className="plate-frame">
-            <div className="plate-media" key={active.title}>
-              {active.media.kind === "video" ? (
-                <GameClip
-                  fill
-                  src={active.media.src}
-                  poster={active.media.poster}
-                  alt={active.media.alt}
-                  className="plate-clip"
-                />
-              ) : (
-                <Image
-                  src={active.media.src}
-                  alt={active.media.alt}
-                  fill
-                  sizes="(min-width: 1024px) 58vw, 100vw"
-                  className={
-                    active.media.fit === "contain"
-                      ? "object-contain"
-                      : "object-cover"
-                  }
-                  priority={i === 0}
-                />
-              )}
-            </div>
-          </div>
-
+          {/* ⚠ THE PAGER EXISTS BECAUSE HOVER IS NOT A CONTROL.
+            *
+            * Selecting a project was a pointer-enter on the index at the foot
+            * of the screen, which is invisible to anyone who does not happen to
+            * move a mouse across it: a touch reader, a keyboard reader, and
+            * anyone who simply looked at the plate and waited. The index still
+            * works exactly as it did and still drives the same state. This adds
+            * the obvious thing that was missing, which is a way to press NEXT.
+            *
+            * Buttons, not links: nothing here navigates. The counter is the
+            * only place on the opening that says how many projects there are,
+            * so it is `aria-live` and the caption is announced with it. */}
           <figcaption className="plate-caption">
             <p key={`${active.n}-line`}>{active.line}</p>
-            <Link href={active.href} className="plate-enter">
-              <span>{active.action}</span>
-              <span aria-hidden>&rarr;</span>
-            </Link>
+
+            <div className="plate-controls">
+              <div className="plate-pager">
+                <button
+                  type="button"
+                  onClick={() => step(-1)}
+                  onPointerEnter={() => play("hover")}
+                  aria-label="Previous project"
+                >
+                  <span aria-hidden>&larr;</span>
+                </button>
+                <span className="plate-count tabular-nums" aria-live="polite">
+                  {active.n}
+                  <span aria-hidden> / </span>
+                  <span className="plate-count-total">
+                    {String(entrances.length).padStart(2, "0")}
+                  </span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => step(1)}
+                  onPointerEnter={() => play("hover")}
+                  aria-label="Next project"
+                >
+                  <span aria-hidden>&rarr;</span>
+                </button>
+              </div>
+
+              <Link href={active.href} className="plate-enter">
+                <span>{active.action}</span>
+                <span aria-hidden>&rarr;</span>
+              </Link>
+            </div>
           </figcaption>
         </figure>
       </div>
