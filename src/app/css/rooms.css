@@ -1,32 +1,125 @@
-/* A full usable viewport of neutral ground prevents adjacent environments from
-   appearing together. No wheel listener, snapping, sticky lock or forced step. */
-.world-passage {
-  min-height: 100svh;
-  background: #111426;
-  color: #b9c2dd;
-  display: grid;
-  place-items: center;
-  padding: 3rem 1.5rem;
+/* ===========================================================================
+ * ROOMS AND SEAMS — how one project world stops and the next one starts.
+ *
+ * The rule the whole homepage is built on: ONE ENVIRONMENT OWNS THE VIEWPORT
+ * AT A TIME, with native scrolling in both directions and no pinning, snapping
+ * or wheel handling anywhere.
+ *
+ * Two things together buy that, and neither works alone:
+ *
+ *   1  Every project room is at least one small-viewport tall and CENTRES its
+ *      own stack. A room can never be a half-screen of content that a
+ *      neighbouring world can share the frame with, at any zoom.
+ *
+ *   2  The seam between two rooms overlaps both of them. It costs ~16svh of
+ *      page but paints ~44svh of darkness, because its negative block margins
+ *      are exactly its own fade and its background runs transparent → solid →
+ *      transparent. It sits above both neighbours in paint order, so it dims
+ *      the tail of one room and the head of the next rather than sitting
+ *      between them as a screen of nothing.
+ *
+ * ⚠ DO NOT REPLACE THE SEAM WITH A 100svh BLANK PASSAGE. That was the previous
+ * answer. It made the homepage fifteen screens long, five of which said
+ * nothing, and it still let two environments meet at some zoom levels because
+ * flow separation only holds for what is directly adjacent in flow.
+ *
+ * ⚠ EVERY LENGTH IN HERE IS svh, NOT vh. Browser zoom changes the CSS-pixel
+ * viewport in both axes, so anything tuned in px or rem to one 1920×1080 screen
+ * comes apart at 80% and at 150%. svh moves with the effective viewport and is
+ * stable against the mobile URL bar as well.
+ * ======================================================================== */
+
+:root {
+  /* The colour a world dissolves into. Darker than every world ground on the
+     site, so it reads as absence rather than as a seventh environment. */
+  --seam-ink: #07070b;
+  /* ⚠ 18svh, not 14. Tuned against the BRIGHTEST world, not the average one:
+     eGov's ground is a saturated blue and glyco's is near-black, so a fade
+     that dissolved the dark rooms cleanly still left a hard blue edge on the
+     bright one. The cost of raising it is zero, because the rooms pay it back
+     as padding and the seam's flow height is unchanged. */
+  --seam-fade: clamp(3.5rem, 18svh, 10rem);
+  --seam-band: clamp(5.5rem, 16svh, 9rem);
+}
+
+.seam {
   position: relative;
-  isolation: isolate;
-}
-.world-passage p {
+  /* The overlap. Pulling the seam into both neighbours by exactly the fade is
+     what makes the darkness wider than the scrolling it costs. */
+  margin-block: calc(var(--seam-fade) * -1);
+  padding: var(--seam-fade) clamp(1.25rem, 4.5vw, 4.5rem);
+  min-height: calc(var(--seam-band) + var(--seam-fade) * 2);
   display: grid;
-  gap: 1.25rem;
-  text-align: center;
+  align-content: center;
+  /* ⚠ Above both neighbours. Without this the room BELOW the seam paints over
+     the bottom fade — later siblings win at equal z-index — and the handoff is
+     a hard edge on the way down and a soft one on the way up. */
+  z-index: 2;
+  isolation: isolate;
+  background: linear-gradient(
+    to bottom,
+    #07070b00 0%,
+    var(--seam-ink) var(--seam-fade),
+    var(--seam-ink) calc(100% - var(--seam-fade)),
+    #07070b00 100%
+  );
+  color: #767d92;
+  pointer-events: none;
 }
-.world-passage span {
-  font-family: var(--font-plex-mono), monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
+
+.seam-line {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  max-width: 92rem;
+  width: 100%;
+  margin-inline: auto;
 }
-.world-passage strong {
-  font-family: var(--font-newsreader), Georgia, serif;
-  font-size: clamp(2rem, 4vw, 3.6rem);
-  font-weight: 400;
-  color: #e0e5fa;
+
+.seam-n {
+  color: #9aa2ba;
 }
+
+.seam-rule {
+  height: 1px;
+  width: clamp(1.5rem, 5vw, 4rem);
+  background: #3a4055;
+}
+
+.seam-title {
+  color: #cfd6ea;
+  letter-spacing: 0.08em;
+}
+
+.seam-arrow {
+  margin-left: auto;
+  color: #4a5167;
+}
+
+/* --- the rooms ---------------------------------------------------------- */
+
+/* ⚠ `:not([data-world="index"])`. The receipts and the person are the
+   building's own neutral surfaces, not project worlds; forcing a viewport
+   minimum on them only adds dead space, and they have no environment for the
+   next room to collide with. */
+#main > section[data-world-panel]:not([data-world="index"]) {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* ⚠ The seam overlaps this room by exactly `--seam-fade` at each end. Paying
+     the same amount back as padding is what keeps a room's first and last line
+     of content out of the darkness, instead of arriving already dimmed. */
+  padding-block: var(--seam-fade);
+}
+
 #main > section[data-world-panel] {
+  position: relative;
+  z-index: 1;
   isolation: isolate;
   overflow: clip;
 }
@@ -42,7 +135,6 @@
   display: grid;
   grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
   align-items: center;
-  min-height: 85svh;
   gap: 3rem;
   padding: 3.5rem clamp(1.25rem, 4.5vw, 4.5rem);
 }
@@ -51,9 +143,7 @@
   grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
   gap: 3rem;
   align-items: center;
-  min-height: 85svh;
   padding: 3.5rem clamp(1.25rem, 4.5vw, 4.5rem);
-  border-bottom: 3px solid #9b2847;
 }
 .mri-copy h2,
 .cardio-copy h2 {
@@ -151,8 +241,8 @@
   padding-top: 2.5rem;
   padding-bottom: 3rem;
 }
-#main .tp-credits li {
-  padding: 0.65rem 0;
+#main .tp-ledger li {
+  padding: 0.5rem 0.2rem;
 }
 #main .eg-top {
   padding-top: 2rem;
@@ -171,8 +261,11 @@
   .contact-evidence {
     grid-template-columns: 1fr;
   }
+  /* ⚠ Not `display: none`. The credit block IS the claim this room makes:
+     one person built every part of the game. Hiding it on a phone deletes the
+     evidence and leaves the boast. It drops below the type instead. */
   #main .tp-credits {
-    display: none;
+    grid-column: 1;
   }
 }
 /* Shorter flagship introductions leave room for the six-world sequence. */
@@ -235,4 +328,115 @@
   .cardio-copy h2 {
     font-size: 2.7rem;
   }
+}
+
+/* ===========================================================================
+ * ROOM PLATES — the real material behind each world.
+ *
+ * ⚠ THE VEIL IS THE PART THAT MATTERS, AND IT IS PER WORLD. Every one of these
+ * plates is a bright screenshot and every one of these rooms sets its text at
+ * around 12% contrast off its own ground. Tuning the veil "so the picture looks
+ * nice" and shipping it is how a room ends up unreadable at 150% zoom on a
+ * laptop screen; tuning it so the TEXT holds and the picture survives is the
+ * job. Each world's stops below were set against its own ink.
+ *
+ * ⚠ The drift is `scale` + `translate3d` on a composited layer, never
+ * `background-position`. And it is 60 to 90 seconds for a few per cent of
+ * travel: if you can watch it move without looking for it, it is wrong.
+ * ======================================================================== */
+.room-plate {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ⚠ BLURRED, AND THAT IS NOT A STYLE CHOICE. Five of these six plates are
+   screenshots of an interface, so they are FULL OF SMALL TEXT. Unblurred, the
+   room's real headline sits on top of a field of ghost words and the whole
+   surface reads as a rendering bug. Three pixels is enough to turn the
+   screenshot into a material and still leave the shapes recognisable. The
+   Tumbang plate is exempt: its art is a render of a street, with nothing in it
+   to misread. */
+.room-plate img {
+  opacity: 0.55;
+  filter: blur(3px) saturate(0.92);
+  transform-origin: 50% 55%;
+  animation: room-drift 76s ease-in-out infinite alternate;
+}
+
+.room-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--plate-veil-a) 0%,
+      var(--plate-veil-b) 24%,
+      var(--plate-veil-b) 56%,
+      var(--plate-veil-a) 90%,
+      var(--plate-veil-a) 100%
+    ),
+    radial-gradient(115% 85% at 50% 46%, transparent 28%, var(--plate-veil-c) 100%);
+}
+
+/* Starts at 1.09, not 1.0: the plate is blurred, and a blurred layer at its
+   natural size shows a soft edge all the way round. */
+@keyframes room-drift {
+  from {
+    transform: scale(1.09) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.16) translate3d(-1.1%, -1.5%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-plate img {
+    animation: none;
+    transform: scale(1.09);
+  }
+}
+
+/* Every room that carries a plate has to lift its own content above it, and
+   must not paint an opaque ground over it. */
+#main > section[data-world-panel] > *:not(.room-plate) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ⚠ Also the Tumbang plate, which predates the shared one and keeps its own
+   veil because its art is a bright daylight render rather than a dark UI
+   screenshot. Both are lifted the same way. */
+.tp-room > *:not(.tp-room-plate) {
+  position: relative;
+  z-index: 1;
+}
+
+[data-world="egov"] {
+  --plate-veil-a: #060d1af2;
+  --plate-veil-b: #060d1ab8;
+  --plate-veil-c: #04091499;
+}
+[data-world="glyco"] {
+  --plate-veil-a: #060a0df5;
+  --plate-veil-b: #060a0dc7;
+  --plate-veil-c: #04070999;
+}
+[data-world="chip8"] {
+  --plate-veil-a: #050807f7;
+  --plate-veil-b: #050807cf;
+  --plate-veil-c: #030605a6;
+}
+[data-world="reading"] {
+  --plate-veil-a: #070708f7;
+  --plate-veil-b: #070708cc;
+  --plate-veil-c: #050506a6;
+}
+[data-world="cardio"] {
+  --plate-veil-a: #08060af7;
+  --plate-veil-b: #08060acc;
+  --plate-veil-c: #050408a6;
 }

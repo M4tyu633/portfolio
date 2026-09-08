@@ -75,10 +75,20 @@ export function WorldScrollSync() {
         }
         apply();
       },
-      // A panel owns the page once its top passes 45% of the viewport, and lets
-      // go once its bottom does. Anything looser makes two worlds fight over
-      // the body colour while a boundary is on screen.
-      { rootMargin: "-45% 0px -55% 0px", threshold: 0 },
+      /* ⚠ ANCHORED JUST UNDER THE NAVIGATION BAR, NOT AT THE MIDDLE OF THE
+       * VIEWPORT. What this attribute actually paints is everything OUTSIDE
+       * the sections: the sticky bar, the footer, the scrollbar, the
+       * overscroll. All of those live at the top edge, so a mid-viewport
+       * decision made the bar the wrong colour for half of every handoff. It
+       * went bright eGov blue while the top third of the window was still
+       * asphalt, which is the single most obvious way to make a transition
+       * look broken. The strip is from the bar's own height to 12% down.
+       *
+       * ⚠ 68px, not 4.25rem. `rootMargin` only accepts px and %, and a rem
+       * value throws rather than being ignored, which took the whole observer
+       * down with it. CSS pixels already scale with browser zoom, so this
+       * tracks the bar at every zoom level anyway. */
+      { rootMargin: "-68px 0px -88% 0px", threshold: 0 },
     );
 
     panels.forEach((p) => io.observe(p));

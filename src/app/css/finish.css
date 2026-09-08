@@ -104,11 +104,14 @@ body[data-world="cardio"] {
   position: relative;
   z-index: 2;
 }
+/* ⚠ NO `background-color` HERE. The room's ground is the game's key art, and
+   this block sits on top of it: an opaque fill made the plate invisible and
+   put the flat asphalt rectangle back. The asphalt grain stays, because it
+   reads as road over the photograph as well as it did over the colour. */
 .tp-claim {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background-color: #1a1917;
   background-image:
     radial-gradient(#c0b7a319 0.8px, transparent 1px),
     radial-gradient(#0707064d 0.6px, transparent 1px);
@@ -571,72 +574,195 @@ body[data-world="cardio"] {
   gap: 2.5rem;
   align-items: stretch;
 }
+/* ===========================================================================
+ * THE EVIDENCE — the stage photograph, the plaque, and the result.
+ *
+ * ⚠ THIS COMPOSITION BROKE, AND IT BROKE FOR A REASON WORTH WRITING DOWN. The
+ * first version placed the plaque with `margin-left: -4rem; margin-top: 7rem`
+ * and lifted the result with `translateY(-1.5rem)`, both inside a narrow
+ * quarter-column. Those are absolute lengths against a column whose width is a
+ * fraction of the viewport, so the ratio between them changed with every
+ * resize and every zoom step. At one width it looked composed; two steps of
+ * browser zoom later the word "place." was printed across the certificates.
+ *
+ * THE RULES THIS VERSION KEEPS, AND THE NEXT ONE HAS TO KEEP:
+ *
+ *   1  Overlap is expressed as GRID SPAN, never as a negative margin. The
+ *      plaque overlaps the photograph because it spans both columns and aligns
+ *      to the end of the second; it cannot drift, because there is no length
+ *      involved.
+ *   2  The display type and the plaque are in DIFFERENT GRID ROWS. They can
+ *      never collide, at any width, because the grid will not let them.
+ *   3  Everything scales in `cqw`, off this block's own inline size, not in vw.
+ *      Browser zoom changes the viewport in CSS pixels; a container query does
+ *      not care, because the container shrinks with it. This is why the layout
+ *      switches on the composition's width and not on the window's.
+ *   4  The only transform is the plaque's rotation, and its cell has room for
+ *      the rotated bounds.
+ * ======================================================================== */
+/* ⚠ The container is the FRAME, not the composition. An element cannot match
+   a container query against itself; putting `container-type` on the grid meant
+   its own `grid-template-columns` rules never fired while its children's did. */
+.evidence-frame {
+  container-type: inline-size;
+  min-width: 0;
+}
+
 .evidence-composition {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.8fr;
-  grid-template-rows: auto auto;
-  gap: 1rem 2rem;
-  position: relative;
-  padding: 1.5rem 0 2rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1rem, 3cqw, 1.75rem);
   max-width: 92rem;
   margin-inline: auto;
+  padding-block: clamp(1rem, 2vw, 2rem);
 }
+
 .evidence-event {
-  grid-column: 1 / 3;
-  grid-row: 1 / 3;
-  margin-top: 1rem;
+  min-width: 0;
 }
+
 .evidence-event img {
   width: 100%;
-  aspect-ratio: 1.65;
+  aspect-ratio: 1.6;
   object-fit: cover;
+  object-position: 50% 44%;
 }
+
 .evidence-composition figcaption {
   font:
     0.75rem/1.6 var(--font-plex-mono),
     monospace;
-  margin-top: 0.75rem;
+  margin-top: 0.7rem;
   color: #b6c3d8;
+  text-wrap: pretty;
 }
+
 .evidence-award {
-  grid-column: 3;
-  grid-row: 1 / 3;
-  margin-left: -4rem;
-  margin-top: 7rem;
-  transform: rotate(5deg);
-  z-index: 1;
+  min-width: 0;
+  margin: 0;
 }
+
 .evidence-award img {
-  aspect-ratio: 0.88;
   width: 100%;
+  aspect-ratio: 0.9;
   object-fit: cover;
   object-position: 50% 46%;
-  border: 8px solid #d2d7de;
-  box-shadow: 0 15px 40px #0008;
+  border: clamp(4px, 1cqw, 9px) solid #d2d7de;
+  box-shadow: 0 15px 40px #0009;
 }
-.evidence-result {
-  grid-column: 3;
-  grid-row: 1;
-  z-index: 2;
-  justify-self: end;
-  transform: translateY(-1.5rem);
-  text-align: right;
-}
+
 .evidence-result span {
   display: block;
   font:
     0.75rem/1.5 var(--font-plex-mono),
     monospace;
+  color: #b6c3d8;
 }
+
 .evidence-result strong {
   display: block;
   font:
-    500 clamp(3rem, 7vw, 7rem)/0.8 var(--font-newsreader),
+    500 clamp(2.6rem, 13cqw, 7rem)/0.84 var(--font-newsreader),
     Georgia,
     serif;
   letter-spacing: -0.05em;
-  margin: 0.8rem 0;
+  margin: 0.55rem 0;
+  color: #f1f2ff;
 }
+
+/* --- narrow: the plaque is inset and tilted, and overlaps nothing --------- */
+@container (max-width: 33rem) {
+  .evidence-result {
+    order: 2;
+  }
+  .evidence-award {
+    order: 3;
+    width: min(76%, 19rem);
+    /* ⚠ Not `margin-inline-start: auto` alone. The plate is rotated, so its
+       corners stick out past its own box; hugging the right edge pushed them
+       outside the section, which clips them. */
+    margin-inline: auto 0.75rem;
+  }
+  .evidence-award img {
+    transform: rotate(3deg);
+  }
+}
+
+/* --- medium: result and plaque share a row under the photograph ---------- */
+@container (min-width: 33rem) {
+  .evidence-composition {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .evidence-event {
+    grid-column: 1 / -1;
+  }
+  .evidence-result {
+    grid-column: 1;
+    align-self: center;
+  }
+  .evidence-award {
+    grid-column: 2;
+    justify-self: end;
+    width: min(100%, 20rem);
+  }
+  .evidence-award img {
+    transform: rotate(3deg);
+  }
+}
+
+/* --- wide: the stage photograph runs the full width, the result sits under it
+       on the left, and the plaque hangs off the right edge and laps UP onto the
+       photograph's bottom corner.
+
+       ⚠ WHY THE PLAQUE SPANS BOTH ROWS AND IS BOTTOM-ALIGNED. That is the whole
+       trick, and it is what makes this survive every width and zoom without a
+       single hand-tuned offset. Its bottom is pinned to the bottom of the
+       composition; whatever height it has left over laps upward over the
+       photograph. If the display type wraps to another line the second row
+       grows and the overlap SHRINKS BY ITSELF. The type and the plaque are in
+       different columns of that row, so they cannot meet, ever. ---------- */
+@container (min-width: 52rem) {
+  .evidence-composition {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: clamp(1.25rem, 3cqw, 2.75rem);
+    row-gap: clamp(0.75rem, 2cqw, 1.5rem);
+    /* room for the rotated plate's corners against the section's clip */
+    padding-right: clamp(0.5rem, 2cqw, 1.75rem);
+  }
+  .evidence-event {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .evidence-event img {
+    aspect-ratio: 2.4;
+  }
+  .evidence-result {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+    padding-right: 0.08em;
+    text-align: left;
+  }
+  .evidence-result strong {
+    font-size: clamp(2.6rem, 9cqw, 6.5rem);
+  }
+  .evidence-award {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    justify-self: end;
+    align-self: end;
+    width: min(100%, 32cqw);
+    z-index: 1;
+  }
+  .evidence-award img {
+    transform: rotate(3.5deg);
+  }
+  .evidence-award figcaption {
+    text-align: right;
+  }
+}
+
 .receipts-list {
   display: grid;
   grid-template-columns: 0.8fr 1.4fr;
@@ -658,7 +784,7 @@ body[data-world="cardio"] {
 .receipts-list .room-exit {
   justify-self: start;
 }
-.receipts-page > .evidence-composition {
+.receipts-page > .evidence-frame {
   margin: 0 4vw 4rem;
 }
 .receipts-page header h1 {
@@ -916,39 +1042,6 @@ body[data-world="cardio"] {
   .machine-boot {
     justify-content: center;
     padding-top: 11rem;
-  }
-  .evidence-composition {
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    padding-top: 0;
-  }
-  .evidence-event {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    margin: 0;
-  }
-  .evidence-event img {
-    aspect-ratio: 1.3;
-  }
-  .evidence-award {
-    grid-column: 2;
-    grid-row: 2;
-    margin: -1rem 0.4rem 0 -1rem;
-    transform: rotate(4deg);
-  }
-  .evidence-result {
-    grid-column: 1;
-    grid-row: 2;
-    transform: none;
-    justify-self: start;
-    text-align: left;
-    padding-top: 1rem;
-  }
-  .evidence-result strong {
-    font-size: 3.8rem;
-  }
-  .evidence-composition figcaption {
-    font-size: 0.75rem;
   }
   .receipts-list {
     display: block;

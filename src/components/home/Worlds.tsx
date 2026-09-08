@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { daruma } from "@/app/fonts";
 import MachineFigure from "@/components/figures/MachineFigure";
+import RoomPlate from "@/components/home/RoomPlate";
 import SwarmPreview from "@/components/home/SwarmPreview";
-import GameClip from "@/components/media/GameClip";
 import type { Project } from "@/content/types";
 import { patientStages } from "@/content/worlds";
 
@@ -50,12 +50,10 @@ function RoomExit({ href, label }: { href: string; label: string }) {
  *
  * ⚠⚠ THIS PANEL USED TO BE A DARK BROWN BLOCK WITH A DIAGRAM IN IT, AND IT WAS
  * THE WORST THING ON THE SITE. A visitor should not have to wonder what the
- * game looks like: it looks like this, because this IS it. Full-bleed clip of a
- * real round, the game's own painted wordmark over it, and the entrance drawn
- * on his own PLAY pennant.
- *
- * The clip is silent, does not load until it is near the viewport, and pauses
- * the moment it leaves. See `GameClip`.
+ * game looks like: it looks like this, because this IS it. The room's ground is
+ * the build's key art, the stage is a real frame with the real HUD on it, the
+ * wordmark is the game's own painted lettering, and the entrance is drawn on
+ * his own PLAY pennant.
  *
  * Under it, the credit block. It is a list of the things he personally made,
  * set like film credits rather than as six capability cards, because the claim
@@ -80,16 +78,42 @@ export function TumbangWorld({ project }: { project: Project }) {
       data-display="daruma"
       data-world-panel
       aria-labelledby={`w${project.n}-title`}
-      className={`${daruma.variable} bg-ground text-ink scroll-mt-[4.25rem]`}
+      className={`${daruma.variable} bg-ground text-ink tp-room scroll-mt-[4.25rem]`}
     >
+      {/* ⚠ THE ROOM'S GROUND IS THE GAME'S OWN KEY ART, NOT A DARK RECTANGLE.
+          A flat asphalt colour with a dot texture on it is the generic
+          portfolio surface with a Tumbang palette, which is exactly what this
+          world is not allowed to be. This is `backdrop.webp` out of the build:
+          the lata and the tsinelas in the chalk ring on the street. It is
+          dimmed and very slowly drifting, so it reads as the room you are
+          standing in rather than as a picture someone put behind the text. */}
+      <div aria-hidden className="tp-room-plate">
+        <Image
+          src="/work/tumbang/backdrop.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-[50%_62%]"
+        />
+      </div>
+
       {/* --- the game, edge to edge --- */}
+      {/* ⚠ A STILL, NOT THE CLIP. This used to autoplay a round of the match
+          behind the wordmark and it pulled the eye off everything else in the
+          room, on a page that already has six worlds competing for attention.
+          The full round still plays on `/work/tumbang-preso`, where looking at
+          it is the point. This frame is the real HUD: the score ledger, the
+          timer, the prompt panel and the stamina meter, which are the same
+          four things the room's own panels are built out of. */}
       <div data-surface="stage" data-seq="stage" className="tp-stage">
-        <GameClip
-          src="/work/tumbang/match.mp4"
-          poster="/work/tumbang/match-poster.webp"
-          alt="A round of Tumbang Preso: the scoreboard, the timer, the lata standing in the middle of the road."
-          ratio="16 / 9"
-          className="max-h-[48svh] w-full"
+        <Image
+          src="/work/tumbang/hud.webp"
+          alt="A round of Tumbang Preso in first person: the score ledger, the timer, the lata in the middle of the road and the prompt to get out of the box to throw."
+          width={1600}
+          height={900}
+          sizes="100vw"
+          priority
+          className="max-h-[48svh] w-full object-cover"
         />
         <div aria-hidden className="tp-stage-shade" />
         <div className="tp-stage-mark">
@@ -100,15 +124,17 @@ export function TumbangWorld({ project }: { project: Project }) {
             height={316}
             className="h-auto w-[min(30vw,13rem)]"
           />
-          <p className="u-meta">
-            <span style={{ color: "var(--tp-gold)" }}>01</span>
-            <span>{project.title}</span>
-            <span aria-hidden>/</span>
-            <span>{project.category}</span>
-            <span aria-hidden className="hidden sm:inline">
-              /
+          {/* ⚠ The game's own pill buttons, not the site's mono meta strip. On
+              a Tumbang surface the labels have to look like the labels in the
+              build; a row of tracked-out monospace here is exactly the
+              "portfolio theme with Tumbang text on it" this world is not
+              allowed to be. */}
+          <p className="tp-stage-chips">
+            <span className="tp-chip" data-tone="gold">
+              01
             </span>
-            <span className="hidden sm:inline">{project.year}</span>
+            <span className="tp-chip">{project.category}</span>
+            <span className="tp-chip">{project.year}</span>
           </p>
         </div>
       </div>
@@ -120,7 +146,14 @@ export function TumbangWorld({ project }: { project: Project }) {
             {h.headline}
           </h2>
           <p className="u-prose mt-6">{h.body}</p>
-          {h.coda ? <p className="tp-coda">{h.coda}</p> : null}
+          {h.coda ? (
+            /* The prompt panel from the bottom right of the HUD: gold caps
+               over the line itself. */
+            <p className="tp-coda tp-slab">
+              <span className="tp-label">Result</span>
+              <span className="tp-value">{h.coda}</span>
+            </p>
+          ) : null}
 
           {/* The entrance, drawn on his own PLAY pennant.
            *
@@ -152,15 +185,27 @@ export function TumbangWorld({ project }: { project: Project }) {
           </Link>
         </div>
 
-        <ol className="tp-credits" data-seq="credits">
-          {TUMBANG_CREDITS.map(([what, how]) => (
-            <li key={what}>
-              <span>{what}</span>
-              <span>{how}</span>
-            </li>
-          ))}
-        </ol>
+        {/* The credit block, set as the game's own SCORES ledger: a brown
+            plaque with a gold rule, a Daruma name on the left and the detail
+            on the right. It is still a list, which is the right shape for the
+            claim being made; it is now a list that looks like this game. */}
+        <div className="tp-credits tp-plaque" data-seq="credits">
+          <p className="tp-label tp-credits-head">
+            Built by one person · 5 days
+          </p>
+          <ol className="tp-ledger">
+            {TUMBANG_CREDITS.map(([what, how]) => (
+              <li key={what}>
+                <span className="tp-ledger-what">{what}</span>
+                <span className="tp-ledger-how">{how}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
+
+      {/* The pennants strung over the street, closing the room. */}
+      <div aria-hidden className="tp-bunting" />
     </section>
   );
 }
@@ -190,6 +235,8 @@ export function EgovWorld({ project }: { project: Project }) {
       aria-labelledby={`w${project.n}-title`}
       className="bg-ground text-ink eg-room scroll-mt-[4.25rem]"
     >
+      {/* The signed-in product itself, as the room's ground. */}
+      <RoomPlate src="/work/egovmed/home.webp" />
       <RoomHead project={project} />
 
       <div className="eg-top">
@@ -277,6 +324,8 @@ export function GlycoWorld({ project }: { project: Project }) {
       aria-labelledby={`w${project.n}-title`}
       className="bg-ground text-ink gs-room scroll-mt-[4.25rem]"
     >
+      {/* The instrument's own screen. */}
+      <RoomPlate src="/work/glycoswarm/home.webp" />
       <RoomHead project={project} />
 
       <div className="gs-top">
@@ -321,6 +370,8 @@ export function Chip8World({ project }: { project: Project }) {
       aria-labelledby={`w${project.n}-title`}
       className="bg-ground text-ink c8-room scroll-mt-[4.25rem]"
     >
+      {/* The debugger, running. */}
+      <RoomPlate src="/work/chip8/debugger.webp" />
       <RoomHead project={project} />
 
       <div className="c8-top">

@@ -13,6 +13,7 @@
 @import "./css/motion.css";
 @import "./css/finish.css";
 @import "./css/rooms.css";
+@import "./css/tumbang.css";
 
 /* ===========================================================================
  * THE BUILDING AND THE ROOMS
@@ -93,6 +94,27 @@
  *
  * Ink #FCD39F measures 11.3:1 on the ground; gold #F5B521 measures 9.5:1.
  * ------------------------------------------------------------------------ */
+/* THE SEAM. Not a project world: the darkness two rooms dissolve into. It has
+   a palette only so that the navigation bar, the footer and the overscroll
+   bounce match what is behind them while a handoff crosses the top of the
+   window, instead of flashing the index world's indigo halfway through. */
+[data-world="seam"] {
+  --w-ground: #07070b;
+  --w-ground-2: #101018;
+  --w-ground-3: #171722;
+  --w-ink: #d7dcec;
+  --w-ink-2: #99a1b8;
+  --w-ink-3: #666e85;
+  --w-rule: #1c1f2b;
+  --w-rule-2: #14161f;
+  --w-accent: #8f98b4;
+  --w-accent-2: #8f98b4;
+  --w-accent-ink: #07070b;
+  --w-focus: #ff2d55;
+
+  color-scheme: dark;
+}
+
 [data-world="tumbang"] {
   --w-ground: #1a1917; /* the road */
   --w-ground-2: #24211e; /* the kerb: plates and panels */

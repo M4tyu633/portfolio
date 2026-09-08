@@ -6,8 +6,13 @@ import { contact, gmailCompose, nav, stamp } from "@/content/site";
 export default function Footer() {
   const year = new Date().getFullYear();
 
+  /* ⚠ NO TOP MARGIN ON THE FOOTER. It used to carry `mt-24`, and with the
+   * ambience layer mounted that six-rem gap stopped being empty: it showed the
+   * archive room's ruling as a pale gridded band between two dark grounds,
+   * which reads as a rendering fault rather than as space. The footer's own
+   * rule already separates it from whatever it follows. */
   return (
-    <footer className="border-rule bg-ground mt-24 border-t">
+    <footer className="border-rule bg-ground border-t">
       <div className="mx-auto max-w-[88rem] px-5 py-12 sm:px-8">
         <div className="grid gap-10 sm:grid-cols-[1fr_auto] sm:items-end">
           <div>

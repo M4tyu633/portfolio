@@ -11,7 +11,17 @@ export default function SwarmPreview() {
   return (
     <div className="swarm-preview">
       <div className="swarm-body" aria-hidden="true">
-        <Image src="/work/glycoswarm/patient.webp" alt="" fill sizes="440px" />
+        {/* ⚠ `sizes` is not the box, it is the RENDERED WIDTH OF THE BITMAP.
+            This plate is 49% of the preview and its img is blown up to 290% of
+            that inside a mask, so it paints at roughly 1.4x the preview's own
+            width. Asking for 440px served a 440px source into a ~1000px hole
+            and the figure came out visibly soft. */}
+        <Image
+          src="/work/glycoswarm/patient.webp"
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 70vw, 140vw"
+        />
       </div>
       <div className="swarm-trace">
         <p className="u-meta">One panel / four independent reads</p>

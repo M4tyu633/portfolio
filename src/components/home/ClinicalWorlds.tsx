@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import RoomPlate from "@/components/home/RoomPlate";
 import type { Project } from "@/content/types";
 
 export function KneeWorld({ project }: { project: Project }) {
@@ -11,6 +12,8 @@ export function KneeWorld({ project }: { project: Project }) {
       className="mri-room"
       aria-labelledby="w05-title"
     >
+      {/* The reading station itself, as the room it is read in. */}
+      <RoomPlate src="/work/knee-mri/station.webp" />
       <div className="room-head">
         <span className="u-meta">05 / Knee MRI Reader</span>
         <span className="u-meta">ML · Imaging · 2026</span>
@@ -70,6 +73,8 @@ export function CardioWorld({ project }: { project: Project }) {
       className="cardio-room"
       aria-labelledby="w06-title"
     >
+      {/* The browser instrument, as the room's ground. */}
+      <RoomPlate src="/work/heart/station.webp" />
       <div className="room-head">
         <span className="u-meta">06 / CardioSense</span>
         <span className="u-meta">ML · Risk attribution · 2025</span>

@@ -43,6 +43,9 @@ const GROUND: Record<WorldId, string> = {
   chip8: "#06090a",
   reading: "#0b0b0c",
   cardio: "#08080b",
+  /* No route is ever in the seam world, but the map is exhaustive so that
+     adding a world is a compile error here rather than a white flash. */
+  seam: "#07070b",
 };
 
 const INK: Record<WorldId, string> = {
@@ -53,6 +56,7 @@ const INK: Record<WorldId, string> = {
   chip8: "#d5e3de",
   reading: "#f2ece4",
   cardio: "#eceaf2",
+  seam: "#d7dcec",
 };
 
 type Target = { world: WorldId; n?: string; title?: string };

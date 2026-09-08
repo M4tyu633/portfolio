@@ -1,0 +1,396 @@
+/* ===========================================================================
+ * TÜMP — the game's own interface kit.
+ *
+ * ⚠ NOTHING IN HERE WAS INVENTED. Every value is measured off the real build's
+ * screens, which are checked into `public/work/tumbang/`:
+ *
+ *   select.webp    the brown option plaques, the gold chevron header, the
+ *                  pill buttons with a gold hairline, the START MATCH slab
+ *   hud.webp       the SCORES ledger, the round timer, the prompt panel, the
+ *                  stamina meter and its [Q] key chip
+ *   menu.webp      the same plaque language over the street
+ *   wordmark.webp  the painted TÜMP lettering
+ *   pennant-*.webp the hand-drawn bunting the menu buttons are cut from
+ *
+ * The point of the kit is a specific claim: if you covered the project name,
+ * the screen should still tell you which world you are in. A dark ground with
+ * the site's serif on it and the word "Tumbang Preso" underneath does not do
+ * that. A brown plaque with a gold rule and Darumadrop caps does, because that
+ * is literally what the game looks like.
+ *
+ * ⚠ DARUMA IS FOR TITLES, LABELS, NUMBERS AND CONTROLS. NOT FOR PARAGRAPHS.
+ * The game sets its body copy in a light hand too, but a portfolio has to be
+ * read by a stranger on a laptop in one pass. Prose stays in Plex Sans. Every
+ * rule below that switches the face is attached to a heading, a label, a
+ * figure or a button, never to `p`.
+ *
+ * ⚠ THE PALETTE IS THE GAME'S, AND THE INDIGO IS NOT IN IT. The building's
+ * midnight/indigo identity is fine on the building's own surfaces. It must
+ * never appear inside a Tumbang surface: the whole failure this file exists to
+ * fix was "generic blue portfolio + serif headline + a Tumbang label".
+ * ======================================================================== */
+
+[data-world="tumbang"] {
+  /* the brown of the option plaques in select.webp, top and bottom */
+  --tp-plaque-top: #6a3a15;
+  --tp-plaque-bot: #3a1c08;
+  /* the gold rule around every panel, and the darker line under it */
+  --tp-edge: #e0a63f;
+  --tp-edge-2: #8a5216;
+  /* the near-black brown the HUD panels use */
+  --tp-slab: #2a1408;
+  /* the banner gradient, top to bottom */
+  --tp-banner-a: #ffd94a;
+  --tp-banner-b: #efa519;
+  --tp-radius: 0.85rem;
+}
+
+/* --- the chevron banner -------------------------------------------------
+ * `SINGLE PLAYER` in select.webp: a gold flag with a pointed right end and the
+ * label knocked out of it in the game's own dark brown. Used for a section
+ * label, never for body text.
+ * --------------------------------------------------------------------- */
+.tp-banner {
+  display: inline-block;
+  font-family: var(--font-daruma), var(--font-plex-sans), sans-serif;
+  font-size: clamp(1rem, 2.2vw, 1.6rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #3d1d09;
+  background: linear-gradient(
+    to bottom,
+    var(--tp-banner-a) 0%,
+    var(--tp-banner-b) 100%
+  );
+  padding: 0.6em 2.1em 0.55em 1.1em;
+  /* the pointed end, in percentages so it holds at every size */
+  clip-path: polygon(0 0, calc(100% - 1.1em) 0, 100% 50%, calc(100% - 1.1em) 100%, 0 100%);
+  filter: drop-shadow(0 3px 0 #00000038);
+}
+
+/* --- the plaque ---------------------------------------------------------
+ * The brown panel the whole menu is built from. Its edge is two lines: a gold
+ * one outside and a dark one inside, which is what stops it reading as a
+ * rounded-rectangle card.
+ * --------------------------------------------------------------------- */
+.tp-plaque {
+  background: linear-gradient(
+    to bottom,
+    var(--tp-plaque-top) 0%,
+    var(--tp-plaque-bot) 100%
+  );
+  border: 3px solid var(--tp-edge);
+  border-radius: var(--tp-radius);
+  box-shadow:
+    inset 0 0 0 2px #00000040,
+    0 6px 0 #00000030;
+  padding: clamp(1rem, 2.4vw, 1.75rem);
+}
+
+/* The darker HUD variant: the SCORES ledger and the prompt panels. */
+.tp-slab {
+  background: linear-gradient(to bottom, #40200bee 0%, #20100569 100%);
+  border: 2px solid var(--tp-edge);
+  border-radius: 0.7rem;
+  padding: clamp(0.8rem, 2vw, 1.4rem);
+}
+
+/* --- labels and values --------------------------------------------------
+ * Gold Daruma caps for the label, cream for the thing itself. This is the
+ * single most recognisable pairing in the game's interface.
+ * --------------------------------------------------------------------- */
+.tp-label {
+  font-family: var(--font-daruma), var(--font-plex-sans), sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--tp-gold);
+}
+
+.tp-value {
+  font-family: var(--font-daruma), var(--font-plex-sans), sans-serif;
+  color: var(--tp-paper);
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+
+/* --- the pill button ----------------------------------------------------
+ * `MAP: [ ESKINITA ]`. Dark brown, gold hairline, cream Daruma caps.
+ * --------------------------------------------------------------------- */
+.tp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-daruma), var(--font-plex-sans), sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--tp-paper);
+  background: linear-gradient(to bottom, #4a2410 0%, #2a1408 100%);
+  border: 2px solid var(--tp-edge-2);
+  border-radius: 0.55rem;
+  padding: 0.45em 0.9em 0.4em;
+}
+
+.tp-chip[data-tone="gold"] {
+  color: var(--tp-gold);
+  border-color: var(--tp-edge);
+}
+
+/* The taya is the only blue in the game and it is allowed here, because it is
+   the game's blue and not the portfolio's. */
+.tp-chip[data-tone="taya"] {
+  color: var(--tp-defense);
+  border-color: #1f5f92;
+}
+
+/* --- the action slab ----------------------------------------------------
+ * `START MATCH`: the wide hexagonal button, cut on both ends.
+ * --------------------------------------------------------------------- */
+a.tp-action,
+button.tp-action {
+  display: inline-block;
+  font-family: var(--font-daruma), var(--font-plex-sans), sans-serif;
+  font-size: clamp(1.15rem, 2.4vw, 1.75rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--tp-paper);
+  background: linear-gradient(to bottom, #93440f 0%, #5d2708 100%);
+  border: 3px solid var(--tp-edge);
+  padding: 0.62em 2.2em 0.58em;
+  clip-path: polygon(
+    0.9em 0,
+    calc(100% - 0.9em) 0,
+    100% 50%,
+    calc(100% - 0.9em) 100%,
+    0.9em 100%,
+    0 50%
+  );
+  transition:
+    transform 160ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 160ms;
+}
+
+a.tp-action:hover,
+button.tp-action:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+}
+
+/* --- the score ledger ---------------------------------------------------
+ * The panel at the top left of every round: a name on the left, a number on
+ * the right, one row per player, leader first.
+ * --------------------------------------------------------------------- */
+.tp-ledger {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.tp-ledger li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.75rem 1.25rem;
+  padding: 0.55rem 0.2rem;
+  border-bottom: 1px solid #ffffff14;
+}
+
+.tp-ledger li:last-child {
+  border-bottom: 0;
+}
+
+.tp-ledger .tp-ledger-what {
+  font-family: var(--font-daruma), var(--font-plex-sans), sans-serif;
+  font-size: 1.0625rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--tp-paper);
+}
+
+.tp-ledger .tp-ledger-how {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: #d8b489;
+  text-align: right;
+  text-wrap: pretty;
+}
+
+@media (max-width: 640px) {
+  .tp-ledger li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tp-ledger .tp-ledger-how {
+    text-align: left;
+  }
+}
+
+/* --- the bunting --------------------------------------------------------
+ * The pennants strung across the power lines in every shot of the map. One
+ * hairline with the game's own flags hanging off it, used to close a surface
+ * rather than as decoration inside one.
+ *
+ * ⚠ Drawn with a repeating conic gradient rather than the pennant PNGs: the
+ * PNGs are one colour each and a strip of them would be six extra requests for
+ * a 12px-tall band. The colours are sampled from the real ones.
+ * --------------------------------------------------------------------- */
+.tp-bunting {
+  position: relative;
+  height: 1.75rem;
+  border-top: 1px solid #ffffff24;
+}
+
+.tp-bunting::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1.15rem;
+  /* the colours, in the order they are strung in the map */
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--tp-chartreuse) 0 1.35rem,
+    var(--tp-persimmon) 1.35rem 2.7rem,
+    var(--tp-gold) 2.7rem 4.05rem,
+    var(--tp-rim) 4.05rem 5.4rem
+  );
+  /* ⚠ An SVG triangle tiled along x, NOT a stack of clip-paths. `clip-path`
+     applies once to the whole element, so it can cut ONE shape, not a row of
+     them; the first attempt stacked two pseudo-elements trying to fake a
+     repeat and drew a solid bar on one and nothing on the other. A mask
+     repeats. */
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2020%2016'%3E%3Cpolygon%20points='1,0%2019,0%2010,16'%20fill='%23000'/%3E%3C/svg%3E");
+  mask-size: 1.35rem 1.15rem;
+  mask-repeat: repeat-x;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2020%2016'%3E%3Cpolygon%20points='1,0%2019,0%2010,16'%20fill='%23000'/%3E%3C/svg%3E");
+  -webkit-mask-size: 1.35rem 1.15rem;
+  -webkit-mask-repeat: repeat-x;
+  opacity: 0.9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.tp-action,
+  button.tp-action {
+    transition: none;
+  }
+}
+
+/* --- the room's ground --------------------------------------------------
+ * The world sits on the game's own key art rather than on a flat colour.
+ *
+ * ⚠ THE VEIL IS NOT OPTIONAL. The plate is a bright daylight render and every
+ * word in this room is cream or honey; without the gradient over it the body
+ * copy drops to about 2:1 against the sky. The image carries the room, the
+ * veil carries the text, and the two are tuned together.
+ *
+ * ⚠ The drift is `scale`, not `background-position`. Scaling a composited
+ * layer is free; animating a background position repaints the whole surface
+ * every frame behind six other elements.
+ * --------------------------------------------------------------------- */
+.tp-room {
+  position: relative;
+  isolation: isolate;
+}
+
+.tp-room > *:not(.tp-room-plate) {
+  position: relative;
+  z-index: 1;
+}
+
+.tp-room-plate {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tp-room-plate img {
+  opacity: 0.62;
+  filter: saturate(0.82) contrast(1.05);
+  transform-origin: 58% 62%;
+  animation: tp-drift 68s ease-in-out infinite alternate;
+}
+
+.tp-room-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* ⚠ TUNED AGAINST THE TEXT, NOT BY EYE ON THE PICTURE. The body copy in this
+     room is cream on whatever this leaves behind. The first pass ran the veil
+     at 0.95 alpha the whole way down "to be safe" and the result was a flat
+     dark rectangle again: the plate was there and you could not see it. These
+     stops keep the street legible in the middle band, where there is no text,
+     and close up top and bottom where the seams meet it. */
+  background:
+    linear-gradient(
+      to bottom,
+      #100c08e0 0%,
+      #100c0894 22%,
+      #100c0894 52%,
+      #100c08d9 88%,
+      #100c08f2 100%
+    ),
+    radial-gradient(115% 85% at 50% 46%, transparent 30%, #0d0906b3 100%);
+}
+
+@keyframes tp-drift {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.13) translate3d(-1.2%, -1.6%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tp-room-plate img {
+    animation: none;
+    transform: scale(1.04);
+  }
+}
+
+/* --- the archive preview ------------------------------------------------
+ * `/work` shows one plate beside the catalogue. When the selected row is
+ * Tumbang the plate must look like Tumbang, not like a dark navy card with a
+ * screenshot in it: that surface was on the list of places the world was
+ * "generic portfolio with a label on top".
+ *
+ * ⚠ Scoped to `[data-world="tumbang"]`, which the stage already carries and
+ * which changes as you move down the catalogue. Nothing here can leak into
+ * another project's preview.
+ * --------------------------------------------------------------------- */
+.archive-stage[data-world="tumbang"] {
+  --w-ground-2: #2a1408;
+}
+
+.archive-stage[data-world="tumbang"] .archive-stage-label {
+  font-family: var(--font-daruma), var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--tp-gold);
+}
+
+.archive-stage[data-world="tumbang"] .archive-frame {
+  border: 3px solid var(--tp-edge);
+  border-radius: var(--tp-radius);
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 0 2px #00000040,
+    0 6px 0 #00000030;
+}
+
+.archive-stage[data-world="tumbang"] .archive-facts {
+  border-bottom-color: #e0a63f4d;
+}
+
+.archive-stage[data-world="tumbang"] .archive-facts dt {
+  font-family: var(--font-daruma), var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.03em;
+  color: var(--tp-gold);
+}
+
+.archive-stage[data-world="tumbang"] .archive-facts dd {
+  color: var(--tp-paper);
+}

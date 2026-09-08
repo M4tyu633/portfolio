@@ -142,19 +142,19 @@ export default function TumbangPage() {
             <h1 className="u-display mt-5 max-w-[16ch] text-[clamp(2.4rem,7vw,6rem)] text-[#feebd4]">
               Five days. Four players. One tin can.
             </h1>
-            <p className="u-meta mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 text-[#fcd39f]">
-              <span
-                className="border px-2.5 py-1.5"
-                style={{ borderColor: "#f5b521", color: "#f5b521" }}
-              >
-                1st Place
+            {/* The result is announced on the game's own gold banner, the one
+                the menu puts SINGLE PLAYER on. A hairline box with a gold
+                border is a portfolio badge; this is the build's own furniture. */}
+            <p className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-3">
+              <span className="tp-banner">1st Place</span>
+              <span className="u-meta text-[#fcd39f]">
+                <span className="hidden sm:inline">
+                  Gear Up NCR Esports Game Dev Challenge
+                </span>
+                <span className="sm:hidden">Gear Up NCR</span>
+                <span aria-hidden> / </span>
+                <span>2026</span>
               </span>
-              <span className="hidden sm:inline">
-                Gear Up NCR Esports Game Dev Challenge
-              </span>
-              <span className="sm:hidden">Gear Up NCR</span>
-              <span aria-hidden>/</span>
-              <span>2026</span>
             </p>
           </div>
 
@@ -187,21 +187,21 @@ export default function TumbangPage() {
               <strong>tsinelas</strong> at it from outside.
             </p>
 
-            <dl className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-4">
+            {/* Four numbers, each on its own HUD slab. The game shows every
+                number it knows on a brown panel with a gold rule; so does this. */}
+            <dl className="mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4">
               {[
                 ["4", "rounds", "one per player, so everyone is taya once"],
                 ["90", "seconds", "a round"],
                 ["1", "taya", "against three attackers"],
                 ["+100", "points", "for a knockdown, to whoever threw"],
               ].map(([n, unit, note]) => (
-                <div key={unit}>
-                  <dd className="u-display text-accent text-[clamp(3rem,7vw,5.5rem)] leading-[0.8]">
+                <div key={unit} className="tp-slab">
+                  <dd className="u-display text-accent text-[clamp(2.6rem,6vw,4.75rem)] leading-[0.85]">
                     {n}
-                    <span className="text-ink-2 ml-2 text-[0.3em] tracking-normal">
-                      {unit}
-                    </span>
+                    <span className="tp-label ml-2 align-middle">{unit}</span>
                   </dd>
-                  <dt className="text-ink-2 mt-4 text-[0.9375rem] leading-snug">
+                  <dt className="text-ink-2 mt-3 text-[0.9375rem] leading-snug">
                     {note}
                   </dt>
                 </div>
@@ -321,7 +321,7 @@ export default function TumbangPage() {
               </div>
             </div>
 
-            <div className="border-rule mt-12 grid gap-px border sm:grid-cols-2">
+            <div className="mt-12 grid gap-3 sm:grid-cols-2">
               <Stat
                 value="±10–14%"
                 label="Spread across the full range of picks"
@@ -480,6 +480,7 @@ export default function TumbangPage() {
                 <p className="u-display text-accent text-[clamp(3.5rem,11vw,8rem)] leading-[0.82]">
                   1st Place
                 </p>
+                <span aria-hidden className="tp-bunting mt-6 block" />
                 <h2
                   id="m08h"
                   className="u-meta text-ink-2 mt-6 tracking-[0.05em] normal-case"
@@ -497,9 +498,9 @@ export default function TumbangPage() {
                 </p>
                 <Link
                   href="/achievements/gear-up-ncr"
-                  className="u-meta border-accent text-accent hover:bg-accent hover:text-accent-ink mt-8 inline-block border px-4 py-2.5 transition-colors"
+                  className="tp-action mt-8"
                 >
-                  What happened at the venue →
+                  At the venue →
                 </Link>
               </div>
               <figure className="m-0">
@@ -614,14 +615,16 @@ function Stat({
   marker?: boolean;
 }) {
   return (
-    <div className="bg-ground px-5 py-6">
+    <div className="tp-plaque">
       <p
-        className="font-mono text-[clamp(1.75rem,4vw,2.75rem)] leading-none tracking-[-0.03em]"
-        style={marker ? { color: "var(--tp-persimmon)" } : undefined}
+        className="u-display text-[clamp(1.75rem,4vw,2.75rem)] leading-none"
+        style={{
+          color: marker ? "var(--tp-persimmon)" : "var(--tp-gold)",
+        }}
       >
         {value}
       </p>
-      <p className="text-ink-2 mt-3 max-w-[38ch] text-[0.9375rem] leading-relaxed">
+      <p className="mt-3 max-w-[38ch] text-[0.9375rem] leading-relaxed text-[#e9cba6]">
         {label}
       </p>
     </div>
@@ -634,7 +637,7 @@ function Ext({ href, children }: { href: string; children: React.ReactNode }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="u-meta border-ink hover:bg-ink hover:text-ground border px-4 py-2.5 transition-colors"
+      className="tp-chip py-2.5 transition-transform hover:-translate-y-0.5"
     >
       {children} ↗
     </a>

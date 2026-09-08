@@ -2,6 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { newsreader, plexMono, plexSans } from "./fonts";
+import Ambience from "@/components/chrome/Ambience";
 import Choreograph from "@/components/chrome/Choreograph";
 import Footer from "@/components/chrome/Footer";
 import RouteCurtain from "@/components/chrome/RouteCurtain";
@@ -100,6 +101,10 @@ export default function RootLayout({
             the current world's voice. It constructs nothing until the toggle in
             the header is pressed. */}
         <SoundProvider>
+          {/* The room behind every page: a different material and a different
+              weather per world, drifting slowly enough that you only see it if
+              you look for it. Client-only and aria-hidden. See the component. */}
+          <Ambience />
           {/* One observer for the whole document; every surface decides for
               itself what arriving means. See the component. */}
           <Choreograph />

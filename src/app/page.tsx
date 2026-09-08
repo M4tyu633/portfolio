@@ -43,6 +43,7 @@ export default function Home() {
       <main id="main" className="flex-1">
         <Opening />
 
+        <WorldPassage n="01" title="Tumbang Preso" />
         <TumbangWorld project={tumbang} />
         <WorldPassage n="02" title="eGovMed" />
         <EgovWorld project={egov} />
@@ -54,7 +55,7 @@ export default function Home() {
         <KneeWorld project={kneeMri} />
         <WorldPassage n="06" title="CardioSense" />
         <CardioWorld project={heartDisease} />
-        <WorldPassage n="→" title="The work, backed up." />
+        <WorldPassage n="→" title="Receipts" />
 
         {/* ---- the evidence ----
          *

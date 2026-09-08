@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { daruma } from "@/app/fonts";
 import Nav from "@/components/chrome/Nav";
 import Archive from "@/components/work/Archive";
 import { projects } from "@/content/projects";
@@ -10,9 +11,15 @@ export const metadata: Metadata = {
     "The complete archive: games, civic systems, clinical machine learning and low-level experiments, with the measurements behind each one.",
 };
 
+/* ⚠ The game's face is loaded on this route on purpose. The archive's preview
+ * plate takes the selected project's world, and when that world is Tumbang it
+ * is set in Darumadrop, which needs the variable in scope. Without it the plate
+ * falls back to the site's serif and the preview goes back to being a dark navy
+ * card with a screenshot in it, which is one of the surfaces this pass exists
+ * to fix. `contents` keeps the wrapper out of the layout entirely. */
 export default function WorkPage() {
   return (
-    <>
+    <div className={`${daruma.variable} contents`}>
       <Nav />
       <main id="main" className="flex-1">
         <div className="mx-auto max-w-[92rem] px-5 sm:px-8">
@@ -52,6 +59,6 @@ export default function WorkPage() {
           </section>
         </div>
       </main>
-    </>
+    </div>
   );
 }

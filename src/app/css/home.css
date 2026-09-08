@@ -60,13 +60,12 @@
   padding: 0 clamp(1.25rem, 4.5vw, 4.5rem) clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.tp-stage-mark p {
-  margin-top: 0.9rem;
+.tp-stage-chips {
+  margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.25rem 1rem;
-  color: var(--tp-honey);
+  gap: 0.5rem;
 }
 
 .tp-claim {
@@ -85,47 +84,26 @@
 
 .tp-coda {
   margin-top: 1.75rem;
-  display: block;
-  width: fit-content;
-  font-size: 1.125rem;
-  color: var(--tp-gold);
-  border-bottom: 3px solid var(--tp-chartreuse);
-  padding-bottom: 0.35rem;
-}
-
-/* The credit block. A rule between every line and nothing else: this is a
-   list of things one person made, and a list is what it should look like. */
-.tp-credits {
-  border-top: 1px solid var(--w-rule);
-  counter-reset: credit;
-}
-
-.tp-credits li {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.2rem;
-  padding: 0.95rem 0;
-  border-bottom: 1px solid var(--w-rule-2);
+  gap: 0.35rem;
+  width: fit-content;
+  max-width: 100%;
 }
 
-.tp-credits li > span:first-child {
-  font-size: 1.0625rem;
-  color: var(--w-ink);
+.tp-coda .tp-value {
+  font-size: clamp(1.15rem, 2.4vw, 1.6rem);
 }
 
-.tp-credits li > span:last-child {
-  font-size: 0.9375rem;
-  line-height: 1.45;
-  color: var(--w-ink-3);
-  text-wrap: pretty;
+/* The credit block is a plaque now; the row rules live in tumbang.css with the
+   rest of the game's interface kit. All that is left here is where it sits. */
+.tp-credits {
+  align-self: start;
 }
 
-@media (min-width: 640px) {
-  .tp-credits li {
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-    gap: 1.5rem;
-    align-items: baseline;
-  }
+.tp-credits-head {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid #ffffff1f;
 }
 
 @media (max-width: 900px) {
