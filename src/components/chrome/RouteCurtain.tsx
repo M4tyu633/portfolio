@@ -69,9 +69,6 @@ function resolve(href: string): Target | null {
     const p = projects.find((x) => x.slug === slug);
     if (p) return { world: p.world, n: p.n, title: p.title };
   }
-  if (path === "/lab/chip-8") {
-    return { world: "chip8", n: "04", title: "CHIP-8" };
-  }
   return { world: "index" };
 }
 

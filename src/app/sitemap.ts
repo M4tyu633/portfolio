@@ -16,9 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("", 1),
     page("/work", 0.9),
     page("/achievements", 0.8),
-    page("/lab", 0.7),
     page("/about", 0.7),
-    page("/lab/chip-8", 0.6),
     ...projects.map((p) => page(`/work/${p.slug}`, 0.8)),
     ...achievementPages.map((a) => page(`/achievements/${a.slug}`, 0.6)),
   ];

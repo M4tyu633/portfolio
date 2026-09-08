@@ -16,8 +16,6 @@ const routes = [
   "/work/chip-8-emulator",
   "/work/knee-mri-reader",
   "/work/heart-disease-prediction",
-  "/lab",
-  "/lab/chip-8",
   "/achievements",
   "/achievements/gear-up-ncr",
   "/achievements/egov-hackathon",
@@ -84,7 +82,7 @@ for (const title of [
 ]) {
   await page.getByRole("button", { name: title, exact: true }).click();
 }
-await page.getByRole("button", { name: /Load the machine/ }).click();
+await page.getByRole("button", { name: /Boot the machine/ }).click();
 await page
   .frameLocator('iframe[title="CHIP-8 emulator and debugger"]')
   .locator("canvas")
@@ -116,16 +114,6 @@ await page
   .click();
 if (!(await page.getByText("Unavailable is an output.").isVisible()))
   failures.push("Offline contract not shown");
-await page.goto(base + "/lab", { waitUntil: "networkidle" });
-for (const name of [
-  "Throwing range",
-  "Missed contacts",
-  "Find a lobby",
-  "Patient route",
-  "Specialist contracts",
-  "The machine",
-])
-  await page.getByRole("button", { name, exact: false }).first().click();
 await page.goto(base + "/");
 await page.getByRole("link", { name: "Work", exact: true }).first().click();
 await page.waitForURL("**/work");

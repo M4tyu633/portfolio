@@ -41,7 +41,6 @@ export const nav = [
   // optimises for clarity; a page title can carry personality. Calling the nav
   // item "Receipts" made a real destination read as a joke.
   { label: "Achievements", href: "/achievements" },
-  { label: "Lab", href: "/lab" },
   { label: "About", href: "/about" },
 ];
 

@@ -93,8 +93,9 @@ export default function SwarmSystem() {
         </strong>
       </div>
       <p className="world-note">
-        Source-based contract explorer, not live inference. No risk scores or
-        patient results are fabricated.
+        Source-based architecture explorer. The original hackathon services are
+        offline. The separate preserved demo uses source samples and
+        deterministic reconstructions; no live clinical inference is performed.
       </p>
     </section>
   );

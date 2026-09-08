@@ -61,7 +61,7 @@ export default function MachineFigure() {
               ▶
             </span>
             <span className="u-meta border-accent text-accent group-hover:bg-accent group-hover:text-accent-ink relative border px-4 py-2 transition-colors">
-              Load the machine
+              Boot the machine
             </span>
             <span className="text-ink relative max-w-sm px-6 text-center text-[0.8125rem] leading-relaxed">
               540 KB of WebAssembly, fetched only when you ask. It opens on

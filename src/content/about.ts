@@ -100,7 +100,7 @@ export const labEntries: LabEntry[] = [
       "The full interpreter and its debugger, compiled to WebAssembly. Six ROMs, all written by hand for this project.",
     affordance:
       "Play it, pause it, single-step it, watch the registers change.",
-    href: "/lab/chip-8",
+    href: "/work/chip-8-emulator",
     status: "live",
   },
   {

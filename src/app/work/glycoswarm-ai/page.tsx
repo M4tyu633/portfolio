@@ -69,17 +69,23 @@ export default function GlycoPage() {
         <section className="world-ending">
           <div>
             <p>LangGraph → FastAPI → Next.js</p>
-            <h2>Inspect the system.</h2>
+            <h2>Inspect the preserved system.</h2>
+            <p>
+              The original hackathon build used temporary AMD compute and hosted
+              inference. Those services are offline. The public demo preserves
+              source inputs and contracts with clearly labeled deterministic
+              reconstructions; no live clinical inference runs.
+            </p>
           </div>
           <nav aria-label="Continue from GlycoSwarm">
+            <span>Preserved demo · deployment pending</span>
             <a
-              href={glycoswarm.links?.demo}
+              href="https://github.com/M4tyu633/glycoswarm-demo"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Open the actual dashboard ↗
+              Read the preserved source ↗
             </a>
-            <Link href="/lab">More things to try →</Link>
             <Link href="/work/chip-8-emulator">Next: inside the machine →</Link>
           </nav>
         </section>

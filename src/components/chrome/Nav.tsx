@@ -22,7 +22,7 @@ import { useSound } from "@/lib/sound";
  * knowing which world that is.
  *
  * ⚠ THE HIERARCHY IS THE POINT, AND THE FIRST VERSION GOT IT WRONG. It printed
- *   Work · Receipts · Lab · About · RESUME · GITHUB · LINKEDIN
+ *   Work · Achievements · About · RESUME · GITHUB · LINKEDIN
  * as one row of text, so three external profiles read as sections of the site.
  * They are not. The order of importance is now built into the markup:
  *

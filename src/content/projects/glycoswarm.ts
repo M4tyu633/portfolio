@@ -14,7 +14,7 @@ export const glycoswarm: Project = {
     "Four specialist agents score a patient in parallel, then hand their evidence to a synthesis agent.",
   media: {
     src: "/images/project-glycoswarm.png",
-    alt: "The GlycoSwarm dashboard, showing the anatomical risk map.",
+    alt: "Historical GlycoSwarm dashboard; updated preserved-demo media is pending.",
     fit: "contain",
   },
   built: [
@@ -26,7 +26,7 @@ export const glycoswarm: Project = {
     "Ollama",
     "AMD MI300X",
   ],
-  links: { demo: "https://glycoswarm-ai.vercel.app/" },
+  links: {}, // Restore the demo link after the separate preserved deployment is verified.
   facts: [
     { label: "My role", value: "Lead developer · full-stack · demo and pitch" },
     { label: "Team", value: "Snowfall, international and cross-timezone" },

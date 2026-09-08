@@ -260,7 +260,7 @@ export function GlycoWorld({ project }: { project: Project }) {
           The graph is where the interesting decisions happen.
         </p>
         <Link href="/work/glycoswarm-ai" className="scene-link">
-          Enter GlycoSwarm <span aria-hidden>↗</span>
+          Explore the preserved system <span aria-hidden>↗</span>
         </Link>
       </div>
     </section>
