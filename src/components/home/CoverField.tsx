@@ -63,6 +63,8 @@ uniform float u_time;
 uniform vec2  u_pointer;  // clip space, -1..1
 uniform float u_pointerOn;
 uniform float u_size;
+uniform float u_contain;  // 0 cover, 1 contain
+uniform float u_bias;     // horizontal offset, source-uv units
 
 out vec4 v_colour;
 
@@ -77,8 +79,18 @@ vec3 hash31(float n) {
 void main() {
   vec2 uv = (a_cell + 0.5) / u_grid;
 
-  /* The image is sampled once per point. Everything after this is geometry. */
-  vec2 suv = clamp((uv - 0.5) * u_cover + 0.5, 0.0, 1.0);
+  /* The image is sampled once per point. Everything after this is geometry.
+     ⚠ NOT CLAMPED WHEN CONTAINED. A contained image does not fill the frame,
+     so the cells outside it have nothing to draw; clamping made them smear the
+     edge pixel across the margin in a long streak. They are dropped instead. */
+  /* ⚠ A CONTAINED IMAGE IS PUSHED RIGHT, NOT CENTRED. The left of this frame
+     is where the sentence lives and is held under a near-solid scrim, so a
+     centred interface spent its first third invisible. Sampling further left
+     for a given screen cell moves the picture right. */
+  vec2 suv = (uv - 0.5) * u_cover + 0.5 - vec2(u_bias, 0.0);
+  float inside =
+    step(0.0, suv.x) * step(suv.x, 1.0) * step(0.0, suv.y) * step(suv.y, 1.0);
+  suv = clamp(suv, 0.0, 1.0);
   vec4 src = texture(u_src, vec2(suv.x, 1.0 - suv.y));
   /* ⚠ HALF THIS ARCHIVE IS A DARK INTERFACE. The reading station and the risk
      instrument are near-black screenshots; sampled straight, their points were
@@ -125,7 +137,7 @@ void main() {
   /* Size carries the depth: scattered points are small and dim, so the cloud
      reads as distance rather than as a flat sheet of confetti. */
   float px = u_size * (0.5 + 0.5 * t) * (0.86 + 0.28 * lum);
-  gl_PointSize = px * (1.0 + well * 1.6);
+  gl_PointSize = px * (1.0 + well * 1.6) * mix(1.0, inside, u_contain);
 
   /* ⚠ THE FLOOR MATTERS MORE THAN THE CEILING. Alpha scaled straight off
      luminance left every shadow in the picture at a third of its opacity, so
@@ -135,7 +147,7 @@ void main() {
   float alpha = mix(0.16, 1.0, t) * (0.72 + 0.28 * lum);
   /* Held just under full strength. The field is the ground the cover's type
      stands on, not the thing competing with it. */
-  v_colour = vec4(src.rgb * 0.92, alpha * 0.95);
+  v_colour = vec4(src.rgb * 0.92, alpha * 0.95 * mix(1.0, inside, u_contain));
 }
 `;
 
@@ -169,9 +181,14 @@ export default function CoverField({
   src,
   /** Bumped by the caller on every project change; re-runs the resolve. */
   token,
+  /** ⚠ `contain` for an interface screenshot. A UI cropped to fill a landscape
+   *  frame shows a random corner of itself and identifies nothing, which is
+   *  what made three of these covers unreadable. */
+  fit = "cover",
 }: {
   src: string;
   token: string;
+  fit?: "cover" | "contain";
 }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -180,7 +197,9 @@ export default function CoverField({
    * is trying to impress you with. */
   const srcRef = useRef(src);
   const tokenRef = useRef(token);
+  const fitRef = useRef(fit);
   srcRef.current = src;
+  fitRef.current = fit;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -190,23 +209,33 @@ export default function CoverField({
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
+    /* ⚠ THE STAGE HAS TO BE TOLD WHEN THIS FAILS. The CSS that hides the
+     * photograph behind the reconstruction keys off the presence of the canvas
+     * element, and the element exists before the context is asked for. Without
+     * this flag a machine with no WebGL2 got a black cover instead of a
+     * photograph, which is the worst possible way to fail. */
+    const stageEl = canvas.parentElement;
+    const giveUp = () => {
+      stageEl?.setAttribute("data-field", "off");
+    };
+
     const gl = canvas.getContext("webgl2", {
       alpha: true,
       antialias: false,
       premultipliedAlpha: false,
       powerPreference: "low-power",
     });
-    if (!gl) return;
+    if (!gl) return giveUp();
 
     const vs = compile(gl, gl.VERTEX_SHADER, VERT);
     const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
-    if (!vs || !fs) return;
+    if (!vs || !fs) return giveUp();
     const prog = gl.createProgram();
-    if (!prog) return;
+    if (!prog) return giveUp();
     gl.attachShader(prog, vs);
     gl.attachShader(prog, fs);
     gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return giveUp();
     gl.useProgram(prog);
 
     /* --- the grid ---------------------------------------------------------
@@ -253,6 +282,8 @@ export default function CoverField({
       pointer: gl.getUniformLocation(prog, "u_pointer"),
       pointerOn: gl.getUniformLocation(prog, "u_pointerOn"),
       size: gl.getUniformLocation(prog, "u_size"),
+      contain: gl.getUniformLocation(prog, "u_contain"),
+      bias: gl.getUniformLocation(prog, "u_bias"),
     };
 
     const tex = gl.createTexture();
@@ -305,11 +336,19 @@ export default function CoverField({
       const w = canvas.clientWidth || 1;
       const h = canvas.clientHeight || 1;
       const boxAspect = w / h;
-      if (boxAspect > imgAspect) {
-        gl.uniform2f(u.cover, 1, imgAspect / boxAspect);
+      const contain = fitRef.current === "contain";
+      gl.uniform1f(u.contain, contain ? 1 : 0);
+      /* `u_cover` is the span of the source sampled across the frame. Under a
+         unit it crops; over a unit it leaves margin, which is what contain is. */
+      let coverX: number;
+      if (contain === boxAspect > imgAspect) {
+        coverX = boxAspect / imgAspect;
+        gl.uniform2f(u.cover, coverX, 1);
       } else {
-        gl.uniform2f(u.cover, boxAspect / imgAspect, 1);
+        coverX = 1;
+        gl.uniform2f(u.cover, 1, imgAspect / boxAspect);
       }
+      gl.uniform1f(u.bias, contain ? 0.17 * coverX : 0);
     };
 
     /* --- the source image ------------------------------------------------- */
@@ -402,7 +441,10 @@ export default function CoverField({
         }
       } else if (resolve < 1) {
         /* Slower on the way in than on the way out: the reveal is the event. */
-        resolve = Math.min(1, resolve + dt * (holding ? 0.85 : 0.55));
+        /* ⚠ Slow on purpose. This is the only thing on the cover worth
+           watching arrive, and at the old rate it was over before anyone had
+           finished reading the first line of the sentence. */
+        resolve = Math.min(1, resolve + dt * (holding ? 0.6 : 0.42));
         if (resolve >= 1) holding = 0;
       }
 
@@ -467,6 +509,12 @@ export default function CoverField({
     ro.observe(canvas);
     canvas.addEventListener("pointermove", onMove);
     canvas.addEventListener("pointerleave", onLeave);
+    /* A lost context is the same failure as never having had one. */
+    const onLost = (e: Event) => {
+      e.preventDefault();
+      giveUp();
+    };
+    canvas.addEventListener("webglcontextlost", onLost);
 
     return () => {
       disposed = true;
@@ -476,6 +524,7 @@ export default function CoverField({
       ro.disconnect();
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerleave", onLeave);
+      canvas.removeEventListener("webglcontextlost", onLost);
       gl.deleteProgram(prog);
       gl.deleteShader(vs);
       gl.deleteShader(fs);

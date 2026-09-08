@@ -78,10 +78,20 @@ export default function Opening() {
             fill
             sizes="100vw"
             priority={i === 0}
-            className="object-cover"
+            /* Pushed right for the same reason the field is: the left of the
+               frame belongs to the sentence. */
+            className={
+              active.coverFit === "contain"
+                ? "object-contain object-[67%_50%]"
+                : "object-cover"
+            }
           />
         </div>
-        <CoverField src={coverSrc} token={active.title} />
+        <CoverField
+          src={coverSrc}
+          token={active.title}
+          fit={active.coverFit ?? "cover"}
+        />
         <div aria-hidden className="opening-scrim" />
       </div>
 
@@ -91,10 +101,13 @@ export default function Opening() {
             sentence rather than over it because the sentence is the thing a
             stranger will still remember tomorrow. */}
         <div className="opening-id">
+          {/* ⚠ The year range used to sit at the far end of this rule, out in
+              the middle of the picture with nothing near it and nothing
+              depending on it. Every project row in the index below already
+              carries its own year. */}
           <p className="opening-kicker">
             <span>Selected work</span>
             <span aria-hidden className="opening-rule" />
-            <span>2025&ndash;2026</span>
           </p>
 
           <h1 id="opening-statement">{opening.statement}</h1>

@@ -59,6 +59,29 @@
   z-index: 1;
 }
 
+/* A contained interface needs a ground to sit on, or it is a screenshot
+   floating in black with hard edges. Each project lends its own. */
+.opening-stage[data-project="egov"] {
+  --stage-ground: #04246b;
+}
+.opening-stage[data-project="glyco"] {
+  --stage-ground: #071016;
+}
+.opening-stage[data-project="chip8"] {
+  --stage-ground: #06100d;
+}
+.opening-stage[data-project="reading"] {
+  --stage-ground: #0b0b0c;
+}
+.opening-stage[data-project="cardio"] {
+  --stage-ground: #120a10;
+}
+
+.opening-stage {
+  background: var(--stage-ground, transparent);
+  transition: background 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .opening-plate-fallback {
   position: absolute;
   inset: 0;
@@ -69,32 +92,46 @@
 /* Once the field is up the photograph is only a source and a fallback, so it
    sits well under it. If the canvas never mounts this rule never matches and
    the photograph is the cover at full strength. */
-/* ⚠ THE PHOTOGRAPH COMES UP AS THE POINTS LAND, AND THAT IS THE WHOLE ENDING.
-   The field on its own resolves to a stipple: good to watch arrive, poor to
-   look at afterwards, and on the two near-black interface screenshots in this
-   archive it resolved to almost nothing at all. `--resolve` is written by the
-   canvas every few frames, so the real image rises underneath in step with the
-   reconstruction and the field settles on top of it. Cloud, then points, then
-   the work. The `0` fallback keeps the photograph down if the canvas is never
-   mounted... and the rule below puts it back to full strength in that case. */
-.opening-stage:has(.cover-field) .opening-plate-fallback {
-  opacity: calc(0.06 + 0.94 * var(--resolve, 0));
-  filter: saturate(calc(0.5 + 0.5 * var(--resolve, 0)));
-  transition: opacity 120ms linear;
+/* ⚠ THE PHOTOGRAPH ARRIVES LATE, AND THAT IS THE WHOLE POINT OF THE EFFECT.
+ *
+ * The first version faded the real image up in step with the reconstruction,
+ * which sounds reasonable and is completely wrong: by the time the points
+ * landed you had already been looking at the picture for a second and a half,
+ * so the field appeared to be doing a great deal of nothing. Watching an image
+ * assemble only means something if the image is not there yet.
+ *
+ * The remap below holds the photograph at zero for the first 72% of the
+ * resolve. Everything you see until then IS the point field. In the last 28%
+ * the picture locks in and the field hands over. Two seconds of points, then a
+ * snap to the work.
+ *
+ * ⚠ `--lock` is derived, not published. The canvas writes `--resolve` only.
+ * ------------------------------------------------------------------------ */
+.opening-stage {
+  --lock: clamp(0, calc((var(--resolve, 0) - 0.72) / 0.28), 1);
 }
 
-/* ⚠ THE FIELD IS A TRANSITION, NOT A RENDERER, AND GETTING THAT BACKWARDS IS
-   WHAT MADE THE COVER LOOK BROKEN.
-   
-   The first version left the point field at full strength once it had
-   resolved, so the resting state of the first screen was a coarse halftone of
-   a photograph: fine to watch arrive, bad to look at, and on a tall UI
-   screenshot cropped to a landscape frame it was a grey wall. The points now
-   fade back as they land. What you watch is a cloud becoming the work; what
-   you are left looking at is the work, with just enough of the field still
-   alive over it to see that it is running. */
+.opening-stage:has(.cover-field) .opening-plate-fallback {
+  opacity: var(--lock);
+  transition: opacity 90ms linear;
+}
+
+/* The field is at full strength for as long as it is the only thing drawing
+   the picture, and gets out of the way once the photograph has it. */
 .opening-stage .cover-field {
-  opacity: calc(1 - 0.82 * var(--resolve, 0));
+  opacity: calc(1 - 0.86 * var(--lock));
+}
+
+/* ⚠ AND IF WEBGL NEVER STARTS, THE PHOTOGRAPH IS THE COVER AT FULL STRENGTH.
+   The canvas element is rendered before its context is requested, so
+   `:has(.cover-field)` matches even when the context could not be had. The
+   component sets this attribute in that case, and it wins. */
+.opening-stage[data-field="off"] .opening-plate-fallback {
+  opacity: 1;
+}
+
+.opening-stage[data-field="off"] .cover-field {
+  display: none;
 }
 
 /* --- the readout --------------------------------------------------------

@@ -136,6 +136,13 @@ export type Entrance = {
    * When a project's own picture cannot carry a full screen, it names a
    * landscape one here and keeps `media` for everywhere else. */
   cover?: string;
+  /** ⚠ `contain` for an interface. Five of these six projects identify
+   *  themselves by their screen, and a screen cropped to fill a landscape
+   *  frame shows a random corner of itself: a grey panel, half a chart, three
+   *  words of a label. Contained, the whole interface is visible and the
+   *  project is recognisable in one glance, which is the only job the cover
+   *  image has. Photographs stay `cover`. */
+  coverFit?: "cover" | "contain";
   media:
     | { kind: "video"; src: string; poster: string; alt: string }
     | { kind: "image"; src: string; alt: string; fit?: "cover" | "contain" };
@@ -169,8 +176,8 @@ export const entrances: Entrance[] = [
     action: "Follow the patient",
     world: "egov",
     display: "franklin",
-    /* The signed-in home screen is a tall phone shot; the venue is the frame. */
-    cover: "/work/egovmed/team.webp",
+    /* The product, whole. It is the thing that is recognisably eGovMed. */
+    coverFit: "contain",
     media: {
       kind: "image",
       src: "/work/egovmed/home.webp",
@@ -188,6 +195,7 @@ export const entrances: Entrance[] = [
     action: "Trace a specialist",
     world: "glyco",
     display: "plex",
+    coverFit: "contain",
     media: {
       kind: "image",
       src: "/work/glycoswarm/home.webp",
@@ -205,6 +213,7 @@ export const entrances: Entrance[] = [
     action: "Boot the machine",
     world: "chip8",
     display: "mono",
+    coverFit: "contain",
     media: {
       kind: "image",
       src: "/work/chip8/debugger.webp",
@@ -233,6 +242,7 @@ export const entrances: Entrance[] = [
     action: "Open the reading station",
     world: "reading",
     display: "plex",
+    coverFit: "contain",
     media: {
       kind: "image",
       src: "/work/knee-mri/station.webp",
@@ -250,6 +260,7 @@ export const entrances: Entrance[] = [
     action: "Explore the risk instrument",
     world: "cardio",
     display: "plex",
+    coverFit: "contain",
     media: {
       kind: "image",
       src: "/work/heart/station.webp",
