@@ -14,13 +14,18 @@ export const heartDisease: Project = {
   display: "plex",
   oneLiner:
     "Coronary risk from biomarkers, tuned for recall rather than accuracy, with the attributions on screen.",
+  did: "Data work, model selection, and the client-side app.",
+  outcome: "0.919 ROC-AUC · 89.2% recall",
   media: {
     // A capture of the deployed risk station itself. See scripts/capture-live.sh.
     src: "/work/heart/station.webp",
     alt: "The CardioSense risk station: a 98% predicted probability of stenosis beside a list of SHAP feature drivers.",
   },
   built: ["Python", "scikit-learn", "SHAP", "Next.js 16", "TypeScript"],
-  links: { demo: "https://cardiosense-app.vercel.app" },
+  links: {
+    demo: "https://cardiosense-app.vercel.app",
+    repo: "https://github.com/M4tyu633/heart-disease-prediction",
+  },
   facts: [
     { label: "Dataset", value: "UCI Heart Disease, 920 patients, 4 hospitals" },
     {

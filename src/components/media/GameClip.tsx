@@ -26,12 +26,16 @@ export default function GameClip({
   alt,
   className = "",
   ratio = "16 / 9",
+  /** Fills its positioned parent instead of holding its own aspect ratio. Used
+   *  by the opening plate, whose frame already owns the geometry. */
+  fill = false,
 }: {
   src: string;
   poster: string;
   alt: string;
   className?: string;
   ratio?: string;
+  fill?: boolean;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [armed, setArmed] = useState(false);
@@ -63,8 +67,8 @@ export default function GameClip({
 
   return (
     <div
-      className={`bg-ground-2 relative overflow-hidden ${className}`}
-      style={{ aspectRatio: ratio }}
+      className={`bg-ground-2 overflow-hidden ${fill ? "absolute inset-0" : "relative"} ${className}`}
+      style={fill ? undefined : { aspectRatio: ratio }}
     >
       <video
         ref={ref}

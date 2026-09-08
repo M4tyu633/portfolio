@@ -1,0 +1,414 @@
+/* ===========================================================================
+ * THE MOTION VOCABULARY
+ *
+ * Everything in here is driven by `[data-seq]` / `[data-in]` from
+ * components/chrome/Choreograph.tsx. Nothing runs on a timer, nothing runs
+ * twice, and no two surfaces use the same sequence.
+ *
+ * The rule the whole file is written against: motion has to say something the
+ * static page cannot. A route DRAWS because a route is travelled. Four
+ * specialists arrive TOGETHER because that is the architectural claim. A
+ * catalogue row's rule grows DOWNWARD from the row you touched because that is
+ * where the selection came from. If a proposed animation does not encode a
+ * fact, it is a fade and it does not go in.
+ *
+ * Every rule below is written so the RESTING state is the finished, readable
+ * one, and the transition is the only thing `prefers-reduced-motion` removes.
+ * ======================================================================== */
+
+/* --------------------------------------------------------------------------
+ * The generic arrival. Used only where the content genuinely has no better
+ * story than "this is the next thing" — a heading, a paragraph column.
+ * ------------------------------------------------------------------------ */
+[data-seq="rise"] > * {
+  opacity: 0;
+  transform: translateY(0.9rem);
+  transition:
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-seq="rise"][data-in] > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* A stagger, in document order, at 70ms. Six children is the limit before the
+   last one arrives after the reader has already looked away. */
+[data-seq="rise"] > *:nth-child(2) {
+  transition-delay: 70ms;
+}
+[data-seq="rise"] > *:nth-child(3) {
+  transition-delay: 140ms;
+}
+[data-seq="rise"] > *:nth-child(4) {
+  transition-delay: 210ms;
+}
+[data-seq="rise"] > *:nth-child(5) {
+  transition-delay: 280ms;
+}
+[data-seq="rise"] > *:nth-child(6) {
+  transition-delay: 350ms;
+}
+
+/* --------------------------------------------------------------------------
+ * THE OPENING. The name is the last thing to arrive, not the first: the claim
+ * lands, and then it is signed.
+ * ------------------------------------------------------------------------ */
+.opening-id > * {
+  opacity: 0;
+  transform: translateY(0.7rem);
+  animation: op-in 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.opening-kicker {
+  animation-delay: 60ms;
+}
+.opening h1 {
+  animation-delay: 140ms;
+}
+.opening-sign {
+  animation-delay: 460ms;
+}
+.opening-where {
+  animation-delay: 540ms;
+}
+.opening-blurb {
+  animation-delay: 300ms;
+}
+
+@keyframes op-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The rule under the sentence draws rather than appearing, because it is a
+   pen stroke under a signature and that is what one does. */
+.opening h1::after {
+  animation: op-rule 620ms 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes op-rule {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.opening h1::after {
+  transform-origin: left;
+}
+
+/* The index arrives after the plate, as a single row rather than four cards. */
+.opening-index {
+  animation: op-in 700ms 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* --------------------------------------------------------------------------
+ * THE STREET. The stage opens like a shutter, from the middle out.
+ * ------------------------------------------------------------------------ */
+.tp-stage[data-seq] {
+  clip-path: inset(12% 0 12% 0);
+  transition: clip-path 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tp-stage[data-seq][data-in] {
+  clip-path: inset(0 0 0 0);
+}
+
+/* The credits fall in one after another, quickly, like a list being typed. */
+.tp-credits li {
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tp-credits[data-in] li {
+  opacity: 1;
+  transform: none;
+}
+
+.tp-credits li:nth-child(2) {
+  transition-delay: 60ms;
+}
+.tp-credits li:nth-child(3) {
+  transition-delay: 120ms;
+}
+.tp-credits li:nth-child(4) {
+  transition-delay: 180ms;
+}
+.tp-credits li:nth-child(5) {
+  transition-delay: 240ms;
+}
+.tp-credits li:nth-child(6) {
+  transition-delay: 300ms;
+}
+
+/* --------------------------------------------------------------------------
+ * THE ROUTE. The line is travelled: the rule draws left to right and each stop
+ * lights as the line reaches it. This is the one sequence on the site where
+ * the ORDER is the content, so the stagger is long enough to read as travel.
+ * ------------------------------------------------------------------------ */
+.eg-route {
+  position: relative;
+}
+
+.eg-route::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--w-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1400ms cubic-bezier(0.33, 0.9, 0.3, 1);
+}
+
+.eg-route[data-in]::before {
+  transform: scaleX(1);
+}
+
+.eg-route li {
+  opacity: 0;
+  transition: opacity 420ms ease-out;
+}
+
+.eg-route[data-in] li {
+  opacity: 1;
+}
+
+.eg-route li:nth-child(1) {
+  transition-delay: 120ms;
+}
+.eg-route li:nth-child(2) {
+  transition-delay: 340ms;
+}
+.eg-route li:nth-child(3) {
+  transition-delay: 560ms;
+}
+.eg-route li:nth-child(4) {
+  transition-delay: 780ms;
+}
+.eg-route li:nth-child(5) {
+  transition-delay: 1000ms;
+}
+.eg-route li:nth-child(6) {
+  transition-delay: 1220ms;
+}
+
+.eg-node {
+  transform: scale(0.2);
+  transition: transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: inherit;
+}
+
+.eg-route[data-in] .eg-node {
+  transform: none;
+}
+
+/* The phone rises into its own light. */
+.eg-device[data-seq] {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.eg-device[data-seq][data-in] {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+ * THE FAN. ⚠ THE FOUR BRANCHES HAVE NO STAGGER AND MUST NEVER GET ONE. The
+ * only claim this diagram makes is that they run at the same time; staggering
+ * them by 80ms each would animate the opposite of the architecture. The input
+ * arrives, the buses draw, all four light together, then synthesis.
+ * ------------------------------------------------------------------------ */
+.gs-source,
+.gs-synth {
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gs-fan[data-in] .gs-source {
+  opacity: 1;
+  transform: none;
+}
+
+.gs-fan[data-in] .gs-synth {
+  opacity: 1;
+  transform: none;
+  transition-delay: 900ms;
+}
+
+.gs-branches::before,
+.gs-branches::after {
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform 520ms 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gs-fan[data-in] .gs-branches::before,
+.gs-fan[data-in] .gs-branches::after {
+  transform: none;
+}
+
+.gs-branches li {
+  opacity: 0;
+  transform: translateX(-0.75rem);
+  transition:
+    opacity 520ms 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 520ms 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gs-fan[data-in] .gs-branches li {
+  opacity: 1;
+  transform: none;
+}
+
+.gs-branches li::before,
+.gs-branches li::after {
+  transform: scaleX(0);
+  transition: transform 380ms 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gs-branches li::before {
+  transform-origin: right;
+}
+
+.gs-branches li::after {
+  transform-origin: left;
+}
+
+.gs-fan[data-in] .gs-branches li::before,
+.gs-fan[data-in] .gs-branches li::after {
+  transform: none;
+}
+
+@media (max-width: 700px) {
+  /* The bus is horizontal-to-vertical here; scaleY still reads as "drawn". */
+  .gs-branches li::before {
+    transform-origin: left;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * THE EVIDENCE. A print being laid down on the table: it settles rather than
+ * sliding in, and the caption follows it.
+ * ------------------------------------------------------------------------ */
+.receipts-photo[data-seq] {
+  opacity: 0;
+  transform: scale(1.035) rotate(-0.4deg);
+  transition:
+    opacity 760ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.receipts-photo[data-seq][data-in] {
+  opacity: 1;
+  transform: none;
+}
+
+.receipts-list li {
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.receipts-list[data-in] li {
+  opacity: 1;
+  transform: none;
+}
+
+.receipts-list[data-in] li:nth-child(2) {
+  transition-delay: 90ms;
+}
+.receipts-list[data-in] li:nth-child(3) {
+  transition-delay: 180ms;
+}
+
+/* --------------------------------------------------------------------------
+ * THE ARCHIVE. Rows arrive as a block, quickly — this is a catalogue and a
+ * catalogue that takes two seconds to assemble is a catalogue you cannot scan.
+ * ------------------------------------------------------------------------ */
+.archive-list li {
+  opacity: 0;
+  transform: translateY(0.6rem);
+  transition:
+    opacity 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.archive-list[data-in] li {
+  opacity: 1;
+  transform: none;
+}
+
+.archive-list[data-in] li:nth-child(2) {
+  transition-delay: 55ms;
+}
+.archive-list[data-in] li:nth-child(3) {
+  transition-delay: 110ms;
+}
+.archive-list[data-in] li:nth-child(4) {
+  transition-delay: 165ms;
+}
+.archive-list[data-in] li:nth-child(5) {
+  transition-delay: 220ms;
+}
+.archive-list[data-in] li:nth-child(6) {
+  transition-delay: 275ms;
+}
+
+/* --------------------------------------------------------------------------
+ * REDUCED MOTION. The resting state of every rule above is the finished one,
+ * so removing the transition leaves the composition intact rather than empty.
+ * ------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  [data-seq] > *,
+  [data-seq] li,
+  .opening-id > *,
+  .opening-index,
+  .tp-credits li,
+  .eg-route li,
+  .eg-device[data-seq],
+  .gs-source,
+  .gs-synth,
+  .gs-branches li,
+  .receipts-photo[data-seq],
+  .receipts-list li,
+  .archive-list li {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .tp-stage[data-seq] {
+    clip-path: none !important;
+  }
+  .eg-route::before,
+  .gs-branches::before,
+  .gs-branches::after,
+  .gs-branches li::before,
+  .gs-branches li::after,
+  .opening h1::after {
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

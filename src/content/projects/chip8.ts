@@ -18,6 +18,8 @@ export const chip8: Project = {
   display: "mono",
   oneLiner:
     "A CHIP-8 interpreter in C++17 with a debugger that shows the machine changing while a ROM runs.",
+  did: "Core, debugger, web build, six ROMs.",
+  outcome: "106 assertions · runs in this browser",
   media: {
     // A capture of the deployed debugger, mid-frame, running Brix.
     src: "/work/chip8/debugger.webp",
@@ -31,7 +33,10 @@ export const chip8: Project = {
     "WebAssembly",
     "CHIP-8 assembly",
   ],
-  links: { demo: "https://chip8-debugger.vercel.app" },
+  links: {
+    demo: "https://chip8-debugger.vercel.app",
+    repo: "https://github.com/M4tyu633/chip8",
+  },
   facts: [
     { label: "Language", value: "C++17, no dependencies in the core" },
     { label: "Front end", value: "Raylib, doubling as a debugger" },

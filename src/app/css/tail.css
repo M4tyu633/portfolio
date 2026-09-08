@@ -1,0 +1,128 @@
+/* ===========================================================================
+ * THE END OF THE HOMEPAGE — the evidence, and the person.
+ *
+ * Two more compositions that share nothing with the four rooms above them: a
+ * photograph with a caption hanging off it, and a portrait against a column of
+ * prose. Both are quiet on purpose. After four project worlds the page needs to
+ * come down, not deliver a fifth spectacle.
+ * ======================================================================== */
+
+.receipts {
+  border-top: 1px solid var(--w-rule);
+  padding: clamp(3rem, 7vw, 6rem) clamp(1.25rem, 4.5vw, 4.5rem);
+  /* Press dots. This section is quoting printed matter — certificates and a
+     results sheet — so the ground it sits on is a printed ground. */
+  background-image: radial-gradient(var(--w-rule-2) 0.9px, transparent 0.9px);
+  background-size: 4px 4px;
+}
+
+.receipts-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.receipts-photo img {
+  width: 100%;
+  height: auto;
+  /* A hard crop off the top and bottom of a phone photograph: the plaque and
+     the certificate with his name are the middle of the frame, and the blue
+     table above and below them is not evidence of anything. */
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 46%;
+  border: 1px solid var(--w-rule);
+}
+
+.receipts-photo figcaption {
+  margin-top: 0.7rem;
+  color: var(--w-ink-3);
+}
+
+.receipts-list h2 {
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+}
+
+.receipts-list ol {
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--w-rule);
+}
+
+.receipts-list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 1.25rem;
+  row-gap: 0.15rem;
+  align-items: baseline;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--w-rule-2);
+}
+
+.receipts-list li > span:first-child {
+  grid-row: 1 / span 2;
+  align-self: start;
+  padding-top: 0.3rem;
+}
+
+.receipts-title {
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+}
+
+/* The result is the point of the row, so it is the only coloured thing in it,
+   and it is set in the measured accent rather than the hot one: it is a fact
+   that was awarded, not a control. */
+.receipts-result {
+  grid-column: 2;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.875rem;
+  color: var(--w-accent-2);
+}
+
+.receipts-org {
+  grid-column: 2;
+  margin-top: 0.3rem;
+  letter-spacing: 0.07em;
+  font-size: 0.6875rem;
+}
+
+/* ------------------------------------------------------------------------ */
+.person {
+  border-top: 1px solid var(--w-rule);
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 4.5vw, 4.5rem);
+}
+
+.person-portrait img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 22%;
+  border: 1px solid var(--w-rule);
+  /* The one image on the site treated rather than reproduced: pulled slightly
+     toward the ground's warmth so a white studio backdrop does not punch a
+     hole in an ink-black page. */
+  filter: saturate(0.88) contrast(1.04) brightness(0.94);
+}
+
+.person-copy h2 {
+  font-size: clamp(1.9rem, 3.8vw, 3rem);
+}
+
+@media (max-width: 860px) {
+  .receipts-grid,
+  .person {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .receipts-photo img {
+    aspect-ratio: 3 / 2;
+  }
+  .person-portrait {
+    max-width: 16rem;
+  }
+}

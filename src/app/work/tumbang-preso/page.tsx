@@ -5,6 +5,7 @@ import { daruma } from "@/app/fonts";
 import Nav from "@/components/chrome/Nav";
 import WorldSync from "@/components/chrome/WorldSync";
 import ContactFigure from "@/components/figures/ContactFigure";
+import FreezeFigure from "@/components/figures/FreezeFigure";
 import NetworkFigure from "@/components/figures/NetworkFigure";
 import ThrowFigure from "@/components/figures/ThrowFigure";
 import GameClip from "@/components/media/GameClip";
@@ -364,6 +365,16 @@ export default function TumbangPage() {
               callbacks, which is what I built first and what any tutorial would
               tell you to use. I only caught it because I wrote a probe that ran
               every contact case and counted what actually fired.
+            </p>
+
+            {/* The signature moment: a real frame, stopped, and then taken
+                apart until it is the question the engine was asked. */}
+            <FreezeFigure />
+
+            <p className="u-prose">
+              That is the count. The probe below is the same 36 cases laid out
+              by target, with the resolver switchable, so the clustering is
+              visible rather than described.
             </p>
 
             <ContactFigure />

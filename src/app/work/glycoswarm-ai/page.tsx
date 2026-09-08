@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/chrome/Nav";
 import WorldSync from "@/components/chrome/WorldSync";
+import { projectLinks } from "@/components/work/ProjectLinkRail";
 import SwarmSystem from "@/components/work/SwarmSystem";
 import { glycoswarm } from "@/content/projects/glycoswarm";
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export default function GlycoPage() {
           </a>
           <div className="glyco-artifact">
             <Image
-              src="/images/project-glycoswarm.png"
+              src={glycoswarm.media.src}
               alt={glycoswarm.media.alt}
               fill
               sizes="(min-width: 900px) 60vw, 100vw"
@@ -78,15 +79,18 @@ export default function GlycoPage() {
             </p>
           </div>
           <nav aria-label="Continue from GlycoSwarm">
-            <span>Preserved demo · deployment pending</span>
-            <a
-              href="https://github.com/M4tyu633/glycoswarm-demo"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Read the preserved source ↗
-            </a>
-            <Link href="/work/chip-8-emulator">Next: inside the machine →</Link>
+            {projectLinks(glycoswarm).map((l) => (
+              <a
+                key={l.key}
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {l.label}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            ))}
+            <Link href="/work/chip-8-emulator">Next: inside the machine</Link>
           </nav>
         </section>
       </main>

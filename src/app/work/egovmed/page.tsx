@@ -3,7 +3,9 @@ import Link from "next/link";
 import Nav from "@/components/chrome/Nav";
 import WorldSync from "@/components/chrome/WorldSync";
 import PatientSystem from "@/components/work/PatientSystem";
+import { projectLinks } from "@/components/work/ProjectLinkRail";
 import { egovmed } from "@/content/projects/egovmed";
+import { patientStages } from "@/content/worlds";
 export const metadata: Metadata = {
   title: "eGovMed",
   description: egovmed.oneLiner,
@@ -60,6 +62,33 @@ export default function EgovPage() {
             </p>
           </div>
         </section>
+
+        {/* ⚠ THE SAME SIX OUTCOMES, WITHOUT THE CLICKING. The walkthrough above
+         * is better if you use it, but a reader with ninety seconds will not,
+         * and the failure boundaries are the most persuasive thing on this
+         * page. They are printed here as a flat sheet so they are legible at a
+         * glance, and so nothing about this project's engineering is only
+         * reachable through an interaction. */}
+        <section className="egov-boundaries" aria-labelledby="boundaries">
+          <div className="egov-boundaries-head">
+            <h2 id="boundaries">Six ways to break the visit.</h2>
+            <p>
+              Every one of these was decided before the happy path was made to
+              look good. The right column is what still works after the left
+              column happens.
+            </p>
+          </div>
+          <ol data-seq="rows">
+            {patientStages.map((s) => (
+              <li key={s.name}>
+                <span className="u-meta eb-stage">{s.name}</span>
+                <span className="eb-fail">{s.failure}</span>
+                <span className="eb-out">{s.outcome}</span>
+                <code>{s.path}</code>
+              </li>
+            ))}
+          </ol>
+        </section>
         <section className="world-ending">
           <div>
             <p>eGov Hackathon PH 2026</p>
@@ -71,16 +100,20 @@ export default function EgovPage() {
           </div>
           <nav aria-label="Continue from eGovMed">
             <Link href="/achievements/egov-hackathon">
-              What happened at the event ↗
+              What happened at the event
             </Link>
-            <a
-              href={egovmed.links?.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Open the actual product ↗
-            </a>
-            <Link href="/work/glycoswarm-ai">Next: GlycoSwarm AI →</Link>
+            {projectLinks(egovmed).map((l) => (
+              <a
+                key={l.key}
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {l.label}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            ))}
+            <Link href="/work/glycoswarm-ai">Next: GlycoSwarm AI</Link>
           </nav>
         </section>
       </main>

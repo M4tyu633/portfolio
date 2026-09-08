@@ -18,12 +18,16 @@ export const kneeMri: Project = {
   display: "plex",
   oneLiner:
     "Twelve knee findings scored from a multi-series DICOM study, in a reading station you can scrub.",
+  did: "The whole chain, from raw DICOM to browser inference.",
+  outcome: "0.843 macro AUC, strict out-of-fold",
   media: {
     // A capture of the deployed reading station. See scripts/capture-live.sh.
     src: "/work/knee-mri/station.webp",
     alt: "The Knee MRI Reader's opening screen: twelve findings from one knee MRI, with the out-of-fold score beside the scan count.",
   },
   built: ["PyTorch", "DINOv2", "ONNX Runtime", "Next.js 16", "React 19"],
+  // ⚠ No `repo` here on purpose: M4tyu633/knee-mri-reader is PRIVATE, so a
+  // source link would 404 for every visitor. Add it if the repo is opened up.
   links: { demo: "https://knee-mri-reader.vercel.app/" },
   facts: [
     {

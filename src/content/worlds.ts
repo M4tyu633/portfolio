@@ -100,37 +100,104 @@ export const specialistContracts = [
       "Inspect the lipid panel independently of the other specialists.",
   },
 ];
-export const entrances = [
+/* ---------------------------------------------------------------------------
+ * THE OPENING INDEX.
+ *
+ * Four entries, and every one of them answers the three questions a stranger
+ * has in the first fifteen seconds, in this order: what is it, what did HE do,
+ * and did it go anywhere. `did` is the load-bearing field — it is the only
+ * place on the homepage where ownership is stated in the first person, and it
+ * is why a visitor does not have to open six pages to work out which of these
+ * he actually built.
+ *
+ * `action` is deliberately not "View project" four times. The verb belongs to
+ * the work: you enter a build, you follow a patient, you trace a specialist,
+ * you boot a machine.
+ * ------------------------------------------------------------------------ */
+export type Entrance = {
+  n: string;
+  title: string;
+  /** One engineering line. Not a tagline. */
+  line: string;
+  /** What Matthew personally did. Shown at full size, never as a badge. */
+  did: string;
+  /** The outcome, or the measurement that stands in for one. */
+  result: string;
+  href: string;
+  action: string;
+  world: string;
+  display: "daruma" | "franklin" | "plex" | "mono";
+  media:
+    | { kind: "video"; src: string; poster: string; alt: string }
+    | { kind: "image"; src: string; alt: string; fit?: "cover" | "contain" };
+};
+
+export const entrances: Entrance[] = [
   {
+    n: "01",
     title: "Tumbang Preso",
-    line: "A street game. Built from the ground up.",
+    line: "A four-player street game, empty project to shipped build in five days.",
+    did: "I built the whole game.",
+    result: "1st Place · Gear Up NCR 2026",
     href: "/work/tumbang-preso",
-    src: "/work/tumbang/match-poster.webp",
-    alt: "A round of Tumbang Preso in the actual Godot build",
+    action: "Enter the build",
     world: "tumbang",
+    display: "daruma",
+    media: {
+      kind: "video",
+      src: "/work/tumbang/match.mp4",
+      poster: "/work/tumbang/match-poster.webp",
+      alt: "A round of Tumbang Preso in the shipped Godot build: the scoreboard, the timer, and the tin can standing in the road.",
+    },
   },
   {
+    n: "02",
     title: "eGovMed",
-    line: "One visit. Eight systems underneath.",
+    line: "Eight government services behind one hospital visit, each with its own failure boundary.",
+    did: "Full-stack, every integration, and the pitch.",
+    result: "Winner, 1 of 10 · eGov Hackathon PH",
     href: "/work/egovmed",
-    src: "/work/egovmed/home.webp",
-    alt: "The real signed-in eGovMed home screen",
+    action: "Follow the patient",
     world: "egov",
+    display: "franklin",
+    media: {
+      kind: "image",
+      src: "/work/egovmed/home.webp",
+      alt: "The signed-in eGovMed home screen on a phone.",
+      fit: "contain",
+    },
   },
   {
+    n: "03",
     title: "GlycoSwarm AI",
-    line: "Four specialists. Follow their evidence.",
+    line: "Four specialists read different evidence in parallel before anything is combined.",
+    did: "Lead developer. I designed the graph.",
+    result: "AMD Developer Hackathon · Track 3",
     href: "/work/glycoswarm-ai",
-    src: "/images/project-glycoswarm.png",
-    alt: "Historical GlycoSwarm dashboard",
+    action: "Trace a specialist",
     world: "glyco",
+    display: "plex",
+    media: {
+      kind: "image",
+      src: "/work/glycoswarm/home.webp",
+      alt: "The GlycoSwarm evidence graph: one sample feeding four parallel specialists into a synthesis stage.",
+      fit: "contain",
+    },
   },
   {
+    n: "04",
     title: "CHIP-8",
-    line: "An emulator you can actually use. Boot the machine.",
+    line: "An interpreter in C++17 with a debugger that shows the machine changing while a ROM runs.",
+    did: "Core, debugger, web build, six ROMs.",
+    result: "106 assertions · runs in this browser",
     href: "/work/chip-8-emulator",
-    src: "/work/chip8/debugger.webp",
-    alt: "The CHIP-8 visual debugger running Brix",
+    action: "Boot the machine",
     world: "chip8",
+    display: "mono",
+    media: {
+      kind: "image",
+      src: "/work/chip8/debugger.webp",
+      alt: "The CHIP-8 visual debugger: framebuffer, registers, disassembly and memory.",
+    },
   },
 ];

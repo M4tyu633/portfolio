@@ -18,6 +18,8 @@ export const egovmed: Project = {
   display: "franklin",
   oneLiner:
     "Assess and route the patient before they join the queue, on the government's own API stack.",
+  did: "Full-stack, every integration, and the pitch.",
+  outcome: "Winner, 1 of 10 · eGov Hackathon PH",
   media: {
     // ⚠ The SIGNED-IN home screen, not the sign-in wall. Every route on the
     // deployed app redirects to MPIN entry without a session, so a headless
@@ -30,7 +32,10 @@ export const egovmed: Project = {
   award: "Winner, 1 of 10 teams · eGov Hackathon PH 2026 · ₱100,000",
   built: ["React + Vite", "Node / Express", "Redis", "Besu", "eGov API stack"],
   related: ["egov-hackathon"],
-  links: { demo: "https://egovmed-frontend.vercel.app/" },
+  links: {
+    demo: "https://egovmed-frontend.vercel.app/",
+    repo: "https://github.com/M4tyu633/egovmed",
+  },
   facts: [
     {
       label: "My role",

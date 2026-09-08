@@ -18,9 +18,15 @@ export const tumbangPreso: Project = {
   display: "daruma",
   oneLiner:
     "A four-player networked take on the Filipino street game, built alone in five days.",
+  did: "I built the whole game.",
+  outcome: "1st Place · Gear Up NCR 2026",
   media: {
     src: "/images/project-tumbang-preso.jpg",
     alt: "The Tumbang Preso title screen: a rusted tin can and a slipper on asphalt, with the game's hand-lettered menu.",
+  },
+  clip: {
+    src: "/work/tumbang/match.mp4",
+    poster: "/work/tumbang/match-poster.webp",
   },
   award: "1st Place · Gear Up NCR Esports Game Dev Challenge 2026",
   built: [

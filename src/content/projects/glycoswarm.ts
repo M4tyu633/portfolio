@@ -12,10 +12,11 @@ export const glycoswarm: Project = {
   display: "plex",
   oneLiner:
     "Four specialist agents score a patient in parallel, then hand their evidence to a synthesis agent.",
+  did: "Lead developer. I designed the graph.",
+  outcome: "AMD Developer Hackathon · Track 3",
   media: {
-    src: "/images/project-glycoswarm.png",
-    alt: "Historical GlycoSwarm dashboard; updated preserved-demo media is pending.",
-    fit: "contain",
+    src: "/work/glycoswarm/home.webp",
+    alt: "The GlycoSwarm evidence graph: one patient panel separating into four coloured lanes for the renal, retinal, neuropathy and cardiovascular specialists, which rejoin at a single synthesis junction reading four of four reads arrived.",
   },
   built: [
     "LangGraph",
@@ -26,7 +27,18 @@ export const glycoswarm: Project = {
     "Ollama",
     "AMD MI300X",
   ],
-  links: {}, // Restore the demo link after the separate preserved deployment is verified.
+  /* ⚠ The demo is the PRESERVED one, and the label says so. The original
+   * hackathon deployment is offline and its URL is deliberately not restored:
+   * a dead link would be worse than no link, and pointing at the old dashboard
+   * would misrepresent what a visitor is about to open. */
+  links: {
+    demo: "https://glycoswarm-demo.vercel.app",
+    repo: "https://github.com/M4tyu633/glycoswarm-demo",
+  },
+  linkLabels: {
+    demo: "Open the preserved demo",
+    repo: "Read the preserved source",
+  },
   facts: [
     { label: "My role", value: "Lead developer · full-stack · demo and pitch" },
     { label: "Team", value: "Snowfall, international and cross-timezone" },

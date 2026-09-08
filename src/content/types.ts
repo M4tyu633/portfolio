@@ -87,11 +87,27 @@ export type Section = {
   breath?: boolean;
 };
 
+/* ⚠ `repo` was dropped in an earlier pass and has been restored on request. The
+ * rule that comes with it: a repo link only ships if the repository is PUBLIC
+ * and is actually the artifact the page is describing. A private repository
+ * gives a visitor a 404, and pointing at a later rewrite of a competition build
+ * misrepresents what won. Both cases are left unset rather than guessed at. */
 export type ProjectLinks = {
+  /** The deployed product. */
   demo?: string;
+  /** Public source. See the warning above. */
+  repo?: string;
   download?: string;
   trailer?: string;
   gameplay?: string;
+};
+
+/** One row of the project's utility rail, resolved from `links` at render time
+ *  so the label belongs to the work rather than to the field name. */
+export type ProjectLink = {
+  key: keyof ProjectLinks;
+  label: string;
+  href: string;
 };
 
 export type Project = {
@@ -106,8 +122,23 @@ export type Project = {
   display: DisplayId;
   /** One line, present tense, no adjectives. Read in the /work archive. */
   oneLiner: string;
+  /** ⚠ THE TWO MOST IMPORTANT STRINGS IN THIS FILE.
+   *
+   *  `did` is what Matthew personally built, first person, no hedging. `outcome`
+   *  is where it went: a placement, or the measurement that stands in for one on
+   *  a project that was never entered into anything.
+   *
+   *  They exist because a visitor should not have to open six case studies to
+   *  work out which of these he owned. Both are printed at full size on the
+   *  homepage index and on every row of /work, and nothing else on the site is
+   *  allowed to contradict them. */
+  did: string;
+  outcome: string;
   /** The archive's media stage. */
   media: { src: string; alt: string; fit?: "cover" | "contain" };
+  /** A short silent capture of the thing actually running. Mounted only while
+   *  the project is the selected one in the archive, never six at once. */
+  clip?: { src: string; poster: string };
   /** Flat facts. Role, team, event, stack. */
   facts: { label: string; value: string }[];
   /** Only the flagship four have a homepage world. */
@@ -123,6 +154,10 @@ export type Project = {
   lede: string;
   sections: Section[];
   links?: ProjectLinks;
+  /** Overrides a link's default label where the work has a better word for it.
+   *  GlycoSwarm's `demo` is a preserved demo, not a live product, and saying so
+   *  in the button is more honest than saying it in a footnote. */
+  linkLabels?: Partial<Record<keyof ProjectLinks, string>>;
   /** Rendered as a small stamped line, never as a gold pill. */
   award?: string;
   /** Technologies. Metadata, printed once, in the case study's colophon. */

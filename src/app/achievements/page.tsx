@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/chrome/Nav";
 import { achievements, receipts } from "@/content/achievements";
@@ -29,24 +30,53 @@ export default function AchievementsPage() {
   return (
     <>
       <Nav />
-      <main id="main" className="flex-1">
-        <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
-          <header className="grid gap-x-16 gap-y-6 py-16 sm:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
+      <main id="main" className="receipts-page flex-1">
+        <div className="mx-auto max-w-[92rem] px-5 sm:px-8">
+          <header
+            className="grid gap-x-16 gap-y-6 py-14 sm:py-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end"
+            data-seq="rise"
+          >
             <h1 className="u-display text-[clamp(3rem,10vw,8rem)]">
               {receipts.title}
             </h1>
             <p className="u-prose">{receipts.standfirst}</p>
           </header>
+        </div>
 
+        {/* ⚠ THE PHOTOGRAPH COMES BEFORE THE LIST ON PURPOSE. A results page is
+         * the easiest thing on a portfolio to disbelieve, and the cheapest way
+         * to fix that is not a better typeface, it is the actual room: five
+         * people on a stage in Valenzuela holding the certificates the rest of
+         * this page is a transcript of. */}
+        <figure className="receipts-band" data-seq="print">
+          <Image
+            src="/work/tumbang/team-stage.webp"
+            alt="BH Studios on stage at the Gear Up NCR awarding ceremony, holding their certificates."
+            width={1600}
+            height={1067}
+            sizes="100vw"
+            priority
+          />
+          <figcaption>
+            <span className="u-meta">Gear Up NCR &middot; 8 August 2026</span>
+            <p>
+              BH Studios at the awarding. First place in the region, and the
+              region&rsquo;s entry at the national finals in General Santos City.
+            </p>
+            <Link href="/achievements/gear-up-ncr" className="room-exit">
+              <span>What happened at the venue</span>
+              <span aria-hidden>&rarr;</span>
+            </Link>
+          </figcaption>
+        </figure>
+
+        <div className="mx-auto max-w-[92rem] px-5 sm:px-8">
           {years.map((year) => (
-            <section key={year} aria-labelledby={`y${year}`} className="mb-14">
-              <h2
-                id={`y${year}`}
-                className="border-ink u-meta text-ink-3 border-b-2 pb-2 tabular-nums"
-              >
+            <section key={year} aria-labelledby={`y${year}`} className="mb-12">
+              <h2 id={`y${year}`} className="u-meta receipts-year tabular-nums">
                 {year}
               </h2>
-              <ol>
+              <ol data-seq="rows" className="receipts-rows">
                 {achievements
                   .filter((a) => a.year === year)
                   .map((a) => (
@@ -68,19 +98,13 @@ export default function AchievementsPage() {
 
 function Row({ a }: { a: Achievement }) {
   const inner = (
-    <div className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-4 gap-y-1 py-5 sm:grid-cols-[auto_minmax(0,1fr)_minmax(0,18rem)] sm:gap-x-8">
-      <span className="u-meta text-ink-3 tabular-nums">{a.n}</span>
-      <span>
-        <span className="u-display block text-[clamp(1.25rem,2.8vw,2rem)]">
-          {a.title}
-        </span>
-        <span className="u-meta text-ink-3 mt-1.5 block tracking-[0.04em] normal-case">
-          {a.org}
-        </span>
+    <div className="receipt-row">
+      <span className="u-meta receipt-n tabular-nums">{a.n}</span>
+      <span className="receipt-name">
+        <span className="u-display">{a.title}</span>
+        <span className="u-meta receipt-org">{a.org}</span>
       </span>
-      <span className="col-start-2 font-mono text-[clamp(1rem,2vw,1.375rem)] tracking-[-0.02em] sm:col-start-3 sm:text-right">
-        {a.result}
-      </span>
+      <span className="receipt-result">{a.result}</span>
     </div>
   );
 

@@ -7,7 +7,7 @@ import Blocks from "@/components/ui/Blocks";
 import { chip8 } from "@/content/projects/chip8";
 
 export const metadata: Metadata = {
-  title: "CHIP-8 — boot the machine",
+  title: "CHIP-8, boot the machine",
   description: chip8.oneLiner,
   alternates: { canonical: "/work/chip-8-emulator" },
 };

@@ -15,9 +15,9 @@ export default function WorkPage() {
     <>
       <Nav />
       <main id="main" className="flex-1">
-        <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
-          <header className="grid gap-x-16 gap-y-6 py-16 sm:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
-            <h1 className="u-display text-[clamp(2.4rem,6.4vw,5.5rem)]">
+        <div className="mx-auto max-w-[92rem] px-5 sm:px-8">
+          <header className="grid gap-x-16 gap-y-6 py-14 sm:py-20 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-end">
+            <h1 className="u-display text-[clamp(2.4rem,6vw,5.25rem)]">
               {opening.short}
             </h1>
             <p className="u-prose">{opening.shortBody}</p>
@@ -30,7 +30,7 @@ export default function WorkPage() {
            * technology, and the row's whole content is where it was used. A
            * capability with no work under it does not appear.
            * ------------------------------------------------------------- */}
-          <section aria-labelledby="tech-index" className="py-20 sm:py-28">
+          <section aria-labelledby="tech-index" className="py-16 sm:py-20">
             <h2
               id="tech-index"
               className="u-display text-[clamp(1.6rem,3.2vw,2.5rem)]"
@@ -41,16 +41,11 @@ export default function WorkPage() {
               Shown through the work that proves it. Each row says where.
             </p>
 
-            <dl className="border-rule mt-10 grid gap-x-14 border-t sm:grid-cols-2">
+            <dl className="tech-index mt-10">
               {technicalIndex.map((t) => (
-                <div
-                  key={t.name}
-                  className="border-rule-2 grid grid-cols-[minmax(0,12rem)_minmax(0,1fr)] gap-x-6 border-b py-3.5"
-                >
-                  <dt className="font-mono text-[0.875rem]">{t.name}</dt>
-                  <dd className="text-ink-2 text-[0.9375rem] leading-snug">
-                    {t.where}
-                  </dd>
+                <div key={t.name}>
+                  <dt>{t.name}</dt>
+                  <dd>{t.where}</dd>
                 </div>
               ))}
             </dl>

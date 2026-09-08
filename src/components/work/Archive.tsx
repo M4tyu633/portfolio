@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import GameClip from "@/components/media/GameClip";
+import ProjectLinkRail from "@/components/work/ProjectLinkRail";
 import type { Project } from "@/content/types";
 
 /* ===========================================================================
@@ -12,10 +14,16 @@ import type { Project } from "@/content/types";
  * photograph is served BESIDE the list rather than inside every row. That is
  * the whole layout: move down the catalogue and the plate changes.
  *
+ * ⚠ WHAT THE ROWS SAY IS THE POINT, AND THE FIRST VERSION GOT IT WRONG. It
+ * printed a title, a category, a year and a one-line description, so a reader
+ * had to open six case studies to discover which of these Matthew personally
+ * built and which of them went anywhere. Every row now carries `did` and
+ * `outcome` at full size, and they are the two lines with the most contrast in
+ * the row rather than a footnote under it.
+ *
  * The stage updates on hover AND on focus, so tabbing through the rows drives
- * it identically. Every plate is rendered and cross-faded rather than swapped,
- * because a swap shows a blank frame for one paint on a slow connection and
- * turns a catalogue into a flicker.
+ * it identically. Only the ACTIVE plate mounts its media, which is why the
+ * moving one can be a real video without the page pulling six of them.
  *
  * Below `lg` the composition is different rather than scaled: the stage is
  * gone and each row carries its own plate, because a fixed pane beside a list
@@ -24,47 +32,35 @@ import type { Project } from "@/content/types";
 
 export default function Archive({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState(0);
+  const current = projects[active];
 
   return (
-    <div className="grid gap-x-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-start">
+    <div className="archive">
       {/* -------- the catalogue -------- */}
-      <ol className="border-rule border-t">
+      <ol className="archive-list" data-seq="rows">
         {projects.map((p, i) => (
-          <li key={p.slug} className="border-rule border-b">
+          <li key={p.slug} data-active={i === active || undefined}>
             <Link
               href={`/work/${p.slug}`}
               onMouseEnter={() => setActive(i)}
               onFocus={() => setActive(i)}
-              className="group block py-5 lg:py-6"
-              aria-describedby={`cat-${p.slug}`}
+              onTouchStart={() => setActive(i)}
+              className="archive-row"
             >
-              <div className="flex items-baseline gap-4 sm:gap-6">
-                <span
-                  className="u-meta tabular-nums transition-colors"
-                  style={{
-                    color: active === i ? "var(--w-ink)" : "var(--w-ink-3)",
-                  }}
-                >
-                  {p.n}
-                </span>
-                <span className="u-display min-w-0 flex-1 text-[clamp(1.5rem,3.4vw,2.5rem)]">
-                  {p.title}
-                </span>
-                <span
-                  id={`cat-${p.slug}`}
-                  className="u-meta text-ink-3 hidden tracking-[0.04em] normal-case sm:block"
-                >
-                  {p.category}
-                </span>
-                <span className="u-meta text-ink-3 tabular-nums">{p.year}</span>
-              </div>
+              <span className="u-meta arc-n tabular-nums">{p.n}</span>
 
-              <p className="text-ink-2 mt-2 max-w-[46ch] pl-10 text-[0.9375rem] leading-relaxed sm:pl-12">
-                {p.oneLiner}
-              </p>
+              <span className="arc-head">
+                <span className="u-display arc-title">{p.title}</span>
+                <span className="u-meta arc-class">{p.category}</span>
+                <span className="u-meta arc-year tabular-nums">{p.year}</span>
+              </span>
 
-              {/* The mobile composition: the plate lives in the row. */}
-              <div className="border-rule bg-ground-2 relative mt-4 ml-10 aspect-[16/10] border sm:ml-12 lg:hidden">
+              <span className="arc-did">{p.did}</span>
+              <span className="u-meta arc-outcome">{p.outcome}</span>
+              <span className="arc-line">{p.oneLiner}</span>
+
+              {/* The phone composition: the plate lives in the row. */}
+              <span className="arc-plate">
                 <Image
                   src={p.media.src}
                   alt={p.media.alt}
@@ -76,48 +72,58 @@ export default function Archive({ projects }: { projects: Project[] }) {
                       : "object-cover"
                   }
                 />
-              </div>
+              </span>
             </Link>
           </li>
         ))}
       </ol>
 
       {/* -------- the stage -------- */}
-      <div className="sticky top-24 hidden lg:block">
-        <div className="border-rule bg-ground-2 relative aspect-[16/10] overflow-hidden border">
+      <div className="archive-stage">
+        <div className="archive-frame m-reg">
           {projects.map((p, i) => (
             <div
               key={p.slug}
-              aria-hidden
-              className="absolute inset-0 transition-opacity duration-[450ms] ease-out"
-              style={{ opacity: active === i ? 1 : 0 }}
+              aria-hidden={i !== active}
+              className="archive-shot"
+              data-on={i === active || undefined}
             >
-              <Image
-                src={p.media.src}
-                alt=""
-                fill
-                sizes="44rem"
-                priority={i === 0}
-                className={
-                  p.media.fit === "contain"
-                    ? "object-contain p-8"
-                    : "object-cover"
-                }
-              />
+              {/* Only the selected plate mounts anything that moves. */}
+              {p.clip && i === active ? (
+                <GameClip
+                  fill
+                  src={p.clip.src}
+                  poster={p.clip.poster}
+                  alt={p.media.alt}
+                />
+              ) : (
+                <Image
+                  src={p.media.src}
+                  alt=""
+                  fill
+                  sizes="44rem"
+                  priority={i === 0}
+                  className={
+                    p.media.fit === "contain"
+                      ? "object-contain p-8"
+                      : "object-cover"
+                  }
+                />
+              )}
             </div>
           ))}
         </div>
 
-        <dl className="border-rule mt-px grid grid-cols-2 gap-px border-t sm:grid-cols-3">
-          {projects[active].facts.slice(0, 3).map((f) => (
-            <div key={f.label} className="bg-ground py-3">
+        <dl className="archive-facts">
+          {current.facts.slice(0, 3).map((f) => (
+            <div key={f.label}>
               <dt className="u-meta text-ink-3">{f.label}</dt>
-              <dd className="mt-1.5 text-[0.9375rem] leading-snug">
-                {f.value}
-              </dd>
+              <dd>{f.value}</dd>
             </div>
           ))}
         </dl>
+
+        <ProjectLinkRail project={current} />
       </div>
     </div>
   );

@@ -1,0 +1,129 @@
+/* ===========================================================================
+ * /ACHIEVEMENTS — the results sheet.
+ *
+ * A page of claims, so the page is built out of the two things that make a
+ * claim credible: the photograph of the room it happened in, and a transcript
+ * set like one. The material is press dots, because everything on this page
+ * exists as a piece of paper somewhere.
+ * ======================================================================== */
+
+.receipts-page {
+  background-image: radial-gradient(var(--w-rule-2) 0.9px, transparent 0.9px);
+  background-size: 4px 4px;
+}
+
+/* --- the evidence band -------------------------------------------------- */
+.receipts-band {
+  position: relative;
+  margin: clamp(1rem, 2vw, 2rem) 0 clamp(2.5rem, 5vw, 4rem);
+  border-block: 1px solid var(--w-rule);
+  background: var(--w-ground-2);
+}
+
+.receipts-band img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: 50% 42%;
+}
+
+/* The caption sits ON the photograph at desktop, in the dark half of the
+   frame, so the band reads as one object rather than a picture with a label. */
+.receipts-band figcaption {
+  display: grid;
+  gap: 0.7rem;
+  padding: 1.25rem clamp(1.25rem, 4.5vw, 4.5rem) 1.5rem;
+}
+
+.receipts-band figcaption p {
+  max-width: 46ch;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--w-ink-2);
+  text-wrap: pretty;
+}
+
+.receipts-band figcaption .room-exit {
+  margin-top: 0.35rem;
+  justify-self: start;
+}
+
+@media (min-width: 900px) {
+  .receipts-band img {
+    aspect-ratio: 21 / 8;
+  }
+  .receipts-band figcaption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    background: linear-gradient(
+      to top,
+      #100e0ceb 0%,
+      #100e0cb0 55%,
+      #100e0c00 100%
+    );
+  }
+}
+
+/* --- the sheet ---------------------------------------------------------- */
+.receipts-year {
+  color: var(--w-ink-3);
+  border-bottom: 2px solid var(--w-ink);
+  padding-bottom: 0.5rem;
+  letter-spacing: 0.16em;
+}
+
+.receipts-rows > li {
+  border-bottom: 1px solid var(--w-rule);
+}
+
+.receipt-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 1.25rem;
+  row-gap: 0.35rem;
+  padding: 1.25rem 0 1.1rem;
+}
+
+.receipt-n {
+  color: var(--w-ink-3);
+}
+
+.receipt-name {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.receipt-name > .u-display {
+  font-size: clamp(1.25rem, 2.6vw, 1.9rem);
+}
+
+.receipt-org {
+  color: var(--w-ink-3);
+  letter-spacing: 0.05em;
+  text-transform: none;
+  font-size: 0.75rem;
+}
+
+/* The result is what the page is for, so it is the loudest thing in the row
+   and it is set in the measured accent: an awarded fact, not a control. */
+.receipt-result {
+  grid-column: 2;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: clamp(1rem, 1.9vw, 1.3125rem);
+  letter-spacing: -0.02em;
+  color: var(--w-accent-2);
+}
+
+@media (min-width: 780px) {
+  .receipt-row {
+    grid-template-columns: auto minmax(0, 1fr) minmax(0, 18rem);
+    column-gap: 2rem;
+  }
+  .receipt-result {
+    grid-column: 3;
+    text-align: right;
+  }
+}
