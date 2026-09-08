@@ -80,6 +80,13 @@ void main() {
   /* The image is sampled once per point. Everything after this is geometry. */
   vec2 suv = clamp((uv - 0.5) * u_cover + 0.5, 0.0, 1.0);
   vec4 src = texture(u_src, vec2(suv.x, 1.0 - suv.y));
+  /* ⚠ HALF THIS ARCHIVE IS A DARK INTERFACE. The reading station and the risk
+     instrument are near-black screenshots; sampled straight, their points were
+     black points on a black ground and the cover was a dead rectangle. A
+     gamma lift opens the shadows without touching the highlights, so a dark UI
+     reconstructs as legibly as a daylight street does. */
+  vec3 tint = pow(max(src.rgb, 0.0), vec3(0.72)) * 1.06;
+  src.rgb = clamp(tint, 0.0, 1.0);
   float lum = dot(src.rgb, vec3(0.299, 0.587, 0.114));
 
   /* Where the point belongs: its cell, in clip space. */
@@ -206,7 +213,12 @@ export default function CoverField({
      * Sized off the viewport so a phone does not pay for a desktop's density,
      * and hard-capped so a 4K monitor does not either. */
     const wide = window.innerWidth;
-    const cols = Math.round(Math.max(90, Math.min(260, wide / 7)));
+    /* ⚠ FINER THAN IT LOOKS LIKE IT NEEDS TO BE. At one point per seven CSS
+     * pixels the resolved field read as a coarse halftone rather than as the
+     * photograph, which is the single thing people said about it. Four and a
+     * half is dense enough that the picture is legible while it is still made
+     * of points, and it is still only about fifty thousand of them. */
+    const cols = Math.round(Math.max(120, Math.min(340, wide / 4.5)));
     /* ⚠ ROWS COME FROM THE CANVAS'S OWN ASPECT, NOT FROM A CONSTANT. A fixed
      * 0.62 gave a grid whose cells were 3.1px wide and 4.0px tall inside a
      * 1.25 frame, so a point big enough to close the horizontal gaps still
@@ -342,10 +354,25 @@ export default function CoverField({
       pTarget = 0;
     };
 
-    /* --- the resolve ------------------------------------------------------ */
+    /* --- the resolve ------------------------------------------------------
+     * ⚠ THE VALUE IS PUBLISHED TO CSS, AND THAT IS WHAT MAKES THE ENDING WORK.
+     * The field alone never becomes the photograph; it becomes a stipple of
+     * it, which is a lovely thing to watch arrive and a poor thing to look at
+     * afterwards. The parent reads `--resolve` and brings the real image up
+     * underneath as the points land, so the sequence is cloud, then points,
+     * then the work itself, with the field still breathing over the top.
+     * ------------------------------------------------------------------- */
     let resolve = 0;
     let holding = 0;
     let current = "";
+    const stage = canvas.parentElement;
+    let published = -1;
+    let readoutAt = -1;
+    const readout = document.createElement("p");
+    readout.className = "cover-readout";
+    readout.setAttribute("aria-hidden", "true");
+    stage?.appendChild(readout);
+    const nf = new Intl.NumberFormat("en-US");
 
     /* --- the loop --------------------------------------------------------- */
     let raf = 0;
@@ -380,6 +407,27 @@ export default function CoverField({
       }
 
       pOn += (pTarget - pOn) * Math.min(1, dt * 6);
+
+      /* Two hundredths is under one frame of visible change; publishing every
+         frame would thrash style recalculation for nothing. */
+      const shown = reduced ? 1 : resolve;
+      if (Math.abs(shown - published) > 0.02 || shown === 1 || shown === 0) {
+        published = shown;
+        stage?.style.setProperty("--resolve", shown.toFixed(3));
+      }
+
+      /* ⚠ THE READOUT EXISTS BECAUSE THE EFFECT DID NOT EXPLAIN ITSELF. It
+         looked expensive and meant nothing: people watched it and asked what it
+         was doing. It now says so, in the site's own metadata voice, and the
+         number it lands on is the real one. */
+      const pct = Math.round(shown * 100);
+      if (pct !== readoutAt) {
+        readoutAt = pct;
+        readout.textContent =
+          pct >= 100
+            ? `${nf.format(count)} points · ${tokenRef.current}`
+            : `Reconstructing ${tokenRef.current} · ${String(pct).padStart(2, "0")}%`;
+      }
 
       gl.uniform1f(u.resolve, reduced ? 1 : resolve);
       gl.uniform1f(u.time, reduced ? 0 : (now - start) / 1000);
@@ -433,6 +481,7 @@ export default function CoverField({
       gl.deleteShader(fs);
       gl.deleteBuffer(buf);
       gl.deleteTexture(tex);
+      readout.remove();
     };
     /* ⚠ EMPTY DEPS ON PURPOSE. The loop reads `srcRef.current`, so a project
      * change is picked up inside the frame instead of by re-running this

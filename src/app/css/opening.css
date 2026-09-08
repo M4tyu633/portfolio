@@ -69,9 +69,61 @@
 /* Once the field is up the photograph is only a source and a fallback, so it
    sits well under it. If the canvas never mounts this rule never matches and
    the photograph is the cover at full strength. */
+/* ⚠ THE PHOTOGRAPH COMES UP AS THE POINTS LAND, AND THAT IS THE WHOLE ENDING.
+   The field on its own resolves to a stipple: good to watch arrive, poor to
+   look at afterwards, and on the two near-black interface screenshots in this
+   archive it resolved to almost nothing at all. `--resolve` is written by the
+   canvas every few frames, so the real image rises underneath in step with the
+   reconstruction and the field settles on top of it. Cloud, then points, then
+   the work. The `0` fallback keeps the photograph down if the canvas is never
+   mounted... and the rule below puts it back to full strength in that case. */
 .opening-stage:has(.cover-field) .opening-plate-fallback {
-  opacity: 0.26;
-  filter: saturate(0.7);
+  opacity: calc(0.06 + 0.94 * var(--resolve, 0));
+  filter: saturate(calc(0.5 + 0.5 * var(--resolve, 0)));
+  transition: opacity 120ms linear;
+}
+
+/* ⚠ THE FIELD IS A TRANSITION, NOT A RENDERER, AND GETTING THAT BACKWARDS IS
+   WHAT MADE THE COVER LOOK BROKEN.
+   
+   The first version left the point field at full strength once it had
+   resolved, so the resting state of the first screen was a coarse halftone of
+   a photograph: fine to watch arrive, bad to look at, and on a tall UI
+   screenshot cropped to a landscape frame it was a grey wall. The points now
+   fade back as they land. What you watch is a cloud becoming the work; what
+   you are left looking at is the work, with just enough of the field still
+   alive over it to see that it is running. */
+.opening-stage .cover-field {
+  opacity: calc(1 - 0.82 * var(--resolve, 0));
+}
+
+/* --- the readout --------------------------------------------------------
+ * What the field is doing, said in the site's metadata voice. It counts up
+ * while the picture is being derived and then states the real number of points
+ * it took. Aria-hidden: it is a caption for an effect, and the picture it
+ * describes already has alt text on the image underneath it.
+ * --------------------------------------------------------------------- */
+.cover-readout {
+  position: absolute;
+  z-index: 3;
+  right: clamp(1.25rem, 4.5vw, 4.5rem);
+  top: clamp(1rem, 3vh, 2rem);
+  margin: 0;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--w-ink-3);
+  text-align: right;
+  pointer-events: none;
+  text-shadow: 0 1px 6px #000000b8;
+}
+
+@media (max-width: 760px) {
+  .cover-readout {
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+  }
 }
 
 /* ⚠ THE SCRIM IS LOAD-BEARING, AND IT IS DIRECTIONAL. Display type over a

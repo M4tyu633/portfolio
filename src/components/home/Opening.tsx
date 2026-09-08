@@ -44,6 +44,13 @@ export default function Opening() {
   const step = (d: number) =>
     setI((n) => (n + d + entrances.length) % entrances.length);
 
+  /* The cover runs edge to edge, so it needs a landscape frame. Most projects
+     have one already; the ones whose own picture is a tall phone screenshot
+     name a different image for this and keep theirs everywhere else. */
+  const coverSrc =
+    active.cover ??
+    (active.media.kind === "video" ? active.media.poster : active.media.src);
+
   return (
     <section
       className="opening"
@@ -65,36 +72,16 @@ export default function Opening() {
         * photograph with type on it, which is still a cover. */}
       <div className="opening-stage" data-project={active.world}>
         <div className="opening-plate-fallback" key={active.title}>
-          {active.media.kind === "video" ? (
-            <Image
-              src={active.media.poster!}
-              alt={active.media.alt}
-              fill
-              sizes="100vw"
-              priority
-              className="object-cover"
-            />
-          ) : (
-            <Image
-              src={active.media.src}
-              alt={active.media.alt}
-              fill
-              sizes="100vw"
-              className={
-                active.media.fit === "contain"
-                  ? "object-contain"
-                  : "object-cover"
-              }
-              priority={i === 0}
-            />
-          )}
+          <Image
+            src={coverSrc}
+            alt={active.media.alt}
+            fill
+            sizes="100vw"
+            priority={i === 0}
+            className="object-cover"
+          />
         </div>
-        <CoverField
-          src={
-            active.media.kind === "video" ? active.media.poster! : active.media.src
-          }
-          token={active.title}
-        />
+        <CoverField src={coverSrc} token={active.title} />
         <div aria-hidden className="opening-scrim" />
       </div>
 

@@ -88,10 +88,14 @@ export default function Home() {
               </p>
 
               <ol>
-                {headline.map((a) => (
+                {/* ⚠ NUMBERED BY POSITION IN THIS LIST, NOT BY `a.n`. Each
+                    achievement carries its own number in the full archive, so
+                    printing it here gave a homepage list that counted 01, 02,
+                    10: correct in the archive, nonsense in a list of three. */}
+                {headline.map((a, index) => (
                   <li key={a.slug}>
                     <span className="u-meta text-ink-3 tabular-nums">
-                      {a.n}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="receipts-title">{a.title}</span>
                     <span className="receipts-result">{a.result}</span>

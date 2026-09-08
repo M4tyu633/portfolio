@@ -127,6 +127,15 @@ export type Entrance = {
   action: string;
   world: string;
   display: "daruma" | "franklin" | "plex" | "mono";
+  /** ⚠ THE FULL-BLEED IMAGE FOR THE COVER, WHEN `media` CANNOT BE ONE.
+   *
+   * `media` is the project's identifying picture and two of them are portrait
+   * phone screenshots meant to be shown whole. The cover runs edge to edge, so
+   * cover-cropping a tall UI screenshot to a landscape screen produced a grey
+   * wall with a few illegible words in it, which is exactly what it looks like.
+   * When a project's own picture cannot carry a full screen, it names a
+   * landscape one here and keeps `media` for everywhere else. */
+  cover?: string;
   media:
     | { kind: "video"; src: string; poster: string; alt: string }
     | { kind: "image"; src: string; alt: string; fit?: "cover" | "contain" };
@@ -160,6 +169,8 @@ export const entrances: Entrance[] = [
     action: "Follow the patient",
     world: "egov",
     display: "franklin",
+    /* The signed-in home screen is a tall phone shot; the venue is the frame. */
+    cover: "/work/egovmed/team.webp",
     media: {
       kind: "image",
       src: "/work/egovmed/home.webp",
