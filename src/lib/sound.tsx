@@ -9,6 +9,7 @@ import {
   useRef,
 } from "react";
 import type { WorldId } from "@/content/types";
+import { Bed } from "@/lib/bed";
 import { setSoundEnabled, useSoundEnabled } from "@/lib/prefs";
 
 // Opt-in samples and music from the Godot game. Other pages are silent.
@@ -36,9 +37,10 @@ const SAMPLES: Partial<Record<Cue, string>> = {
   impact: "/sound/lata-knockdown.mp3",
 };
 
-/** The music bed per world. Only Tumbang has one, and it is the game's own
- *  menu theme. Nothing is invented to fill the others: silence in a reading
- *  room is correct. */
+/** ⚠ THE SAMPLED BED IS TUMBANG'S ONLY, AND IT IS THE GAME'S OWN MENU THEME.
+ *  Every other world is played by the synth in `lib/bed.ts` rather than by a
+ *  file, because a stock loop would have been the least honest thing on a
+ *  portfolio whose argument is that the work is real. See that file. */
 const BEDS: Partial<Record<WorldId, string>> = {
   tumbang: "/sound/tumbang-theme.mp3",
 };
@@ -50,6 +52,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   const bufferRef = useRef<Map<string, AudioBuffer>>(new Map());
   const worldRef = useRef<WorldId>("index");
   const bedRef = useRef<HTMLAudioElement | null>(null);
+  const synthRef = useRef<Bed | null>(null);
 
   const ensureContext = useCallback(() => {
     if (ctxRef.current) return ctxRef.current;
@@ -106,30 +109,54 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     [enabled, playSample],
   );
 
-  /* --- the music bed ---------------------------------------------------- */
-  const startBed = useCallback((world: WorldId) => {
-    const url = BEDS[world];
-    const el = bedRef.current;
-    if (!url) {
+  /* --- the music bed ----------------------------------------------------
+   * Two engines, and which one runs is decided by the world. Tumbang plays its
+   * own recorded menu theme, because the game has one and it is his. Every
+   * other world is generated: a kick, a hat, a sub and a held pad, scheduled
+   * ahead on the audio clock, with a different tempo, scale and pattern per
+   * room. See `lib/bed.ts` for why each pattern is what it is.
+   *
+   * ⚠ NEITHER STARTS BY ITSELF. Autoplaying audio is refused by every browser
+   * worth shipping to and should be. The toggle in the navigation bar is the
+   * only thing that starts either of them.
+   * ------------------------------------------------------------------- */
+  const startBed = useCallback(
+    (world: WorldId) => {
+      const url = BEDS[world];
+      const el = bedRef.current;
+
+      /* The recorded bed, if this world has one. */
+      if (url) {
+        synthRef.current?.stop();
+        const audio = el ?? new Audio();
+        bedRef.current = audio;
+        if (audio.getAttribute("src") !== url) {
+          audio.src = url;
+          audio.loop = true;
+          audio.preload = "none";
+        }
+        audio.volume = MUSIC;
+        void audio.play().catch(() => {
+          /* the browser can still refuse; the toggle is the only promise made */
+        });
+        return;
+      }
+
+      /* Otherwise, the synth. */
       if (el) {
         el.pause();
         el.removeAttribute("src");
         el.load();
       }
-      return;
-    }
-    const audio = el ?? new Audio();
-    bedRef.current = audio;
-    if (audio.getAttribute("src") !== url) {
-      audio.src = url;
-      audio.loop = true;
-      audio.preload = "none";
-    }
-    audio.volume = MUSIC;
-    void audio.play().catch(() => {
-      /* the browser can still refuse; the toggle is the only promise made */
-    });
-  }, []);
+      const ctx = ensureContext();
+      const master = masterRef.current;
+      if (!ctx || !master) return;
+      if (!synthRef.current) synthRef.current = new Bed(ctx, master);
+      synthRef.current.setWorld(world);
+      synthRef.current.start();
+    },
+    [ensureContext],
+  );
 
   const setWorld = useCallback(
     (w: WorldId) => {
@@ -150,14 +177,17 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
       if (w === "tumbang") void playSample(SAMPLES.click!, 0.8);
     } else {
       bedRef.current?.pause();
+      synthRef.current?.stop();
     }
   }, [enabled, ensureContext, playSample, startBed]);
 
   // Leaving the page should not leave a loop running in a background tab.
   useEffect(() => {
     const bed = bedRef;
+    const synth = synthRef;
     return () => {
       bed.current?.pause();
+      synth.current?.dispose();
       void ctxRef.current?.close();
     };
   }, []);
