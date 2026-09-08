@@ -3,6 +3,7 @@ import Link from "next/link";
 import Boot from "@/components/chrome/Boot";
 import Nav from "@/components/chrome/Nav";
 import { WorldScrollSync } from "@/components/chrome/WorldSync";
+import Evidence from "@/components/home/Evidence";
 import Opening from "@/components/home/Opening";
 import {
   Chip8World,
@@ -57,18 +58,7 @@ export default function Home() {
           className="bg-ground text-ink receipts"
         >
           <div className="receipts-grid">
-            <figure className="receipts-photo m-reg" data-seq="print">
-              <Image
-                src="/work/tumbang/trophies.webp"
-                alt="The Gear Up NCR first-place plaque laid out on a blue table with the seven certificates of recognition awarded to BH Studios, one of them in Matthew's name."
-                width={1600}
-                height={2134}
-                sizes="(min-width: 900px) 42vw, 100vw"
-              />
-              <figcaption className="u-meta">
-                Valenzuela City &middot; 8 August 2026
-              </figcaption>
-            </figure>
+            <Evidence />
 
             <div className="receipts-list" data-seq="rows">
               <h2 id="receipts-signal" className="u-display">
@@ -116,12 +106,18 @@ export default function Home() {
               height={1200}
               sizes="(min-width: 900px) 30vw, 60vw"
             />
+            <figcaption className="person-caption">
+              Computer science. A habit of asking one more question.
+            </figcaption>
           </figure>
           <div className="person-copy">
+            <p className="u-meta person-label">
+              Matthew Labrador / Manila, Philippines
+            </p>
             <h2 id="person-signal" className="u-display">
               {about.heading}
             </h2>
-            <p className="u-prose mt-6">{about.paragraphs[1]}</p>
+            <p className="u-prose mt-6">{about.paragraphs[0]}</p>
             <Link href="/about" className="room-exit">
               <span>About</span>
               <span aria-hidden>&rarr;</span>

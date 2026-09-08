@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import SwarmPreview from "@/components/home/SwarmPreview";
 import GameClip from "@/components/media/GameClip";
 import ProjectLinkRail from "@/components/work/ProjectLinkRail";
 import type { Project } from "@/content/types";
@@ -60,7 +61,7 @@ export default function Archive({ projects }: { projects: Project[] }) {
               <span className="arc-line">{p.oneLiner}</span>
 
               {/* The phone composition: the plate lives in the row. */}
-              <span className="arc-plate">
+              <span className="arc-plate" data-world={p.world}>
                 <Image
                   src={p.media.src}
                   alt={p.media.alt}
@@ -79,7 +80,13 @@ export default function Archive({ projects }: { projects: Project[] }) {
       </ol>
 
       {/* -------- the stage -------- */}
-      <div className="archive-stage">
+      <div className="archive-stage" data-world={current.world}>
+        <div className="archive-stage-label">
+          <span>
+            {current.n} / {current.title}
+          </span>
+          <span>{current.category}</span>
+        </div>
         <div className="archive-frame m-reg">
           {projects.map((p, i) => (
             <div
@@ -89,7 +96,9 @@ export default function Archive({ projects }: { projects: Project[] }) {
               data-on={i === active || undefined}
             >
               {/* Only the selected plate mounts anything that moves. */}
-              {p.clip && i === active ? (
+              {p.world === "glyco" && i === active ? (
+                <SwarmPreview />
+              ) : p.clip && i === active ? (
                 <GameClip
                   fill
                   src={p.clip.src}

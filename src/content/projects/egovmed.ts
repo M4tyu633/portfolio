@@ -50,7 +50,7 @@ export const egovmed: Project = {
 
   home: {
     headline: "Eight government APIs. One patient flow.",
-    body: "The interesting part wasn't adding an AI chat box. It was getting identity, triage, liveness, booking, messaging, payments and audit logic to behave like one system.",
+    body: "I connected identity, triage, verification, booking, messaging and payments into one patient journey, with explicit safeguards at each service boundary.",
     coda: "eGovMed was selected as one of ten winning projects at the eGov Hackathon PH 2026.",
     figure: "eg-route",
     figureCaption:

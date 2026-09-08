@@ -27,12 +27,16 @@ export default function AboutPage() {
   return (
     <>
       <Nav />
-      <main id="main" className="flex-1">
+      <main id="main" className="about-page flex-1">
         <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
           <header className="about-opening" data-seq="rise">
             <div>
               <p className="u-meta text-accent">Matthew Labrador · Manila</p>
-              <h1>{about.heading}</h1>
+              <h1>
+                Always one more
+                <br />
+                <em>question.</em>
+              </h1>
               <p>
                 Computer science at UP Manila. Games, systems, debate, and a
                 habit of asking one more question.

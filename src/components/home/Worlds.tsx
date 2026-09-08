@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { daruma, franklin } from "@/app/fonts";
-import InteractiveFigure from "@/components/figures";
+import { daruma } from "@/app/fonts";
+import MachineFigure from "@/components/figures/MachineFigure";
+import SwarmPreview from "@/components/home/SwarmPreview";
 import GameClip from "@/components/media/GameClip";
 import type { Project } from "@/content/types";
-import { patientStages, specialistContracts } from "@/content/worlds";
+import { patientStages } from "@/content/worlds";
 
 /* ===========================================================================
  * THE FOUR ROOMS.
@@ -184,24 +185,39 @@ export function EgovWorld({ project }: { project: Project }) {
     <section
       id={`w${project.n}`}
       data-world="egov"
-      data-display="franklin"
+      data-display="plex"
       data-world-panel
       aria-labelledby={`w${project.n}-title`}
-      className={`${franklin.variable} bg-ground text-ink eg-room scroll-mt-[4.25rem]`}
+      className="bg-ground text-ink eg-room scroll-mt-[4.25rem]"
     >
       <RoomHead project={project} />
 
       <div className="eg-top">
         <div className="eg-device" data-seq="device">
-          <Image
-            src={project.media.src}
-            alt={project.media.alt}
-            width={430}
-            height={880}
-            sizes="(min-width: 900px) 300px, 60vw"
-          />
+          <div className="eg-phone-status" aria-hidden="true">
+            <span>9:41</span>
+            <span className="eg-island" />
+            <span>▮▮▮ ▰</span>
+          </div>
+          <div className="eg-phone-screen">
+            <Image
+              src={project.media.src}
+              alt={project.media.alt}
+              width={430}
+              height={880}
+              sizes="(min-width: 900px) 300px, 60vw"
+            />
+          </div>
+          <div className="eg-phone-home" aria-hidden="true" />
         </div>
         <div className="eg-type">
+          <p className="eg-wordmark">
+            <span aria-hidden className="eg-brand-ring" />
+            eGov<span>Med</span>
+          </p>
+          <p className="u-meta eg-eyebrow">
+            A connected visit · Architecture walkthrough
+          </p>
           <h2 id={`w${project.n}-title`} className="u-display">
             {h.headline}
           </h2>
@@ -212,7 +228,11 @@ export function EgovWorld({ project }: { project: Project }) {
 
       {/* The route. Six stops, real service names, and under each one the
           failure that stop is allowed to have without taking the visit down. */}
-      <ol className="eg-route" data-seq="route" aria-label="What one visit crosses">
+      <ol
+        className="eg-route"
+        data-seq="route"
+        aria-label="What one visit crosses"
+      >
         {patientStages.map((s) => (
           <li key={s.name}>
             <span aria-hidden className="eg-node" />
@@ -262,47 +282,14 @@ export function GlycoWorld({ project }: { project: Project }) {
             {h.headline}
           </h2>
           <p className="u-prose mt-6">{h.body}</p>
-          <RoomExit
-            href={`/work/${project.slug}`}
-            label="Trace a specialist"
-          />
+          <RoomExit href={`/work/${project.slug}`} label="Trace a specialist" />
         </div>
 
-        <div className="gs-fan" data-seq="fan" role="img" aria-label={GS_ALT}>
-          <div className="gs-source">
-            <span className="u-meta">Input</span>
-            <strong>One patient panel</strong>
-            <span className="gs-source-note">
-              NHANES laboratory values, one visit
-            </span>
-          </div>
-
-          <ul className="gs-branches">
-            {specialistContracts.map((s) => (
-              <li key={s.id} style={{ ["--gs" as string]: s.colour }}>
-                <span className="gs-branch-name">{s.name}</span>
-                <span className="gs-branch-fields">
-                  {s.inputs.join(" · ")}
-                </span>
-              </li>
-            ))}
-          </ul>
-
-          <div className="gs-synth">
-            <span className="u-meta">Synthesis</span>
-            <strong>One combined read</strong>
-            <span className="gs-source-note">
-              Receives four independent answers. Never invents a fifth.
-            </span>
-          </div>
-        </div>
+        <SwarmPreview />
       </div>
     </section>
   );
 }
-
-const GS_ALT =
-  "One patient panel feeding four parallel specialists: renal, retinal, neuropathy and cardiovascular, each reading its own fields, which converge on a single synthesis stage.";
 
 /* ---------------------------------------------------------------------------
  * 04 · THE MACHINE
@@ -348,14 +335,11 @@ export function Chip8World({ project }: { project: Project }) {
               </div>
             ))}
           </dl>
-          <RoomExit
-            href={`/work/${project.slug}`}
-            label="Open the debugger"
-          />
+          <RoomExit href={`/work/${project.slug}`} label="Open the debugger" />
         </div>
 
         <div className="c8-machine">
-          <InteractiveFigure id="c8-machine" />
+          <MachineFigure />
         </div>
       </div>
     </section>

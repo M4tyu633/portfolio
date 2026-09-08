@@ -57,7 +57,7 @@ export const utilities = [
  * ------------------------------------------------------------------------ */
 export const opening = {
   statement: "I keep picking projects that are slightly unreasonable.",
-  body: "I'm a computer science student at UP Manila. I build games, civic systems, AI tools and the infrastructure around them, usually far enough across the stack that something eventually breaks in an interesting way.",
+  body: "I'm a computer science student at UP Manila. I build games, civic systems, AI tools, and the infrastructure that brings them to life.",
   coda: "Then I figure out why.",
   /* The alternative hero, tested against the composition and kept: it is the
    * line the /work archive opens with, where the long version would be a

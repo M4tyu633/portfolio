@@ -1,10 +1,5 @@
 import localFont from "next/font/local";
-import {
-  IBM_Plex_Mono,
-  IBM_Plex_Sans,
-  Libre_Franklin,
-  Newsreader,
-} from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Newsreader } from "next/font/google";
 
 // Plex is the common body system. Display faces are scoped to their surfaces.
 export const plexSans = IBM_Plex_Sans({
@@ -40,13 +35,5 @@ export const daruma = localFont({
   preload: false,
 });
 
-/** eGovMed only. Franklin Gothic lineage, so it reads as civic and newspaper
- *  rather than as a product sans, and it holds up set in tracked-out caps for
- *  anything that wants to look like a government header. */
-export const franklin = Libre_Franklin({
-  variable: "--font-franklin",
-  subsets: ["latin"],
-  display: "swap",
-  // See the note on `daruma`.
-  preload: false,
-});
+// Existing civic pages share Plex Sans with product UI throughout the site.
+export const franklin = plexSans;

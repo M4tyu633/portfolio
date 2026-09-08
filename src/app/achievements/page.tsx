@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Evidence from "@/components/home/Evidence";
 import Link from "next/link";
 import Nav from "@/components/chrome/Nav";
 import { achievements, receipts } from "@/content/achievements";
@@ -48,27 +48,7 @@ export default function AchievementsPage() {
          * to fix that is not a better typeface, it is the actual room: five
          * people on a stage in Valenzuela holding the certificates the rest of
          * this page is a transcript of. */}
-        <figure className="receipts-band" data-seq="print">
-          <Image
-            src="/work/tumbang/team-stage.webp"
-            alt="BH Studios on stage at the Gear Up NCR awarding ceremony, holding their certificates."
-            width={1600}
-            height={1067}
-            sizes="100vw"
-            priority
-          />
-          <figcaption>
-            <span className="u-meta">Gear Up NCR &middot; 8 August 2026</span>
-            <p>
-              BH Studios at the awarding. First place in the region, and the
-              region&rsquo;s entry at the national finals in General Santos City.
-            </p>
-            <Link href="/achievements/gear-up-ncr" className="room-exit">
-              <span>What happened at the venue</span>
-              <span aria-hidden>&rarr;</span>
-            </Link>
-          </figcaption>
-        </figure>
+        <Evidence />
 
         <div className="mx-auto max-w-[92rem] px-5 sm:px-8">
           {years.map((year) => (

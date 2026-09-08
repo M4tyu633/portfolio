@@ -11,6 +11,7 @@
 @import "./css/egov.css";
 @import "./css/receipts.css";
 @import "./css/motion.css";
+@import "./css/finish.css";
 
 /* ===========================================================================
  * THE BUILDING AND THE ROOMS
@@ -52,23 +53,21 @@
  * ------------------------------------------------------------------------ */
 :root,
 [data-world="index"] {
-  --w-ground: #14100f;
-  --w-ground-2: #1d1817; /* raised: plates, cards, the media stage */
-  --w-ground-3: #272120; /* pressed / hovered fills */
-  --w-ink: #f4ece1;
-  --w-ink-2: #f4ece1b8; /* secondary prose, 72% */
-  --w-ink-3: #f4ece182; /* metadata, 51% */
-  --w-rule: #f4ece12e; /* hairlines, 18% */
-  --w-rule-2: #f4ece117; /* the quieter hairline, 9% */
-  --w-accent: #ff5b34;
-  --w-accent-ink: #14100f;
-  --w-accent-2: #c9e253;
-  --w-focus: #c9e253;
-
-  --w-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --w-ground: #171b38;
+  --w-ground-2: #22294b;
+  --w-ground-3: #30385d;
+  --w-ink: #f1f2ff;
+  --w-ink-2: #cbd0e8;
+  --w-ink-3: #a1abc9;
+  --w-rule: #f1f2ff38;
+  --w-rule-2: #f1f2ff1c;
+  --w-accent: #b8c4ff;
+  --w-accent-ink: #171b38;
+  --w-accent-2: #b8c4ff;
+  --w-focus: #d2daff;
+  --w-display: var(--font-newsreader), Georgia, serif;
   --w-display-weight: 400;
-  --w-display-tracking: -0.02em;
-
+  --w-display-tracking: -0.035em;
   color-scheme: dark;
 }
 
@@ -171,29 +170,27 @@
  * type on this ground, only as route geometry and fills.
  * ------------------------------------------------------------------------ */
 [data-world="egov"] {
-  --w-ground: #08222a;
-  --w-ground-2: #0e3039; /* the raised panel */
-  --w-ground-3: #16414b;
-  --w-ink: #dce9e4;
-  --w-ink-2: #dce9e4bd;
-  --w-ink-3: #dce9e488;
-  --w-rule: #7fc6b52e;
-  --w-rule-2: #dce9e414;
-  --w-accent: #62c8ac; /* readable seafoam: the live route */
-  --w-accent-ink: #08222a;
-  --w-focus: #e7b363;
-  --w-accent-2: #e7b363; /* amber: a held or unverified state */
-
-  --eg-blue: #3d86ff; /* the product primary, for fills and geometry only */
-  --eg-teal: #2fd0b6;
-  --eg-amber: #e7b363;
-  --eg-red: #e57b68;
-  --eg-green: #62c8ac;
-  --eg-ok: #62c8ac;
-  --eg-stamp: #e57b68;
-  --eg-route: #3d86ff;
-  --eg-hold: #e7b363;
-
+  --w-ground: #0439c7;
+  --w-ground-2: #072c8e;
+  --w-ground-3: #124bcc;
+  --w-ink: #ffffff;
+  --w-ink-2: #e0e8ff;
+  --w-ink-3: #bacfff;
+  --w-rule: #ffffff42;
+  --w-rule-2: #ffffff24;
+  --w-accent: #f5c400;
+  --w-accent-ink: #09215d;
+  --w-focus: #ffe77e;
+  --w-accent-2: #f5c400;
+  --eg-blue: #9cc5ff;
+  --eg-teal: #73e3c7;
+  --eg-amber: #ffe071;
+  --eg-red: #ffb9b4;
+  --eg-green: #73e3c7;
+  --eg-ok: #73e3c7;
+  --eg-stamp: #ffb9b4;
+  --eg-route: #9cc5ff;
+  --eg-hold: #ffe071;
   color-scheme: dark;
 }
 
@@ -313,7 +310,7 @@
 }
 
 [data-display="franklin"] {
-  --w-display: var(--font-franklin), "Helvetica Neue", sans-serif;
+  --w-display: var(--font-plex-sans), system-ui, sans-serif;
   --w-display-weight: 700;
   --w-display-tracking: -0.015em;
 }
@@ -525,10 +522,7 @@
   /* Press dots. 3px pitch, 45°, at the ink's own colour so it tints rather than
      greys whatever it is laid over. */
   .m-halftone {
-    background-image: radial-gradient(
-      var(--w-rule-2) 0.9px,
-      transparent 0.9px
-    );
+    background-image: radial-gradient(var(--w-rule-2) 0.9px, transparent 0.9px);
     background-size: 4px 4px;
     background-position: 0 0;
   }

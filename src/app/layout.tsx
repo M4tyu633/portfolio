@@ -2,7 +2,6 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { newsreader, plexMono, plexSans } from "./fonts";
-import Ambience from "@/components/chrome/Ambience";
 import Choreograph from "@/components/chrome/Choreograph";
 import Footer from "@/components/chrome/Footer";
 import RouteCurtain from "@/components/chrome/RouteCurtain";
@@ -45,7 +44,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   // The building's ground. A world overrides it live through WorldSync, so the
   // browser chrome on a phone follows the room you are standing in.
-  themeColor: "#14100f",
+  themeColor: "#171b38",
 };
 
 const personSchema = {
@@ -93,7 +92,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
       </head>
-      <body data-world="index" className="m-grain flex min-h-dvh flex-col">
+      <body data-world="index" className="flex min-h-dvh flex-col">
         <a className="u-skip u-meta" href="#main">
           Skip to content
         </a>
@@ -101,9 +100,6 @@ export default function RootLayout({
             the current world's voice. It constructs nothing until the toggle in
             the header is pressed. */}
         <SoundProvider>
-          {/* ⚠ Never a flat ground, on any page. Painted in whichever world's
-              colours the body currently carries. See the component. */}
-          <Ambience />
           {/* One observer for the whole document; every surface decides for
               itself what arriving means. See the component. */}
           <Choreograph />
