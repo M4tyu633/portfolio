@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRef } from "react";
+import { useSound } from "@/lib/sound";
 
 /* ===========================================================================
  * A horizontal strip of real photographs.
@@ -22,10 +23,12 @@ export default function PhotoStrip({
   label: string;
 }) {
   const railRef = useRef<HTMLUListElement>(null);
+  const { play } = useSound();
 
   const nudge = (dir: 1 | -1) => {
     const rail = railRef.current;
     if (!rail) return;
+    play("click");
     rail.scrollBy({ left: dir * rail.clientWidth * 0.8, behavior: "smooth" });
   };
 

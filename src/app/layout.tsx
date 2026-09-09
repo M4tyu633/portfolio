@@ -5,6 +5,7 @@ import { newsreader, plexMono, plexSans } from "./fonts";
 import Ambience from "@/components/chrome/Ambience";
 import Choreograph from "@/components/chrome/Choreograph";
 import Footer from "@/components/chrome/Footer";
+import { SoundProvider } from "@/lib/sound";
 import { contact, site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -95,12 +96,17 @@ export default function RootLayout({
         <a className="u-skip u-meta" href="#main">
           Skip to content
         </a>
-        {/* The room behind every page. Client-only and aria-hidden. */}
-        <Ambience />
-        {/* One IntersectionObserver for every [data-seq] on the document. */}
-        <Choreograph />
-        {children}
-        <Footer />
+        {/* The whole tree is inside the provider so a link anywhere can ask for
+            the current world's voice. It constructs no AudioContext and fetches
+            no audio until the toggle in the header is pressed. */}
+        <SoundProvider>
+          {/* The room behind every page. Client-only and aria-hidden. */}
+          <Ambience />
+          {/* One IntersectionObserver for every [data-seq] on the document. */}
+          <Choreograph />
+          {children}
+          <Footer />
+        </SoundProvider>
         {/* Page views only, no cookies and no cross-site identifier. */}
         <Analytics />
       </body>

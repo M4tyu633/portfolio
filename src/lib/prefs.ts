@@ -25,3 +25,56 @@ export function usePrefersReducedMotion() {
     () => false,
   );
 }
+
+/* --- the sound preference ------------------------------------------------
+ * A three line store rather than a state library. The value has to survive
+ * navigation and reloads, be readable by any component, and never be true on
+ * the server, which is all a module-level boolean plus a listener set gives.
+ * ---------------------------------------------------------------------- */
+
+const SOUND_KEY = "sound";
+let soundCache: boolean | null = null;
+const soundListeners = new Set<() => void>();
+
+function readStoredSound() {
+  try {
+    return window.localStorage.getItem(SOUND_KEY) === "on";
+  } catch {
+    return false; // private mode, or storage disabled
+  }
+}
+
+function subscribeSound(onChange: () => void) {
+  soundListeners.add(onChange);
+  // Another tab turning it off should turn it off here too.
+  const onStorage = (e: StorageEvent) => {
+    if (e.key === SOUND_KEY) {
+      soundCache = readStoredSound();
+      soundListeners.forEach((l) => l());
+    }
+  };
+  window.addEventListener("storage", onStorage);
+  return () => {
+    soundListeners.delete(onChange);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+function getSoundSnapshot() {
+  if (soundCache === null) soundCache = readStoredSound();
+  return soundCache;
+}
+
+export function setSoundEnabled(next: boolean) {
+  soundCache = next;
+  try {
+    window.localStorage.setItem(SOUND_KEY, next ? "on" : "off");
+  } catch {
+    /* private mode */
+  }
+  soundListeners.forEach((l) => l());
+}
+
+export function useSoundEnabled() {
+  return useSyncExternalStore(subscribeSound, getSoundSnapshot, () => false);
+}

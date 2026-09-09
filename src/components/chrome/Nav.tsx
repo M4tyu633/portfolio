@@ -8,7 +8,9 @@ import {
   LinkedinIcon,
   MailIcon,
 } from "@/components/chrome/Icons";
+import SoundToggle from "@/components/chrome/SoundToggle";
 import { contact, gmailCompose, nav } from "@/content/site";
+import { useSound } from "@/lib/sound";
 
 /* Navigation. The one surface that is identical in every world: it reads its
  * colours from the `--w-*` tokens, so it inverts when a world takes the page
@@ -40,6 +42,7 @@ export default function Nav({
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { play } = useSound();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 140);
@@ -75,6 +78,8 @@ export default function Nav({
       >
         <Link
           href="/"
+          onPointerEnter={() => play("hover")}
+          onClick={() => play("click")}
           className="hover:text-ink-2 shrink-0 text-[1.0625rem] font-medium tracking-[-0.015em] transition-colors"
         >
           Matthew Labrador
@@ -99,6 +104,8 @@ export default function Nav({
             <li key={item.href}>
               <Link
                 href={item.href}
+                onPointerEnter={() => play("hover")}
+                onClick={() => play("click")}
                 aria-current={isActive(item.href) ? "page" : undefined}
                 className="group relative block py-1 text-[1.0625rem]"
               >
@@ -148,9 +155,13 @@ export default function Nav({
               </IconLink>
             </li>
           ))}
+          <li>
+            <SoundToggle />
+          </li>
         </ul>
 
         <div className="flex items-center lg:hidden">
+          <SoundToggle />
           <a
             href={contact.resume}
             target="_blank"
@@ -161,7 +172,10 @@ export default function Nav({
           </a>
           <button
             type="button"
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+              play("click");
+              setOpen((v) => !v);
+            }}
             aria-expanded={open}
             aria-controls="nav-index"
             className="u-meta text-ink-2 hover:text-ink -mr-2 ml-2 px-3 py-3"
@@ -181,7 +195,10 @@ export default function Nav({
             <li key={item.href} className="border-rule-2 border-b">
               <Link
                 href={item.href}
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  play("click");
+                  setOpen(false);
+                }}
                 className="flex items-baseline gap-3 py-3.5"
                 aria-current={isActive(item.href) ? "page" : undefined}
               >
@@ -243,6 +260,7 @@ function IconLink({
   children: React.ReactNode;
   big?: boolean;
 }) {
+  const { play } = useSound();
   return (
     <a
       href={href}
@@ -250,6 +268,8 @@ function IconLink({
       rel="noopener noreferrer"
       aria-label={label}
       title={label}
+      onPointerEnter={() => play("hover")}
+      onClick={() => play("click")}
       className={`group text-ink-3 hover:text-ink relative flex items-center justify-center transition-colors ${
         big ? "h-11 w-11" : "h-10 w-10"
       }`}
