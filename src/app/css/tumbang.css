@@ -394,3 +394,40 @@ button.tp-action:hover {
 .archive-stage[data-world="tumbang"] .archive-facts dd {
   color: var(--tp-paper);
 }
+
+/* --- the menu theme ------------------------------------------------------
+ * The only audio control left on the site, on the only page that has audio
+ * worth playing. */
+.theme-track {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--w-rule);
+}
+
+.theme-track button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--w-rule);
+  color: var(--w-ink);
+  font-size: 0.9375rem;
+  transition:
+    background-color 180ms,
+    border-color 180ms;
+}
+
+.theme-track button:hover {
+  border-color: var(--w-accent);
+  background: color-mix(in srgb, var(--w-accent) 12%, transparent);
+}
+
+.theme-track-glyph {
+  color: var(--w-accent);
+  font-size: 0.75rem;
+  line-height: 1;
+}

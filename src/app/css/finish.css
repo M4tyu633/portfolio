@@ -377,9 +377,9 @@ body[data-world="cardio"] {
   padding-block: 5rem;
 }
 .gs-type h2 {
-  font-size: clamp(2.8rem, 5.5vw, 5rem);
-  line-height: 0.99;
-  letter-spacing: -0.05em;
+  font-size: clamp(2.1rem, 3.9vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
 }
 .swarm-preview {
   position: relative;
@@ -800,19 +800,21 @@ body[data-world="cardio"] {
   font-style: italic;
 }
 
-/* A personal editorial spread, with a portrait breaking the column. */
-/* One step lighter than the receipts, so the person reads as a different room
-   without becoming a different colour. The ruling is the only texture. */
+/* The person band on the homepage, and /about. One step lighter than the
+   receipts sheet so it reads as a different room without becoming a different
+   colour. */
 .person,
 .about-page {
   --w-ground: #101013;
   --w-ground-2: #1c1c21;
   background-color: #101013;
-  background-image:
-    linear-gradient(112deg, #ffffff0a, transparent 50%),
-    repeating-linear-gradient(96deg, #ffffff0a 0 1px, transparent 1px 5px),
-    repeating-linear-gradient(4deg, #00000026 0 1px, transparent 1px 4px);
   color: #f4f2ee;
+}
+
+/* The homepage band keeps a trace of material; /about does not. A page that is
+   mostly prose should not have a ruling running under the prose. */
+.person {
+  background-image: linear-gradient(112deg, #ffffff0a, transparent 55%);
 }
 .person {
   grid-template-columns: 1fr 1.2fr;
@@ -870,33 +872,147 @@ body[data-world="cardio"] {
 .person-copy .u-prose {
   max-width: 38ch;
 }
+/* --- /about -------------------------------------------------------------
+ * The calmest page on the site. One column of prose, a portrait, the
+ * credentials in the gutter. */
 .about-page .about-opening {
-  grid-template-columns: 1.2fr 1fr;
-  min-height: 80vh;
-  gap: 3vw;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: end;
+  padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem);
 }
+
 .about-page .about-opening h1 {
   font-family: var(--font-newsreader), Georgia, serif;
-  font-size: clamp(4rem, 6.5vw, 6.8rem);
-  position: relative;
-  z-index: 2;
-  margin-right: 0;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-top: 0.6rem;
 }
-.about-page .about-opening h1 em {
+
+.about-standfirst {
+  margin-top: 1.5rem;
+  max-width: 34rem;
+  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+  line-height: 1.6;
   color: var(--w-ink-2);
+  text-wrap: pretty;
 }
+
+/* ⚠ THE PORTRAIT IS AN ID PHOTOGRAPH ON A WHITE STUDIO GROUND, AND ON AN INK
+   PAGE THAT WHITE IS THE BRIGHTEST SURFACE ON THE SITE. It was previously
+   tilted and framed like a Polaroid, which made a costume of the problem
+   instead of solving it. The frame below is square and level; a warm grey
+   multiply knocks the studio white down to a paper tone so the picture sits on
+   the page as a printed plate rather than punching a hole in it. Replace the
+   filters, not the layout, if a photograph on a real background ever arrives. */
 .about-page .about-opening figure {
-  transform: none;
-  background: transparent;
-  color: var(--w-ink-2);
-  padding: 0;
+  position: relative;
+  margin: 0;
   width: 100%;
-  align-self: end;
+  max-width: 21rem;
+  justify-self: end;
+  isolation: isolate;
 }
+
+.about-page .about-opening figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #b6b0a6;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
 .about-page .about-opening img {
-  max-height: 36rem;
-  aspect-ratio: 0.9;
-  filter: saturate(0.75);
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 0.88;
+  object-fit: cover;
+  object-position: 50% 38%;
+  border: 1px solid var(--w-rule);
+  filter: saturate(0.82) contrast(1.04);
+}
+
+.about-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 19rem);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid var(--w-rule);
+  padding-top: clamp(2rem, 4vw, 3rem);
+}
+
+.about-prose p {
+  max-width: 62ch;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--w-ink);
+  text-wrap: pretty;
+}
+
+.about-prose p + p {
+  margin-top: 1.5rem;
+}
+
+.about-credentials > div + div {
+  margin-top: 1.5rem;
+}
+
+.about-credentials p {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--w-ink-2);
+  text-wrap: pretty;
+}
+
+.about-evidence {
+  border-top: 1px solid var(--w-rule);
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
+}
+
+.about-evidence h2,
+.about-timeline h2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.about-evidence ol {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+}
+
+.about-evidence li {
+  border-top: 1px solid var(--w-rule);
+  padding-top: 1rem;
+}
+
+.about-evidence li p {
+  margin: 0.6rem 0 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--w-ink);
+  text-wrap: pretty;
+}
+
+.about-evidence li a {
+  color: var(--w-accent);
+  border-bottom: 1px solid transparent;
+  transition: border-color 180ms;
+}
+
+.about-evidence li a:hover {
+  border-bottom-color: currentColor;
+}
+
+.about-timeline {
+  border-top: 1px solid var(--w-rule);
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
 }
 
 /* The catalogue stays calm; only its selected specimen changes material. */
@@ -1094,17 +1210,20 @@ body[data-world="cardio"] {
     font-size: 0.75rem;
   }
   .about-page .about-opening {
-    grid-template-columns: 1fr;
-    padding-top: 2rem;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
   }
   .about-page .about-opening h1 {
-    margin-right: 0;
-    font-size: clamp(3.6rem, 14vw, 6rem);
+    font-size: clamp(2.4rem, 11vw, 4rem);
   }
   .about-page .about-opening figure {
-    max-width: none;
-    width: 85%;
-    justify-self: end;
+    order: -1;
+  }
+  .about-page .about-opening img {
+    max-width: 15rem;
+  }
+  .about-body {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 @media (prefers-reduced-motion: reduce) {

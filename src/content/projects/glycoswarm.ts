@@ -52,9 +52,9 @@ export const glycoswarm: Project = {
   ],
 
   home: {
-    headline: "Four specialists. One decision.",
-    body: "I built a LangGraph system where renal, retinal, neuropathy and cardiovascular agents work in parallel, then hand their evidence to a synthesis agent that decides what matters most.",
-    coda: "The diagram below isn't decoration. It's the architecture.",
+    headline: "Four specialists read the same blood panel at once.",
+    body: "A prototype for diabetes screening. Instead of one model answering everything, four agents each look at a different organ system, then hand their findings to a fifth that ranks what matters. I designed the graph and led the build.",
+    coda: "The diagram is the running topology, not an illustration of it.",
     figure: "gs-graph",
     figureCaption:
       "Select a specialist to isolate it. The others dim, and its inputs, its job and what it contributes to synthesis appear.",
@@ -65,7 +65,7 @@ export const glycoswarm: Project = {
   sections: [
     {
       n: "01",
-      heading: "The graph is the product",
+      heading: "How the graph is wired",
       blocks: [
         { kind: "figure", id: "gs-graph" },
         {

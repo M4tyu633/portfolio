@@ -20,16 +20,17 @@ export function KneeWorld({ project }: { project: Project }) {
       </div>
       <div className="mri-composition">
         <div className="mri-copy">
-          <p className="u-meta">Six views. Twelve findings.</p>
+          <p className="u-meta">Six views · twelve findings</p>
           <h2 id="w05-title" className="u-display">
-            The scan stays
+            A reading station
             <br />
-            at the center.
+            for knee MRI.
           </h2>
           <p>
-            I built the path from raw DICOM to a multi-view model and a browser
-            reading station. Compare held-out scores with the radiologist’s
-            annotations.
+            A model that scores twelve findings from a knee MRI study, and a
+            viewer that puts its scores next to the radiologist&rsquo;s own
+            notes. I built the whole chain: reading the raw scan files, pulling
+            labels out of free-text reports, training the model, and serving it.
           </p>
           <div className="mri-score">
             <strong>0.843</strong>
@@ -40,7 +41,9 @@ export function KneeWorld({ project }: { project: Project }) {
             </span>
           </div>
           <p className="clinical-note">
-            0.997 in-sample. The distinction is part of the work.
+            The same model scores 0.997 on studies it was trained on. 0.843 is
+            the number measured on studies it had never seen, so 0.843 is the
+            one printed here.
           </p>
           <Link className="room-exit" href={`/work/${project.slug}`}>
             Inside the reading station →
@@ -81,16 +84,17 @@ export function CardioWorld({ project }: { project: Project }) {
       </div>
       <div className="cardio-composition">
         <div className="cardio-copy">
-          <p className="u-meta">Input → Attribution → Risk</p>
+          <p className="u-meta">Input → attribution → risk</p>
           <h2 id="w06-title" className="u-display">
             Change a value.
             <br />
             See what moved.
           </h2>
           <p>
-            I built the data pipeline, compared models, and brought the exported
-            Logistic Regression model into the browser. Every input contributes
-            to a score you can inspect.
+            A heart-risk model you can take apart. Change one measurement and
+            the page shows exactly how much it moved the score, and in which
+            direction. I prepared the data, compared the models, and ran the
+            chosen one in the browser rather than on a server.
           </p>
           <p className="clinical-note">
             920 UCI records · four hospitals · local inference.

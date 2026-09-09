@@ -152,7 +152,7 @@ export const entrances: Entrance[] = [
   {
     n: "01",
     title: "Tumbang Preso",
-    line: "A four-player street game, empty project to shipped build in five days.",
+    line: "A four-player online game of the Filipino street game, built from an empty project to a competition build in five days.",
     did: "I built the whole game.",
     result: "1st Place · Gear Up NCR 2026",
     href: "/work/tumbang-preso",
@@ -169,7 +169,7 @@ export const entrances: Entrance[] = [
   {
     n: "02",
     title: "eGovMed",
-    line: "Eight government services behind one hospital visit, each with its own failure boundary.",
+    line: "A hospital app that carries one patient through eight separate government services in a single visit.",
     did: "Full-stack, every integration, and the pitch.",
     result: "Winner, 1 of 10 · eGov Hackathon PH",
     href: "/work/egovmed",
@@ -188,7 +188,7 @@ export const entrances: Entrance[] = [
   {
     n: "03",
     title: "GlycoSwarm AI",
-    line: "Four specialists read different evidence in parallel before anything is combined.",
+    line: "An AI prototype where four specialist agents inspect different diabetes risks at the same time, then combine what they found.",
     did: "Lead developer. I designed the graph.",
     result: "AMD Developer Hackathon · Track 3",
     href: "/work/glycoswarm-ai",
@@ -206,7 +206,7 @@ export const entrances: Entrance[] = [
   {
     n: "04",
     title: "CHIP-8",
-    line: "An interpreter in C++17 with a debugger that shows the machine changing while a ROM runs.",
+    line: "An emulator for a 1970s virtual computer, written from scratch in C++, with a debugger that shows the machine executing.",
     did: "Core, debugger, web build, six ROMs.",
     result: "106 assertions · runs in this browser",
     href: "/work/chip-8-emulator",
@@ -235,7 +235,7 @@ export const entrances: Entrance[] = [
   {
     n: "05",
     title: "Knee MRI Reader",
-    line: "Twelve findings scored from a multi-series DICOM study, in a reading station with real series previews.",
+    line: "A model that scores twelve knee findings from an MRI study, and a browser viewer to read the scans beside its scores.",
     did: "The whole chain, from raw DICOM to the browser.",
     result: "0.843 macro AUC · strict out-of-fold",
     href: "/work/knee-mri-reader",
@@ -253,7 +253,7 @@ export const entrances: Entrance[] = [
   {
     n: "06",
     title: "CardioSense",
-    line: "Change a biomarker and follow its signed contribution through to a probability computed in the page.",
+    line: "A heart-risk model you can take apart: change one measurement and watch exactly how much it moved the score.",
     did: "Data preparation, model comparison, and the browser instrument.",
     result: "0.919 holdout AUC · research comparison",
     href: "/work/heart-disease-prediction",

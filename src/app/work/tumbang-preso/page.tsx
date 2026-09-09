@@ -10,6 +10,7 @@ import NetworkFigure from "@/components/figures/NetworkFigure";
 
 import GameClip from "@/components/media/GameClip";
 import PhotoStrip from "@/components/media/PhotoStrip";
+import ThemeTrack from "@/components/media/ThemeTrack";
 import { tumbangPreso as p } from "@/content/projects/tumbang-preso";
 import { site } from "@/content/site";
 
@@ -290,6 +291,12 @@ export default function TumbangPage() {
                 caption="Pick a person, a lata and a tsinelas. All three reach gameplay."
               />
             </div>
+
+            <ThemeTrack
+              src="/sound/tumbang-theme.mp3"
+              label="the menu theme"
+              note="Written for the build. It is what plays behind the screen above."
+            />
           </div>
         </section>
 

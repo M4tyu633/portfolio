@@ -173,8 +173,6 @@ function compile(gl: WebGL2RenderingContext, type: number, source: string) {
 
 export default function CoverField({
   src,
-  /** Bumped by the caller on every project change; re-runs the resolve. */
-  token,
   /** ⚠ `contain` for an interface screenshot. A UI cropped to fill a landscape
    *  frame shows a random corner of itself and identifies nothing, which is
    *  what made three of these covers unreadable. */
@@ -182,7 +180,6 @@ export default function CoverField({
   onSwap,
 }: {
   src: string;
-  token: string;
   fit?: "cover" | "contain";
   onSwap?: () => void;
 }) {
@@ -192,11 +189,9 @@ export default function CoverField({
    * re-rendered React on pointer move would be a worse version of the thing it
    * is trying to impress you with. */
   const srcRef = useRef(src);
-  const tokenRef = useRef(token);
   const fitRef = useRef(fit);
   const onSwapRef = useRef(onSwap);
   srcRef.current = src;
-  tokenRef.current = token;
   fitRef.current = fit;
   onSwapRef.current = onSwap;
 
@@ -446,12 +441,26 @@ export default function CoverField({
     let current = srcRef.current;
     const stage = canvas.parentElement;
     let published = -1;
-    let readoutAt = -1;
-    const readout = document.createElement("p");
-    readout.className = "cover-readout";
-    readout.setAttribute("aria-hidden", "true");
-    stage?.appendChild(readout);
-    const nf = new Intl.NumberFormat("en-US");
+
+    /* ⚠ THE FIRST RESOLVE AND EVERY LATER ONE ARE DIFFERENT EVENTS.
+     *
+     * On arrival the reconstruction IS the loading: the page has nothing else
+     * to show, and taking about a second and a half to derive the work out of
+     * a cloud is the opening. After that it is a selection change, and a
+     * selection change that takes two seconds is not an effect, it is latency.
+     * Somebody moving a pointer across six index rows would spend twelve
+     * seconds watching the cover catch up with them.
+     *
+     * So later switches dip to a floor rather than all the way to noise, and
+     * come back roughly seven times faster: about a quarter of a second, which
+     * still reads as a re-derive and lands before the pointer has moved on. */
+    let first = true;
+    const SCATTER_FLOOR = 0.34;
+    const RATES = {
+      firstUp: 0.62,
+      down: 12,
+      up: 3.2,
+    };
 
     /* --- the loop --------------------------------------------------------- */
     let raf = 0;
@@ -472,21 +481,20 @@ export default function CoverField({
       }
 
       if (state === "scattering") {
-        /* Scatter down to 0 */
-        resolve = Math.max(0, resolve - dt * 3.8);
-        if (resolve <= 0.001) {
-          resolve = 0;
+        resolve = Math.max(SCATTER_FLOOR, resolve - dt * RATES.down);
+        if (resolve <= SCATTER_FLOOR + 0.001) {
+          resolve = SCATTER_FLOOR;
           current = target;
           loadTexture(current);
           onSwapRef.current?.();
           state = "resolving";
         }
       } else if (state === "resolving") {
-        /* Deliberate reveal on the way up */
-        resolve = Math.min(1, resolve + dt * 0.52);
+        resolve = Math.min(1, resolve + dt * (first ? RATES.firstUp : RATES.up));
         if (resolve >= 1) {
           resolve = 1;
           state = "idle";
+          first = false;
         }
       }
 
@@ -498,18 +506,6 @@ export default function CoverField({
       if (Math.abs(shown - published) > 0.02 || shown === 1 || shown === 0) {
         published = shown;
         stage?.style.setProperty("--resolve", shown.toFixed(3));
-      }
-
-      /* ⚠ THE READOUT EXISTS BECAUSE THE EFFECT DID NOT EXPLAIN ITSELF. */
-      const pct = Math.round(shown * 100);
-      if (pct !== readoutAt) {
-        readoutAt = pct;
-        readout.textContent =
-          pct >= 100
-            ? `${nf.format(count)} points · ${tokenRef.current}`
-            : state === "scattering"
-            ? `Transitioning · ${String(pct).padStart(2, "0")}%`
-            : `Reconstructing ${tokenRef.current} · ${String(pct).padStart(2, "0")}%`;
       }
 
       gl.uniform1f(u.resolve, reduced ? 1 : resolve);
@@ -570,7 +566,6 @@ export default function CoverField({
       gl.deleteShader(fs);
       gl.deleteBuffer(buf);
       gl.deleteTexture(tex);
-      readout.remove();
     };
     /* ⚠ EMPTY DEPS ON PURPOSE. The loop reads `srcRef.current`, so a project
      * change is picked up inside the frame instead of by re-running this
@@ -578,10 +573,6 @@ export default function CoverField({
      * context, its shaders, its buffer and its texture six times as somebody
      * moves a pointer across the index. */
   }, []);
-
-  useEffect(() => {
-    tokenRef.current = token;
-  }, [token]);
 
   /* ⚠ THE CANVAS IS ALWAYS RENDERED, AND IT IS NOT GATED ON A HYDRATION FLAG.
    * The first version returned `null` until a `useHydrated` effect had run,

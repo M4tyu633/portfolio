@@ -107,6 +107,16 @@
   font-size: 0.75rem;
 }
 
+/* A few words for a reader outside the Philippines. Set as prose rather than
+   metadata, because it is the one thing in the row that has to be read. */
+.receipt-context {
+  color: var(--w-ink-2);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+
 /* The result is what the page is for, so it is the loudest thing in the row
    and it is set in the measured accent: an awarded fact, not a control. */
 .receipt-result {

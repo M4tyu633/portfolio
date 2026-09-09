@@ -50,7 +50,7 @@ export const egovmed: Project = {
 
   home: {
     headline: "Eight government APIs. One patient flow.",
-    body: "I connected identity, triage, verification, booking, messaging and payments into one patient journey, with explicit safeguards at each service boundary.",
+    body: "A patient app for Philippine public hospitals, built on the government's own eGovPH services. I connected identity, triage, verification, booking, messaging and payments into one visit, with an explicit safeguard at every service boundary.",
     coda: "eGovMed was selected as one of ten winning projects at the eGov Hackathon PH 2026.",
     figure: "eg-route",
     figureCaption:
@@ -62,7 +62,7 @@ export const egovmed: Project = {
   sections: [
     {
       n: "01",
-      heading: "A queue is already too late",
+      heading: "What actually happens at the counter",
       standfirst:
         "The idea was to assess and route the patient before they join it.",
       blocks: [
@@ -99,7 +99,7 @@ export const egovmed: Project = {
     },
     {
       n: "03",
-      heading: "Decisions, not features",
+      heading: "Six decisions, and the constraint behind each one",
       standfirst:
         "I assumed real health information from the start, so most of my time went here instead of into features.",
       blocks: [

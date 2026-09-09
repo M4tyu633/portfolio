@@ -1,7 +1,5 @@
-/* ===========================================================================
- * IDENTITY, CONTACT, NAVIGATION, METADATA.
- * Everything that is true of the whole site rather than of one project.
- * ======================================================================== */
+/* Identity, contact, navigation, metadata. Everything true of the whole site
+ * rather than of one project. */
 
 export const site = {
   name: "Matthew Labrador",
@@ -9,11 +7,11 @@ export const site = {
   title: "Matthew Labrador",
   titleTemplate: "%s · Matthew Labrador",
   description:
-    "Games, AI systems, public-sector software and low-level experiments by Matthew Labrador, CS at UP Manila. An archive of things that were built, measured, and changed.",
+    "Computer science student at UP Manila. Games, AI systems, public-sector software and low-level experiments, built end to end and measured.",
   locale: "en_PH",
 };
 
-/** The three-part metadata line that opens the site and closes every page. */
+/** The three-part metadata line that closes every page. */
 export const stamp = ["Matthew Labrador", "Manila", "Computer Science"];
 
 export const contact = {
@@ -23,63 +21,37 @@ export const contact = {
   linkedin: "https://www.linkedin.com/in/m4tyuuu1/",
   facebook: "https://www.facebook.com/matthewtlabrador",
   resume: "/Matthew_Labrador_Resume.pdf",
-  heading: "Got something difficult?",
-  body: "I'm open to internships, research, technical collaborations and competition teams. If you're working on something with real constraints, I'd like to hear about it.",
+  heading: "Contact",
+  body: "I'm open to internships, research, technical collaborations and competition teams. Email is the fastest way to reach me.",
 };
 
 /* A bare `mailto:` silently does nothing on a machine with no mail client
- * configured, which is most people on a laptop, and that is exactly what he
- * reported. Gmail's compose window opens in any browser; the copy button in the
- * footer covers everyone else. */
+ * configured, which is most people on a laptop. Gmail's compose window opens in
+ * any browser; the footer prints the address itself for everyone else. */
 export const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
   contact.email,
 )}`;
 
 export const nav = [
   { label: "Work", href: "/work" },
-  // ⚠ The LABEL is "Achievements" and the PAGE TITLE is "Receipts". Navigation
-  // optimises for clarity; a page title can carry personality. Calling the nav
-  // item "Receipts" made a real destination read as a joke.
+  // ⚠ The nav label is "Achievements"; the page's display heading is
+  // "Receipts", printed under an "Achievements" kicker so the destination is
+  // never in doubt. Calling the nav item "Receipts" made a real page read as a
+  // joke.
   { label: "Achievements", href: "/achievements" },
   { label: "About", href: "/about" },
 ];
 
-export const utilities = [
-  { label: "Resume", href: contact.resume, external: true },
-  { label: "GitHub", href: contact.github, external: true },
-  { label: "LinkedIn", href: contact.linkedin, external: true },
-];
-
-/* ---------------------------------------------------------------------------
- * The opening. Every word of this was written against the composition rather
- * than lifted from a résumé, which is why there is no "passionate" in it and no
- * three-role subtitle.
- * ------------------------------------------------------------------------ */
+/* The opening. */
 export const opening = {
   statement: "I keep picking projects that are slightly unreasonable.",
-  body: "I'm a computer science student at UP Manila. I build games, civic systems, AI tools, and the infrastructure that brings them to life.",
-  coda: "Then I figure out why.",
-  /* The alternative hero, tested against the composition and kept: it is the
-   * line the /work archive opens with, where the long version would be a
-   * second introduction on a page nobody arrives at first. */
-  short: "I like the part where it gets complicated.",
+  body: "I'm a computer science student at UP Manila. I build complete systems rather than pieces of them: interface, backend, model, netcode and deployment, usually on projects I have no business finishing in the time available.",
   shortBody:
-    "Games, AI systems, public-sector software and low-level experiments by Matthew Labrador, CS @ UP Manila.",
+    "Six projects, in the order they matter. Every row says what I built and where it went.",
 };
 
-/** The index strip under the opening. Order is the order of the homepage. */
-export const worldIndex = [
-  { n: "01", title: "Tumbang Preso", tag: "Game / Multiplayer", href: "#w01" },
-  { n: "02", title: "eGovMed", tag: "Civic / Healthcare", href: "#w02" },
-  { n: "03", title: "GlycoSwarm AI", tag: "Agents / Clinical", href: "#w03" },
-  { n: "04", title: "CHIP-8", tag: "Systems / Emulation", href: "#w04" },
-];
-
-/* ---------------------------------------------------------------------------
- * The technical index. Capability shown through the work that proves it, not
- * as forty pills in five groups. Each row names where it was used, and that is
- * the entire claim being made.
- * ------------------------------------------------------------------------ */
+/* One row per technology, and the row's whole content is where it was used. A
+ * capability with no work under it does not appear. */
 export const technicalIndex: {
   name: string;
   where: string;
@@ -98,7 +70,7 @@ export const technicalIndex: {
   },
   {
     name: "LangGraph · LangChain",
-    where: "GlycoSwarm's four-specialist StateGraph",
+    where: "GlycoSwarm's four-specialist agent graph",
     slugs: ["glycoswarm-ai"],
   },
   {
@@ -113,7 +85,7 @@ export const technicalIndex: {
   },
   {
     name: "Node · Express · Redis",
-    where: "eGovMed's services and its single-use liveness sessions",
+    where: "eGovMed's services and its single-use identity sessions",
     slugs: ["egovmed"],
   },
   {

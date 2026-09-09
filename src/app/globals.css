@@ -86,7 +86,7 @@
   --w-ground-3: #1b1b20;
   --w-ink: #f4f2ee;
   --w-ink-2: #a8a5a0;
-  --w-ink-3: #74716c;
+  --w-ink-3: #94918b;
   --w-rule: #f4f2ee26;
   --w-rule-2: #f4f2ee12;
   --w-accent: #f4f2ee;
@@ -109,7 +109,7 @@
   --w-ground-3: #171722;
   --w-ink: #d7dcec;
   --w-ink-2: #99a1b8;
-  --w-ink-3: #666e85;
+  --w-ink-3: #8a92aa;
   --w-rule: #1c1f2b;
   --w-rule-2: #14161f;
   --w-accent: #8f98b4;
@@ -126,7 +126,7 @@
   --w-ground-3: #2f2b26;
   --w-ink: #fcd39f; /* honey quartz, the game's own UI type */
   --w-ink-2: #fcd39fbd;
-  --w-ink-3: #fcd39f85;
+  --w-ink-3: #fcd39f9e;
   --w-rule: #fcd39f30;
   --w-rule-2: #fcd39f17;
   --w-accent: #fd8041; /* persimmon: the marker, the thing that moved */
@@ -168,7 +168,7 @@
   --w-ground-3: #fcd39f;
   --w-ink: #55290f;
   --w-ink-2: #97491b;
-  --w-ink-3: #55290f8c;
+  --w-ink-3: #55290fb3;
   --w-rule: #55290f38;
   --w-rule-2: #55290f1a;
   --w-accent: #980715;
@@ -233,7 +233,7 @@
   --w-ground-3: #17212b;
   --w-ink: #dfe5e8;
   --w-ink-2: #dfe5e8a8;
-  --w-ink-3: #dfe5e874;
+  --w-ink-3: #dfe5e89e;
   --w-rule: #dfe5e828;
   --w-rule-2: #dfe5e814;
   --w-accent: #10b981; /* the dashboard's own green primary */
@@ -264,7 +264,7 @@
   --w-ground-3: #151d20;
   --w-ink: #d5e3de;
   --w-ink-2: #d5e3dea0;
-  --w-ink-3: #d5e3de70;
+  --w-ink-3: #d5e3dea0;
   --w-rule: #7ee0b826;
   --w-rule-2: #d5e3de12;
   --w-accent: #7ee0b8; /* the debugger's phosphor */
@@ -291,7 +291,7 @@
   --w-ground-3: #1b1b1e;
   --w-ink: #f2ece4;
   --w-ink-2: #f2ece4a8;
-  --w-ink-3: #f2ece476;
+  --w-ink-3: #f2ece4a2;
   --w-rule: #f2ece426;
   --w-rule-2: #f2ece412;
   --w-accent: #e8b57e;
@@ -314,7 +314,7 @@
   --w-ground-3: #171722;
   --w-ink: #eceaf2;
   --w-ink-2: #eceaf2a8;
-  --w-ink-3: #eceaf276;
+  --w-ink-3: #eceaf2a2;
   --w-rule: #ff2d5533;
   --w-rule-2: #eceaf214;
   --w-accent: #ff2d55;
@@ -1302,42 +1302,11 @@
   margin-top: 1rem;
   line-height: 1.7;
 }
-.about-opening {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  align-items: center;
-  gap: 6vw;
-  padding: 4rem 0 5rem;
-}
-.about-opening h1 {
-  font-size: clamp(3rem, 6vw, 6rem);
-  line-height: 1.02;
-  letter-spacing: -0.055em;
-  margin: 2rem 0;
-}
-.about-opening div > p:last-child {
-  max-width: 32ch;
-  font-size: 1.2rem;
-  line-height: 1.6;
-}
-.about-opening figure {
-  transform: rotate(3deg);
-  padding: 1rem;
-  background: #fff;
-  color: #252525;
-  width: 90%;
-  justify-self: center;
-}
-.about-opening img {
-  width: 100%;
-  max-height: 480px;
-  object-fit: cover;
-  object-position: top;
-}
-.about-opening figcaption {
-  font-size: 0.8125rem;
-  padding: 0.9rem 0 0.3rem;
-}
+/* ⚠ The /about opening lives entirely in css/finish.css. There used to be a
+   second, older definition here — a tilted white Polaroid figure and a 32ch
+   paragraph — and because it loaded later it silently beat the newer sheet on
+   equal specificity. Anything about that page goes in finish.css. */
+
 @supports (animation-timeline: view()) {
   .event-trophy {
     animation: photo-settle linear both;
@@ -1357,8 +1326,7 @@
 }
 @media (max-width: 640px) {
   .event-account,
-  .event-result,
-  .about-opening {
+  .event-result {
     grid-template-columns: 1fr;
     gap: 2rem;
     padding: 3rem 5vw;
@@ -1368,13 +1336,6 @@
   }
   .event-trophy {
     width: 85%;
-  }
-  .about-opening {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .about-opening figure {
-    max-width: 330px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

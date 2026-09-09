@@ -38,8 +38,8 @@
      that dissolved the dark rooms cleanly still left a hard blue edge on the
      bright one. The cost of raising it is zero, because the rooms pay it back
      as padding and the seam's flow height is unchanged. */
-  --seam-fade: clamp(3.5rem, 18svh, 10rem);
-  --seam-band: clamp(5.5rem, 16svh, 9rem);
+  --seam-fade: clamp(2.5rem, 11svh, 6.5rem);
+  --seam-band: clamp(3.5rem, 9svh, 5.5rem);
 }
 
 .seam {
@@ -356,18 +356,23 @@
   pointer-events: none;
 }
 
-/* ⚠ BLURRED, AND THAT IS NOT A STYLE CHOICE. Five of these six plates are
-   screenshots of an interface, so they are FULL OF SMALL TEXT. Unblurred, the
-   room's real headline sits on top of a field of ghost words and the whole
-   surface reads as a rendering bug. Three pixels is enough to turn the
-   screenshot into a material and still leave the shapes recognisable. The
-   Tumbang plate is exempt: its art is a render of a street, with nothing in it
-   to misread. */
+/* ⚠ HEAVILY BLURRED, AND THAT IS NOT A STYLE CHOICE. Five of these six plates
+   are screenshots of an interface, and by the time a plate fills a viewport its
+   type is enormous. At three pixels the GlycoSwarm plate still spelled out its
+   own headline behind the room heading, so the room read as two competing
+   titles and a rendering fault. Eleven turns the screenshot into a material
+   while the layout shapes stay recognisable.
+
+   Scaled, not animated: six of these are on the homepage at once, and a
+   permanently drifting full-viewport blurred layer is six large composited
+   surfaces repainting for a motion nobody can perceive over 76 seconds. */
 .room-plate img {
-  opacity: 0.55;
-  filter: blur(3px) saturate(0.92);
+  opacity: 0.42;
+  /* 1.09, not 1.0: a blurred layer at its natural size shows a soft edge all
+     the way round. */
+  transform: scale(1.09);
   transform-origin: 50% 55%;
-  animation: room-drift 76s ease-in-out infinite alternate;
+  filter: blur(11px) saturate(0.9);
 }
 
 .room-plate::after {
@@ -384,24 +389,6 @@
       var(--plate-veil-a) 100%
     ),
     radial-gradient(115% 85% at 50% 46%, transparent 28%, var(--plate-veil-c) 100%);
-}
-
-/* Starts at 1.09, not 1.0: the plate is blurred, and a blurred layer at its
-   natural size shows a soft edge all the way round. */
-@keyframes room-drift {
-  from {
-    transform: scale(1.09) translate3d(0, 0, 0);
-  }
-  to {
-    transform: scale(1.16) translate3d(-1.1%, -1.5%, 0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .room-plate img {
-    animation: none;
-    transform: scale(1.09);
-  }
 }
 
 /* Every room that carries a plate has to lift its own content above it, and

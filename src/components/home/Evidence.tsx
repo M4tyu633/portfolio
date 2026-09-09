@@ -1,18 +1,14 @@
 import Image from "next/image";
 
-/* ⚠ THE WRAPPER IS LOAD-BEARING, NOT DECORATION.
+/* Laid out with `@container` queries so it responds to its own width rather
+ * than the window's, which is what makes it survive browser zoom.
  *
- * The composition below is laid out entirely with `@container` queries so it
- * responds to its OWN width rather than the window's, which is what makes it
- * survive browser zoom: zoom changes the viewport in CSS pixels, and a
- * container shrinks with it.
- *
- * But an element cannot query itself. `container-type: inline-size` on
- * `.evidence-composition` lets its CHILDREN query it and does nothing for its
- * own `grid-template-columns`, which silently kept the one-column fallback
- * while the children moved into their wide-layout positions. That is what put
- * the plaque across the middle of the stage photograph. The size lives on
- * `.evidence-frame`; the composition reads it. */
+ * ⚠ The container size lives on `.evidence-frame`, not on
+ * `.evidence-composition`. An element cannot query itself: `container-type` on
+ * the composition lets its children query it and does nothing for its own
+ * `grid-template-columns`, which silently kept the one-column fallback while
+ * the children moved into wide-layout positions, putting the plaque across the
+ * middle of the stage photograph. */
 export default function Evidence() {
   return (
     <div className="evidence-frame">
@@ -35,7 +31,9 @@ export default function Evidence() {
             height={2134}
             sizes="(min-width: 900px) 28vw, 50vw"
           />
-          <figcaption>The plaque. The names. The result.</figcaption>
+          <figcaption>
+            The first-place plaque and the team certificates.
+          </figcaption>
         </figure>
         <p className="evidence-result">
           <span>01 / Gear Up NCR</span>

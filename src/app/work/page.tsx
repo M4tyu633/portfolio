@@ -24,19 +24,14 @@ export default function WorkPage() {
       <main id="main" className="flex-1">
         <div className="mx-auto max-w-[92rem] px-5 sm:px-8">
           <header className="grid gap-x-16 gap-y-6 py-14 sm:py-20 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-end">
-            <h1 className="u-display text-[clamp(2.4rem,6vw,5.25rem)]">
-              {opening.short}
-            </h1>
-            <p className="u-prose">{opening.shortBody}</p>
+            <h1 className="u-display text-[clamp(2.4rem,6vw,5.25rem)]">Work</h1>
+            <p className="u-prose text-ink-2">{opening.shortBody}</p>
           </header>
 
           <Archive projects={projects} />
 
-          {/* ---------------------------------------------------------------
-           * The technical index. Not forty pills in five groups: one row per
-           * technology, and the row's whole content is where it was used. A
-           * capability with no work under it does not appear.
-           * ------------------------------------------------------------- */}
+          {/* One row per technology, and the row's whole content is where it
+              was used. A capability with no work under it does not appear. */}
           <section aria-labelledby="tech-index" className="py-16 sm:py-20">
             <h2
               id="tech-index"
@@ -44,8 +39,9 @@ export default function WorkPage() {
             >
               What it was built with
             </h2>
-            <p className="u-prose mt-4">
-              Shown through the work that proves it. Each row says where.
+            <p className="u-prose text-ink-2 mt-4">
+              Each row says where it was used. Nothing appears here without work
+              under it.
             </p>
 
             <dl className="tech-index mt-10">

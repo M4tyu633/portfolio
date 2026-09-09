@@ -32,14 +32,21 @@ export default function AchievementsPage() {
       <Nav />
       <main id="main" className="receipts-page flex-1">
         <div className="mx-auto max-w-[92rem] px-5 sm:px-8">
+          {/* ⚠ The nav says "Achievements" and this page is called "Receipts",
+              so the kicker prints the nav's word above the display heading. A
+              reader arriving from the bar should never have to wonder whether
+              they landed on the page they pressed. */}
           <header
             className="grid gap-x-16 gap-y-6 py-14 sm:py-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end"
             data-seq="rise"
           >
-            <h1 className="u-display text-[clamp(3rem,10vw,8rem)]">
-              {receipts.title}
-            </h1>
-            <p className="u-prose">{receipts.standfirst}</p>
+            <div>
+              <p className="u-meta text-ink-3">Achievements</p>
+              <h1 className="u-display mt-2 text-[clamp(3rem,10vw,8rem)]">
+                {receipts.title}
+              </h1>
+            </div>
+            <p className="u-prose text-ink-2">{receipts.standfirst}</p>
           </header>
         </div>
 
@@ -83,6 +90,9 @@ function Row({ a }: { a: Achievement }) {
       <span className="receipt-name">
         <span className="u-display">{a.title}</span>
         <span className="u-meta receipt-org">{a.org}</span>
+        {a.context ? (
+          <span className="receipt-context">{a.context}</span>
+        ) : null}
       </span>
       <span className="receipt-result">{a.result}</span>
     </div>

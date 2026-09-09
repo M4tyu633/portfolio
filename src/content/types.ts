@@ -184,6 +184,10 @@ export type Achievement = {
   /** "1st Place", "Winner, 1 of 10", "5th Place". */
   result: string;
   org: string;
+  /** A few words for a reader who has no reason to know what this is: what
+   *  kind of competition it was, or what a Philippine credential means. Never
+   *  a sentence, and only where the title does not already say it. */
+  context?: string;
   year: string;
   /** Tier A gets a page, B expands in place, C is a row and nothing more. */
   tier: "A" | "B" | "C";

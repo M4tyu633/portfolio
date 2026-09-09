@@ -1,47 +1,52 @@
 import type { LabEntry } from "./types";
 
-/* ===========================================================================
- * ABOUT and LAB.
- * The two index-level pages whose content is not a project or a result.
- * ======================================================================== */
+/* /about and /lab: the two index-level pages whose content is not a project or
+ * a result. */
 
 export const about = {
-  heading: "There’s a person behind all this.",
   paragraphs: [
-    "I'm a BS Computer Science student at UP Manila and a DOST undergraduate scholar. Most of my projects end up crossing boundaries I wasn't planning to cross: networking in a game, security in a healthcare system, deployment around an AI model. I like that part.",
-    "I also like having receipts. If a collision system feels unreliable, I measure it. If two API documents contradict each other, I test both. If software can fail in a dangerous way, I want to decide what failure should look like before I make the happy path pretty.",
-    "Before computer science, I spent three years competing in debate. It still shows up every time I have five minutes to explain a technical system to judges who weren't there while I built it.",
-  ],
-  /* ⚠ NOT NEW COPY. These three lines are lifted verbatim out of the second
-   * paragraph below, because they are the only sentences on the site that say
-   * how he works rather than what he built, and they were buried in the middle
-   * of a paragraph at 19px. Set at display scale they do the job the direction
-   * asks of this page: make someone want to work with him. If the paragraph is
-   * ever reworded, reword these with it. */
-  credo: [
-    "If a collision system feels unreliable, I measure it.",
-    "If two API documents contradict each other, I test both.",
-    "If software can fail in a dangerous way, I decide what failure looks like before I make the happy path pretty.",
+    "I'm a BS Computer Science student at UP Manila and a DOST undergraduate scholar. Most of my projects end up crossing a boundary I wasn't planning to cross. A game turned into a networking problem. A hospital app turned into an identity and payments problem. An AI project turned into a deployment problem. I like that part, and it is most of the reason the work here looks so scattered.",
+    "The other reason is that I keep taking on things with a deadline attached. Five days for a four-player game. Thirty-six hours for a system on eight government APIs. It leaves marks: some of what I build is blunt, because I had time for the version I could verify and not for the clever one.",
+    "Before computer science I spent three years competing in debate. That is the part of my background that shows up most often in engineering: I am used to defending a claim I made twenty minutes ago to someone who has read the same material and disagrees, and to explaining a system in five minutes to judges who weren't there while it was built.",
   ],
   portrait: {
     src: "/images/profile.jpg",
     alt: "Matthew Labrador.",
   },
-  /* Margin notes. Rendered in the gutter on desktop and folded into the flow on
-   * mobile, anchored to the paragraph index they annotate. */
-  marginalia: [
+  /* Evidence, not maxims. Each row is one thing that actually happened on a
+   * named project, so the claim underneath it is checkable. */
+  evidence: [
     {
-      after: 0,
+      project: "Tumbang Preso",
+      href: "/work/tumbang-preso",
+      label: "Game physics",
+      text: "The engine's collision callbacks felt unreliable, so I staged 36 contacts and logged both tests. 16 area overlaps never fired, and they clustered by target. The build ships a host-side distance check instead.",
+    },
+    {
+      project: "Knee MRI Reader",
+      href: "/work/knee-mri-reader",
+      label: "Model evaluation",
+      text: "The model scores 0.997 macro AUC in-sample and 0.843 strictly out-of-fold. The headline number on this site is 0.843, because the other one is measured on studies the model has already seen.",
+    },
+    {
+      project: "eGovMed",
+      href: "/work/egovmed",
+      label: "Identity API",
+      text: "Two government documents disagreed about the liveness endpoint, so I ran a real session and a random UUID against it. Both returned byte-identical errors, which told me the failure mode I had to design for.",
+    },
+  ],
+  /* Short annotations for a reader outside the Philippines, who has no reason
+   * to know what a GWA or a DOST scholarship is. */
+  credentials: [
+    {
       label: "University Scholar",
-      text: "Cumulative GWA 1.0375. Expected BSCS 2029.",
+      text: "Cumulative GWA 1.0375. On the UP scale 1.0 is the highest possible grade. Expected BSCS 2029.",
     },
     {
-      after: 1,
-      label: "The measurements",
-      text: "36 contacts staged, 20 fired. 0.997 in-sample against 0.843 out-of-fold. A real liveness session and a random UUID returning byte-identical errors. Each of those changed something.",
+      label: "DOST Undergraduate Scholar",
+      text: "A Philippine government scholarship for students in science and engineering, awarded by the Department of Science and Technology.",
     },
     {
-      after: 2,
       label: "Debate",
       text: "NASH DC, PSDC, UP Diliman Debates, XSDC, ASDC. Quarterfinalist at the Ateneo Peace Debate.",
     },
@@ -65,7 +70,7 @@ export const timeline: {
     period: "2026",
     role: "Lead developer",
     org: "Gear Up NCR Esports Game Dev Challenge",
-    note: "1st place, and NCR's entry at the national finals.",
+    note: "1st place in Metro Manila, and the region's entry at the national finals.",
   },
   {
     period: "2026",
@@ -154,7 +159,7 @@ export const labEntries: LabEntry[] = [
     n: "06",
     title: "Agent topology explorer",
     blurb:
-      "GlycoSwarm's actual StateGraph. Four specialists in parallel, one synthesis stage.",
+      "GlycoSwarm's actual agent graph. Four specialists in parallel, one synthesis stage.",
     affordance: "Isolate a specialist and read what it contributes.",
     href: "/work/glycoswarm-ai#s01",
     status: "diagram",

@@ -8,38 +8,28 @@ import { certifications, contact } from "@/content/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "BS Computer Science at UP Manila, DOST undergraduate scholar. Most of my projects end up crossing boundaries I wasn't planning to cross.",
+    "BS Computer Science at UP Manila, DOST undergraduate scholar. Most of my projects end up crossing a boundary I wasn't planning to cross.",
 };
 
-/* ===========================================================================
- * ABOUT.
- *
- * After four worlds this page calms down completely. Editorial: one column of
- * prose, wide margins, and annotations in the gutter rather than a row of stat
- * cards. No skill percentages, no capability grid, no four-tile dashboard.
- *
- * The marginalia are anchored to the paragraph they annotate, and on a phone
- * they fold into the flow directly after it, which is what a margin note does
- * in a book that has been reset for a narrower page.
- * ======================================================================== */
+/* /about is the quietest page on the site, and that is the point. A reader
+ * arrives here after four or five project worlds; this one is a column of
+ * prose, a portrait, three pieces of evidence and a dated list. No credo, no
+ * capability grid, no stat cards. */
 
 export default function AboutPage() {
   return (
     <>
       <Nav />
       <main id="main" className="about-page flex-1">
-        <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
+        <div className="mx-auto max-w-[76rem] px-5 sm:px-8">
           <header className="about-opening" data-seq="rise">
             <div>
-              <p className="u-meta text-accent">Matthew Labrador · Manila</p>
-              <h1>
-                Always one more
-                <br />
-                <em>question.</em>
-              </h1>
-              <p>
-                Computer science at UP Manila. Games, systems, debate, and a
-                habit of asking one more question.
+              <p className="u-meta text-ink-3">About</p>
+              <h1>Matthew Labrador</h1>
+              <p className="about-standfirst">
+                Computer science at UP Manila. I build games, civic systems and
+                machine-learning tools, usually end to end, and usually with
+                less time than the problem deserves.
               </p>
             </div>
             <figure>
@@ -48,87 +38,67 @@ export default function AboutPage() {
                 alt={about.portrait.alt}
                 width={600}
                 height={750}
-                sizes="(min-width: 768px) 400px, 80vw"
+                sizes="(min-width: 900px) 26rem, 70vw"
                 priority
               />
-              <figcaption>
-                Usually building. Sometimes explaining what I built.
-              </figcaption>
             </figure>
           </header>
 
-          {/* ⚠ THE THREE LINES THAT MAKE THIS PAGE WORTH READING, AT SIZE.
-           * They were buried mid-paragraph at 19px, which is where a claim
-           * about how somebody works goes to be skipped. They are the same
-           * sentences, lifted; see content/about.ts. */}
-          <section className="credo" aria-label="How I work" data-seq="credo">
-            {about.credo.map((line, i) => (
-              <p key={line}>
-                <span className="u-meta">0{i + 1}</span>
-                <span className="u-display">{line}</span>
-              </p>
-            ))}
-          </section>
-
-          <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:items-start">
-            {/* -------- the prose column -------- */}
-            <div>
-              {about.paragraphs.map((p, i) => {
-                const note = about.marginalia.find((m) => m.after === i);
-                return (
-                  <div key={i}>
-                    <p className="u-prose text-ink mt-0 mb-7 text-[1.1875rem] leading-[1.6]">
-                      {p}
-                    </p>
-                    {note ? (
-                      <aside className="border-rule mb-9 border-l pl-4 lg:hidden">
-                        <div className="u-meta text-ink-3">{note.label}</div>
-                        <p className="text-ink-2 mt-1.5 text-[0.875rem] leading-relaxed">
-                          {note.text}
-                        </p>
-                      </aside>
-                    ) : null}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* -------- the gutter -------- */}
-            <div className="hidden lg:sticky lg:top-24 lg:block">
-              {about.marginalia.map((m) => (
-                <div key={m.label} className="border-rule mb-6 border-t pt-3">
-                  <div className="u-meta text-ink-3">{m.label}</div>
-                  <p className="text-ink-2 mt-1.5 text-[0.875rem] leading-relaxed">
-                    {m.text}
-                  </p>
-                </div>
+          <div className="about-body">
+            <div className="about-prose">
+              {about.paragraphs.map((p) => (
+                <p key={p.slice(0, 32)}>{p}</p>
               ))}
             </div>
+
+            <aside className="about-credentials" aria-label="Credentials">
+              {about.credentials.map((c) => (
+                <div key={c.label}>
+                  <div className="u-meta text-ink-3">{c.label}</div>
+                  <p>{c.text}</p>
+                </div>
+              ))}
+            </aside>
           </div>
 
-          {/* -------- the timeline -------- */}
-          <section aria-labelledby="timeline" className="py-20 sm:py-28">
-            <h2
-              id="timeline"
-              className="u-display text-[clamp(1.6rem,3.2vw,2.5rem)]"
-            >
+          {/* Three things that actually happened, each on a named project, in
+              place of a philosophy section. */}
+          <section aria-labelledby="evidence" className="about-evidence">
+            <h2 id="evidence" className="u-display">
+              Three things I checked
+            </h2>
+            <ol>
+              {about.evidence.map((e) => (
+                <li key={e.label}>
+                  <div className="u-meta text-ink-3">{e.label}</div>
+                  <p>{e.text}</p>
+                  <Link href={e.href} className="u-meta">
+                    {e.project} <span aria-hidden>&rarr;</span>
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section aria-labelledby="timeline" className="about-timeline">
+            <h2 id="timeline" className="u-display">
               Where the time went
             </h2>
 
-            <ol className="border-rule mt-10 border-t">
+            <ol className="border-rule mt-8 border-t">
               {timeline.map((t) => (
                 <li
                   key={`${t.period}-${t.org}`}
                   className="border-rule grid gap-x-8 gap-y-1 border-b py-5 sm:grid-cols-[minmax(0,10rem)_minmax(0,1fr)]"
                 >
-                  <span className="u-meta text-ink-3 tabular-nums">
+                  <span className="u-meta text-ink-2 tabular-nums">
                     {t.period}
                   </span>
                   <div>
                     <p className="text-[1.0625rem] tracking-[-0.01em]">
                       {t.role}
                     </p>
-                    <p className="u-meta text-ink-3 mt-1 tracking-[0.04em] normal-case">
+                    <p className="u-meta text-ink-2 mt-1 tracking-[0.04em] normal-case">
                       {t.org}
                     </p>
                     {t.note ? (
@@ -142,7 +112,6 @@ export default function AboutPage() {
             </ol>
           </section>
 
-          {/* -------- the flat facts -------- */}
           <section className="border-rule grid gap-x-14 gap-y-8 border-t py-14 sm:grid-cols-2 lg:grid-cols-3">
             <div>
               <div className="u-meta text-ink-3">Certifications</div>
@@ -172,7 +141,7 @@ export default function AboutPage() {
                     href="/achievements"
                     className="border-ink hover:bg-ink hover:text-ground border-b pb-0.5 text-[0.9375rem] transition-colors"
                   >
-                    Receipts
+                    Achievements
                   </Link>
                 </li>
               </ul>
@@ -186,7 +155,7 @@ export default function AboutPage() {
                   rel="noopener noreferrer"
                   className="border-ink hover:bg-ink hover:text-ground border-b pb-0.5 text-[0.9375rem] transition-colors"
                 >
-                  Resume, one page
+                  Resume, one page (PDF)
                 </a>
               </p>
             </div>

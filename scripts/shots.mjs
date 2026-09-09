@@ -81,7 +81,8 @@ for (const [label, w, h] of [
         v.pause();
       });
       document.getAnimations().forEach((a) => {
-        a.currentTime = a.effect?.getComputedTiming?.().activeDuration || 1000;
+        const d = a.effect?.getComputedTiming?.().activeDuration;
+        try { a.currentTime = Number.isFinite(d) ? d : 1000; } catch {}
         a.pause();
       });
     });

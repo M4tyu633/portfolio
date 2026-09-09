@@ -228,8 +228,6 @@ const ink = (pct: number) =>
   `color-mix(in srgb, var(--w-ink) ${pct}%, var(--w-ground))`;
 const accent = (pct: number) =>
   `color-mix(in srgb, var(--w-accent) ${pct}%, transparent)`;
-const accent2 = (pct: number) =>
-  `color-mix(in srgb, var(--w-accent-2) ${pct}%, transparent)`;
 
 /* Every world's own weather. No two share a frequency, a tile or a speed. */
 const FOG: Record<string, FogSpec> = {
@@ -253,25 +251,30 @@ const FOG: Record<string, FogSpec> = {
 
 /* ------------------------------------------------------------------------ */
 
-function Archive({ reduced }: { reduced: boolean | null }) {
+/* ⚠ THE BUILDING'S OWN ROOM IS DELIBERATELY THE QUIETEST ONE, AND IT USED NOT
+ * TO BE. It ran the same recipe as a project world — turbulent fog, four
+ * drifting fields, a 2rem measurement ruling and 28 animated motes — and /work,
+ * /about and /achievements are the three pages made almost entirely of prose.
+ * A ruling under a paragraph is not atmosphere, it is interference, and it
+ * cost a permanently animating layer on the pages with the least to gain.
+ *
+ * Two static gradients, no fog, no ruling, no motes. The project worlds keep
+ * everything; they earn it by being about something. */
+function Archive() {
   return (
     <>
-      <Fog spec={FOG.index} reduced={reduced} />
-      <Field paint={accent(60)} size="70vw" x="-26%" y="-30%" dx={8} dy={6} seconds={47} opacity={0.16} reduced={reduced} />
-      <Field paint={ink(16)} size="84vw" x="48%" y="-24%" dx={-7} dy={9} seconds={59} opacity={0.9} reduced={reduced} />
-      <Field paint={accent2(55)} size="42vw" x="70%" y="56%" dx={-8} dy={-7} seconds={67} opacity={0.1} reduced={reduced} />
-      <Field paint={ink(10)} size="78vw" x="-18%" y="54%" dx={10} dy={-6} seconds={79} opacity={0.95} reduced={reduced} />
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage:
-            "linear-gradient(var(--w-rule) 1px, transparent 1px), linear-gradient(90deg, var(--w-rule) 1px, transparent 1px)",
-          backgroundSize: "2rem 2rem",
-          maskImage:
-            "radial-gradient(115% 95% at 50% 36%, black 8%, transparent 74%)",
+          background: `radial-gradient(70vw 60vw at 12% -8%, ${ink(14)}, transparent 70%)`,
         }}
       />
-      <Motes count={28} reduced={reduced} />
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(60vw 55vw at 88% 4%, ${ink(9)}, transparent 68%)`,
+        }}
+      />
     </>
   );
 }
@@ -450,12 +453,7 @@ function StripChart({ reduced }: { reduced: boolean | null }) {
 /** The handoff. One slow cloud and nothing else: it has to be quiet enough
  *  that the room arriving after it is the thing you notice. */
 function Seam({ reduced }: { reduced: boolean | null }) {
-  return (
-    <>
-      <Fog spec={FOG.seam} reduced={reduced} />
-      <Motes count={14} reduced={reduced} />
-    </>
-  );
+  return <Fog spec={FOG.seam} reduced={reduced} />;
 }
 
 const ROOMS: Record<WorldId, (p: { reduced: boolean | null }) => React.ReactNode> = {

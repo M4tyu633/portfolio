@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import CoverField from "@/components/home/CoverField";
 import { opening } from "@/content/site";
 import { entrances } from "@/content/worlds";
-import { useSound } from "@/lib/sound";
 
 /* ===========================================================================
  * THE OPENING — a catalogue cover with a live plate in it.
@@ -34,7 +33,6 @@ import { useSound } from "@/lib/sound";
 export default function Opening() {
   const [i, setI] = useState(0);
   const [displayedI, setDisplayedI] = useState(0);
-  const { play } = useSound();
   const active = entrances[i];
   const displayed = entrances[displayedI] ?? active;
 
@@ -105,7 +103,6 @@ export default function Opening() {
         </div>
         <CoverField
           src={coverSrc}
-          token={active.title}
           fit={active.coverFit ?? "cover"}
           onSwap={() => setDisplayedI(i)}
         />
@@ -164,7 +161,6 @@ export default function Opening() {
                 <button
                   type="button"
                   onClick={() => step(-1)}
-                  onPointerEnter={() => play("hover")}
                   aria-label="Previous project"
                 >
                   <span aria-hidden>&larr;</span>
@@ -179,7 +175,6 @@ export default function Opening() {
                 <button
                   type="button"
                   onClick={() => step(1)}
-                  onPointerEnter={() => play("hover")}
                   aria-label="Next project"
                 >
                   <span aria-hidden>&rarr;</span>

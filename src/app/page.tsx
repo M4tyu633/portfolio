@@ -18,13 +18,9 @@ import { achievements } from "@/content/achievements";
 import { about } from "@/content/about";
 import { featured } from "@/content/projects";
 
-/* ===========================================================================
- * THE HOMEPAGE.
- *
- * Quiet, then four rooms, then quiet again. It is an index into the work rather
- * than the whole résumé: there is no skills section, no services grid and no
- * timeline here, because all three have real destinations now.
- * ======================================================================== */
+/* The homepage: an index into the work, then the results, then the person.
+ * There is no skills section, no services grid and no timeline here, because
+ * all three have real destinations. */
 
 const [tumbang, egov, glyco, chip] = featured;
 
@@ -35,15 +31,6 @@ export default function Home() {
 
   return (
     <>
-      {/* ⚠ THERE IS NO BOOT SCREEN ANY MORE, AND THAT IS DELIBERATE.
-       *
-       * A full-screen card held a manifest over the page for 1.6 seconds once
-       * per tab. That is long enough to be in the way and far too short to
-       * read, so it cost every visitor a wait in exchange for nothing. The
-       * cover's own resolve replaced it: the page arrives as a cloud of points
-       * and becomes the work. The loading IS the opening.
-       *
-       * See `CoverField`. */}
       <Nav />
       <WorldScrollSync />
       <main id="main" className="flex-1">
@@ -61,15 +48,12 @@ export default function Home() {
         <KneeWorld project={kneeMri} />
         <WorldPassage n="06" title="CardioSense" />
         <CardioWorld project={heartDisease} />
-        <WorldPassage n="→" title="Receipts" />
+        <WorldPassage n="→" title="Achievements" />
 
-        {/* ---- the evidence ----
-         *
-         * ⚠ THIS USED TO BE A TABLE OF RESULTS AND IT READ AS A RÉSUMÉ. A
-         * result is only believable if you can see the thing itself, so the
-         * first place at Gear Up NCR is a photograph of the actual plaque and
-         * the seven certificates that came with it, with his name on one of
-         * them, and the list hangs off it as a caption. */}
+        {/* ⚠ A table of results read as a résumé. A result is only believable if
+            you can see the thing itself, so the first place at Gear Up NCR is a
+            photograph of the actual plaque and the certificates that came with
+            it, and the list hangs off it. */}
         <section
           data-world="index"
           data-world-panel
@@ -80,6 +64,7 @@ export default function Home() {
             <Evidence />
 
             <div className="receipts-list" data-seq="rows">
+              <p className="u-meta text-ink-3">Achievements</p>
               <h2 id="receipts-signal" className="u-display">
                 Receipts.
               </h2>
@@ -88,10 +73,10 @@ export default function Home() {
               </p>
 
               <ol>
-                {/* ⚠ NUMBERED BY POSITION IN THIS LIST, NOT BY `a.n`. Each
+                {/* ⚠ Numbered by position in this list, not by `a.n`. Each
                     achievement carries its own number in the full archive, so
                     printing it here gave a homepage list that counted 01, 02,
-                    10: correct in the archive, nonsense in a list of three. */}
+                    10. */}
                 {headline.map((a, index) => (
                   <li key={a.slug}>
                     <span className="u-meta text-ink-3 tabular-nums">
@@ -114,7 +99,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ---- the person ---- */}
         <section
           data-world="index"
           data-world-panel
@@ -129,16 +113,13 @@ export default function Home() {
               height={1200}
               sizes="(min-width: 900px) 30vw, 60vw"
             />
-            <figcaption className="person-caption">
-              Computer science. A habit of asking one more question.
-            </figcaption>
           </figure>
           <div className="person-copy">
             <p className="u-meta person-label">
               Matthew Labrador / Manila, Philippines
             </p>
             <h2 id="person-signal" className="u-display">
-              {about.heading}
+              I&rsquo;m a computer science student at UP Manila.
             </h2>
             <p className="u-prose mt-6">{about.paragraphs[0]}</p>
             <Link href="/about" className="room-exit">

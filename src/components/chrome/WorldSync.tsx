@@ -2,50 +2,33 @@
 
 import { useEffect } from "react";
 import type { WorldId } from "@/content/types";
-import { useSound } from "@/lib/sound";
 
-/* ===========================================================================
- * Writes the current world onto <body>, and tells the sound engine which voice
- * to use.
+/* Writes the current world onto <body>.
  *
- * The page's own sections already carry `data-world`, so their colours are
- * correct without this. What this buys is everything OUTSIDE the section: the
- * navigation bar, the footer, the scrollbar, and the overscroll bounce at the
- * top and bottom of the document. Without it, scrolling past the end of a
- * near-black debugger page shows a strip of archival paper underneath it.
- *
- * It is also the transition. `body` has a 420ms colour transition in
- * globals.css, so the whole page changes ground as you cross into a world
- * rather than snapping.
- * ======================================================================== */
+ * A page's own sections already carry `data-world`, so their colours are right
+ * without this. What this buys is everything OUTSIDE the section: the
+ * navigation bar, the footer, the scrollbar and the overscroll bounce. Without
+ * it, scrolling past the end of a near-black debugger page shows a strip of the
+ * index world underneath it. `body` has a 420ms colour transition in
+ * globals.css, so crossing into a world changes ground rather than snapping. */
 
 export default function WorldSync({ world }: { world: WorldId }) {
-  const { setWorld } = useSound();
-
   useEffect(() => {
     const previous = document.body.dataset.world;
     document.body.dataset.world = world;
-    setWorld(world);
     return () => {
       document.body.dataset.world = previous ?? "index";
     };
-  }, [world, setWorld]);
+  }, [world]);
 
   return null;
 }
 
-/* ---------------------------------------------------------------------------
- * The homepage version. Watches every `[data-world-panel]` and hands the body
- * whichever one owns the middle of the viewport.
- *
- * A single IntersectionObserver with a top-heavy rootMargin rather than a
- * scroll handler doing getBoundingClientRect on five nodes per frame: the
- * decision only changes four times over the whole page, so paying for it once
- * per crossing is the right trade.
- * ------------------------------------------------------------------------ */
+/* The homepage version. Watches every `[data-world-panel]` and hands the body
+ * whichever one owns the strip just under the navigation bar. One observer
+ * rather than a scroll handler measuring six nodes a frame: the decision only
+ * changes six times over the whole page. */
 export function WorldScrollSync() {
-  const { setWorld } = useSound();
-
   useEffect(() => {
     const panels = Array.from(
       document.querySelectorAll<HTMLElement>("[data-world-panel]"),
@@ -62,7 +45,6 @@ export function WorldScrollSync() {
       const world = (chosen?.dataset.world as WorldId) ?? "index";
       if (document.body.dataset.world !== world) {
         document.body.dataset.world = world;
-        setWorld(world);
       }
     };
 
@@ -75,19 +57,13 @@ export function WorldScrollSync() {
         }
         apply();
       },
-      /* ⚠ ANCHORED JUST UNDER THE NAVIGATION BAR, NOT AT THE MIDDLE OF THE
-       * VIEWPORT. What this attribute actually paints is everything OUTSIDE
-       * the sections: the sticky bar, the footer, the scrollbar, the
-       * overscroll. All of those live at the top edge, so a mid-viewport
-       * decision made the bar the wrong colour for half of every handoff. It
-       * went bright eGov blue while the top third of the window was still
-       * asphalt, which is the single most obvious way to make a transition
-       * look broken. The strip is from the bar's own height to 12% down.
+      /* Anchored just under the navigation bar, not at the middle of the
+       * viewport. What this attribute paints is everything outside the
+       * sections, and all of it lives at the top edge; a mid-viewport decision
+       * made the bar the wrong colour for half of every handoff.
        *
-       * ⚠ 68px, not 4.25rem. `rootMargin` only accepts px and %, and a rem
-       * value throws rather than being ignored, which took the whole observer
-       * down with it. CSS pixels already scale with browser zoom, so this
-       * tracks the bar at every zoom level anyway. */
+       * 68px, not 4.25rem: `rootMargin` only accepts px and %, and a rem value
+       * throws rather than being ignored, taking the whole observer with it. */
       { rootMargin: "-68px 0px -88% 0px", threshold: 0 },
     );
 
@@ -96,7 +72,7 @@ export function WorldScrollSync() {
       io.disconnect();
       document.body.dataset.world = "index";
     };
-  }, [setWorld]);
+  }, []);
 
   return null;
 }

@@ -48,7 +48,7 @@ export const chip8: Project = {
 
   home: {
     headline: "I wanted to understand an emulator, so I wrote one.",
-    body: "CHIP-8 from scratch, with a visual debugger that lets you watch registers and memory change while the program runs.",
+    body: "An emulator for a 1970s virtual computer, written from scratch in C++, with a debugger that shows every register and instruction as the program executes. It is running below.",
     coda: "It runs in this browser. Thirty-five instructions, 4 KB of memory, and a 64 by 32 display.",
   },
 
@@ -106,7 +106,7 @@ export const chip8: Project = {
     },
     {
       n: "03",
-      heading: "A debugger, not a log",
+      heading: "Watching the machine instead of reading about it",
       blocks: [
         {
           kind: "p",
@@ -151,7 +151,7 @@ export const chip8: Project = {
     },
     {
       n: "04",
-      heading: "The quirks are switches, not decisions",
+      heading: "Every incompatible behaviour is a switch",
       blocks: [
         {
           kind: "p",

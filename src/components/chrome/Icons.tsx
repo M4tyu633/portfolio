@@ -1,12 +1,8 @@
-/* ===========================================================================
- * Five inline SVGs, drawn at 24x24 on a currentColor stroke or fill.
+/* Inline SVGs at 24x24 on a currentColor stroke or fill. No icon package: four
+ * symbols do not justify a dependency, and the brand marks have to stay
+ * recognisable anyway.
  *
- * No icon package. Five symbols do not justify a dependency, and the three
- * brand marks have to stay recognisable anyway, so there is nothing to gain
- * from a set with its own opinions about them.
- *
- * Every one is decorative: the accessible name lives on the <a> that wraps it.
- * ======================================================================== */
+ * Every one is decorative; the accessible name lives on the <a> around it. */
 
 type P = { className?: string };
 
@@ -63,25 +59,6 @@ export function MailIcon({ className }: P) {
     >
       <rect x="2.5" y="4.5" width="19" height="15" rx="1.5" />
       <path d="m3 6 9 6.5L21 6" />
-    </svg>
-  );
-}
-
-export function ResumeIcon({ className }: P) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      className={className}
-    >
-      <path d="M14 2.5H6.5A1.5 1.5 0 0 0 5 4v16a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 20V7.5z" />
-      <path d="M14 2.5V7a.5.5 0 0 0 .5.5H19" />
-      <path d="M8.5 12.5h7M8.5 16h4.5" />
     </svg>
   );
 }

@@ -134,35 +134,6 @@
   display: none;
 }
 
-/* --- the readout --------------------------------------------------------
- * What the field is doing, said in the site's metadata voice. It counts up
- * while the picture is being derived and then states the real number of points
- * it took. Aria-hidden: it is a caption for an effect, and the picture it
- * describes already has alt text on the image underneath it.
- * --------------------------------------------------------------------- */
-.cover-readout {
-  position: absolute;
-  z-index: 3;
-  right: clamp(1.25rem, 4.5vw, 4.5rem);
-  top: clamp(1rem, 3vh, 2rem);
-  margin: 0;
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: 0.6875rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--w-ink-3);
-  text-align: right;
-  pointer-events: none;
-  text-shadow: 0 1px 6px #000000b8;
-}
-
-@media (max-width: 760px) {
-  .cover-readout {
-    font-size: 0.625rem;
-    letter-spacing: 0.1em;
-  }
-}
-
 /* ⚠ THE SCRIM IS LOAD-BEARING, AND IT IS DIRECTIONAL. Display type over a
    reconstructed photograph is unreadable without it, and a flat 50% wash over
    the whole frame would kill the thing it is protecting. It is heavy on the
@@ -549,11 +520,19 @@
   text-wrap: pretty;
 }
 
+/* The outcome line. This is the proof a stranger needs in the first fifteen
+   seconds, so it is legible on every row rather than only on the selected one,
+   and the selected one takes the project accent. */
 .idx-result {
-  color: var(--w-ink-3);
+  color: var(--w-ink-2);
   font-size: 0.6875rem;
   letter-spacing: 0.09em;
   margin-top: 0.2rem;
+  transition: color 260ms;
+}
+
+.opening-index li[data-active] .idx-result {
+  color: var(--op-accent);
 }
 
 /* --- tablet ------------------------------------------------------------- */
