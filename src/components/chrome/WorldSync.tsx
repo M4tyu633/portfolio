@@ -23,6 +23,7 @@ export default function WorldSync({ world }: { world: WorldId }) {
     setWorld(world);
     return () => {
       document.body.dataset.world = previous ?? "index";
+      setWorld("index");
     };
   }, [world, setWorld]);
 

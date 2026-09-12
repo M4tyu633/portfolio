@@ -25,7 +25,7 @@ export const egovmed: Project = {
     // deployed app redirects to MPIN entry without a session, so a headless
     // capture can only ever photograph the door. He supplied this one from a
     // real session; it is the screen the product actually is.
-    src: "/work/egovmed/home.webp",
+    src: "/work/egovmed/demo-home.webp",
     alt: "The eGovMed home screen: a greeting by name, a Start a visit card, tiles for Records, Payments, Report and Messages, and a bottom tab bar.",
     fit: "contain",
   },
@@ -33,9 +33,9 @@ export const egovmed: Project = {
   built: ["React + Vite", "Node / Express", "Redis", "Besu", "eGov API stack"],
   related: ["egov-hackathon"],
   links: {
-    demo: "https://egovmed-frontend.vercel.app/",
-    repo: "https://github.com/M4tyu633/egovmed",
+    demo: "/demos/egovmed/index.html",
   },
+  linkLabels: { demo: "Try the interactive demo" },
   facts: [
     {
       label: "My role",

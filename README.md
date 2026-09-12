@@ -1,150 +1,27 @@
-# Matthew Labrador — Portfolio
+# Matthew Labrador — portfolio
 
-My personal site: [matthewlabrador.vercel.app](https://matthewlabrador.vercel.app)
+A software developer portfolio built with Next.js, React, TypeScript and Three.js. The Kinetic Gallery combines a procedural metallic aperture, readable project case studies and working browser demonstrations.
 
-A single-page portfolio with an interactive ID badge, dark/light theming,
-scroll-reveal animations, and filterable project cards. Statically generated,
-so every page is served as pre-rendered HTML.
+## Run locally
 
----
+Use Node.js 24 and npm. Run npm ci, then npm run dev. Production checks are npm run lint, npx tsc --noEmit and npm run build; npm start serves the production build. Stop the development server before building into the same .next directory.
 
-## Tech stack
+## Editing
 
-| Layer      | Choice                              | Why / what it's doing here                                                                   |
-| ---------- | ----------------------------------- | -------------------------------------------------------------------------------------------- |
-| Framework  | **Next.js 16** (App Router)         | Static generation, file-based metadata, built-in image + font optimization                   |
-| UI library | **React 19**                        | Server Components by default; only 4 components ship JavaScript to the browser               |
-| Language   | **TypeScript 5**                    | The content file is typed, so a malformed project entry fails at build instead of at runtime |
-| Styling    | **Tailwind CSS v4**                 | Utility classes; theme tokens defined as CSS variables in `globals.css`                      |
-| Font       | **Space Grotesk** (`next/font`)     | Self-hosted at build time — no request to Google, no layout shift                            |
-| Icons      | Hand-written inline SVG             | No icon dependency; all icons live in `src/components/Icons.tsx`                             |
-| Build tool | **Turbopack**                       | Next 16's default bundler                                                                    |
-| Linting    | **ESLint 9** + React Compiler rules | `next lint` is gone in Next 16; the `lint` script calls `eslint` directly                    |
-| Formatting | **Prettier**                        | Includes the Tailwind class-sorting plugin                                                   |
-| Hosting    | **Vercel**                          | Pushes to `main` deploy automatically; PRs get preview URLs                                  |
+- Start with AGENTS.md and docs/REDESIGN-STATUS.md for current scope and continuity.
+- docs/RESEARCH-AND-ART-DIRECTION.md records research, visual decisions and project-specific boundaries.
+- src/content holds verified identity, project and achievement facts; src/content/portfolio.ts contains the concise gallery presentation.
+- src/components/home/KineticScene.tsx owns the optional 3D aperture. It pauses when hidden, supports reduced motion and includes a static fallback.
+- src/app/css/gallery.css owns shared gallery compositions. Individual case studies retain their own palettes and typography.
+- public/chip8 contains the actual compiled C++ emulator. Its source is maintained in the separate chip8 checkout.
+- public/demos/egovmed contains the preserved patient interface and a fully local, clearly labeled demo adapter. Rebuild it from egovmed-showcase/frontend with Vite base ./.
+- docs/PROJECT-MEDIA.md records original source material and fresh captures. scripts/prepare-captures.mjs prepares WebP assets.
+- docs/MUSIC.md records the downloaded soundtrack, original game music and playback behavior. Music is opt-in and is not downloaded before a play gesture.
 
-**Zero runtime dependencies beyond React and Next.** No animation library, no
-UI kit, no icon package, no 3D engine — everything below is hand-built.
+## Product constraints
 
-### What's implemented and how
+No repository links in the portfolio. No invented project interfaces, results or employment claims. TUMP and eGovMed retain their original app designs. Historical service demos explicitly identify simulated output. The portrait belongs in About, and every boxed text panel needs generous internal padding.
 
-- **Interactive ID badge** (`IdBadge.tsx`) — the card hanging in the hero is a
-  pendulum simulation: gravity, angular damping, a stretchy strap, and a
-  separate spin axis, integrated in a `requestAnimationFrame` loop that writes
-  transforms straight to the DOM (no React state per frame). It has a real back
-  face via `backface-visibility`, so it reads correctly when it settles flipped.
-  Drag it, tap it to flip, or focus it and use the arrow keys.
-- **Command palette** (`CommandPalette.tsx`) — ⌘K / Ctrl-K to jump to a section,
-  open a project's repo, download the resume, copy the email or flip the theme.
-  Arrow keys, Enter, Esc, grouped results, live filtering; no dependency.
-- **Dark / light theme** — class-based, with an inline script in `layout.tsx`
-  that reads `localStorage` _before first paint_, so there's no flash of the
-  wrong theme on reload. The sun/moon icon swap is pure CSS, so there is no
-  hydration mismatch to handle.
-- **Scroll reveal** (`Reveal.tsx`) — one `IntersectionObserver` per block,
-  unobserving after it fires. Staggered via a `delay` prop.
-- **Active-section nav** — a second `IntersectionObserver` highlights the nav
-  link for whichever section is currently on screen.
-- **Filterable projects** — curated tag filters defined in `data.ts`; filters
-  that no longer match any project are dropped automatically.
-- **SEO / sharing** — `opengraph-image.tsx` generates a 1200×630 link-preview
-  card at build time with `next/og`, `icon.tsx` generates the favicon, plus
-  `sitemap.xml`, `robots.txt`, and JSON-LD `Person` structured data.
-- **Accessibility** — semantic landmarks, `aria-label`/`aria-pressed` on
-  controls, keyboard support on the badge, and a `prefers-reduced-motion` branch
-  that disables the physics loop and all transitions.
+## Delivery
 
----
-
-## Editing the site
-
-**Everything you'd want to change lives in one file:
-[`src/content/data.ts`](src/content/data.ts).**
-
-Open it, change the text, save. Your name, bio, projects, skills, timeline,
-links and the ID badge all come from there. Anything marked `// TODO` is a
-placeholder waiting on you.
-
-### Adding a project
-
-Find the `projects` list and copy the commented-out block at the bottom of it:
-
-```ts
-{
-  title: "Your Next Project",
-  year: "2026",
-  featured: false,          // true = big card with an image, false = small card
-  blurb: "One or two sentences on what it does and what was hard about it.",
-  image: "/images/your-screenshot.png",
-  tags: ["Python", "FastAPI"],
-  links: { github: "https://github.com/...", demo: "https://..." },
-},
-```
-
-Leave out any link you don't have and it simply won't render.
-
-### Adding images
-
-Drop the file into `public/images/`, then reference it as
-`/images/your-file.png`. Square works best for the photo, roughly 16:10 for
-project screenshots.
-
-The current placeholders are generated SVGs — replace them as you go. To
-regenerate them: `python scripts/make-placeholders.py`.
-
-### Changing the colours
-
-`src/app/globals.css`, at the top. Change `--accent` and `--accent-2` under
-`:root` (light mode) and `.dark` (dark mode) and the whole site follows.
-
-### Updating the resume
-
-Replace `public/Matthew_Labrador_Resume.pdf`. To hide the button, set
-`contact.resume` to `""` in `data.ts`.
-
----
-
-## Project structure
-
-```
-src/
-  content/data.ts        all copy + config  ← edit this
-  app/
-    layout.tsx           fonts, metadata, JSON-LD, anti-flash theme script
-    page.tsx             section order
-    globals.css          colour tokens, dark mode, animations
-    opengraph-image.tsx  generated link-preview card
-    icon.tsx             generated favicon
-    sitemap.ts robots.ts
-  components/            one file per section + Icons / Reveal / IdBadge
-public/
-  images/                screenshots and photos
-  Matthew_Labrador_Resume.pdf
-scripts/
-  make-placeholders.py   regenerates the placeholder SVGs
-```
-
----
-
-## Running it locally
-
-```bash
-npm install
-```
-
-```bash
-npm run dev
-```
-
-Then open http://localhost:3100.
-
-## Checking it before you push
-
-```bash
-npm run lint && npx tsc --noEmit && npm run build
-```
-
-## Deploying
-
-Hosted on Vercel. Pushing to `main` triggers a production deploy; every pull
-request gets its own preview URL.
+The existing Vercel portfolio project is the hosting target. Do not create paid services, change plans or redeem credits. Keep source commits and deployment status separate in the status document. Browser QA uses one reusable tab and closes it when finished.

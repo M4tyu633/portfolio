@@ -35,7 +35,7 @@ export default function PatientSystem() {
         <figure className="visit-device">
           <div className="visit-screen">
             <Image
-              src="/work/egovmed/home.webp"
+              src="/work/egovmed/demo-home.webp"
               alt="The signed-in eGovMed home screen: a greeting by name, a Start a visit card, and tiles for records, payments, reports and messages."
               fill
               sizes="(min-width: 768px) 280px, 220px"

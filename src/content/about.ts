@@ -5,9 +5,9 @@ import type { LabEntry } from "./types";
 
 export const about = {
   paragraphs: [
-    "I'm a BS Computer Science student at UP Manila and a DOST undergraduate scholar. Most of my projects end up crossing a boundary I wasn't planning to cross. A game turned into a networking problem. A hospital app turned into an identity and payments problem. An AI project turned into a deployment problem. I like that part, and it is most of the reason the work here looks so scattered.",
-    "The other reason is that I keep taking on things with a deadline attached. Five days for a four-player game. Thirty-six hours for a system on eight government APIs. It leaves marks: some of what I build is blunt, because I had time for the version I could verify and not for the clever one.",
-    "Before computer science I spent three years competing in debate. That is the part of my background that shows up most often in engineering: I am used to defending a claim I made twenty minutes ago to someone who has read the same material and disagrees, and to explaining a system in five minutes to judges who weren't there while it was built.",
+    "I'm a BS Computer Science student at UP Manila and a DOST undergraduate scholar. I enjoy building across the whole system: the interface people touch, the services behind it, and the decisions that make it reliable.",
+    "That curiosity has taken me from multiplayer games to hospital workflows, machine-learning pipelines and a C++ emulator. Competitions taught me to make clear decisions under time pressure, test the parts that matter and bring a working product into the room.",
+    "Before computer science, I spent three years competing in debate. It still shapes how I work: I like asking good questions, explaining technical ideas clearly and being able to defend a decision with evidence. I want to bring that mix of building and communication to a team doing useful work.",
   ],
   portrait: {
     src: "/images/profile.jpg",

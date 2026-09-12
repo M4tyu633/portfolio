@@ -12,13 +12,12 @@ export const heartDisease: Project = {
   did: "Data preparation, model comparison, and the browser risk instrument.",
   outcome: "0.919 holdout AUC · Random Forest recall 89.2%",
   media: {
-    src: "/work/heart/station.webp",
+    src: "/work/heart/instrument.webp",
     alt: "CardioSense showing real UCI inputs, signed Logistic Regression contributions and the locally computed model probability.",
   },
   built: ["Python", "scikit-learn", "Next.js 16", "TypeScript"],
   links: {
     demo: "https://cardiosense-app.vercel.app",
-    repo: "https://github.com/M4tyu633/heart-disease-prediction",
   },
   facts: [
     {
@@ -83,8 +82,8 @@ export const heartDisease: Project = {
       blocks: [
         {
           kind: "image",
-          src: "/work/heart/station.webp",
-          alt: "The CardioSense input, contribution and output columns.",
+          src: "/work/heart/contributions.webp",
+          alt: "The actual signed coefficient contributions for the selected CardioSense record.",
           caption:
             "A real UCI example. Once edited, the interface labels the inputs as a hypothetical variation.",
         },

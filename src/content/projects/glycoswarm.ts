@@ -15,8 +15,8 @@ export const glycoswarm: Project = {
   did: "Lead developer. I designed the graph.",
   outcome: "AMD Developer Hackathon · Track 3",
   media: {
-    src: "/work/glycoswarm/home.webp",
-    alt: "The GlycoSwarm evidence graph: one patient panel separating into four coloured lanes for the renal, retinal, neuropathy and cardiovascular specialists, which rejoin at a single synthesis junction reading four of four reads arrived.",
+    src: "/work/glycoswarm/workspace.webp",
+    alt: "The new GlycoSwarm demo workspace: sample patient inputs, the original interactive anatomy map, four specialists, and an explicitly labeled demo index.",
   },
   built: [
     "LangGraph",
@@ -33,11 +33,9 @@ export const glycoswarm: Project = {
    * would misrepresent what a visitor is about to open. */
   links: {
     demo: "https://glycoswarm-demo.vercel.app",
-    repo: "https://github.com/M4tyu633/glycoswarm-demo",
   },
   linkLabels: {
     demo: "Open the preserved demo",
-    repo: "Read the preserved source",
   },
   facts: [
     { label: "My role", value: "Lead developer · full-stack · demo and pitch" },

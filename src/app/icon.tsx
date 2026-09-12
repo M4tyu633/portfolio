@@ -1,12 +1,6 @@
 import { ImageResponse } from "next/og";
-
-/* Ink on paper, square, no radius. The building's own two colours and nothing
- * else: there is no gradient anywhere on this site and the favicon is not going
- * to be the exception. */
-
-export const size = { width: 32, height: 32 };
+export const size = { width: 64, height: 64 };
 export const contentType = "image/png";
-
 export default function Icon() {
   return new ImageResponse(
     <div
@@ -16,14 +10,14 @@ export default function Icon() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#16130f",
-        color: "#f0ede6",
-        fontSize: 15,
-        fontWeight: 600,
-        letterSpacing: -0.8,
+        background: "#10131a",
+        color: "#efede7",
+        fontSize: 29,
+        fontWeight: 700,
+        letterSpacing: -2,
       }}
     >
-      ML
+      ML<span style={{ color: "#f17852" }}>·</span>
     </div>,
     size,
   );

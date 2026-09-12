@@ -6,7 +6,7 @@ import { achievements, receipts } from "@/content/achievements";
 import type { Achievement } from "@/content/types";
 
 export const metadata: Metadata = {
-  title: "Receipts",
+  title: "Achievements",
   description:
     "Competitions, rankings, scholarships, and the work behind them. First place at Gear Up NCR, one of ten winners at the eGov Hackathon PH.",
 };
@@ -72,11 +72,6 @@ export default function AchievementsPage() {
               </ol>
             </section>
           ))}
-
-          <p className="text-ink-3 border-rule max-w-[46em] border-t py-8 text-[0.875rem] leading-relaxed">
-            Everything on this page is a confirmed result. An entry with no
-            placement is written as an entry.
-          </p>
         </div>
       </main>
     </>

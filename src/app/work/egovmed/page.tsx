@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Nav from "@/components/chrome/Nav";
 import WorldSync from "@/components/chrome/WorldSync";
 import PhotoStrip from "@/components/media/PhotoStrip";
@@ -38,6 +39,54 @@ export default function EgovPage() {
             </p>
           </div>
         </header>
+        <section className="demo-preview" aria-labelledby="egov-demo-title">
+          <div className="demo-preview-copy">
+            <p className="u-meta">Interactive demo</p>
+            <h2 id="egov-demo-title">Take a visit from start to finish.</h2>
+            <p>
+              The original patient interface, now with a complete local
+              walkthrough. Try symptom intake, identity verification, booking
+              and payment.
+            </p>
+            <a className="world-button" href="/demos/egovmed/index.html">
+              Try the patient demo ↗
+            </a>
+            <p className="demo-notice">
+              Demo only. The hackathon APIs have expired. All patients, identity
+              checks, bookings and payments in this walkthrough are simulated.
+            </p>
+          </div>
+          <div className="demo-phone-strip">
+            {[
+              {
+                file: "demo-home",
+                label: "01 / Start a visit",
+                alt: "Actual eGovMed demo home showing the patient navigation and visit action.",
+              },
+              {
+                file: "demo-booking",
+                label: "02 / Visit booked",
+                alt: "The original booking confirmation screen with a clearly labeled demo visit.",
+              },
+              {
+                file: "demo-payment",
+                label: "03 / Payment complete",
+                alt: "The original payment receipt screen showing a simulated completed payment.",
+              },
+            ].map((p) => (
+              <figure key={p.file}>
+                <Image
+                  src={`/work/egovmed/${p.file}.webp`}
+                  alt={p.alt}
+                  width={366}
+                  height={745}
+                  sizes="(max-width:700px) 52vw, 20vw"
+                />
+                <figcaption>{p.label}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
         <PatientSystem />
         <section className="egov-principle" id="s02">
           <span>

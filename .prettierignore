@@ -5,6 +5,8 @@ public/images/*.svg
 .review
 public/chip8
 public/fonts
+public/demos
+artifacts
 
 # Captured third-party HTML artifact
 public/images/colab_dom.html

@@ -11,7 +11,7 @@ import { useState } from "react";
  *
  * It stays an <iframe>. The Emscripten glue expects a global `Module`, grabs
  * the keyboard, and ships its own styles; a separate document keeps all three
- * off the portfolio. The build is ~540 KB and nothing is fetched until somebody
+ * off the portfolio. Nothing is fetched until somebody
  * asks, which is also why the emulator never starts making noise on its own.
  * ======================================================================== */
 
@@ -29,14 +29,20 @@ export default function MachineFigure() {
           35 instructions · 4 KB · 16 registers · 64 x 32
         </span>
         <span className="u-meta text-ink-3 ml-auto tracking-[0.04em] normal-case opacity-70">
-          {started ? "running" : "540 KB, on request"}
+          {started ? "running" : "loads when you press play"}
         </span>
       </div>
 
+      <a
+        href="/chip8/index.html"
+        className="border-rule text-accent block border-b px-4 py-3 text-sm"
+      >
+        Open the full emulator ↗
+      </a>
       <div className="machine-viewport relative overflow-hidden">
         {started ? (
           <iframe
-            src="/chip8/embed.html"
+            src="/chip8/index.html?embed=1"
             title="CHIP-8 emulator and debugger"
             className="h-full w-full"
             // Same origin, but it has no reason to navigate, submit anything,
@@ -50,7 +56,7 @@ export default function MachineFigure() {
             className="machine-boot group relative flex h-full w-full flex-col items-center justify-end gap-4"
           >
             <Image
-              src="/work/chip8/debugger.webp"
+              src="/work/chip8/arcade.webp"
               alt=""
               fill
               sizes="(min-width: 1024px) 800px, 100vw"
@@ -72,8 +78,8 @@ export default function MachineFigure() {
         The 16 buttons under the screen are the CHIP-8 keypad, labelled with the
         keys they stand in for. Brix and Catch move with <Key>A</Key> and{" "}
         <Key>D</Key>; Pong is <Key>1</Key>/<Key>Q</Key> and <Key>4</Key>/
-        <Key>R</Key>. <em>Next ROM</em> cycles through them, and{" "}
-        <em>Show debugger</em> reveals the machine state, though it needs a
+        <Key>R</Key>. The game library switches between ROMs, and{" "}
+        <em>Inspect machine</em> reveals the machine state, though it needs a
         wider screen to be legible.
       </figcaption>
 
@@ -83,10 +89,10 @@ export default function MachineFigure() {
         <Key>Z X C V</Key>. Brix and Catch move with <Key>A</Key> and{" "}
         <Key>D</Key>; Pong is <Key>1</Key>/<Key>Q</Key> and <Key>4</Key>/
         <Key>R</Key>. <Key>Space</Key> pauses, <Key>N</Key> steps one
-        instruction, <Key>Tab</Key> cycles ROMs, <Key>Backspace</Key> resets,{" "}
-        <Key>[</Key> and <Key>]</Key> change the clock, and <Key>F1</Key> to{" "}
-        <Key>F5</Key> toggle the hardware quirks. <Key>H</Key> folds the
-        debugger in and out.
+        instruction, <Key>Tab</Key> leaves the game, <Key>Backspace</Key>{" "}
+        resets, <Key>[</Key> and <Key>]</Key> change the clock, and{" "}
+        <Key>F1</Key> to <Key>F5</Key> toggle the hardware quirks. <Key>H</Key>{" "}
+        folds the debugger in and out.
       </figcaption>
     </figure>
   );

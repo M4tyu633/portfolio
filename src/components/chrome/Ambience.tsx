@@ -82,7 +82,11 @@ function Motes({
               ? undefined
               : { y: [0, -m.drift, 0], x: [0, m.drift * 0.4, 0] }
           }
-          transition={{ duration: m.seconds, repeat: Infinity, ease: "easeInOut" }}
+          transition={{
+            duration: m.seconds,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         />
       ))}
     </>
@@ -185,13 +189,7 @@ type FogSpec = {
   blend?: "soft-light" | "overlay";
 };
 
-function Fog({
-  spec,
-  reduced,
-}: {
-  spec: FogSpec;
-  reduced: boolean | null;
-}) {
+function Fog({ spec, reduced }: { spec: FogSpec; reduced: boolean | null }) {
   const image = useMemo(
     () => turbulence(spec.freq, spec.octaves, spec.seed),
     [spec.freq, spec.octaves, spec.seed],
@@ -232,21 +230,93 @@ const accent = (pct: number) =>
 /* Every world's own weather. No two share a frequency, a tile or a speed. */
 const FOG: Record<string, FogSpec> = {
   /* the archive: paper tooth, almost isotropic, barely moving */
-  index: { freq: "0.62 0.7", octaves: 3, seed: 7, tile: 300, opacity: 0.4, dx: 1.4, dy: -1.1, seconds: 120 },
+  index: {
+    freq: "0.62 0.7",
+    octaves: 3,
+    seed: 7,
+    tile: 300,
+    opacity: 0.4,
+    dx: 1.4,
+    dy: -1.1,
+    seconds: 120,
+  },
   /* the street: heat coming off asphalt, banded across, rising */
-  tumbang: { freq: "0.008 0.05", octaves: 4, seed: 21, tile: 680, opacity: 0.5, dx: 2.6, dy: -3.2, seconds: 74 },
+  tumbang: {
+    freq: "0.008 0.05",
+    octaves: 4,
+    seed: 21,
+    tile: 680,
+    opacity: 0.5,
+    dx: 2.6,
+    dy: -3.2,
+    seconds: 74,
+  },
   /* infrastructure: thin vertical fibres, like cabling seen from far away */
-  egov: { freq: "0.05 0.005", octaves: 3, seed: 4, tile: 560, opacity: 0.34, dx: -3.4, dy: 1.2, seconds: 96 },
+  egov: {
+    freq: "0.05 0.005",
+    octaves: 3,
+    seed: 4,
+    tile: 560,
+    opacity: 0.34,
+    dx: -3.4,
+    dy: 1.2,
+    seconds: 96,
+  },
   /* the instrument: a slow isotropic cloud over the plotting grid */
-  glyco: { freq: "0.018 0.02", octaves: 4, seed: 13, tile: 620, opacity: 0.36, dx: 2.2, dy: 2.6, seconds: 108 },
+  glyco: {
+    freq: "0.018 0.02",
+    octaves: 4,
+    seed: 13,
+    tile: 620,
+    opacity: 0.36,
+    dx: 2.2,
+    dy: 2.6,
+    seconds: 108,
+  },
   /* the machine: coarse horizontal grain, the tube's own dirt */
-  chip8: { freq: "0.9 0.02", octaves: 2, seed: 33, tile: 420, opacity: 0.3, dx: -1.6, dy: 2.4, seconds: 64 },
+  chip8: {
+    freq: "0.9 0.02",
+    octaves: 2,
+    seed: 33,
+    tile: 420,
+    opacity: 0.3,
+    dx: -1.6,
+    dy: 2.4,
+    seconds: 64,
+  },
   /* the viewing room: heavy film grain, fine and everywhere */
-  reading: { freq: "0.72 0.72", octaves: 3, seed: 9, tile: 240, opacity: 0.5, dx: 2.8, dy: -2.4, seconds: 62 },
+  reading: {
+    freq: "0.72 0.72",
+    octaves: 3,
+    seed: 9,
+    tile: 240,
+    opacity: 0.5,
+    dx: 2.8,
+    dy: -2.4,
+    seconds: 62,
+  },
   /* the strip chart: a smear along the paper's travel */
-  cardio: { freq: "0.004 0.07", octaves: 3, seed: 44, tile: 720, opacity: 0.42, dx: 3.4, dy: -1.4, seconds: 88 },
+  cardio: {
+    freq: "0.004 0.07",
+    octaves: 3,
+    seed: 44,
+    tile: 720,
+    opacity: 0.42,
+    dx: 3.4,
+    dy: -1.4,
+    seconds: 88,
+  },
   /* the seam: the handoff is dark, not dead. One very slow cloud in it. */
-  seam: { freq: "0.014 0.03", octaves: 4, seed: 61, tile: 700, opacity: 0.34, dx: 2.4, dy: -2.2, seconds: 140 },
+  seam: {
+    freq: "0.014 0.03",
+    octaves: 4,
+    seed: 61,
+    tile: 700,
+    opacity: 0.34,
+    dx: 2.4,
+    dy: -2.2,
+    seconds: 140,
+  },
 };
 
 /* ------------------------------------------------------------------------ */
@@ -284,8 +354,28 @@ function Street({ reduced }: { reduced: boolean | null }) {
   return (
     <>
       <Fog spec={FOG.tumbang} reduced={reduced} />
-      <Field paint={accent(45)} size="96vw" x="-20%" y="46%" dx={5} dy={-4} seconds={53} opacity={0.14} reduced={reduced} />
-      <Field paint={`color-mix(in srgb, var(--w-focus) 50%, transparent)`} size="60vw" x="58%" y="-18%" dx={-6} dy={7} seconds={71} opacity={0.1} reduced={reduced} />
+      <Field
+        paint={accent(45)}
+        size="96vw"
+        x="-20%"
+        y="46%"
+        dx={5}
+        dy={-4}
+        seconds={53}
+        opacity={0.14}
+        reduced={reduced}
+      />
+      <Field
+        paint={`color-mix(in srgb, var(--w-focus) 50%, transparent)`}
+        size="60vw"
+        x="58%"
+        y="-18%"
+        dx={-6}
+        dy={7}
+        seconds={71}
+        opacity={0.1}
+        reduced={reduced}
+      />
       {/* the road's own grain, coarser than the archive's ruling */}
       <div
         className="absolute inset-0 opacity-60"
@@ -325,8 +415,28 @@ function Network({ reduced }: { reduced: boolean | null }) {
   return (
     <>
       <Fog spec={FOG.egov} reduced={reduced} />
-      <Field paint={accent(50)} size="80vw" x="-24%" y="-26%" dx={7} dy={6} seconds={61} opacity={0.12} reduced={reduced} />
-      <Field paint={ink(14)} size="70vw" x="56%" y="44%" dx={-8} dy={-6} seconds={73} opacity={0.85} reduced={reduced} />
+      <Field
+        paint={accent(50)}
+        size="80vw"
+        x="-24%"
+        y="-26%"
+        dx={7}
+        dy={6}
+        seconds={61}
+        opacity={0.12}
+        reduced={reduced}
+      />
+      <Field
+        paint={ink(14)}
+        size="70vw"
+        x="56%"
+        y="44%"
+        dx={-8}
+        dy={-6}
+        seconds={73}
+        opacity={0.85}
+        reduced={reduced}
+      />
       {lines.map((l, i) => (
         <motion.div
           key={i}
@@ -339,7 +449,11 @@ function Network({ reduced }: { reduced: boolean | null }) {
             willChange: "transform",
           }}
           animate={reduced ? undefined : { x: ["0%", `${l.dx}%`, "0%"] }}
-          transition={{ duration: l.seconds, repeat: Infinity, ease: "easeInOut" }}
+          transition={{
+            duration: l.seconds,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         >
           <span
             className="absolute top-1/2 left-0 size-1 -translate-y-1/2 rounded-full"
@@ -360,8 +474,28 @@ function Instrument({ reduced }: { reduced: boolean | null }) {
   return (
     <>
       <Fog spec={FOG.glyco} reduced={reduced} />
-      <Field paint={accent(45)} size="76vw" x="-22%" y="-28%" dx={8} dy={5} seconds={57} opacity={0.12} reduced={reduced} />
-      <Field paint={ink(12)} size="64vw" x="60%" y="50%" dx={-7} dy={-6} seconds={69} opacity={0.85} reduced={reduced} />
+      <Field
+        paint={accent(45)}
+        size="76vw"
+        x="-22%"
+        y="-28%"
+        dx={8}
+        dy={5}
+        seconds={57}
+        opacity={0.12}
+        reduced={reduced}
+      />
+      <Field
+        paint={ink(12)}
+        size="64vw"
+        x="60%"
+        y="50%"
+        dx={-7}
+        dy={-6}
+        seconds={69}
+        opacity={0.85}
+        reduced={reduced}
+      />
       <div
         className="absolute inset-0"
         style={{
@@ -389,8 +523,28 @@ function Machine({ reduced }: { reduced: boolean | null }) {
   return (
     <>
       <Fog spec={FOG.chip8} reduced={reduced} />
-      <Field paint={accent(35)} size="66vw" x="-18%" y="-24%" dx={6} dy={5} seconds={63} opacity={0.1} reduced={reduced} />
-      <Field paint={ink(10)} size="60vw" x="58%" y="52%" dx={-6} dy={-5} seconds={77} opacity={0.8} reduced={reduced} />
+      <Field
+        paint={accent(35)}
+        size="66vw"
+        x="-18%"
+        y="-24%"
+        dx={6}
+        dy={5}
+        seconds={63}
+        opacity={0.1}
+        reduced={reduced}
+      />
+      <Field
+        paint={ink(10)}
+        size="60vw"
+        x="58%"
+        y="52%"
+        dx={-6}
+        dy={-5}
+        seconds={77}
+        opacity={0.8}
+        reduced={reduced}
+      />
       <div
         className="absolute inset-0 opacity-70"
         style={{
@@ -417,11 +571,35 @@ function ViewingRoom({ reduced }: { reduced: boolean | null }) {
   return (
     <>
       <Fog spec={FOG.reading} reduced={reduced} />
-      <Field paint={ink(15)} size="90vw" x="-14%" y="-30%" dx={5} dy={6} seconds={67} opacity={0.9} reduced={reduced} />
-      <Field paint={accent(40)} size="46vw" x="66%" y="52%" dx={-6} dy={-5} seconds={83} opacity={0.1} reduced={reduced} />
+      <Field
+        paint={ink(15)}
+        size="90vw"
+        x="-14%"
+        y="-30%"
+        dx={5}
+        dy={6}
+        seconds={67}
+        opacity={0.9}
+        reduced={reduced}
+      />
+      <Field
+        paint={accent(40)}
+        size="46vw"
+        x="66%"
+        y="52%"
+        dx={-6}
+        dy={-5}
+        seconds={83}
+        opacity={0.1}
+        reduced={reduced}
+      />
       <motion.div
         className="absolute inset-y-0 w-px"
-        style={{ background: "var(--w-accent)", opacity: 0.14, willChange: "transform" }}
+        style={{
+          background: "var(--w-accent)",
+          opacity: 0.14,
+          willChange: "transform",
+        }}
         animate={reduced ? undefined : { x: ["-2vw", "102vw"] }}
         transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
       />
@@ -435,8 +613,28 @@ function StripChart({ reduced }: { reduced: boolean | null }) {
   return (
     <>
       <Fog spec={FOG.cardio} reduced={reduced} />
-      <Field paint={accent(45)} size="72vw" x="-24%" y="42%" dx={7} dy={-6} seconds={59} opacity={0.13} reduced={reduced} />
-      <Field paint={ink(13)} size="68vw" x="54%" y="-26%" dx={-6} dy={7} seconds={73} opacity={0.85} reduced={reduced} />
+      <Field
+        paint={accent(45)}
+        size="72vw"
+        x="-24%"
+        y="42%"
+        dx={7}
+        dy={-6}
+        seconds={59}
+        opacity={0.13}
+        reduced={reduced}
+      />
+      <Field
+        paint={ink(13)}
+        size="68vw"
+        x="54%"
+        y="-26%"
+        dx={-6}
+        dy={7}
+        seconds={73}
+        opacity={0.85}
+        reduced={reduced}
+      />
       <div
         className="absolute inset-0 opacity-80"
         style={{
@@ -456,7 +654,10 @@ function Seam({ reduced }: { reduced: boolean | null }) {
   return <Fog spec={FOG.seam} reduced={reduced} />;
 }
 
-const ROOMS: Record<WorldId, (p: { reduced: boolean | null }) => React.ReactNode> = {
+const ROOMS: Record<
+  WorldId,
+  (p: { reduced: boolean | null }) => React.ReactNode
+> = {
   index: Archive,
   tumbang: Street,
   egov: Network,

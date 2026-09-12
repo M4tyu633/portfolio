@@ -49,6 +49,7 @@ Achievements
 About
 
 [social utility icons]
+```
 ````
 
 Do NOT leave an empty `Lab` route merely because it already exists.
@@ -178,12 +179,12 @@ Prefer permanent redirects if appropriate after the redesign is stable.
 
 Update:
 
-* sitemap
-* navigation
-* cross-links
-* metadata
-* homepage references
-* achievement/project links
+- sitemap
+- navigation
+- cross-links
+- metadata
+- homepage references
+- achievement/project links
 
 so new users never need to encounter `/lab`.
 
@@ -193,11 +194,11 @@ so new users never need to encounter `/lab`.
 
 Removing Lab does NOT mean deleting:
 
-* ThrowFigure
-* ContactFigure
-* NetworkFigure
-* PatientSystem
-* SwarmSystem
+- ThrowFigure
+- ContactFigure
+- NetworkFigure
+- PatientSystem
+- SwarmSystem
 
 if they remain useful.
 
@@ -261,14 +262,14 @@ The new demo should originate from the real GlycoSwarm source.
 
 Preserve as much genuine implementation as makes sense:
 
-* data contracts
-* specialist structure
-* LangGraph topology
-* UI concepts
-* patient/lab fields
-* synthesis behavior
-* project terminology
-* original architecture documentation
+- data contracts
+- specialist structure
+- LangGraph topology
+- UI concepts
+- patient/lab fields
+- synthesis behavior
+- project terminology
+- original architecture documentation
 
 Do NOT make a random fake GlycoSwarm frontend from the portfolio description alone.
 
@@ -347,10 +348,10 @@ For example, a compact persistent version could be:
 
 This should appear somewhere such as:
 
-* top utility bar
-* information drawer
-* first-run notice
-* small persistent status area
+- top utility bar
+- information drawer
+- first-run notice
+- small persistent status area
 
 It should be visible without feeling like an error banner.
 
@@ -498,13 +499,13 @@ not:
 
 No:
 
-* purple gradients
-* glowing brain
-* neon nodes
-* glass cards
-* sparkle icons
-* generic dashboards
-* huge “AI powered” labels
+- purple gradients
+- glowing brain
+- neon nodes
+- glass cards
+- sparkle icons
+- generic dashboards
+- huge “AI powered” labels
 
 ---
 
@@ -512,13 +513,13 @@ No:
 
 GlycoSwarm can look rich through:
 
-* scientific plotting grids
-* line traces
-* anatomical/data annotations
-* beautiful numeric typography
-* print-like legends
-* chart markers
-* subtle measurement texture
+- scientific plotting grids
+- line traces
+- anatomical/data annotations
+- beautiful numeric typography
+- print-like legends
+- chart markers
+- subtle measurement texture
 
 not fake paper or generic noise.
 
@@ -622,18 +623,18 @@ Hackathon-hosted APIs/compute are no longer available.
 
 ## What is real
 
-* source-derived architecture
-* specialist contracts
-* sample data schema
-* preserved outputs
-* interface
-* graph behavior
+- source-derived architecture
+- specialist contracts
+- sample data schema
+- preserved outputs
+- interface
+- graph behavior
 
 ## What is not happening
 
-* live clinical inference
-* live MI300X inference
-* clinical validation
+- live clinical inference
+- live MI300X inference
+- clinical validation
 
 ---
 
@@ -687,8 +688,7 @@ That is enough.
 
 It does not need:
 
-Work
-+
+Work +
 Lab
 
 duplicating the same project.
@@ -729,14 +729,14 @@ Generic “go to Lab” CTAs should disappear.
 
 Remove Lab from:
 
-* nav config
-* sitemap
-* homepage references
-* footer
-* OG copy where applicable
-* structured links
-* keyboard navigation
-* mobile menu
+- nav config
+- sitemap
+- homepage references
+- footer
+- OG copy where applicable
+- structured links
+- keyboard navigation
+- mobile menu
 
 Do not leave the concept half-removed.
 

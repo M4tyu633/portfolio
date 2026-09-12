@@ -57,14 +57,14 @@ export const tumbangPreso: Project = {
 
   home: {
     headline: "Five days. Four players. One tin can.",
-    body: "BH Studios entered as a team. I built the game itself: every model, character, map, menu, sound, bot, physics rule, line of netcode and the codebase underneath it.",
+    body: "BH Studios entered as a team. I developed the gameplay, level assembly, interface, sound integration, bots, physics and multiplayer networking.",
     coda: "It won 1st Place at Gear Up NCR.",
     figure: "tp-throw",
     figureCaption:
       "Drag back and let go. Every contact is judged twice at once, and the two answers do not always agree.",
   },
 
-  lede: "Tumbang Preso is the street game every Filipino kid knows: one person guards a tin can inside a chalk box, everybody else throws a slipper at it from outside. I rebuilt it as a four-player networked game in Godot 4. A studio would split that across a 3D artist, a UI designer, an SFX designer, a gameplay programmer, someone on AI and physics, and a marketing lead for the pitch. I did all of it, in five days, and then pitched it.",
+  lede: "Tumbang Preso is the street game every Filipino kid knows: one person guards a tin can inside a chalk box, everybody else throws a slipper at it from outside. I rebuilt it as a four-player networked game in Godot 4. I developed the gameplay, networking, bots and interface, assembled the environments from custom work and licensed assets, integrated the sound, and delivered the pitch. The competition build came together in five days.",
 
   sections: [
     {
@@ -107,11 +107,11 @@ export const tumbangPreso: Project = {
       blocks: [
         {
           kind: "p",
-          text: "Every 3D model and character, the map, the interface, the sound design, the bots, the physics, the netcode, and the codebase under all of it. Then the marketing, the deck, the pitch, and the Q&A in front of the judges.",
+          text: "Gameplay, level assembly, UI, sound integration, bots, physics and networking. I built the game, prepared the presentation and answered the judges’ questions. The original project combines custom work with licensed asset kits.",
         },
         {
           kind: "p",
-          text: "Five days is why a lot of what follows looks blunt. I did not have time for the clever version of any of these problems. I had time for the version I could measure, confirm, and then stop thinking about. Most of the decisions below are really decisions about what I could verify fast.",
+          text: "The five-day deadline made verification essential. I prioritized reliable contact detection, readable feedback and multiplayer behavior I could measure and test.",
         },
       ],
     },

@@ -20,7 +20,6 @@ import type { Project, ProjectLink, ProjectLinks } from "@/content/types";
 
 const ORDER: (keyof ProjectLinks)[] = [
   "demo",
-  "repo",
   "gameplay",
   "trailer",
   "download",

@@ -1,16 +1,16 @@
 I checked the actual branch at `8cb2971`, not just Claude’s handoff. The handoff is **partly accurate, but it oversells how finished the redesign is**.
 
-The biggest thing Astra should know: Tumbang is now genuinely much better grounded in real footage/assets and has its own bespoke route, which is good.  But **every other project still goes through the same `ProjectHero + Blocks` case-study shell**; the code literally has `BESPOKE = new Set(["tumbang-preso"])`.  Achievements are still essentially a styled results list, and the detail pages use that same numbered-section/Blocks grammar.   The Lab is mostly a list of links back to diagrams elsewhere; CHIP-8 is the only thing that actually runs there. 
+The biggest thing Astra should know: Tumbang is now genuinely much better grounded in real footage/assets and has its own bespoke route, which is good. But **every other project still goes through the same `ProjectHero + Blocks` case-study shell**; the code literally has `BESPOKE = new Set(["tumbang-preso"])`. Achievements are still essentially a styled results list, and the detail pages use that same numbered-section/Blocks grammar. The Lab is mostly a list of links back to diagrams elsewhere; CHIP-8 is the only thing that actually runs there.
 
-Also, Claude says “CHIP-8 screenshot that turns out to be running when you press it” as if that exists. **It doesn’t on the homepage.** The homepage still shows an image and a `Run it` link; the actual emulator is one click away on `/lab/chip-8`.   The current Tumbang asset pipeline is also hardcoded to Claude’s local Windows folders, so it is useful provenance but not reproducible elsewhere without cleanup. 
+Also, Claude says “CHIP-8 screenshot that turns out to be running when you press it” as if that exists. **It doesn’t on the homepage.** The homepage still shows an image and a `Run it` link; the actual emulator is one click away on `/lab/chip-8`. The current Tumbang asset pipeline is also hardcoded to Claude’s local Windows folders, so it is useful provenance but not reproducible elsewhere without cleanup.
 
-The social-nav correction **is** implemented properly now: primary routes are text, GitHub/LinkedIn/Facebook/email are icons, Resume is separated. I wouldn’t redo that unless Astra finds a genuinely better composition. 
+The social-nav correction **is** implemented properly now: primary routes are text, GitHub/LinkedIn/Facebook/email are icons, Resume is separated. I wouldn’t redo that unless Astra finds a genuinely better composition.
 
 The prompt below tells Astra all of that while giving it authority to disagree with both me and Claude.
 
 ---
 
-```md
+````md
 # ASTRA FINAL PASS — TAKE OWNERSHIP OF MATTHEW'S PORTFOLIO
 
 Repository:
@@ -202,6 +202,7 @@ git status
 git log --oneline --decorate -15
 git diff main...redesign/archive-of-systems --stat
 ```
+````
 
 Read:
 
@@ -396,16 +397,20 @@ Actually interact with the app.
 Review:
 
 ### Desktop
+
 1440 × 900
 1920 × 1080
 
 ### Laptop
+
 1366 × 768
 
 ### Tablet
+
 768 width
 
 ### Mobile
+
 390 × 844
 360 × 800
 
@@ -701,9 +706,11 @@ That is okay.
 Keep this separation clear:
 
 ### actual game
+
 real footage/assets
 
 ### engineering explanation
+
 diagram/simulation
 
 Do not make the engineering diagram masquerade as gameplay.
@@ -983,18 +990,23 @@ Not another archive table.
 For example:
 
 ### CHIP-8
+
 boot directly
 
 ### Tumbang contact lab
+
 run directly
 
 ### Tumbang networking explorer
+
 interact directly
 
 ### eGovMed route
+
 step directly
 
 ### GlycoSwarm topology
+
 explore directly
 
 Not all of them need to load at once.
@@ -1042,6 +1054,7 @@ Add it.
 Confirmed details to use:
 
 ### Kaspersky{CTF} 2026
+
 Asia & Oceania Regional Stage
 
 Team:
@@ -1092,12 +1105,15 @@ Do not mechanically follow the current Tier A/B/C assignments.
 Use:
 
 ### Tier A
+
 there is enough real story + evidence for a strong page
 
 ### Tier B
+
 there is a meaningful short story
 
 ### Tier C
+
 the result itself is enough
 
 Do not create huge pages because a result “sounds impressive.”
@@ -1109,9 +1125,11 @@ Do not create huge pages because a result “sounds impressive.”
 These two routes must answer different questions.
 
 ### Tumbang page
+
 How was the game built?
 
 ### Gear Up page
+
 What happened at the competition?
 
 Use:
@@ -1293,6 +1311,7 @@ You may completely change typography.
 Rules:
 
 ## Per page:
+
 maximum 1–2 meaningful font families.
 
 A sans + its mono sibling can count as one system if they genuinely belong together.
@@ -1679,18 +1698,23 @@ Not thirty.
 Potential examples:
 
 ### Tumbang
+
 actual game object becomes interactive / game-to-engineering transition
 
 ### eGovMed
+
 actual app decomposes into the government systems underneath
 
 ### GlycoSwarm
+
 actual dashboard fans out into the live agent topology and recombines
 
 ### CHIP-8
+
 a static-looking debugger boots and becomes the real machine
 
 ### Work archive
+
 media/world transforms around the selected project
 
 You may find better ideas.
@@ -1947,25 +1971,32 @@ Do not write a victory essay.
 Give me:
 
 ### Final URLs
+
 - production
 - branch/PR if relevant
 
 ### Final commit
+
 SHA
 
 ### Biggest changes
+
 5–10 concise bullets
 
 ### What you deliberately removed
+
 anything that looked good in code but made the site worse
 
 ### Factual uncertainties
+
 only real unresolved facts
 
 ### Performance
+
 short note on heavy routes/assets
 
 ### Final assessment
+
 one paragraph on whether YOU genuinely believe this now reaches the intended quality bar
 
 ---
@@ -1997,16 +2028,18 @@ Use the actual systems.
 Give each flagship project the interface it deserves.
 
 Make the portfolio itself evidence that Matthew can build things people remember.
+
 ```
 
 ### The 5 things I’d personally prioritize for Astra
 
-1. **Bespoke eGovMed + GlycoSwarm pages.** Right now Tumbang is the only page that truly escaped the template. 
-2. **Make Lab actually interactive.** At the moment five of six entries mostly bounce you to figures elsewhere. 
-3. **Make CHIP-8 “boot in place.”** The real emulator already exists and lazy-loads cleanly, so this is unusually achievable. 
-4. **Redo achievement detail experiences + add Kaspersky CTF.** The current achievement system is very clean but still feels like a designed résumé. 
-5. **Let Astra judge the opening lens itself.** It’s technically bespoke, but it may still be more “clever interaction” than “unforgettable first impression.” 
+1. **Bespoke eGovMed + GlycoSwarm pages.** Right now Tumbang is the only page that truly escaped the template.
+2. **Make Lab actually interactive.** At the moment five of six entries mostly bounce you to figures elsewhere.
+3. **Make CHIP-8 “boot in place.”** The real emulator already exists and lazy-loads cleanly, so this is unusually achievable.
+4. **Redo achievement detail experiences + add Kaspersky CTF.** The current achievement system is very clean but still feels like a designed résumé.
+5. **Let Astra judge the opening lens itself.** It’s technically bespoke, but it may still be more “clever interaction” than “unforgettable first impression.”
 
-Tumbang is the one area where I **wouldn’t tell Astra to start over anymore**. Claude’s second pass actually moved that in the right direction: the page is now using the real footage, UI, event photos, trophy/team media, and it correctly isolates the fake browser physics simulation as an engineering explanation rather than pretending it’s the game. 
+Tumbang is the one area where I **wouldn’t tell Astra to start over anymore**. Claude’s second pass actually moved that in the right direction: the page is now using the real footage, UI, event photos, trophy/team media, and it correctly isolates the fake browser physics simulation as an engineering explanation rather than pretending it’s the game.
 
 The rest is where Astra can go significantly harder.
+```

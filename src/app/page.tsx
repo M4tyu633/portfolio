@@ -1,131 +1,184 @@
 import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/chrome/Nav";
-import { WorldScrollSync } from "@/components/chrome/WorldSync";
-import Evidence from "@/components/home/Evidence";
-import Opening from "@/components/home/Opening";
-import WorldPassage from "@/components/home/WorldPassage";
-import { KneeWorld, CardioWorld } from "@/components/home/ClinicalWorlds";
-import { kneeMri } from "@/content/projects/knee-mri";
-import { heartDisease } from "@/content/projects/heart-disease";
-import {
-  Chip8World,
-  EgovWorld,
-  GlycoWorld,
-  TumbangWorld,
-} from "@/components/home/Worlds";
-import { achievements } from "@/content/achievements";
-import { about } from "@/content/about";
-import { featured } from "@/content/projects";
-
-/* The homepage: an index into the work, then the results, then the person.
- * There is no skills section, no services grid and no timeline here, because
- * all three have real destinations. */
-
-const [tumbang, egov, glyco, chip] = featured;
+import KineticScene from "@/components/home/KineticScene";
+import GalleryProjects from "@/components/home/GalleryProjects";
+import { contact } from "@/content/site";
 
 export default function Home() {
-  const headline = achievements.filter(
-    (a) => a.tier === "A" || a.slug === "paref-southridge",
-  );
-
   return (
     <>
       <Nav />
-      <WorldScrollSync />
-      <main id="main" className="flex-1">
-        <Opening />
-
-        <WorldPassage n="01" title="Tumbang Preso" />
-        <TumbangWorld project={tumbang} />
-        <WorldPassage n="02" title="eGovMed" />
-        <EgovWorld project={egov} />
-        <WorldPassage n="03" title="GlycoSwarm" />
-        <GlycoWorld project={glyco} />
-        <WorldPassage n="04" title="CHIP-8" />
-        <Chip8World project={chip} />
-        <WorldPassage n="05" title="Knee MRI Reader" />
-        <KneeWorld project={kneeMri} />
-        <WorldPassage n="06" title="CardioSense" />
-        <CardioWorld project={heartDisease} />
-        <WorldPassage n="→" title="Achievements" />
-
-        {/* ⚠ A table of results read as a résumé. A result is only believable if
-            you can see the thing itself, so the first place at Gear Up NCR is a
-            photograph of the actual plaque and the certificates that came with
-            it, and the list hangs off it. */}
-        <section
-          data-world="index"
-          data-world-panel
-          aria-labelledby="receipts-signal"
-          className="bg-ground text-ink receipts"
-        >
-          <div className="receipts-grid">
-            <Evidence />
-
-            <div className="receipts-list" data-seq="rows">
-              <p className="u-meta text-ink-3">Achievements</p>
-              <h2 id="receipts-signal" className="u-display">
-                Receipts.
-              </h2>
-              <p className="u-prose mt-5">
-                Competitions, rankings, scholarships, and the work behind them.
+      <main id="main" className="gallery-home">
+        <section className="gallery-hero" aria-labelledby="gallery-name">
+          <div className="gallery-coordinate" aria-hidden="true">
+            <span>INDEPENDENT MIND</span>
+            <span>MANILA, PH</span>
+          </div>
+          <div className="gallery-hero-copy">
+            <p className="gallery-kicker">
+              Software developer · Computer science at UP Manila
+            </p>
+            <h1 id="gallery-name">
+              <span>MATTHEW</span>
+              <span>
+                LABRADOR<span className="gallery-stop">.</span>
+              </span>
+            </h1>
+            <div className="gallery-hero-intro">
+              <span className="gallery-cross" aria-hidden="true">
+                ↗
+              </span>
+              <p>
+                I turn complex ideas into things you can use, play with, and
+                understand.
               </p>
-
-              <ol>
-                {/* ⚠ Numbered by position in this list, not by `a.n`. Each
-                    achievement carries its own number in the full archive, so
-                    printing it here gave a homepage list that counted 01, 02,
-                    10. */}
-                {headline.map((a, index) => (
-                  <li key={a.slug}>
-                    <span className="u-meta text-ink-3 tabular-nums">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="receipts-title">{a.title}</span>
-                    <span className="receipts-result">{a.result}</span>
-                    <span className="u-meta text-ink-3 receipts-org">
-                      {a.org} &middot; {a.year}
-                    </span>
-                  </li>
-                ))}
-              </ol>
-
-              <Link href="/achievements" className="room-exit">
-                <span>The whole archive</span>
-                <span aria-hidden>&rarr;</span>
-              </Link>
+            </div>
+            <div className="gallery-actions">
+              <a className="gallery-button" href="#selected-work">
+                Enter the work <span aria-hidden="true">↓</span>
+              </a>
+              <a
+                className="gallery-link"
+                href={contact.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View résumé <span aria-hidden="true">↗</span>
+              </a>
             </div>
           </div>
+          <KineticScene />
+          <div className="gallery-hero-foot">
+            <span>Games. AI. Civic software. A habit of building.</span>
+            <span>
+              SCROLL TO EXPLORE <span aria-hidden="true">↓</span>
+            </span>
+          </div>
         </section>
-
-        <section
-          data-world="index"
-          data-world-panel
-          aria-labelledby="person-signal"
-          className="bg-ground text-ink person"
-        >
-          <figure className="person-portrait">
-            <Image
-              src={about.portrait.src}
-              alt={about.portrait.alt}
-              width={900}
-              height={1200}
-              sizes="(min-width: 900px) 30vw, 60vw"
-            />
-          </figure>
-          <div className="person-copy">
-            <p className="u-meta person-label">
-              Matthew Labrador / Manila, Philippines
+        <div className="gallery-proof">
+          <Link href="/achievements/gear-up-ncr">
+            <span>01</span>
+            <strong>1ST PLACE</strong>
+            <p>
+              Gear Up NCR
+              <br />
+              Game development challenge
             </p>
-            <h2 id="person-signal" className="u-display">
-              I&rsquo;m a computer science student at UP Manila.
+            <span aria-hidden="true">↗</span>
+          </Link>
+          <Link href="/achievements/egov-hackathon">
+            <span>02</span>
+            <strong>HACKATHON WINNER</strong>
+            <p>
+              eGov Hackathon PH
+              <br />
+              One of ten winning teams
+            </p>
+            <span aria-hidden="true">↗</span>
+          </Link>
+          <Link href="/about">
+            <span>03</span>
+            <strong>UP MANILA</strong>
+            <p>
+              BS Computer Science
+              <br />
+              DOST Undergraduate Scholar
+            </p>
+            <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+        <section
+          className="gallery-work"
+          id="selected-work"
+          aria-labelledby="gallery-work-heading"
+        >
+          <header className="gallery-section-title">
+            <div>
+              <p className="gallery-kicker">
+                A selection of things I’ve built / 2025—2026
+              </p>
+              <h2 id="gallery-work-heading">
+                WORK,
+                <br />
+                <span>IN MOTION.</span>
+              </h2>
+            </div>
+            <p>
+              A multiplayer street game. A connected hospital visit. A computer
+              small enough to understand completely.
+              <br />
+              <br />
+              Different problems, taken all the way through.
+            </p>
+          </header>
+          <GalleryProjects />
+        </section>
+        <section
+          className="gallery-recognition"
+          aria-labelledby="gallery-results-heading"
+        >
+          <div className="recognition-index">
+            <p className="gallery-kicker">Beyond the screen</p>
+            <h2 id="gallery-results-heading">
+              MADE.
+              <br />
+              SHOWN.
+              <br />
+              <span>RECOGNIZED.</span>
             </h2>
-            <p className="u-prose mt-6">{about.paragraphs[0]}</p>
-            <Link href="/about" className="room-exit">
-              <span>About</span>
-              <span aria-hidden>&rarr;</span>
+            <p>
+              Building is part of the job. Explaining it, demonstrating it, and
+              taking feedback are part of it too.
+            </p>
+            <Link href="/achievements" className="gallery-link">
+              The results and the stories <span aria-hidden="true">↗</span>
             </Link>
+          </div>
+          <figure>
+            <Image
+              src="/work/tumbang/event-playing.webp"
+              alt="Visitors playing Tumbang Preso at the PC Express showcase."
+              width={1100}
+              height={850}
+              sizes="(max-width:800px) 90vw, 55vw"
+            />
+            <figcaption>
+              <span>Tumbang Preso, out in the world.</span>
+              <span>PC Express · Intel Gamer Days</span>
+            </figcaption>
+          </figure>
+        </section>
+        <section
+          className="gallery-person"
+          aria-labelledby="gallery-person-heading"
+        >
+          <p className="gallery-kicker">The person behind the work</p>
+          <div>
+            <h2 id="gallery-person-heading">
+              CURIOUS ENOUGH TO START.
+              <br />
+              <span>COMMITTED ENOUGH TO FINISH.</span>
+            </h2>
+            <p>
+              I’m a computer science student and former competitive debater. I
+              like working across boundaries: from the interface to the model,
+              from the game to its networking, and from a technical idea to a
+              clear explanation.
+            </p>
+            <div className="gallery-actions">
+              <Link href="/about" className="gallery-link">
+                A little more about me <span aria-hidden="true">↗</span>
+              </Link>
+              <a
+                href={contact.linkedin}
+                className="gallery-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </div>
         </section>
       </main>

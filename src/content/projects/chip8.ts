@@ -22,8 +22,8 @@ export const chip8: Project = {
   outcome: "106 assertions · runs in this browser",
   media: {
     // A capture of the deployed debugger, mid-frame, running Brix.
-    src: "/work/chip8/debugger.webp",
-    alt: "The CHIP-8 debugger running Brix: the pixel display, the live disassembly, the sixteen registers and the hex keypad matrix.",
+    src: "/work/chip8/arcade.webp",
+    alt: "The actual redesigned CHIP-8 micro arcade running Brix with the debugger tucked away.",
   },
   built: [
     "C++17",
@@ -34,8 +34,7 @@ export const chip8: Project = {
     "CHIP-8 assembly",
   ],
   links: {
-    demo: "https://chip8-debugger.vercel.app",
-    repo: "https://github.com/M4tyu633/chip8",
+    demo: "/chip8/index.html",
   },
   facts: [
     { label: "Language", value: "C++17, no dependencies in the core" },
@@ -63,7 +62,7 @@ export const chip8: Project = {
         { kind: "figure", id: "c8-machine" },
         {
           kind: "p",
-          text: "It opens on Brix, a brick breaker. **A** and **D** move the paddle. **Tab** loads the next ROM. There are six: Brix, Pong (two players, 1 and Q on the left, 4 and R on the right), Catch, then Bounce, Counter and Keypad, three smaller ROMs that exercise specific instructions rather than being games.",
+          text: "It opens on Brix, a brick breaker. **A** and **D** move the paddle. The cartridge library switches ROMs; **Tab** leaves the game. There are six: Brix, Pong (two players, 1 and Q on the left, 4 and R on the right), Catch, then Bounce, Counter and Keypad, three smaller ROMs that exercise specific instructions rather than being games.",
         },
         {
           kind: "p",
@@ -108,6 +107,13 @@ export const chip8: Project = {
       n: "03",
       heading: "Watching the machine instead of reading about it",
       blocks: [
+        {
+          kind: "image",
+          src: "/work/chip8/inspection.webp",
+          alt: "The redesigned emulator in inspection mode, with actual Brix instructions, registers and memory.",
+          caption:
+            "Inspect machine reveals the running C++ state. Return to game hides it again.",
+        },
         {
           kind: "p",
           text: "The right-hand panel is live machine state. V0 to VF in hex and decimal, with a register flashing amber for a moment after it is written. PC, I and SP, plus both timers highlighted while they count down. The call stack, which is the thing that tells you a ROM is about to overflow it. And the eight bytes around **I**, because I is almost always pointing at whatever matters next: a sprite, a BCD result, or a block of registers about to be loaded.",
@@ -198,7 +204,7 @@ export const chip8: Project = {
       blocks: [
         {
           kind: "p",
-          text: "There are no third-party binaries in the repository. I wrote every bundled ROM myself in CHIP-8 assembly, kept the readable source next to it, and wrote a small assembler in the tools directory to build them.",
+          text: "I wrote all six bundled ROMs in CHIP-8 assembly and built a small assembler for them. Each program has readable, commented source alongside its compiled ROM.",
         },
         {
           kind: "ledger",

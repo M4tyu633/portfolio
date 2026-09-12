@@ -78,3 +78,50 @@ export function setSoundEnabled(next: boolean) {
 export function useSoundEnabled() {
   return useSyncExternalStore(subscribeSound, getSoundSnapshot, () => false);
 }
+
+const VOLUME_KEY = "portfolio.music-volume";
+let volumeCache: number | null = null;
+const volumeListeners = new Set<() => void>();
+function readVolume() {
+  try {
+    const value = window.localStorage.getItem(VOLUME_KEY);
+    const parsed = value === null ? 0.3 : Number(value);
+    return Number.isFinite(parsed) ? Math.max(0, Math.min(1, parsed)) : 0.3;
+  } catch {
+    return 0.3;
+  }
+}
+function subscribeVolume(listener: () => void) {
+  volumeListeners.add(listener);
+  const sync = (event: StorageEvent) => {
+    if (event.key === VOLUME_KEY) {
+      volumeCache = readVolume();
+      volumeListeners.forEach((update) => update());
+    }
+  };
+  window.addEventListener("storage", sync);
+  return () => {
+    volumeListeners.delete(listener);
+    window.removeEventListener("storage", sync);
+  };
+}
+export function setMusicVolume(value: number) {
+  if (!Number.isFinite(value)) return;
+  volumeCache = Math.max(0, Math.min(1, value));
+  try {
+    window.localStorage.setItem(VOLUME_KEY, String(volumeCache));
+  } catch {
+    /* private browsing */
+  }
+  volumeListeners.forEach((update) => update());
+}
+export function useMusicVolume() {
+  return useSyncExternalStore(
+    subscribeVolume,
+    () => {
+      if (volumeCache === null) volumeCache = readVolume();
+      return volumeCache;
+    },
+    () => 0.3,
+  );
+}

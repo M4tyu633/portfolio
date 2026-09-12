@@ -50,3 +50,6 @@ next-env.d.ts
 .review/
 playwright-report/
 test-results/
+
+# Local source captures and audio masters; optimized deliverables live in public.
+/artifacts/

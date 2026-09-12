@@ -388,7 +388,11 @@
       var(--plate-veil-a) 90%,
       var(--plate-veil-a) 100%
     ),
-    radial-gradient(115% 85% at 50% 46%, transparent 28%, var(--plate-veil-c) 100%);
+    radial-gradient(
+      115% 85% at 50% 46%,
+      transparent 28%,
+      var(--plate-veil-c) 100%
+    );
 }
 
 /* Every room that carries a plate has to lift its own content above it, and

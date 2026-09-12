@@ -8,7 +8,7 @@ import { certifications, contact } from "@/content/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "BS Computer Science at UP Manila, DOST undergraduate scholar. Most of my projects end up crossing a boundary I wasn't planning to cross.",
+    "Software developer, BS Computer Science student at UP Manila and DOST scholar. Building across interfaces, systems, games and machine learning.",
 };
 
 /* /about is the quietest page on the site, and that is the point. A reader
@@ -28,8 +28,7 @@ export default function AboutPage() {
               <h1>Matthew Labrador</h1>
               <p className="about-standfirst">
                 Computer science at UP Manila. I build games, civic systems and
-                machine-learning tools, usually end to end, and usually with
-                less time than the problem deserves.
+                machine-learning tools, from the first idea to a working system.
               </p>
             </div>
             <figure>
@@ -65,7 +64,7 @@ export default function AboutPage() {
               place of a philosophy section. */}
           <section aria-labelledby="evidence" className="about-evidence">
             <h2 id="evidence" className="u-display">
-              Three things I checked
+              How I make decisions
             </h2>
             <ol>
               {about.evidence.map((e) => (
@@ -82,7 +81,7 @@ export default function AboutPage() {
 
           <section aria-labelledby="timeline" className="about-timeline">
             <h2 id="timeline" className="u-display">
-              Where the time went
+              The path so far
             </h2>
 
             <ol className="border-rule mt-8 border-t">

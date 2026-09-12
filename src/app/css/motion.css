@@ -21,8 +21,8 @@
  * story than "this is the next thing" — a heading, a paragraph column.
  * ------------------------------------------------------------------------ */
 [data-seq="rise"] > * {
-  opacity: 0;
-  transform: translateY(0.9rem);
+  opacity: 1;
+  transform: none;
   transition:
     opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -177,7 +177,7 @@
 }
 
 .eg-route li {
-  opacity: 0;
+  opacity: 1;
   transition: opacity 420ms ease-out;
 }
 
@@ -310,8 +310,8 @@
  * sliding in, and the caption follows it.
  * ------------------------------------------------------------------------ */
 .receipts-photo[data-seq] {
-  opacity: 0;
-  transform: scale(1.035) rotate(-0.4deg);
+  opacity: 1;
+  transform: none;
   transition:
     opacity 760ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -323,8 +323,8 @@
 }
 
 .receipts-list li {
-  opacity: 0;
-  transform: translateY(0.5rem);
+  opacity: 1;
+  transform: none;
   transition:
     opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -347,8 +347,8 @@
  * catalogue that takes two seconds to assemble is a catalogue you cannot scan.
  * ------------------------------------------------------------------------ */
 .archive-list li {
-  opacity: 0;
-  transform: translateY(0.6rem);
+  opacity: 1;
+  transform: none;
   transition:
     opacity 460ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 460ms cubic-bezier(0.22, 1, 0.36, 1);

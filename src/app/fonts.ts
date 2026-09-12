@@ -1,5 +1,17 @@
 import localFont from "next/font/local";
-import { IBM_Plex_Mono, IBM_Plex_Sans, Newsreader } from "next/font/google";
+import {
+  Barlow_Condensed,
+  IBM_Plex_Mono,
+  IBM_Plex_Sans,
+  Newsreader,
+} from "next/font/google";
+
+export const galleryDisplay = Barlow_Condensed({
+  variable: "--font-gallery",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
 
 // Plex is the common body system. Display faces are scoped to their surfaces.
 export const plexSans = IBM_Plex_Sans({

@@ -105,7 +105,6 @@ body[data-world="cardio"] {
 /* The frame takes the selected world's own ground while its plate is up, so
    the cover is briefly lit by that project rather than by the building. */
 
-
 .room-head {
   position: relative;
   z-index: 2;

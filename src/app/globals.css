@@ -14,86 +14,26 @@
 @import "./css/finish.css";
 @import "./css/rooms.css";
 @import "./css/tumbang.css";
+@import "./css/gallery.css";
+@import "./css/audio.css";
 
-/* ===========================================================================
- * THE BUILDING AND THE ROOMS
- *
- * One skeleton, several worlds. Every colour on this site comes from a `--w-*`
- * custom property, and a world is one `[data-world="..."]` block that rewrites
- * them. Nothing below this file needs to know which world it is in: a component
- * written against `--w-ink` is correct in the archive, on asphalt, and inside
- * the debugger.
- *
- * That indirection is the whole art direction. The alternative, a variant class
- * per world on every element, was tried in the first pass and produced 300
- * character utility strings that nobody could read or change.
- *
- * ⚠⚠ THE BUILDING USED TO BE MONOCHROME CREAM, ON THE THEORY THAT "COLOUR IS A
- * PROPERTY OF THE WORK". It made every shared page — Work, Achievements, About
- * — the same cream / black / hairline worksheet, and the site read as a
- * competent template rather than as something a person designed. The building
- * is a designed object too. It now has a ground, a signature and a second mark,
- * and the worlds still look nothing like it or like each other.
- * ======================================================================== */
-
-/* --------------------------------------------------------------------------
- * THE BUILDING — ink stock, bone type, one hot signature, one cold mark.
- *
- * Ground is a warm near-black with red left in it (#14100F, hue 15°), not the
- * blue-grey every dark template ships. Type is bone rather than white so the
- * page reads as printed rather than as an OS surface.
- *
- * Two accents with two jobs, and they never swap:
- *   --w-accent    vermilion. HUMAN. Live things, the active project, the thing
- *                 you are meant to press. 6.1:1 on the ground.
- *   --w-accent-2  acid. MEASURED. Numbers that were counted, states that were
- *                 observed, anything the site is claiming it checked. 12.9:1.
- *
- * The pair is lifted from his own printed identity — the business card runs a
- * deep oxblood field with an antique-gold rule — pushed to screen brightness
- * and given a cold partner so measurements do not read as decoration.
- * ------------------------------------------------------------------------ */
-/* ===========================================================================
- * THE BUILDING — and why it has no colour.
- *
- * ⚠ THIS USED TO BE A MIDNIGHT INDIGO AND THE INDIGO HAD NO ARGUMENT BEHIND IT.
- * It was a nice dark blue, which is the same thing as saying it was a default.
- * Worse, it competed: an indigo cover, an indigo receipts sheet and an indigo
- * about page put a seventh world on a site that already has six, and every one
- * of the six is defined by its colour.
- *
- * The building is now achromatic on purpose. Ground #08080A, ink a warm
- * off-white, and an accent that is the ink itself. The rule that falls out of
- * it is worth stating plainly:
- *
- *     COLOUR MEANS WORK. If something on this site is coloured, a project is
- *     speaking. If it is black, white or grey, the building is.
- *
- * That is why the cover takes its one accent from whichever project is selected
- * (`--op-accent`), why the seams disappear into the ground rather than reading
- * as a seventh environment, and why a photograph or a screenshot is always the
- * brightest thing in frame. Nothing here is decoration that has to be argued
- * with later; it is the absence of decoration, which is the argument.
- *
- * The one chromatic exception is `--w-focus`, and it is an accessibility
- * control, not a style: a focus ring has to be findable against every world on
- * the site, including the ones that are nearly white.
- * ======================================================================== */
+/* Shared gallery tokens. Each project world overrides its own palette.
+   Current art direction: docs/RESEARCH-AND-ART-DIRECTION.md. */
 :root,
 [data-world="index"] {
-  --w-ground: #08080a;
-  --w-ground-2: #111114;
-  --w-ground-3: #1b1b20;
-  --w-ink: #f4f2ee;
-  --w-ink-2: #a8a5a0;
-  --w-ink-3: #94918b;
-  --w-rule: #f4f2ee26;
-  --w-rule-2: #f4f2ee12;
-  --w-accent: #f4f2ee;
-  --w-accent-ink: #08080a;
-  --w-accent-2: #a8a5a0;
+  --w-ground: #10131a;
+  --w-ground-2: #191f2b;
+  --w-ground-3: #253045;
+  --w-ink: #f1efeb;
+  --w-ink-2: #b7bdc9;
+  --w-ink-3: #a2aabd;
+  --w-rule: #bac5d530;
+  --w-rule-2: #bac5d51a;
+  --w-accent: #f17852;
+  --w-accent-ink: #10131a;
+  --w-accent-2: #b3c3e5;
   --w-focus: #ff2d55;
-  --w-display: var(--font-newsreader), Georgia, serif;
+  --w-display: var(--font-gallery), Impact, sans-serif;
   --w-display-weight: 400;
   --w-display-tracking: -0.035em;
   color-scheme: dark;
@@ -797,7 +737,9 @@
   right: 1vw;
   top: 50%;
   transform: translateY(-50%) perspective(1200px) rotateY(-14deg) rotateZ(3deg);
-  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s;
+  transition:
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.8s;
   opacity: 0.9;
 }
 .glyco-header:hover .glyco-artifact {

@@ -24,9 +24,8 @@ export default function Chip8Page() {
           </Link>
           <div className="grid items-end gap-6 pt-8 lg:grid-cols-[1.5fr_1fr]">
             <h1 className="u-display text-[clamp(2rem,5vw,4.5rem)]">
-              I wanted to understand an emulator,
-              <br />
-              so I wrote one.
+              A small machine.
+              <br />A complete emulator.
             </h1>
             <p className="u-prose">
               This is the actual C++ machine, compiled to WebAssembly. Boot it,
@@ -60,13 +59,6 @@ export default function Chip8Page() {
         ))}
         <footer className="border-rule flex flex-wrap justify-between gap-6 border-t py-12">
           <p className="u-meta">{chip8.built.join(" · ")}</p>
-          <a
-            href="https://github.com/M4tyu633/chip8"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read the source ↗
-          </a>
           <Link href="/work">Back to work →</Link>
         </footer>
       </main>

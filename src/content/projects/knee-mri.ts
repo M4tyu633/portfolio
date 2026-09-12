@@ -22,7 +22,7 @@ export const kneeMri: Project = {
   outcome: "0.843 macro AUC, strict out-of-fold",
   media: {
     // A capture of the deployed reading station. See scripts/capture-live.sh.
-    src: "/work/knee-mri/station.webp",
+    src: "/work/knee-mri/reading-room.webp",
     alt: "The redesigned Knee MRI station: a large sagittal preview, series navigation and held-out scores beside radiologist annotations.",
   },
   built: ["PyTorch", "DINOv2", "ONNX Runtime", "Next.js 16", "React 19"],
@@ -159,7 +159,7 @@ export const kneeMri: Project = {
         },
         {
           kind: "image",
-          src: "/work/knee-mri/station.webp",
+          src: "/work/knee-mri/reading-room.webp",
           alt: "The reading station with a real scan preview, series navigation and per-finding model scores.",
           caption:
             "The station, with the twelve findings scored down the right.",

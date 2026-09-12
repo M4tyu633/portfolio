@@ -242,16 +242,15 @@ export default function TumbangPage() {
               The team built the entry. I built the game.
             </h2>
             <p className="u-prose mt-6 text-[1.1875rem]">
-              Every 3D model and character, the map, the interface, the sound
-              design, the bots, the physics, the netcode, and the codebase under
-              all of it. Then the marketing, the deck, the pitch, and the
-              Q&amp;A in front of the judges.
+              Gameplay, level assembly, interface, sound integration, bots,
+              physics and multiplayer networking. I developed the game and
+              presented it to the judges, combining custom work with the
+              licensed asset kits credited in the original project.
             </p>
             <p className="u-prose mt-5">
-              Five days is why a lot of what follows looks blunt. I did not have
-              time for the clever version of any of these problems. I had time
-              for the version I could measure, confirm, and then stop thinking
-              about.
+              With five days to build, I prioritized decisions I could test:
+              reliable contact detection, clear feedback and a multiplayer flow
+              that worked in the competition room.
             </p>
 
             <div className="mt-12 grid gap-4 lg:grid-cols-2">
@@ -274,19 +273,20 @@ export default function TumbangPage() {
                   className="border-rule border"
                 />
                 <figcaption className="u-meta text-ink-3 mt-3 tracking-[0.04em] normal-case">
-                  Eskinita. Every building, prop and character in it is ours.
+                  Eskinita: a complete game environment assembled from custom
+                  work and licensed assets.
                 </figcaption>
               </figure>
             </div>
 
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               <Plate
-                src={`${M}/menu.webp`}
-                alt="The Tumbang Preso main menu, with hand-lettered pennant buttons over the street."
-                caption="The menu. The pennants are drawn, not generated."
+                src={`${M}/original/defender-start.webp`}
+                alt="The original Tumbang Preso defender round, captured from the full game recording."
+                caption="The defender’s opening view, captured from the actual game."
               />
               <Plate
-                src={`${M}/select.webp`}
+                src={`${M}/original/setup-capture.webp`}
                 alt="The character select screen showing a player, their name and three stat meters."
                 caption="Pick a person, a lata and a tsinelas. All three reach gameplay."
               />
@@ -295,7 +295,7 @@ export default function TumbangPage() {
             <ThemeTrack
               src="/sound/tumbang-theme.mp3"
               label="the menu theme"
-              note="Written for the build. It is what plays behind the screen above."
+              note="The original Godot menu track, presented in full stereo."
             />
           </div>
         </section>

@@ -1,23 +1,13 @@
 import { ImageResponse } from "next/og";
-import { opening, site, stamp } from "@/content/site";
-import { entrances } from "@/content/worlds";
-
-/* The card people see when the site is pasted into a chat: the homepage's
- * opening, reset for 1200x630.
- *
- * ⚠ No custom font is loaded on purpose. Satori would need the WOFF fetched at
- * build time, and a build that reaches the network to render a share image is a
- * build that can fail for a reason nobody will connect to this file. */
-
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = `${site.name}: ${opening.statement}`;
-
-const GROUND = "#08080a";
-const INK = "#f4f2ee";
-const RULE = "rgba(244,242,238,0.16)";
-const MUTED = "rgba(244,242,238,0.55)";
-
+export const alt =
+  "Matthew Labrador — Software developer. From idea to working software.";
+const font = await readFile(
+  join(process.cwd(), "public/fonts/BarlowCondensed-SemiBold.ttf"),
+);
 export default function OpengraphImage() {
   return new ImageResponse(
     <div
@@ -26,63 +16,105 @@ export default function OpengraphImage() {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
-        background: GROUND,
-        color: INK,
-        padding: "56px 64px",
+        padding: "48px 58px",
+        background: "linear-gradient(120deg,#10131a,#172b48)",
+        color: "#efede7",
+        position: "relative",
       }}
     >
       <div
         style={{
           display: "flex",
-          gap: 18,
-          fontSize: 19,
-          letterSpacing: 3,
-          textTransform: "uppercase",
-          color: MUTED,
+          fontSize: 18,
+          letterSpacing: 2,
+          color: "#b5c4d8",
         }}
       >
-        {stamp.map((s, i) => (
-          <div key={s} style={{ display: "flex", gap: 18 }}>
-            {i > 0 ? <span>/</span> : null}
-            <span>{s}</span>
-          </div>
-        ))}
+        SOFTWARE DEVELOPER / UP MANILA
       </div>
-
+      <div
+        style={{
+          position: "absolute",
+          right: 65,
+          top: 148,
+          width: 350,
+          height: 350,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "50%",
+          border: "38px solid #74869d",
+          transform: "rotate(-24deg)",
+          boxShadow: "0 0 0 18px #34465f",
+        }}
+      >
+        <div
+          style={{
+            width: 230,
+            height: 230,
+            borderRadius: "50%",
+            border: "34px solid #bac3cd",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "#111823",
+          }}
+        >
+          <div
+            style={{
+              width: 95,
+              height: 95,
+              display: "flex",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg,#ffa079,#d6582d)",
+            }}
+          />
+        </div>
+      </div>
       <div
         style={{
           display: "flex",
-          fontSize: 74,
-          lineHeight: 1.06,
-          letterSpacing: -2.4,
-          maxWidth: 940,
+          flexDirection: "column",
+          fontFamily: "Barlow",
+          fontSize: 132,
+          lineHeight: 0.86,
+          letterSpacing: -3,
+          marginTop: 70,
         }}
       >
-        {opening.statement}
+        <span>MATTHEW</span>
+        <span style={{ display: "flex" }}>
+          LABRADOR<span style={{ color: "#f17852" }}>.</span>
+        </span>
       </div>
-
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex", height: 1, background: RULE }} />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            paddingTop: 20,
-            fontSize: 19,
-            letterSpacing: 1.2,
-            color: MUTED,
-          }}
-        >
-          {entrances.map((w) => (
-            <div key={w.n} style={{ display: "flex", gap: 10 }}>
-              <span>{w.n}</span>
-              <span style={{ color: INK }}>{w.title}</span>
-            </div>
-          ))}
-        </div>
+      <div
+        style={{
+          display: "flex",
+          fontSize: 24,
+          marginTop: 32,
+          color: "#becbdd",
+        }}
+      >
+        From idea to working software.
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "auto",
+          paddingTop: 22,
+          borderTop: "1px solid #8194af55",
+          fontSize: 16,
+          color: "#a9bad1",
+        }}
+      >
+        <span>Selected work · Games, systems & machine learning</span>
+        <span>matthewlabrador.vercel.app ↗</span>
       </div>
     </div>,
-    size,
+    {
+      ...size,
+      fonts: [{ name: "Barlow", data: font, weight: 600, style: "normal" }],
+    },
   );
 }

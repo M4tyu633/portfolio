@@ -75,17 +75,17 @@ export default function Opening() {
       aria-labelledby="opening-statement"
     >
       {/* ⚠ THE FIELD IS THE FIRST SCREEN, NOT A PANEL ON IT.
-        *
-        * It used to be a framed plate in the right-hand column, which made the
-        * cover a two-up card: a sentence, and a picture of a project beside it.
-        * Nothing about that said the site itself was built. The reconstruction
-        * now runs edge to edge behind everything, so the first thing that
-        * happens when the page opens is the whole screen deriving the work out
-        * of a cloud of points, with the name and the sentence sitting in it.
-        *
-        * The photograph underneath is the fallback and the alt text. If WebGL2
-        * is not available it simply stays, and the cover is a full-bleed
-        * photograph with type on it, which is still a cover. */}
+       *
+       * It used to be a framed plate in the right-hand column, which made the
+       * cover a two-up card: a sentence, and a picture of a project beside it.
+       * Nothing about that said the site itself was built. The reconstruction
+       * now runs edge to edge behind everything, so the first thing that
+       * happens when the page opens is the whole screen deriving the work out
+       * of a cloud of points, with the name and the sentence sitting in it.
+       *
+       * The photograph underneath is the fallback and the alt text. If WebGL2
+       * is not available it simply stays, and the cover is a full-bleed
+       * photograph with type on it, which is still a cover. */}
       <div className="opening-stage" data-project={displayed.world}>
         <div className="opening-plate-fallback" key={displayed.title}>
           <Image
@@ -144,17 +144,17 @@ export default function Opening() {
             it is the work, and it pauses itself off-screen. */}
         <figure className="opening-plate">
           {/* ⚠ THE PAGER EXISTS BECAUSE HOVER IS NOT A CONTROL.
-            *
-            * Selecting a project was a pointer-enter on the index at the foot
-            * of the screen, which is invisible to anyone who does not happen to
-            * move a mouse across it: a touch reader, a keyboard reader, and
-            * anyone who simply looked at the plate and waited. The index still
-            * works exactly as it did and still drives the same state. This adds
-            * the obvious thing that was missing, which is a way to press NEXT.
-            *
-            * Buttons, not links: nothing here navigates. The counter is the
-            * only place on the opening that says how many projects there are,
-            * so it is `aria-live` and the caption is announced with it. */}
+           *
+           * Selecting a project was a pointer-enter on the index at the foot
+           * of the screen, which is invisible to anyone who does not happen to
+           * move a mouse across it: a touch reader, a keyboard reader, and
+           * anyone who simply looked at the plate and waited. The index still
+           * works exactly as it did and still drives the same state. This adds
+           * the obvious thing that was missing, which is a way to press NEXT.
+           *
+           * Buttons, not links: nothing here navigates. The counter is the
+           * only place on the opening that says how many projects there are,
+           * so it is `aria-live` and the caption is announced with it. */}
           <figcaption className="plate-caption">
             <p key={`${active.n}-line`}>{active.line}</p>
 

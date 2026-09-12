@@ -4,10 +4,10 @@
 export const site = {
   name: "Matthew Labrador",
   url: "https://matthewlabrador.vercel.app",
-  title: "Matthew Labrador",
+  title: "Matthew Labrador · Software Developer",
   titleTemplate: "%s · Matthew Labrador",
   description:
-    "Computer science student at UP Manila. Games, AI systems, public-sector software and low-level experiments, built end to end and measured.",
+    "Software developer and computer science student at UP Manila. Award-winning games, civic software, AI systems and working experiments.",
   locale: "en_PH",
 };
 
@@ -44,10 +44,10 @@ export const nav = [
 
 /* The opening. */
 export const opening = {
-  statement: "I keep picking projects that are slightly unreasonable.",
-  body: "I'm a computer science student at UP Manila. I build complete systems rather than pieces of them: interface, backend, model, netcode and deployment, usually on projects I have no business finishing in the time available.",
+  statement: "Curious mind. Hands-on builder.",
+  body: "I'm Matthew, a software developer and computer science student at UP Manila. I turn complex ideas into things people can use, play with, and understand.",
   shortBody:
-    "Six projects, in the order they matter. Every row says what I built and where it went.",
+    "Games, AI, civic software and systems experiments. Explore the problems, the decisions, and the results.",
 };
 
 /* One row per technology, and the row's whole content is where it was used. A
@@ -57,7 +57,11 @@ export const technicalIndex: {
   where: string;
   slugs: string[];
 }[] = [
-  { name: "Python", where: "Used in five of the projects here", slugs: [] },
+  {
+    name: "Python",
+    where: "Data pipelines, model training and the GlycoSwarm backend",
+    slugs: [],
+  },
   {
     name: "C / C++",
     where: "CHIP-8 interpreter, Raylib debugger, Emscripten build",
@@ -95,7 +99,7 @@ export const technicalIndex: {
   },
   {
     name: "Blender",
-    where: "Every model and character in Tumbang Preso",
+    where: "Game asset work for Tumbang Preso",
     slugs: ["tumbang-preso"],
   },
   {

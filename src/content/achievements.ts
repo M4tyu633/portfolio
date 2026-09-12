@@ -14,7 +14,7 @@ import type { Achievement } from "./types";
  * ======================================================================== */
 
 export const receipts = {
-  title: "Receipts",
+  title: "Achievements",
   standfirst: "Competitions, rankings, scholarships, and the work behind them.",
 };
 
@@ -50,7 +50,7 @@ export const achievements: Achievement[] = [
           },
           {
             kind: "p",
-            text: "I built the game. Not the gameplay code with art commissioned around it: every 3D model and character, the map, the interface, the sound design, the bots, the physics, the netcode and the codebase under all of it. Then the marketing, the deck, and the Q&A in front of the judges.",
+            text: "I developed the game end to end: gameplay, level assembly, interface, sound integration, bots, physics and multiplayer networking. I also prepared the presentation and answered the judges' questions. The game combines custom work with licensed asset kits, as recorded in the original project.",
           },
           {
             kind: "figures",
@@ -201,7 +201,8 @@ export const achievements: Achievement[] = [
     title: "DOST Undergraduate Scholarship",
     result: "Scholar",
     org: "Department of Science and Technology",
-    context: "Philippine government scholarship for students in science and engineering.",
+    context:
+      "Philippine government scholarship for students in science and engineering.",
     year: "2025 – present",
     tier: "C",
   },
@@ -211,7 +212,8 @@ export const achievements: Achievement[] = [
     title: "University Scholar",
     result: "GWA 1.0375",
     org: "University of the Philippines Manila",
-    context: "UP honours standing. On the UP grading scale 1.0 is the highest possible grade.",
+    context:
+      "UP honours standing. On the UP grading scale 1.0 is the highest possible grade.",
     year: "2025 – present",
     tier: "C",
   },

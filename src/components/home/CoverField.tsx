@@ -384,14 +384,7 @@ export default function CoverField({
       imgAspect = img.naturalWidth / Math.max(1, img.naturalHeight);
       gl.bindTexture(gl.TEXTURE_2D, tex);
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 0);
-      gl.texImage2D(
-        gl.TEXTURE_2D,
-        0,
-        gl.RGBA,
-        gl.RGBA,
-        gl.UNSIGNED_BYTE,
-        img,
-      );
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
       fitCover();
     };
 
@@ -490,7 +483,10 @@ export default function CoverField({
           state = "resolving";
         }
       } else if (state === "resolving") {
-        resolve = Math.min(1, resolve + dt * (first ? RATES.firstUp : RATES.up));
+        resolve = Math.min(
+          1,
+          resolve + dt * (first ? RATES.firstUp : RATES.up),
+        );
         if (resolve >= 1) {
           resolve = 1;
           state = "idle";

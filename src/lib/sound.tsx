@@ -7,214 +7,328 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
+import { usePathname } from "next/navigation";
 import type { WorldId } from "@/content/types";
-import { Bed } from "@/lib/bed";
-import { setSoundEnabled, useSoundEnabled } from "@/lib/prefs";
+import { setMusicVolume, useMusicVolume } from "@/lib/prefs";
+import { soundtrack } from "@/content/music";
 
-// Opt-in samples and music from the Godot game. Other pages are silent.
-// The emulator owns its actual buzzer inside its isolated document.
 export type Cue = "hover" | "click" | "enter" | "impact";
-
-type Ctx = {
+type SoundContext = {
   enabled: boolean;
+  loading: boolean;
+  error: string | null;
+  volume: number;
+  setVolume: (value: number) => void;
+  effects: boolean;
+  setEffects: (value: boolean) => void;
   toggle: () => void;
   play: (cue: Cue) => void;
-  /** Sets the world whose voice is used, and whose music bed plays. */
-  setWorld: (w: WorldId) => void;
+  setWorld: (world: WorldId) => void;
+  getLevel: () => number;
 };
-
-const SoundCtx = createContext<Ctx | null>(null);
-
-const MASTER = 0.3;
-const MUSIC = 0.055;
-
-/* --- the sampled cues, Tumbang only -------------------------------------- */
-const SAMPLES: Partial<Record<Cue, string>> = {
-  hover: "/sound/ui-hover.mp3",
+const SoundCtx = createContext<SoundContext | null>(null);
+const samples: Partial<Record<Cue, string>> = {
   click: "/sound/ui-click.mp3",
   enter: "/sound/lata-impact.mp3",
   impact: "/sound/lata-knockdown.mp3",
 };
 
-/** ⚠ THE SAMPLED BED IS TUMBANG'S ONLY, AND IT IS THE GAME'S OWN MENU THEME.
- *  Every other world is played by the synth in `lib/bed.ts` rather than by a
- *  file, because a stock loop would have been the least honest thing on a
- *  portfolio whose argument is that the work is real. See that file. */
-const BEDS: Partial<Record<WorldId, string>> = {
-  tumbang: "/sound/tumbang-theme.mp3",
-};
-
 export function SoundProvider({ children }: { children: React.ReactNode }) {
-  const enabled = useSoundEnabled();
-  const ctxRef = useRef<AudioContext | null>(null);
-  const masterRef = useRef<GainNode | null>(null);
-  const bufferRef = useRef<Map<string, AudioBuffer>>(new Map());
-  const worldRef = useRef<WorldId>("index");
-  const bedRef = useRef<HTMLAudioElement | null>(null);
-  const synthRef = useRef<Bed | null>(null);
+  const pathname = usePathname();
+  const [enabled, setEnabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [effects, setEffectsState] = useState(false);
+  const volume = useMusicVolume();
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const contextRef = useRef<AudioContext | null>(null);
+  const gainRef = useRef<GainNode | null>(null);
+  const effectGainRef = useRef<GainNode | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const meter = useRef(new Uint8Array(128));
+  const desired = useRef(false);
+  const world = useRef<WorldId>("index");
+  const volumeRef = useRef(0.3);
+  const effectsRef = useRef(false);
+  const pauseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const buffers = useRef(new Map<string, AudioBuffer>());
+  const audibleFrames = useRef(new Set<MessageEventSource>());
 
-  const ensureContext = useCallback(() => {
-    if (ctxRef.current) return ctxRef.current;
-    const AC =
+  const mix = useCallback(() => {
+    const context = contextRef.current,
+      gain = gainRef.current;
+    if (!context || !gain) return;
+    const frames = [...document.querySelectorAll("iframe")];
+    for (const source of audibleFrames.current) {
+      if (!frames.some((frame) => frame.contentWindow === source))
+        audibleFrames.current.delete(source);
+    }
+    const anotherTrack =
+      audibleFrames.current.size > 0 ||
+      [...document.querySelectorAll<HTMLMediaElement>("audio,video")].some(
+        (media) =>
+          media !== audioRef.current &&
+          !media.paused &&
+          !media.ended &&
+          !media.muted,
+      );
+    const reading = ["reading", "cardio", "glyco"].includes(world.current);
+    const target =
+      desired.current && !document.hidden && !anotherTrack
+        ? volumeRef.current * (reading ? 0.78 : 1)
+        : 0;
+    gain.gain.cancelScheduledValues(context.currentTime);
+    gain.gain.setTargetAtTime(target, context.currentTime, 0.16);
+  }, []);
+
+  const ensureAudio = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return null;
+    if (contextRef.current) return contextRef.current;
+    const AudioContextClass =
       window.AudioContext ||
       (window as unknown as { webkitAudioContext: typeof AudioContext })
         .webkitAudioContext;
-    if (!AC) return null;
-    const ctx = new AC();
-    const master = ctx.createGain();
-    master.gain.value = MASTER;
-    master.connect(ctx.destination);
-    ctxRef.current = ctx;
-    masterRef.current = master;
-    return ctx;
+    if (!AudioContextClass) return null;
+    const context = new AudioContextClass();
+    const source = context.createMediaElementSource(audio);
+    const gain = context.createGain();
+    gain.gain.value = 0;
+    const effectGain = context.createGain();
+    effectGain.gain.value = 0.07;
+    const analyser = context.createAnalyser();
+    analyser.fftSize = 128;
+    analyser.smoothingTimeConstant = 0.85;
+    source.connect(gain).connect(analyser).connect(context.destination);
+    effectGain.connect(context.destination);
+    analyserRef.current = analyser;
+    contextRef.current = context;
+    gainRef.current = gain;
+    effectGainRef.current = effectGain;
+    return context;
   }, []);
-
-  const playSample = useCallback(
-    async (url: string, gain: number) => {
-      const ctx = ensureContext();
-      const master = masterRef.current;
-      if (!ctx || !master) return;
-      let buf = bufferRef.current.get(url);
-      if (!buf) {
-        try {
-          const res = await fetch(url);
-          buf = await ctx.decodeAudioData(await res.arrayBuffer());
-          bufferRef.current.set(url, buf);
-        } catch {
-          return;
-        }
-      }
-      const src = ctx.createBufferSource();
-      src.buffer = buf;
-      const g = ctx.createGain();
-      g.gain.value = gain;
-      src.connect(g).connect(master);
-      src.start();
-    },
-    [ensureContext],
-  );
-
-  const play = useCallback(
-    (cue: Cue) => {
-      if (!enabled) return;
-      const world = worldRef.current;
-      ctxRef.current?.resume();
-      if (world === "tumbang") {
-        const url = SAMPLES[cue];
-        if (url) void playSample(url, cue === "hover" ? 0.35 : 0.8);
-        return;
-      }
-    },
-    [enabled, playSample],
-  );
-
-  /* --- the music bed ----------------------------------------------------
-   * Two engines, and which one runs is decided by the world. Tumbang plays its
-   * own recorded menu theme, because the game has one and it is his. Every
-   * other world is generated: a kick, a hat, a sub and a held pad, scheduled
-   * ahead on the audio clock, with a different tempo, scale and pattern per
-   * room. See `lib/bed.ts` for why each pattern is what it is.
-   *
-   * ⚠ NEITHER STARTS BY ITSELF. Autoplaying audio is refused by every browser
-   * worth shipping to and should be. The toggle in the navigation bar is the
-   * only thing that starts either of them.
-   * ------------------------------------------------------------------- */
-  const startBed = useCallback(
-    (world: WorldId) => {
-      const url = BEDS[world];
-      const el = bedRef.current;
-
-      /* The recorded bed, if this world has one. */
-      if (url) {
-        synthRef.current?.stop();
-        const audio = el ?? new Audio();
-        bedRef.current = audio;
-        if (audio.getAttribute("src") !== url) {
-          audio.src = url;
-          audio.loop = true;
-          audio.preload = "none";
-        }
-        audio.volume = MUSIC;
-        void audio.play().catch(() => {
-          /* the browser can still refuse; the toggle is the only promise made */
-        });
-        return;
-      }
-
-      /* Otherwise, the synth. */
-      if (el) {
-        el.pause();
-        el.removeAttribute("src");
-        el.load();
-      }
-      const ctx = ensureContext();
-      const master = masterRef.current;
-      if (!ctx || !master) return;
-      if (!synthRef.current) synthRef.current = new Bed(ctx, master);
-      synthRef.current.setWorld(world);
-      synthRef.current.start();
-    },
-    [ensureContext],
-  );
-
-  const setWorld = useCallback(
-    (w: WorldId) => {
-      worldRef.current = w;
-      if (enabled) startBed(w);
-    },
-    [enabled, startBed],
-  );
 
   const toggle = useCallback(() => {
-    const now = !enabled;
-    setSoundEnabled(now);
-    if (now) {
-      ensureContext()?.resume();
-      startBed(worldRef.current);
-      // A cue on the press itself, so turning it on demonstrates what it did.
-      const w = worldRef.current;
-      if (w === "tumbang") void playSample(SAMPLES.click!, 0.8);
-    } else {
-      bedRef.current?.pause();
-      synthRef.current?.stop();
+    desired.current = !desired.current;
+    if (pauseTimer.current) clearTimeout(pauseTimer.current);
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (!desired.current) {
+      setEnabled(false);
+      setLoading(false);
+      mix();
+      pauseTimer.current = setTimeout(() => {
+        if (!desired.current) audio.pause();
+      }, 400);
+      return;
     }
-  }, [enabled, ensureContext, playSample, startBed]);
+    setError(null);
+    setLoading(true);
+    const context = ensureAudio();
+    if (!context) {
+      desired.current = false;
+      setLoading(false);
+      setError("Audio is unavailable in this browser.");
+      return;
+    }
+    if (!audio.getAttribute("src")) audio.src = soundtrack.src;
+    // Both calls occur in the visitor's gesture, including on Safari.
+    void Promise.all([context.resume(), audio.play()])
+      .then(() => {
+        if (!desired.current) {
+          audio.pause();
+          return;
+        }
+        setLoading(false);
+        setEnabled(true);
+        mix();
+      })
+      .catch(() => {
+        desired.current = false;
+        setEnabled(false);
+        setLoading(false);
+        setError("Music couldn’t start. Tap to try again.");
+      });
+  }, [ensureAudio, mix]);
 
-  // Leaving the page should not leave a loop running in a background tab.
-  useEffect(() => {
-    const bed = bedRef;
-    const synth = synthRef;
-    return () => {
-      bed.current?.pause();
-      synth.current?.dispose();
-      void ctxRef.current?.close();
-    };
+  const setWorld = useCallback(
+    (next: WorldId) => {
+      world.current = next;
+      mix();
+    },
+    [mix],
+  );
+  const getLevel = useCallback(() => {
+    if (!desired.current || !analyserRef.current || document.hidden) return 0;
+    analyserRef.current.getByteTimeDomainData(meter.current);
+    let sum = 0;
+    for (const value of meter.current) {
+      const centered = (value - 128) / 128;
+      sum += centered * centered;
+    }
+    return Math.min(1, Math.sqrt(sum / meter.current.length) * 7);
+  }, []);
+  const setEffects = useCallback(
+    (next: boolean) => {
+      effectsRef.current = next;
+      setEffectsState(next);
+      if (next) void ensureAudio()?.resume();
+    },
+    [ensureAudio],
+  );
+  const play = useCallback(async (cue: Cue) => {
+    // No hover noise. Original game cues are available as an explicit option.
+    if (!effectsRef.current || world.current !== "tumbang" || cue === "hover")
+      return;
+    const url = samples[cue],
+      context = contextRef.current,
+      destination = effectGainRef.current;
+    if (!url || !context || !destination) return;
+    try {
+      void context.resume();
+      let buffer = buffers.current.get(url);
+      if (!buffer) {
+        const response = await fetch(url);
+        if (!response.ok) return;
+        buffer = await context.decodeAudioData(await response.arrayBuffer());
+        buffers.current.set(url, buffer);
+      }
+      if (!effectsRef.current || document.hidden) return;
+      const source = context.createBufferSource();
+      source.buffer = buffer;
+      source.connect(destination);
+      source.start();
+      source.onended = () => source.disconnect();
+    } catch {
+      /* Optional cues never interrupt navigation. */
+    }
   }, []);
 
-  const value = useMemo(
-    () => ({ enabled, toggle, play, setWorld }),
-    [enabled, toggle, play, setWorld],
-  );
+  useEffect(() => {
+    volumeRef.current = volume;
+    mix();
+  }, [volume, mix]);
+  useEffect(() => {
+    mix();
+  }, [pathname, mix]);
+  useEffect(() => {
+    const music = audioRef.current;
+    const frameAudio = (event: MessageEvent) => {
+      if (
+        event.origin !== location.origin ||
+        !event.source ||
+        event.data?.type !== "portfolio-project-audio" ||
+        typeof event.data.active !== "boolean"
+      )
+        return;
+      if (
+        ![...document.querySelectorAll("iframe")].some(
+          (frame) => frame.contentWindow === event.source,
+        )
+      )
+        return;
+      if (event.data.active) audibleFrames.current.add(event.source);
+      else audibleFrames.current.delete(event.source);
+      mix();
+    };
+    window.addEventListener("message", frameAudio);
+    const mediaChanged = (event: Event) => {
+      if (event.target !== music) mix();
+    };
+    const visibility = () => {
+      if (document.hidden) {
+        music?.pause();
+        void contextRef.current?.suspend();
+      } else if (desired.current && music) {
+        void Promise.all([contextRef.current?.resume(), music.play()])
+          .then(mix)
+          .catch(() => {
+            desired.current = false;
+            setEnabled(false);
+          });
+      }
+    };
+    document.addEventListener("visibilitychange", visibility);
+    document.addEventListener("play", mediaChanged, true);
+    document.addEventListener("pause", mediaChanged, true);
+    document.addEventListener("ended", mediaChanged, true);
+    return () => {
+      window.removeEventListener("message", frameAudio);
+      document.removeEventListener("visibilitychange", visibility);
+      document.removeEventListener("play", mediaChanged, true);
+      document.removeEventListener("pause", mediaChanged, true);
+      document.removeEventListener("ended", mediaChanged, true);
+      if (pauseTimer.current) clearTimeout(pauseTimer.current);
+      music?.pause();
+      void contextRef.current?.close();
+    };
+  }, [mix]);
 
-  return <SoundCtx.Provider value={value}>{children}</SoundCtx.Provider>;
+  const value = useMemo(
+    () => ({
+      enabled,
+      loading,
+      error,
+      volume,
+      setVolume: setMusicVolume,
+      effects,
+      setEffects,
+      toggle,
+      play,
+      setWorld,
+      getLevel,
+    }),
+    [
+      enabled,
+      loading,
+      error,
+      volume,
+      effects,
+      setEffects,
+      toggle,
+      play,
+      setWorld,
+      getLevel,
+    ],
+  );
+  return (
+    <SoundCtx.Provider value={value}>
+      {children}
+      <audio
+        ref={audioRef}
+        data-site-music
+        preload="none"
+        loop
+        onError={() => {
+          desired.current = false;
+          setEnabled(false);
+          setLoading(false);
+          setError("Music is unavailable. Please try again.");
+        }}
+      />
+    </SoundCtx.Provider>
+  );
 }
 
-/** Safe to call outside the provider: it returns a no-op, so a component can
- *  ask for sound without knowing whether it is mounted inside one. */
-export function useSound(): Ctx {
-  const ctx = useContext(SoundCtx);
+export function useSound(): SoundContext {
   return (
-    ctx ?? {
+    useContext(SoundCtx) ?? {
       enabled: false,
+      loading: false,
+      error: null,
+      volume: 0.3,
+      setVolume: () => {},
+      effects: false,
+      setEffects: () => {},
       toggle: () => {},
       play: () => {},
       setWorld: () => {},
+      getLevel: () => 0,
     }
   );
 }
-
-/** Attach to any interactive element to give it the current world's voice. */
 export function useSoundHandlers() {
   const { play } = useSound();
   return useMemo(

@@ -65,7 +65,13 @@
   );
   padding: 0.6em 2.1em 0.55em 1.1em;
   /* the pointed end, in percentages so it holds at every size */
-  clip-path: polygon(0 0, calc(100% - 1.1em) 0, 100% 50%, calc(100% - 1.1em) 100%, 0 100%);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 1.1em) 0,
+    100% 50%,
+    calc(100% - 1.1em) 100%,
+    0 100%
+  );
   filter: drop-shadow(0 3px 0 #00000038);
 }
 

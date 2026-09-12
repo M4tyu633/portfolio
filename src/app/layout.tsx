@@ -1,8 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { newsreader, plexMono, plexSans } from "./fonts";
-import Ambience from "@/components/chrome/Ambience";
+import { galleryDisplay, newsreader, plexMono, plexSans } from "./fonts";
 import Choreograph from "@/components/chrome/Choreograph";
 import Footer from "@/components/chrome/Footer";
 import { SoundProvider } from "@/lib/sound";
@@ -44,7 +43,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   // The building's ground. A world overrides it live through WorldSync, so the
   // browser chrome on a phone follows the room you are standing in.
-  themeColor: "#171b38",
+  themeColor: "#10131a",
 };
 
 const personSchema = {
@@ -67,20 +66,17 @@ const personSchema = {
     "Networked Multiplayer",
     "Civic Technology",
   ],
-  sameAs: [contact.github, contact.linkedin, contact.facebook].filter(Boolean),
+  sameAs: [contact.linkedin, contact.facebook].filter(Boolean),
 };
 
-/* There is no theme toggle any more, and that is a design decision rather than
- * a regression. The site's whole structure is a monochrome building holding
- * rooms with their own palettes; a user-flipped dark mode would have to
- * override those palettes, which is the same as deleting them. */
+/* Shared chrome uses the gallery identity; each case study owns its palette. */
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
-      className={`${plexSans.variable} ${plexMono.variable} ${newsreader.variable}`}
+      className={`${plexSans.variable} ${plexMono.variable} ${newsreader.variable} ${galleryDisplay.variable}`}
       // Next needs this to know it should suppress its own scroll restoration
       // fighting the smooth scroll in globals.css during a route change.
       data-scroll-behavior="smooth"
@@ -100,8 +96,6 @@ export default function RootLayout({
             the current world's voice. It constructs no AudioContext and fetches
             no audio until the toggle in the header is pressed. */}
         <SoundProvider>
-          {/* The room behind every page. Client-only and aria-hidden. */}
-          <Ambience />
           {/* One IntersectionObserver for every [data-seq] on the document. */}
           <Choreograph />
           {children}
