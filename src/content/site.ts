@@ -7,7 +7,7 @@ export const site = {
   title: "Matthew Labrador · Software Developer",
   titleTemplate: "%s · Matthew Labrador",
   description:
-    "Software developer and computer science student at UP Manila. Award-winning games, civic software, AI systems and working experiments.",
+    "Software developer and computer science student at UP Manila. Grand Champion projects in education and civic technology, multiplayer games and applied AI.",
   locale: "en_PH",
 };
 

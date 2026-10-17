@@ -28,6 +28,7 @@ export default function ProjectHero({ project }: { project: Project }) {
   switch (project.world) {
     case "egov":
       return <Handset project={project} />;
+    case "khan":
     case "glyco":
     case "chip8":
       return <Instrument project={project} />;

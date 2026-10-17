@@ -1,4 +1,5 @@
 import type { Project } from "../types";
+import { khanpanion } from "./khanpanion";
 import { chip8 } from "./chip8";
 import { egovmed } from "./egovmed";
 import { glycoswarm } from "./glycoswarm";
@@ -15,10 +16,16 @@ export const projects: Project[] = [
   chip8,
   kneeMri,
   heartDisease,
+  khanpanion,
 ];
 
 /** The four that take over the homepage, in homepage order. */
-export const featured: Project[] = [tumbangPreso, egovmed, glycoswarm, chip8];
+export const featured: Project[] = [
+  tumbangPreso,
+  egovmed,
+  khanpanion,
+  glycoswarm,
+];
 
 export function projectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);

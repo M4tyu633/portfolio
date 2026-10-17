@@ -275,7 +275,7 @@ export function EgovWorld({ project }: { project: Project }) {
           </h2>
           <p className="u-prose mt-6">{h.body}</p>
           {/* ⚠ THE RESULT IS SHOWN, NOT ASSERTED. This was one line of tracked
-              monospace that said "Winner, 1 of 10", which is a claim a reader
+              monospace that recorded the competition result, which is a claim a reader
               has no reason to believe and no way to check. These are his own
               photographs from the event: the medals the ten teams were given,
               and him at the microphone in front of the wall. Same rule as the
@@ -298,7 +298,7 @@ export function EgovWorld({ project }: { project: Project }) {
               />
             </span>
             <figcaption className="u-meta">
-              Winner · eGov Hackathon PH · 1 of 10 teams
+              Grand Champion · eGov Hackathon PH 2026
             </figcaption>
           </figure>
           <RoomExit href={`/work/${project.slug}`} label="Follow the patient" />

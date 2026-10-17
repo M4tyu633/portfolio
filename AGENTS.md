@@ -39,7 +39,9 @@ The reader should quickly learn who Matthew is, what he can build, what he perso
 - Use first-person, concrete, confident copy. Remove self-deprecation, inflated claims, meta commentary about the page, and repeated explanations of why the portfolio is honest.
 - Lead project summaries with the user problem, personal contribution and substantiated result. Keep detailed caveats where they affect interpretation.
 - Tumbang Preso: sole developer of the competition game; BH Studios is the team; 1st Place at Gear Up NCR. Do not claim an unverified national result.
-- eGovMed: one of ten winning teams; PHP 100,000 prize; eight government integrations. PGH is a pilot target, not a confirmed deployment.
+- Latest owner correction, October 17, 2026: eGovMed is Grand Champion at eGov Hackathon PH 2026; PHP 100,000 prize; eight government integrations. PGH remains a pilot target, not a confirmed deployment.
+- Khanpanion: Grand Champion, Khan Academy Education Impact Challenge 2026, confirmed by the owner October 17. Treat school implementation targets as planned outcomes.
+- Current roles, owner-confirmed: Campus Ambassador at NVIDIA Philippines and Intern at PC Express, both 2026–present. Do not invent duties or metrics.
 - GlycoSwarm: AMD hackathon entry, not an award. It is a preserved prototype, not a production clinical service.
 - Knee MRI: headline macro AUC is **0.843, strict out-of-fold**. The 0.997 figure is in-sample. Do not conflate them or present AUC as accuracy.
 - CardioSense: research demonstration; 0.919 holdout AUC. Do not make clinical claims.
@@ -81,5 +83,9 @@ The reader should quickly learn who Matthew is, what he can build, what he perso
 - Keep a local preview available for review. Do not claim production changed without a verified deployment. Any publication decision comes after a concrete, validated result exists.
 
 ## Latest visual feedback
+
+### October 17 2026 redesign
+
+The owner explicitly rejected the existing portfolio and authorized another full redesign. This supersedes the Kinetic Gallery visual direction above. The current pass uses an editorial studio: near-black, warm ivory, sharp red, oversized condensed type, actual product captures and concise entrance/hover motion. Lead with Khanpanion, eGovMed and TUMP. Keep original project applications and existing routes intact. NVIDIA Philippines Campus Ambassador and PC Express Intern are both current roles, 2026–present. The downloadable resume replaces CHIP-8 with Khanpanion; the CHIP-8 project and demo remain on the site.
 
 The user identified flush text in the About decision cards and credentials panel as unacceptable. All filled panels need deliberate internal padding (24 px minimum at phone width), space between labels, paragraphs and links, and clear vertical rhythm. Inspect computed padding and the actual rendering. Changing a background color without revisiting the box model is incomplete. The latest gallery media must show the redesigned working products, especially CHIP-8.

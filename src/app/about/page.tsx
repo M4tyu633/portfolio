@@ -27,8 +27,8 @@ export default function AboutPage() {
               <p className="u-meta text-ink-3">About</p>
               <h1>Matthew Labrador</h1>
               <p className="about-standfirst">
-                Computer science at UP Manila. I build games, civic systems and
-                machine-learning tools, from the first idea to a working system.
+                Computer science at UP Manila. I build games, learning tools and
+                civic systems, from the first idea to a working product.
               </p>
             </div>
             <figure>

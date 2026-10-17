@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   // The building's ground. A world overrides it live through WorldSync, so the
   // browser chrome on a phone follows the room you are standing in.
-  themeColor: "#10131a",
+  themeColor: "#111110",
 };
 
 const personSchema = {

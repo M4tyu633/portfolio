@@ -28,3 +28,8 @@ The original DOST-GameDEV/DOST-GameDev repo was inspected at C:/Users/matth/orig
 Use a product overview on the gallery card and a different state or detail as supporting case-study evidence. Never return to chip8/debugger.webp, glycoswarm/demo.webp or the original eGov loading-screen capture for the gallery. Documentary event photos remain valid evidence of past events; they are not stale product UI. Keep Matthew's standalone portrait in About only. Do not expose repository links in the portfolio UI.
 
 Music provenance and attribution are in MUSIC.md.
+
+
+## Khanpanion October 17 2026
+
+`public/work/khanpanion/home.jpg` is an actual browser capture of https://khanpanion.vercel.app/ taken during this update, at the default desktop viewport. It shows the live study homepage, topic selector and Khan Academy video embed. No simulated scores or learning outcomes were staged. The project summary is grounded in the local reviewed KEIC submission, executive summary, live UI and `C:/Users/matth/backtrack/README.md`. The Grand Champion result was supplied directly by Matthew in this chat.

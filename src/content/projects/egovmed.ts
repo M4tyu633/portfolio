@@ -3,7 +3,7 @@ import type { Project } from "../types";
 /* ===========================================================================
  * 02 · eGOVMED
  *
- * ⚠ The result is "Winner, 1 of 10 teams", never "champion". The prize is
+ * Result updated by Matthew on October 17, 2026: Grand Champion. The prize is
  * ₱100,000 and it is confirmed rather than estimated. No fake government
  * marks, no PGH endorsement: PGH is the pilot TARGET and is written as one.
  * ======================================================================== */
@@ -19,7 +19,7 @@ export const egovmed: Project = {
   oneLiner:
     "Assess and route the patient before they join the queue, on the government's own API stack.",
   did: "Full-stack, every integration, and the pitch.",
-  outcome: "Winner, 1 of 10 · eGov Hackathon PH",
+  outcome: "Grand Champion · eGov Hackathon PH",
   media: {
     // ⚠ The SIGNED-IN home screen, not the sign-in wall. Every route on the
     // deployed app redirects to MPIN entry without a session, so a headless
@@ -29,7 +29,7 @@ export const egovmed: Project = {
     alt: "The eGovMed home screen: a greeting by name, a Start a visit card, tiles for Records, Payments, Report and Messages, and a bottom tab bar.",
     fit: "contain",
   },
-  award: "Winner, 1 of 10 teams · eGov Hackathon PH 2026 · ₱100,000",
+  award: "Grand Champion · eGov Hackathon PH 2026 · ₱100,000",
   built: ["React + Vite", "Node / Express", "Redis", "Besu", "eGov API stack"],
   related: ["egov-hackathon"],
   links: {
@@ -43,7 +43,7 @@ export const egovmed: Project = {
     },
     { label: "Team", value: "BH Studios, UP Manila" },
     { label: "Event", value: "eGov Hackathon PH 2026" },
-    { label: "Result", value: "Winner, 1 of 10 teams · ₱100,000" },
+    { label: "Result", value: "Grand Champion · ₱100,000" },
     { label: "Pilot target", value: "Philippine General Hospital" },
     { label: "Stack", value: "React + Vite · Node/Express · Redis · Besu" },
   ],
@@ -51,7 +51,7 @@ export const egovmed: Project = {
   home: {
     headline: "Eight government APIs. One patient flow.",
     body: "A patient app for Philippine public hospitals, built on the government's own eGovPH services. I connected identity, triage, verification, booking, messaging and payments into one visit, with an explicit safeguard at every service boundary.",
-    coda: "eGovMed was selected as one of ten winning projects at the eGov Hackathon PH 2026.",
+    coda: "eGovMed won Grand Champion at the eGov Hackathon PH 2026.",
     figure: "eg-route",
     figureCaption:
       "One patient, six stages. Select a stage to see which government service is behind it.",
@@ -171,7 +171,7 @@ export const egovmed: Project = {
       blocks: [
         {
           kind: "p",
-          text: "eGovMed was picked as one of ten winning entries at the eGov Hackathon PH 2026, with a ₱100,000 prize. The pilot target is the Philippine General Hospital.",
+          text: "eGovMed won Grand Champion at the eGov Hackathon PH 2026, with a ₱100,000 prize. The pilot target is the Philippine General Hospital.",
         },
       ],
     },

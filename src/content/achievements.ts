@@ -4,7 +4,7 @@ import type { Achievement } from "./types";
  * RECEIPTS
  *
  * ⚠ Only what the repository and his own records confirm. Nothing here is
- * rounded up: eGovMed is "Winner, 1 of 10", never "champion"; the AMD entry is
+ * Updated results come from Matthew, most recently October 17, 2026. The AMD entry is
  * listed with the placement it actually has, which is none.
  *
  * Three tiers, chosen by how much real material exists:
@@ -101,19 +101,19 @@ export const achievements: Achievement[] = [
     n: "02",
     slug: "egov-hackathon",
     title: "eGov Hackathon PH",
-    result: "Winner, 1 of 10 teams",
+    result: "Grand Champion",
     org: "₱100,000 prize",
     year: "2026",
     tier: "A",
     project: "egovmed",
     summary:
       "eGovMed, an AI triage system on the government's own API stack. Full-stack, eight integrations, and the pitch.",
-    lede: "One of ten.",
+    lede: "Grand Champion.",
     facts: [
       { label: "Event", value: "eGov Hackathon PH 2026" },
       { label: "Team", value: "BH Studios, UP Manila" },
       { label: "My role", value: "Full-stack · API integrations · pitch" },
-      { label: "Result", value: "Winner, 1 of 10 teams" },
+      { label: "Result", value: "Grand Champion" },
       { label: "Prize", value: "₱100,000" },
       { label: "Pilot target", value: "Philippine General Hospital" },
     ],
@@ -157,14 +157,14 @@ export const achievements: Achievement[] = [
           {
             kind: "figures",
             items: [
-              { value: "10", label: "Winning teams" },
+              { value: "Grand", label: "Champion" },
               { value: "₱100,000", label: "Prize" },
               { value: "8", label: "Government APIs integrated" },
             ],
           },
           {
             kind: "p",
-            text: "eGovMed was selected as one of ten winning projects. It is a win, not a championship, and it is written that way everywhere on this site.",
+            text: "eGovMed won Grand Champion at eGov Hackathon PH 2026, with a ₱100,000 prize.",
           },
         ],
       },
@@ -268,6 +268,18 @@ export const achievements: Achievement[] = [
     tier: "B",
     summary:
       "Three years on the national circuit: NASH DC at DLSU, PSDC at Ateneo, UP Diliman Debates, XSDC and ASDC, with a quarterfinal at the Ateneo Peace Debate. It is still the most useful thing I have done for explaining a technical system to people who were not there while I built it.",
+  },
+  {
+    n: "12",
+    slug: "khan-academy-education-impact",
+    title: "Khan Academy Education Impact Challenge",
+    result: "Grand Champion",
+    org: "Enactus Philippines · KEIC 2026",
+    year: "2026",
+    tier: "B",
+    project: "khanpanion",
+    summary:
+      "Team lead, developer and presenter for Khanpanion, a free college-preparation platform. Its BACKTRACK engine investigates missing prerequisites and routes learners to targeted Khan Academy practice. Grand Champion at KEIC 2026.",
   },
 ];
 

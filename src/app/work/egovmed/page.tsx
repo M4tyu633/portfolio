@@ -171,7 +171,7 @@ export default function EgovPage() {
         <section className="world-ending">
           <div>
             <p>eGov Hackathon PH 2026</p>
-            <h2>One of ten winning teams.</h2>
+            <h2>Grand Champion.</h2>
             <p>
               ₱100,000 prize. Philippine General Hospital is the pilot target,
               not a claimed deployment or endorsement.

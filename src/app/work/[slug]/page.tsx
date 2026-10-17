@@ -235,7 +235,11 @@ function Colophon({
                 a ? (
                   <li key={a.slug}>
                     <Link
-                      href={`/achievements/${a.slug}`}
+                      href={
+                        a.tier === "A"
+                          ? `/achievements/${a.slug}`
+                          : `/achievements#${a.slug}`
+                      }
                       className="border-ink hover:bg-ink hover:text-ground border-b pb-0.5 text-[0.9375rem] transition-colors"
                     >
                       {a.title}: {a.result}

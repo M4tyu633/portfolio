@@ -661,6 +661,7 @@ const ROOMS: Record<
   index: Archive,
   tumbang: Street,
   egov: Network,
+  khan: Archive,
   glyco: Instrument,
   chip8: Machine,
   reading: ViewingRoom,

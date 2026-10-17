@@ -9,6 +9,14 @@ export const projectNotes: Record<
     result: string;
   }
 > = {
+  khanpanion: {
+    label: "07 / Education",
+    title: "A clearer route into college.",
+    summary:
+      "Free entrance-exam review, a weekly study plan and a college bridge. BACKTRACK investigates missing prerequisites and connects students to targeted Khan Academy practice.",
+    role: "Team lead · Development & competition presentation",
+    result: "Grand Champion · Khan Academy Education Impact Challenge 2026",
+  },
   "tumbang-preso": {
     label: "01 / Multiplayer game",
     title: "A street game. A whole new playground.",
@@ -23,7 +31,7 @@ export const projectNotes: Record<
     summary:
       "A hospital visit brings enough uncertainty. eGovMed connects sign-in, symptom assessment, booking and payment through eight government services.",
     role: "Full-stack developer · API integrations & pitch",
-    result: "eGov Hackathon PH · One of 10 winning teams",
+    result: "Grand Champion · eGov Hackathon PH 2026",
   },
   "glycoswarm-ai": {
     label: "03 / AI systems",

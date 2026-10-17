@@ -8,7 +8,7 @@ import type { Achievement } from "@/content/types";
 export const metadata: Metadata = {
   title: "Achievements",
   description:
-    "Competitions, rankings, scholarships, and the work behind them. First place at Gear Up NCR, one of ten winners at the eGov Hackathon PH.",
+    "Competitions, rankings, scholarships, and the work behind them. First place at Gear Up NCR and Grand Champion at eGov Hackathon PH and the Khan Academy Education Impact Challenge.",
 };
 
 /* ===========================================================================
@@ -95,7 +95,7 @@ function Row({ a }: { a: Achievement }) {
 
   if (a.tier === "A") {
     return (
-      <li className="border-rule border-b">
+      <li id={a.slug} className="border-rule border-b">
         <Link
           href={`/achievements/${a.slug}`}
           className="group hover:bg-ground-2 block transition-colors"
@@ -117,7 +117,7 @@ function Row({ a }: { a: Achievement }) {
 
   if (a.tier === "B") {
     return (
-      <li className="border-rule border-b">
+      <li id={a.slug} className="border-rule border-b">
         <details className="group">
           <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
             {inner}
@@ -145,5 +145,9 @@ function Row({ a }: { a: Achievement }) {
     );
   }
 
-  return <li className="border-rule border-b">{inner}</li>;
+  return (
+    <li id={a.slug} className="border-rule border-b">
+      {inner}
+    </li>
+  );
 }

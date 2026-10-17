@@ -16,6 +16,7 @@
 @import "./css/tumbang.css";
 @import "./css/gallery.css";
 @import "./css/audio.css";
+@import "./css/studio.css";
 
 /* Shared gallery tokens. Each project world overrides its own palette.
    Current art direction: docs/RESEARCH-AND-ART-DIRECTION.md. */
@@ -43,6 +44,23 @@
    a palette only so that the navigation bar, the footer and the overscroll
    bounce match what is behind them while a handoff crosses the top of the
    window, instead of flashing the index world's indigo halfway through. */
+[data-world="khan"] {
+  --w-ground: #0d1e1b;
+  --w-ground-2: #142c26;
+  --w-ground-3: #204438;
+  --w-ink: #f1f5ed;
+  --w-ink-2: #b9d4c5;
+  --w-ink-3: #a1c6b4;
+  --w-rule: #b6d2c733;
+  --w-rule-2: #b6d2c71a;
+  --w-accent: #70ddb0;
+  --w-accent-ink: #0d1e1b;
+  --w-accent-2: #b5ebcc;
+  --w-focus: #86e5be;
+  --w-display: var(--font-plex-sans), sans-serif;
+  color-scheme: dark;
+}
+
 [data-world="seam"] {
   --w-ground: #07070b;
   --w-ground-2: #101018;

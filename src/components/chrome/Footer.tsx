@@ -2,35 +2,32 @@ import Link from "next/link";
 import { contact, gmailCompose } from "@/content/site";
 export default function Footer() {
   return (
-    <footer className="gallery-footer" id="contact" data-world="index">
-      <div className="footer-aperture" aria-hidden="true" />
-      <div className="gallery-footer-top">
-        <p className="gallery-kicker">
-          The next thing starts with a conversation.
-        </p>
+    <footer className="studio-footer" id="contact" data-world="index">
+      <div className="studio-label">
+        <span>GOOD WORK STARTS WITH A CONVERSATION.</span>
         <span>MANILA, PH / UTC+8</span>
       </div>
-      <div className="gallery-footer-main">
+      <div className="studio-footer-main">
         <h2>
           LET’S
           <br />
-          <span>TALK.</span>
+          <span>BUILD.</span>
         </h2>
         <div>
           <p>
-            I’m open to software internships, research, and collaborations with
-            people who care about what they’re building.
+            Software, research or your next ambitious idea. I’m interested in
+            people who care about what they’re making.
           </p>
           <a
             href={gmailCompose}
-            className="gallery-button"
+            className="studio-button"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Get in touch <span aria-hidden="true">↗</span>
+            Say hello <span aria-hidden="true">↗</span>
           </a>
           <a
-            className="gallery-footer-email"
+            className="studio-footer-email"
             href={gmailCompose}
             target="_blank"
             rel="noopener noreferrer"
@@ -39,7 +36,7 @@ export default function Footer() {
           </a>
         </div>
       </div>
-      <div className="gallery-footer-bottom">
+      <div className="studio-footer-bottom">
         <Link href="/">MATTHEW LABRADOR © {new Date().getFullYear()}</Link>
         <div>
           <Link href="/work">Work</Link>

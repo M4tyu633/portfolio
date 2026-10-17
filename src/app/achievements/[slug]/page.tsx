@@ -83,9 +83,9 @@ export default async function AchievementPage({
           </figure>
         ) : (
           <div className="event-result">
-            <span>1 of 10</span>
+            <span>Grand</span>
             <div>
-              <h2>Winning teams.</h2>
+              <h2>Champion.</h2>
               <p>₱100,000 prize</p>
               <p>
                 eGovMed put assessment before the queue. I delivered the pitch
@@ -136,7 +136,7 @@ export default async function AchievementPage({
             <p>
               {gear
                 ? "Tumbang Preso became NCR’s entry for the national finals. The regional competition build is the Godot version. The later Unity rewrite is the next generation, not the build that won."
-                : "eGovMed was selected as one of ten winning teams, with a ₱100,000 prize. Philippine General Hospital is the pilot target. That is an ambition for the product, not a claimed hospital deployment."}
+                : "eGovMed won Grand Champion at eGov Hackathon PH, with a ₱100,000 prize. Philippine General Hospital is the pilot target. That is an ambition for the product, not a claimed hospital deployment."}
             </p>
             <Link
               className="scene-link"

@@ -1,3 +1,13 @@
+# Current update October 17 2026
+
+The owner requested a new full visual redesign, superseding the Kinetic Gallery direction below. The current editorial studio uses near-black, warm ivory, sharp red and restrained lime accents. The homepage leads with real Khanpanion media, three selected projects, competition results and current roles. The work archive, About, achievements, shared navigation and footer have matching typography and spacing; existing product case-study identities and demos remain available.
+
+Content updates: Khanpanion, Grand Champion at KEIC 2026; eGovMed, Grand Champion at eGov Hackathon PH, both owner-confirmed in this chat. NVIDIA Philippines Campus Ambassador and PC Express Intern are 2026–present. The one-page downloadable resume includes those roles and replaces CHIP-8 with Khanpanion. PGH remains a pilot target. Khanpanion school reach and learning targets remain planned, not achieved metrics.
+
+Verified locally: ESLint, standalone TypeScript and the production build pass. HTTP checks pass for 13 pages and 76 assets/links with zero failures and no rendered repository links. Ten routes were inspected at 390px with no horizontal overflow; the final homepage has no clipped headings. Mobile menu open/Escape close and the Khanpanion award anchor/expander pass. The website resume bytes match the verified one-page deliverable. Publication is pending verification.
+
+---
+
 # Redesign status — September 12, 2026
 
 ## Current phase

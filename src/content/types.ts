@@ -18,6 +18,7 @@ export type WorldId =
   | "index"
   | "tumbang"
   | "egov"
+  | "khan"
   | "glyco"
   | "chip8"
   | "reading"
