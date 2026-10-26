@@ -33,3 +33,11 @@ Music provenance and attribution are in MUSIC.md.
 ## Khanpanion October 17 2026
 
 `public/work/khanpanion/home.jpg` is an actual browser capture of https://khanpanion.vercel.app/ taken during this update, at the default desktop viewport. It shows the live study homepage, topic selector and Khan Academy video embed. No simulated scores or learning outcomes were staged. The project summary is grounded in the local reviewed KEIC submission, executive summary, live UI and `C:/Users/matth/backtrack/README.md`. The Grand Champion result was supplied directly by Matthew in this chat.
+
+
+## October 26 2026 presentation refresh
+
+- `public/work/khanpanion/overview.jpg`, `lesson.jpg` and `backtrack.jpg`: native browser captures of the current local production export at `C:/Users/matth/backtrack/out`, served on loopback. The captured states are the subject browser, the real fractions concept page and a fractions visual-explanation session with its prerequisite route. No scores or learning outcomes were manufactured. `logo.svg` is copied from the application's actual `public/khanpanion-logo.svg`.
+- `public/work/egovmed/patient-home.jpg`, `patient-booking.jpg` and `patient-payment.jpg`: new complete-width captures at 430 x 932 of the packaged original demo. One fictional fever → General Medicine → sample identity → booking → simulated GCash payment walkthrough. The persistent demo notice stays visible. No government service, real appointment, identity check, payment or SMS was submitted.
+- Gallery artwork is rendered in `ProductVisual.tsx` with project-specific CSS. Native captures sit inside device/browser presentations; backgrounds, depth and typography are portfolio presentation. Interface content remains unchanged. eGovMed uses a handset composition, TUMP uses original key art and a gameplay frame, CHIP-8 uses amber instrument typography and the other projects retain their own source palettes.
+- Original TUMP gameplay capture `original/round-capture.webp` now replaces the duplicated title-screen gallery image. Existing high-quality GlycoSwarm, MRI, CardioSense and CHIP-8 captures are reused inside the new compositions.

@@ -13,8 +13,8 @@ export const projectNotes: Record<
     label: "07 / Education",
     title: "A clearer route into college.",
     summary:
-      "Free entrance-exam review, a weekly study plan and a college bridge. BACKTRACK investigates missing prerequisites and connects students to targeted Khan Academy practice.",
-    role: "Team lead · Development & competition presentation",
+      "A Next.js study platform with typed prerequisite routing, generated practice and resumable exam sessions. I connected missed skills to targeted Khan Academy resources.",
+    role: "Developer & team lead · Learning engine, state management & UI",
     result: "Grand Champion · Khan Academy Education Impact Challenge 2026",
   },
   "tumbang-preso": {
@@ -22,7 +22,7 @@ export const projectNotes: Record<
     title: "A street game. A whole new playground.",
     summary:
       "The Filipino game of slippers and tin cans, rebuilt for four online players. I developed the gameplay, assembled the world, built the interface and wrote the multiplayer netcode.",
-    role: "Sole developer · Game design, art & networking",
+    role: "Sole developer · Gameplay systems, level assembly & multiplayer netcode",
     result: "1st Place · Gear Up NCR 2026",
   },
   egovmed: {
@@ -30,7 +30,7 @@ export const projectNotes: Record<
     title: "One patient. One connected visit.",
     summary:
       "A hospital visit brings enough uncertainty. eGovMed connects sign-in, symptom assessment, booking and payment through eight government services.",
-    role: "Full-stack developer · API integrations & pitch",
+    role: "Full-stack developer · React UI, Express API & service adapters",
     result: "Grand Champion · eGov Hackathon PH 2026",
   },
   "glycoswarm-ai": {

@@ -1,4 +1,5 @@
-import Image from "next/image";
+import ProductVisual from "@/components/work/ProductVisual";
+import { khanpanion } from "@/content/projects/khanpanion";
 import Link from "next/link";
 import Nav from "@/components/chrome/Nav";
 import GalleryProjects from "@/components/home/GalleryProjects";
@@ -28,8 +29,9 @@ export default function Home() {
               </h1>
               <p className="studio-intro">
                 I’m Matthew, a computer science student at UP Manila. I build
-                across the interface, the systems behind it and the pitch that
-                brings it into the room.
+                interactive web applications, multiplayer games and
+                machine-learning tools — from the interface to the engine
+                underneath.
               </p>
               <div className="studio-actions">
                 <a className="studio-button" href="#selected-work">
@@ -55,14 +57,7 @@ export default function Home() {
                 <span aria-hidden="true">↗</span>
               </div>
               <div className="studio-feature-image">
-                <Image
-                  src="/work/khanpanion/home.jpg"
-                  alt="Khanpanion’s real study homepage with a topic selector and Khan Academy lesson."
-                  width={1238}
-                  height={714}
-                  priority
-                  sizes="(max-width: 850px) 90vw, 43vw"
-                />
+                <ProductVisual project={khanpanion} priority />
               </div>
               <div className="studio-feature-caption">
                 <span className="studio-award-stamp">
@@ -80,7 +75,7 @@ export default function Home() {
                 </div>
               </div>
               <span className="studio-feature-note">
-                Free learning. A clearer next step.
+                Typed learning routes. Device-local progress. Real software.
               </span>
             </Link>
           </div>

@@ -1,5 +1,5 @@
+import ProjectHero from "@/components/work/ProjectHero";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/chrome/Nav";
 import WorldSync from "@/components/chrome/WorldSync";
@@ -21,31 +21,7 @@ export default function GlycoPage() {
       <WorldSync world="glyco" />
       <Nav tick={{ n: "03", title: "GlycoSwarm AI" }} />
       <main id="main">
-        <header className="glyco-header">
-          <Link href="/work">← All work</Link>
-          <p>GlycoSwarm AI / Team Snowfall / AMD Developer Hackathon</p>
-          <h1>
-            Don’t blend
-            <br />
-            <span>the evidence.</span>
-          </h1>
-          <p>
-            Four specialists inspect different inputs before a synthesis agent
-            brings them together. Follow one through the actual contracts.
-          </p>
-          <a className="world-button" href="#s01">
-            Trace a specialist ↓
-          </a>
-          <div className="glyco-artifact">
-            <Image
-              src={glycoswarm.media.src}
-              alt={glycoswarm.media.alt}
-              fill
-              sizes="(min-width: 900px) 60vw, 100vw"
-              className="object-contain"
-            />
-          </div>
-        </header>
+        <ProjectHero project={glycoswarm} />
         <SwarmSystem />
         <section className="glyco-serving">
           <h2>

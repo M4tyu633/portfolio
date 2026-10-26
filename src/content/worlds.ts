@@ -170,7 +170,7 @@ export const entrances: Entrance[] = [
     n: "02",
     title: "eGovMed",
     line: "A hospital app that carries one patient through eight separate government services in a single visit.",
-    did: "Full-stack, every integration, and the pitch.",
+    did: "Full-stack development, service adapters and patient workflows.",
     result: "Grand Champion · eGov Hackathon PH",
     href: "/work/egovmed",
     action: "Follow the patient",

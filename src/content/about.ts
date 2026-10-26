@@ -91,7 +91,7 @@ export const timeline: {
   },
   {
     period: "2026",
-    role: "Full-stack developer, pitch lead",
+    role: "Full-stack developer · service integrations",
     org: "eGov Hackathon PH",
     note: "Grand Champion, eGov Hackathon PH 2026.",
   },

@@ -18,14 +18,14 @@ export const egovmed: Project = {
   display: "franklin",
   oneLiner:
     "Assess and route the patient before they join the queue, on the government's own API stack.",
-  did: "Full-stack, every integration, and the pitch.",
+  did: "Full-stack development, government-service adapters and patient workflows.",
   outcome: "Grand Champion · eGov Hackathon PH",
   media: {
     // ⚠ The SIGNED-IN home screen, not the sign-in wall. Every route on the
     // deployed app redirects to MPIN entry without a session, so a headless
     // capture can only ever photograph the door. He supplied this one from a
     // real session; it is the screen the product actually is.
-    src: "/work/egovmed/demo-home.webp",
+    src: "/work/egovmed/patient-home.jpg",
     alt: "The eGovMed home screen: a greeting by name, a Start a visit card, tiles for Records, Payments, Report and Messages, and a bottom tab bar.",
     fit: "contain",
   },
@@ -39,7 +39,7 @@ export const egovmed: Project = {
   facts: [
     {
       label: "My role",
-      value: "Full-stack · API integrations · pitch and presentation",
+      value: "Full-stack development · API adapters · patient workflows",
     },
     { label: "Team", value: "BH Studios, UP Manila" },
     { label: "Event", value: "eGov Hackathon PH 2026" },
@@ -57,7 +57,7 @@ export const egovmed: Project = {
       "One patient, six stages. Select a stage to see which government service is behind it.",
   },
 
-  lede: "Go to a Philippine public hospital and you will re-enter the same details at every counter, repeat labs another facility already ran, and queue a second time just to pay. We built eGovMed to put one login, one record and one payment in front of all of that, on the government's own eGov API stack. I worked full-stack on it and owned the API integrations, then pitched it.",
+  lede: "I built across the React frontend and Express backend, connecting eight government services into one patient journey. Identity, triage, booking and payment each have explicit service adapters, validation and mock/live boundaries.",
 
   sections: [
     {

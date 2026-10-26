@@ -84,8 +84,8 @@ export const technicalIndex: {
   },
   {
     name: "Next.js · React · TypeScript",
-    where: "Four front ends, including this one",
-    slugs: ["knee-mri-reader", "heart-disease-prediction"],
+    where: "Khanpanion learning engine, clinical tools and this portfolio",
+    slugs: ["khanpanion", "knee-mri-reader", "heart-disease-prediction"],
   },
   {
     name: "Node · Express · Redis",

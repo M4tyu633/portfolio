@@ -51,7 +51,7 @@ export const chip8: Project = {
     coda: "It runs in this browser. Thirty-five instructions, 4 KB of memory, and a 64 by 32 display.",
   },
 
-  lede: "CHIP-8 is a virtual machine from 1977, built so hobbyists could write a game once and run it on any 8-bit micro with an interpreter. Thirty-five instructions, 4 KB of memory, sixteen 8-bit registers and a 64 by 32 monochrome display: small enough to hold in your head and awkward enough to stay interesting. I wrote a full interpreter for it in C++17, with a Raylib front end that doubles as a live debugger, running natively and in the browser through WebAssembly.",
+  lede: "I implemented a C++ interpreter, debugger and six original ROMs, then compiled the machine to WebAssembly. Run a game in the browser and inspect the real registers, memory and disassembly as each instruction executes.",
 
   sections: [
     {

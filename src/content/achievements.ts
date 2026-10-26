@@ -107,12 +107,15 @@ export const achievements: Achievement[] = [
     tier: "A",
     project: "egovmed",
     summary:
-      "eGovMed, an AI triage system on the government's own API stack. Full-stack, eight integrations, and the pitch.",
+      "eGovMed connects patient intake, identity, booking and payment through eight government services. I built across the React interface, Express backend and service adapters.",
     lede: "Grand Champion.",
     facts: [
       { label: "Event", value: "eGov Hackathon PH 2026" },
       { label: "Team", value: "BH Studios, UP Manila" },
-      { label: "My role", value: "Full-stack · API integrations · pitch" },
+      {
+        label: "My role",
+        value: "Full-stack development · API integrations · patient workflows",
+      },
       { label: "Result", value: "Grand Champion" },
       { label: "Prize", value: "₱100,000" },
       { label: "Pilot target", value: "Philippine General Hospital" },
@@ -279,7 +282,7 @@ export const achievements: Achievement[] = [
     tier: "B",
     project: "khanpanion",
     summary:
-      "Team lead, developer and presenter for Khanpanion, a free college-preparation platform. Its BACKTRACK engine investigates missing prerequisites and routes learners to targeted Khan Academy practice. Grand Champion at KEIC 2026.",
+      "Developer and team lead for Khanpanion, a Next.js college-preparation platform. I built typed learning routes, device-local study state and interfaces connecting prerequisite repair to targeted Khan Academy practice. Grand Champion at KEIC 2026.",
   },
 ];
 

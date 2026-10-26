@@ -219,7 +219,9 @@ function Colophon({
                     rel="noopener noreferrer"
                     className="border-ink hover:bg-ink hover:text-ground border-b pb-0.5 text-[0.9375rem] transition-colors"
                   >
-                    {LINK_LABELS[key] ?? key}
+                    {project.linkLabels?.[key as keyof typeof project.links] ??
+                      LINK_LABELS[key] ??
+                      key}
                   </a>
                 </li>
               ))}

@@ -21,8 +21,8 @@ export const tumbangPreso: Project = {
   did: "I built the whole game.",
   outcome: "1st Place · Gear Up NCR 2026",
   media: {
-    src: "/images/project-tumbang-preso.jpg",
-    alt: "The Tumbang Preso title screen: a rusted tin can and a slipper on asphalt, with the game's hand-lettered menu.",
+    src: "/work/tumbang/original/round-capture.webp",
+    alt: "Actual four-player Tumbang Preso gameplay from the original Godot competition recording, showing the plaza and in-game HUD.",
   },
   clip: {
     src: "/work/tumbang/match.mp4",

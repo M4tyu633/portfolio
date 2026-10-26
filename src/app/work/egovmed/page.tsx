@@ -1,3 +1,4 @@
+import ProjectHero from "@/components/work/ProjectHero";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -23,22 +24,7 @@ export default function EgovPage() {
       <WorldSync world="egov" />
       <Nav tick={{ n: "02", title: "eGovMed" }} />
       <main id="main">
-        <header className="egov-header">
-          <Link href="/work">← All work</Link>
-          <p>Civic software / BH Studios / 2026</p>
-          <h1>
-            Before
-            <br />
-            <span>the queue.</span>
-          </h1>
-          <div>
-            <p>eGovMed</p>
-            <p>
-              A patient visit across eight government integrations. I built
-              across the stack, owned the adapters, and delivered the pitch.
-            </p>
-          </div>
-        </header>
+        <ProjectHero project={egovmed} />
         <section className="demo-preview" aria-labelledby="egov-demo-title">
           <div className="demo-preview-copy">
             <p className="u-meta">Interactive demo</p>
@@ -59,27 +45,27 @@ export default function EgovPage() {
           <div className="demo-phone-strip">
             {[
               {
-                file: "demo-home",
+                file: "patient-home",
                 label: "01 / Start a visit",
                 alt: "Actual eGovMed demo home showing the patient navigation and visit action.",
               },
               {
-                file: "demo-booking",
+                file: "patient-booking",
                 label: "02 / Visit booked",
                 alt: "The original booking confirmation screen with a clearly labeled demo visit.",
               },
               {
-                file: "demo-payment",
+                file: "patient-payment",
                 label: "03 / Payment complete",
                 alt: "The original payment receipt screen showing a simulated completed payment.",
               },
             ].map((p) => (
               <figure key={p.file}>
                 <Image
-                  src={`/work/egovmed/${p.file}.webp`}
+                  src={`/work/egovmed/${p.file}.jpg`}
                   alt={p.alt}
-                  width={366}
-                  height={745}
+                  width={430}
+                  height={932}
                   sizes="(max-width:700px) 52vw, 20vw"
                 />
                 <figcaption>{p.label}</figcaption>

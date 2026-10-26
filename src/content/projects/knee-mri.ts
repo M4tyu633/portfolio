@@ -46,7 +46,7 @@ export const kneeMri: Project = {
     { label: "Findings", value: "Twelve, scored simultaneously" },
   ],
 
-  lede: "A knee MRI is not a photograph. It is a multi-series volume shot on different scanners at different slice thicknesses and contrast weightings, and the finding you are looking for is often visible in exactly one of those series. I built the whole chain: parsing raw unlabelled DICOM, pulling weak supervision out of nine languages of radiology notes, training a multi-view transformer across six anatomical orientations, and serving it as a browser reading station with one real preview frame per acquired series.",
+  lede: "I built the pipeline from raw DICOM studies to multi-view model training and a browser reading station. The system combines DINOv2 features, cross-view attention and ONNX delivery, with a strict out-of-fold macro AUC of 0.843.",
 
   sections: [
     {

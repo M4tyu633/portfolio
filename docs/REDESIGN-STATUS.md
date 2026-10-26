@@ -1,3 +1,17 @@
+# Current update October 26 2026
+
+Developer-focused presentation refinement, requested by the owner with an eGovMed product-artboard reference.
+
+- Rewrote Khanpanion around the implemented TypeScript learning engine, typed prerequisite routing, question generation, persistence, resumable assessment and static delivery. Reviewed current `C:/Users/matth/backtrack` source and production export. School rollout and learning outcomes remain plans.
+- Replaced generic pitch-led summaries across the homepage, project gallery, About and achievements with concrete engineering contributions.
+- New CSS product compositions for all seven projects use actual application screenshots or original Godot gameplay. Six case-study openings now expose the implementation, direct product link and engineering evidence immediately. Existing case-study diagrams and product apps remain intact.
+- Fresh Khanpanion overview, lesson and BACKTRACK captures from the local production export. Fresh eGovMed home, booking and simulated receipt captures at 430 x 932, replacing the horizontally clipped pictures. No generated interface pixels or paid media services.
+- Local verification: ESLint, standalone TypeScript and optimized Next.js build pass. Existing public-link check: 13 pages, 81 assets/links, zero failures. Desktop first-view checks pass for the homepage and six changed case studies. Eleven routes at 390px and home/work/Khanpanion/eGovMed at 768px have no horizontal overflow. Mobile menu opens and Escape closes it in the production build. eGovMed sample visit runs through routing, identity, booking and simulated payment.
+- CHIP-8 boot was checked and the actual game renders. An existing miniaudio callback in the unchanged compiled `public/chip8/index.js` reports `Module.HEAPF32.buffer` undefined; audio engine repair is outside this copy/media change. No clean-console claim for the emulator.
+- Publication: local implementation validated; release pending.
+
+---
+
 # Current update October 17 2026
 
 The owner requested a new full visual redesign, superseding the Kinetic Gallery direction below. The current editorial studio uses near-black, warm ivory, sharp red and restrained lime accents. The homepage leads with real Khanpanion media, three selected projects, competition results and current roles. The work archive, About, achievements, shared navigation and footer have matching typography and spacing; existing product case-study identities and demos remain available.

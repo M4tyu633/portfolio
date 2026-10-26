@@ -42,7 +42,7 @@ export const heartDisease: Project = {
       value: "Signed additive log-odds contributions",
     },
   ],
-  lede: "I built a model comparison on the 920-record UCI Heart Disease dataset and a browser instrument that exposes how a score is assembled. A visitor can start from an actual cohort record, change a biomarker, and see its contribution and the resulting probability move together. The research benchmarks and the model running in the browser are explicitly identified.",
+  lede: "I built the data pipeline and model comparison, then exported Logistic Regression for local browser inference. Change an input and follow its signed log-odds contribution to the resulting probability. Research benchmarks remain separate from the browser model.",
   sections: [
     {
       n: "01",

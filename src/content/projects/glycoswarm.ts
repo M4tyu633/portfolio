@@ -38,7 +38,10 @@ export const glycoswarm: Project = {
     demo: "Open the preserved demo",
   },
   facts: [
-    { label: "My role", value: "Lead developer · full-stack · demo and pitch" },
+    {
+      label: "My role",
+      value: "Lead developer · agent orchestration · FastAPI · frontend",
+    },
     { label: "Team", value: "Snowfall, international and cross-timezone" },
     { label: "Event", value: "AMD Developer Hackathon 2026, Track 3: Unicorn" },
     { label: "Data", value: "NHANES laboratory panels" },
@@ -58,7 +61,7 @@ export const glycoswarm: Project = {
       "Select a specialist to isolate it. The others dim, and its inputs, its job and what it contributes to synthesis appear.",
   },
 
-  lede: "One model can answer a question about a diabetic patient. I wanted four to look at different organs first, and then argue it out somewhere I could inspect. GlycoSwarm is a LangGraph StateGraph that runs renal, retinal, neuropathy and cardiovascular specialists in parallel over real NHANES lab panels, each writing and executing its own Python scoring code, and fans them into a synthesis agent that ranks the risks and returns one clinical referral.",
+  lede: "I designed the LangGraph workflow, FastAPI service and Next.js interface for a multi-agent diabetes screening prototype. Four specialists process different inputs before synthesis, with explicit contracts and unavailable-provider states.",
 
   sections: [
     {

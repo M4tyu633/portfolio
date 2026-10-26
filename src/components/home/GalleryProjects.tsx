@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ProductVisual from "@/components/work/ProductVisual";
 import Link from "next/link";
 import { projects } from "@/content/projects";
 import { projectNotes } from "@/content/portfolio";
@@ -25,27 +25,7 @@ export default function GalleryProjects({ all = false }: { all?: boolean }) {
               href={`/work/${project.slug}`}
               aria-label={`Explore ${project.title}`}
             >
-              <div className="studio-project-browser" aria-hidden="true">
-                <span>● ● ●</span>
-                <span>{project.title}</span>
-                <span>↗</span>
-              </div>
-              <div className="studio-project-capture">
-                <Image
-                  src={project.media.src}
-                  alt={project.media.alt}
-                  width={1600}
-                  height={1000}
-                  sizes={
-                    all
-                      ? "(max-width: 800px) 90vw, 45vw"
-                      : "(max-width: 850px) 90vw, 60vw"
-                  }
-                  className={
-                    project.media.fit === "contain" ? "studio-contain" : ""
-                  }
-                />
-              </div>
+              <ProductVisual project={project} />
               <span className="studio-project-open">
                 OPEN PROJECT <span aria-hidden="true">↗</span>
               </span>
@@ -64,7 +44,7 @@ export default function GalleryProjects({ all = false }: { all?: boolean }) {
               <p className="studio-project-premise">{copy.title}</p>
               <p className="studio-project-description">{copy.summary}</p>
               <div className="studio-project-credit">
-                <span>MY PART</span>
+                <span>ENGINEERING CONTRIBUTION</span>
                 <p>{copy.role}</p>
               </div>
               <p className="studio-project-result">{copy.result}</p>
