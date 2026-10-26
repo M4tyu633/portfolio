@@ -138,9 +138,9 @@ a:hover .pv-device {
   font-size: 3cqw;
 }
 .product-visual-egov .pv-device {
-  width: 34%;
-  top: 12%;
-  left: 60%;
+  width: 28%;
+  top: 5%;
+  left: 64%;
   border: 1cqw solid #e1e8f2;
   border-radius: 4cqw;
   transform: perspective(1000px) rotateY(-15deg) rotateZ(7deg);
@@ -386,24 +386,24 @@ a:hover .pv-device {
   line-height: 1.5;
 }
 .case-opening-egov .product-visual .pv-surface {
-  aspect-ratio: 0.95;
+  aspect-ratio: 1.25;
 }
 .case-opening-egov .pv-brand {
-  top: 20%;
-  left: 8%;
-  max-width: 65%;
+  top: 35%;
+  left: 7%;
+  max-width: 48%;
 }
 .case-opening-egov .pv-name {
-  font-size: 12cqw;
+  font-size: 9cqw;
 }
 .case-opening-egov .pv-brand p {
-  font-size: 3.6cqw;
-  max-width: 15em;
+  font-size: 3cqw;
+  max-width: 10em;
 }
 .case-opening-egov .pv-device {
-  width: 47%;
-  left: 43%;
-  top: 39%;
+  width: 32%;
+  left: 61%;
+  top: 6%;
 }
 .case-opening-glyco .pv-surface {
   aspect-ratio: 1.15;
@@ -441,9 +441,9 @@ a:hover .pv-device {
     max-width: 10em;
   }
   .case-opening-egov .pv-device {
-    width: 34%;
-    top: 12%;
-    left: 60%;
+    width: 28%;
+    top: 5%;
+    left: 64%;
   }
   .case-opening-glyco .pv-surface {
     aspect-ratio: 1.5;

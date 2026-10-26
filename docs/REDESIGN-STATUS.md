@@ -8,7 +8,7 @@ Developer-focused presentation refinement, requested by the owner with an eGovMe
 - Fresh Khanpanion overview, lesson and BACKTRACK captures from the local production export. Fresh eGovMed home, booking and simulated receipt captures at 430 x 932, replacing the horizontally clipped pictures. No generated interface pixels or paid media services.
 - Local verification: ESLint, standalone TypeScript and optimized Next.js build pass. Existing public-link check: 13 pages, 81 assets/links, zero failures. Desktop first-view checks pass for the homepage and six changed case studies. Eleven routes at 390px and home/work/Khanpanion/eGovMed at 768px have no horizontal overflow. Mobile menu opens and Escape closes it in the production build. eGovMed sample visit runs through routing, identity, booking and simulated payment.
 - CHIP-8 boot was checked and the actual game renders. An existing miniaudio callback in the unchanged compiled `public/chip8/index.js` reports `Module.HEAPF32.buffer` undefined; audio engine repair is outside this copy/media change. No clean-console claim for the emulator.
-- Publication: local implementation validated; release pending.
+- Publication: application commit `a2ffc91d8c24171816c1e83e92b89ae2b357c303` deployed READY as `portfolio-44r40hqjq-m4tyu633s-projects.vercel.app`. The public Khanpanion page was visually verified at https://matthewlabrador.vercel.app/work/khanpanion. Follow-up adjusts the eGovMed artboard to show the complete handset.
 
 ---
 
