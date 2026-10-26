@@ -155,8 +155,9 @@ export default function Home() {
             </p>
             <h2 id="current-title">CURRENTLY.</h2>
             <p>
-              Computer science at UP Manila.
-              <br />A DOST scholar with a habit of taking on the whole problem.
+              Alongside computer science at UP Manila, I work on local AI
+              applications with NVIDIA RTX 5090 GPUs and give talks and training
+              on using and deploying models on personal hardware.
             </p>
             <Link href="/about" className="studio-link">
               Meet the person behind the work ↗

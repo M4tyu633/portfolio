@@ -1,3 +1,15 @@
+# Current update October 27 2026
+
+The owner rejected the replacement resume layout and requested the original format. Recovered the exact October 17 PDF and editable Word source from the previous resume task; its PDF matches the private pre-edit backup SHA-256 `7B7166D5B2E456BB9227766656C8A4D8F5975D88F3A79D52AE92186A1B05980C`.
+
+- Restored the original centered Calibri header, ruled section headings, right-aligned dates, italic stack lines, leadership/awards sections and all six detailed project entries. The resume is one Letter-size page.
+- Retained the owner-confirmed new experience: local AI applications using NVIDIA RTX 5090 GPUs plus talks and training on using/deploying models on personal hardware. These duties are grouped across the current NVIDIA/PC Express roles because the owner did not allocate duties by organization. The homepage and About copy reflect the same statement.
+- Updated the Khanpanion bullet to reflect typed prerequisite routing, generated practice, resumable mock exams and device-local learning state.
+- Replaced the redesigning ReportLab builder with a template-preserving OOXML editor. `scripts/resume-template.docx` is the recovered original source. All ZIP package parts other than `word/document.xml` stay byte-identical. Original page geometry and styles are preserved. The generated Word file is rendered with the Documents skill before updating the public PDF.
+- Generated PDF and Word output were visually verified. Production release verification follows the repository checks.
+
+---
+
 # Current update October 26 2026
 
 Developer-focused presentation refinement, requested by the owner with an eGovMed product-artboard reference.

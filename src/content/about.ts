@@ -7,7 +7,7 @@ export const about = {
   paragraphs: [
     "I'm a BS Computer Science student at UP Manila and a DOST undergraduate scholar. I enjoy building across the whole system: the interface people touch, the services behind it, and the decisions that make it reliable.",
     "That curiosity has taken me from multiplayer games to hospital workflows, machine-learning pipelines and a C++ emulator. Competitions taught me to make clear decisions under time pressure, test the parts that matter and bring a working product into the room.",
-    "I’m currently a Campus Ambassador with NVIDIA Philippines and an intern at PC Express, both since 2026. My recent work also includes Khanpanion, Grand Champion at the Khan Academy Education Impact Challenge, and eGovMed, Grand Champion at eGov Hackathon PH.",
+    "I’m currently a Campus Ambassador with NVIDIA Philippines and an intern at PC Express, both since 2026. My work across these roles includes local AI applications using NVIDIA RTX 5090 GPUs and talks and training on using and deploying models on personal hardware.",
     "Before computer science, I spent three years competing in debate. It still shapes how I work: I like asking good questions, explaining technical ideas clearly and being able to defend a decision with evidence. I want to bring that mix of building and communication to a team doing useful work.",
   ],
   portrait: {
