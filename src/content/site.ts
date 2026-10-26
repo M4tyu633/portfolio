@@ -31,6 +31,7 @@ export const contact = {
 export const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
   contact.email,
 )}`;
+export const emailHref = `mailto:${contact.email}`;
 
 export const nav = [
   { label: "Work", href: "/work" },

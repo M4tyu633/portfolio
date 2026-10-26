@@ -73,6 +73,9 @@ function update() {
 
 var Module = {
   canvas,
+  // Raylib's audio bridge reads this exported view. Keep it current when the
+  // Emscripten heap grows; the bundled build only exports HEAPU8 itself.
+  get HEAPF32() { return typeof HEAPF32 === 'undefined' ? undefined : HEAPF32; },
   preRun: [],
   postRun: [function () {
     ready = true;

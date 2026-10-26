@@ -18,6 +18,7 @@
 @import "./css/audio.css";
 @import "./css/studio.css";
 @import "./css/presentation.css";
+@import "./css/hiring.css";
 
 /* Shared gallery tokens. Each project world overrides its own palette.
    Current art direction: docs/RESEARCH-AND-ART-DIRECTION.md. */

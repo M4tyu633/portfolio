@@ -96,22 +96,6 @@ export const timeline: {
     note: "Grand Champion, eGov Hackathon PH 2026.",
   },
   {
-    period: "2026 – present",
-    role: "Campus Ambassador",
-    org: "NVIDIA Philippines",
-  },
-  {
-    period: "2026 – present",
-    role: "Intern",
-    org: "PC Express",
-  },
-  {
-    period: "2026",
-    role: "Team lead and developer",
-    org: "Khanpanion",
-    note: "Grand Champion, Khan Academy Education Impact Challenge 2026.",
-  },
-  {
     period: "2026",
     role: "Lead developer",
     org: "AMD Developer Hackathon ACT II, Track 3",

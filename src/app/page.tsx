@@ -21,21 +21,20 @@ export default function Home() {
                 <i aria-hidden="true" /> SOFTWARE DEVELOPER & CS STUDENT
               </p>
               <h1 id="studio-title">
-                A LITTLE
+                I BUILD
                 <br />
-                OBSESSED
+                THE WHOLE
                 <br />
-                <span>WITH BUILDING.</span>
+                <span>SYSTEM.</span>
               </h1>
               <p className="studio-intro">
-                I’m Matthew, a computer science student at UP Manila. I build
-                interactive web applications, multiplayer games and
-                machine-learning tools — from the interface to the engine
-                underneath.
+                I’m Matthew, a software developer and CS student at UP Manila. I
+                build Next.js applications, API integrations and the engines
+                behind interactive products.
               </p>
               <div className="studio-actions">
                 <a className="studio-button" href="#selected-work">
-                  Explore my work <span aria-hidden="true">↘</span>
+                  See selected projects <span aria-hidden="true">↘</span>
                 </a>
                 <a
                   className="studio-link"
@@ -43,9 +42,12 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  The résumé ↗
+                  Read my résumé ↗
                 </a>
               </div>
+              <p className="studio-hiring-note">
+                Open to development internships & technical collaborations.
+              </p>
             </div>
             <Link
               href="/work/khanpanion"
@@ -53,7 +55,7 @@ export default function Home() {
               aria-label="Explore Khanpanion, Grand Champion at KEIC 2026"
             >
               <div className="studio-feature-top">
-                <span>THE LATEST CHAPTER</span>
+                <span>FEATURED BUILD / NEXT.JS + TYPESCRIPT</span>
                 <span aria-hidden="true">↗</span>
               </div>
               <div className="studio-feature-image">
@@ -75,13 +77,13 @@ export default function Home() {
                 </div>
               </div>
               <span className="studio-feature-note">
-                Typed learning routes. Device-local progress. Real software.
+                Typed learning engine · Resumable practice · Local persistence
               </span>
             </Link>
           </div>
           <div className="studio-label studio-hero-bottom">
-            <span>GAMES / EDUCATION / HEALTHCARE / AI</span>
-            <span>SCROLL TO THE GOOD STUFF ↓</span>
+            <span>WEB APPLICATIONS / SYSTEMS / APPLIED AI</span>
+            <span>IMPLEMENTATION → VALIDATION → DELIVERY</span>
           </div>
         </section>
         <section

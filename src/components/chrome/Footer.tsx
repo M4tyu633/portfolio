@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { contact, gmailCompose } from "@/content/site";
+import { contact, emailHref, gmailCompose } from "@/content/site";
+import CopyEmail from "./CopyEmail";
 export default function Footer() {
   return (
     <footer className="studio-footer" id="contact" data-world="index">
@@ -15,24 +16,25 @@ export default function Footer() {
         </h2>
         <div>
           <p>
-            Software, research or your next ambitious idea. I’m interested in
-            people who care about what they’re making.
+            I’m open to software development internships, research and technical
+            collaborations. Tell me what you’re building and where I can help.
           </p>
-          <a
-            href={gmailCompose}
-            className="studio-button"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Say hello <span aria-hidden="true">↗</span>
+          <div className="contact-actions">
+            <a href={emailHref} className="studio-button">
+              Email Matthew <span aria-hidden="true">↗</span>
+            </a>
+            <CopyEmail />
+          </div>
+          <a className="studio-footer-email" href={emailHref}>
+            {contact.email}
           </a>
           <a
-            className="studio-footer-email"
+            className="contact-gmail"
             href={gmailCompose}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {contact.email}
+            Prefer Gmail? Open compose ↗
           </a>
         </div>
       </div>

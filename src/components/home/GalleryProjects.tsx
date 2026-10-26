@@ -4,12 +4,17 @@ import { projects } from "@/content/projects";
 import { projectNotes } from "@/content/portfolio";
 
 const selected = ["khanpanion", "egovmed", "tumbang-preso"];
+const hiringOrder = [
+  ...selected,
+  "chip-8-emulator",
+  "glycoswarm-ai",
+  "knee-mri-reader",
+  "heart-disease-prediction",
+];
 export default function GalleryProjects({ all = false }: { all?: boolean }) {
-  const shown = all
-    ? projects
-    : selected.flatMap((slug) =>
-        projects.filter((project) => project.slug === slug),
-      );
+  const shown = (all ? hiringOrder : selected).flatMap((slug) =>
+    projects.filter((project) => project.slug === slug),
+  );
   return (
     <div className={`studio-projects ${all ? "studio-projects-all" : ""}`}>
       {shown.map((project, index) => {

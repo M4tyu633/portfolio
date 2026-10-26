@@ -7,8 +7,17 @@ Developer-focused presentation refinement, requested by the owner with an eGovMe
 - New CSS product compositions for all seven projects use actual application screenshots or original Godot gameplay. Six case-study openings now expose the implementation, direct product link and engineering evidence immediately. Existing case-study diagrams and product apps remain intact.
 - Fresh Khanpanion overview, lesson and BACKTRACK captures from the local production export. Fresh eGovMed home, booking and simulated receipt captures at 430 x 932, replacing the horizontally clipped pictures. No generated interface pixels or paid media services.
 - Local verification: ESLint, standalone TypeScript and optimized Next.js build pass. Existing public-link check: 13 pages, 81 assets/links, zero failures. Desktop first-view checks pass for the homepage and six changed case studies. Eleven routes at 390px and home/work/Khanpanion/eGovMed at 768px have no horizontal overflow. Mobile menu opens and Escape closes it in the production build. eGovMed sample visit runs through routing, identity, booking and simulated payment.
-- CHIP-8 boot was checked and the actual game renders. An existing miniaudio callback in the unchanged compiled `public/chip8/index.js` reports `Module.HEAPF32.buffer` undefined; audio engine repair is outside this copy/media change. No clean-console claim for the emulator.
+- CHIP-8 initially exposed an existing miniaudio `Module.HEAPF32.buffer` exception. The employer-review follow-up adds a live memory-view getter in the handwritten browser adapter. The generated JS/WASM and interpreter remain unchanged. Boot and pause were verified; no new console errors appeared after the repair.
 - Publication: application commit `a2ffc91d8c24171816c1e83e92b89ae2b357c303` deployed READY as `portfolio-44r40hqjq-m4tyu633s-projects.vercel.app`. The public Khanpanion page was visually verified at https://matthewlabrador.vercel.app/work/khanpanion. Follow-up adjusts the eGovMed artboard to show the complete handset.
+
+
+## Employer-review follow-up
+
+- Homepage now states a concrete developer proposition, supported by Next.js/API work and visible project/resume actions in the first desktop viewport. Work archive leads with Khanpanion and eGovMed, followed by multiplayer, systems and ML work.
+- Removed duplicate NVIDIA, PC Express and Khanpanion entries from the About timeline. Current job duties remain unspecified until the owner supplies factual deliverables.
+- Contact supports normal email, a tested Copy email action and optional Gmail compose. The primary navigation leads to the contact section. Clipboard test passed and the prior empty clipboard was restored.
+- Rebuilt the linked resume as one readable A4 page with four detailed engineering projects and two additional technical projects. Removed unqualified clinical/performance absolutes and overly senior project labels; preserved substantiated education, roles, awards and measurements. Reproduction source: `scripts/build-resume.py`. The original PDF is retained as a private task-workspace backup. Latest PDF render was visually inspected.
+- Verification: production build, ESLint and standalone TypeScript pass; 13 page/81 asset-link smoke check passes. Changed home/work/About/achievements/Khanpanion routes at 390px have no horizontal overflow. About timeline has zero duplicate rows. CHIP-8 boots, pauses and emits no new runtime errors after the memory-view bridge repair.
 
 ---
 

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import SoundToggle from "./SoundToggle";
-import { contact, gmailCompose, nav } from "@/content/site";
+import { contact, emailHref, nav } from "@/content/site";
 
 export default function Nav({
   tick,
@@ -70,13 +70,8 @@ export default function Nav({
         </div>
         <div className="gallery-nav-actions">
           <SoundToggle />
-          <a
-            href={gmailCompose}
-            className="nav-contact"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Let’s talk <span aria-hidden="true">↗</span>
+          <a href="#contact" className="nav-contact">
+            Contact <span aria-hidden="true">↗</span>
           </a>
           <button
             ref={button}
@@ -109,12 +104,7 @@ export default function Nav({
             <span>04</span>Résumé<span aria-hidden="true">↗</span>
           </a>
         </nav>
-        <a
-          className="mobile-email"
-          href={gmailCompose}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a className="mobile-email" href={emailHref}>
           {contact.email}
         </a>
       </div>
