@@ -13,8 +13,8 @@ export const khanpanion: Project = {
   did: "Developer and team lead · Learning engine, application architecture and interface.",
   outcome: "Grand Champion · Khan Academy Education Impact Challenge 2026",
   media: {
-    src: "/work/khanpanion/overview.jpg",
-    alt: "The current Khanpanion application: navy study workspace, subject browser and interactive learning entry points, captured from the local production export.",
+    src: "/work/khanpanion/explore.jpg",
+    alt: "Khanpanion Explore: an interactive ratio problem beside a list of ideas, with the study navigation and Khan Academy link, captured from the live site.",
     fit: "contain",
   },
   award: "Grand Champion · Khan Academy Education Impact Challenge 2026 · ₱200,000",
