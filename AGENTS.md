@@ -19,7 +19,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - The user explicitly requests animation and 3D where useful. Build purposeful dimensional motion while preserving fast reading, accessible controls and reduced-motion fallbacks.
 - Verify project visuals against actual assets, source and available demos. Never invent a project interface or use an illustrative diagram as if it were a product screenshot.
 - Latest explicit user restrictions: preserve the TUMP and eGovMed application designs; improve all other showcased project sites, prioritizing CHIP-8. eGovMed may still receive a clearly labeled offline demo. Do not put repository links on the portfolio. Internal source inspection remains authorized and required.
-- Use Matthew's portrait once in the About context. Do not repeat his face throughout the site or use it as a default hero/background treatment.
+- Matthew's portrait appears in two places only: the homepage hero (owner request, October 30 2026) and About. Do not repeat it elsewhere or use it as a background treatment.
 - Browser hygiene: keep only one agent preview tab open and reuse it for QA. Close source/research/test tabs when finished; never close the user's own tabs.
 - Music is in scope. Use the downloaded, credited soundtrack with opt-in playback, persistent volume, fades, visibility pause and ducking under explicit project audio. The gallery sculpture may react to real measured audio energy. Do not restore the old per-world oscillator loops or noisy hover cues.
 

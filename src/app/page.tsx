@@ -83,6 +83,16 @@ export default function Home() {
               </h1>
             </div>
             <div className="hero2-side">
+              <figure className="hero2-portrait">
+                <Image
+                  src="/images/profile.jpg"
+                  alt="Matthew Labrador"
+                  width={1200}
+                  height={1200}
+                  sizes="(max-width: 900px) 96px, 320px"
+                  priority
+                />
+              </figure>
               <p className="hero2-intro">
                 I’m Matthew Labrador. I build web apps, APIs and game systems
                 from the first commit to the deployed product.

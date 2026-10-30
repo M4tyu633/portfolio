@@ -445,3 +445,38 @@ main.receipts-page header h1 {
     font-size: clamp(72px, 21vw, 104px);
   }
 }
+.hero2-side {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.hero2-portrait {
+  width: min(100%, 320px);
+  aspect-ratio: 1;
+  margin-bottom: 28px;
+  overflow: hidden;
+  background: #1b1c18;
+  border: 1px solid #f3f0e72b;
+}
+.hero2-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 900px) {
+  .hero2-side {
+    grid-template-columns: 88px minmax(0, 1fr);
+    column-gap: 18px;
+    align-items: center;
+  }
+  .hero2-portrait {
+    width: 88px;
+    margin: 0;
+  }
+  .hero2-side > .studio-actions,
+  .hero2-side > .studio-hiring-note {
+    grid-column: 1 / -1;
+  }
+  .hero2-side > .studio-actions {
+    margin-top: 24px;
+  }
+}
