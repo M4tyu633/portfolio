@@ -23,7 +23,7 @@ const awards = [
     href: "/achievements/egov-hackathon",
     meta: "2026 · Civic technology",
     result: "Grand Champion",
-    event: "eGov Hackathon PH · ₱100,000 prize",
+    event: "eGov Hackathon PH",
     logo: "/work/egovmed/logo-wordmark.png",
     w: 859,
     h: 192,
@@ -137,7 +137,9 @@ export default function Home() {
           <dl className="studio-proof" aria-label="Highlights">
             <div>
               <dt>3× Grand Champion</dt>
-              <dd>Khanpanion (₱200,000), eGovMed (₱100,000) and Tumbang Preso, 2026</dd>
+              <dd>
+                Khanpanion (₱200,000 prize), eGovMed and Tumbang Preso, 2026
+              </dd>
             </div>
             <div>
               <dt>DOST Scholar</dt>
@@ -224,9 +226,7 @@ export default function Home() {
         </section>
         <section className="studio-current" aria-labelledby="current-title">
           <div>
-            <p className="studio-eyebrow">
-              03 / RIGHT NOW
-            </p>
+            <p className="studio-eyebrow">03 / RIGHT NOW</p>
             <h2 id="current-title">CURRENTLY.</h2>
             <p>
               Alongside computer science at UP Manila, I work on local AI

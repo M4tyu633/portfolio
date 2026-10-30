@@ -41,6 +41,9 @@ with ZipFile(reference) as source:
     replace('1st Place, Gear Up NCR (2026, NCR Representative to Nationals)', 'Grand Champion, Gear Up NCR (2026)')
     replace('Impact Challenge 2026 (Enactus Philippines).', 'Impact Challenge 2026 (₱200,000 prize).')
     replace('Impact Challenge (2026) •', 'Impact Challenge (2026, ₱200,000) •')
+    # The ₱100,000 was the grant every Top 30 finalist team received, not a winner's prize: state the title only.
+    replace('Grand Champion at eGov Hackathon PH 2026 (₱100,000 prize), with Philippine General Hospital', 'Grand Champion at eGov Hackathon PH 2026, with Philippine General Hospital')
+    replace('eGov Hackathon PH (2026, ₱100,000)', 'eGov Hackathon PH (2026)')
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with ZipFile(args.output, 'w') as target:
         for item in source.infolist():

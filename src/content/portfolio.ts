@@ -31,7 +31,7 @@ export const projectNotes: Record<
     summary:
       "A hospital visit usually means separate sign-ups, forms and queues. eGovMed puts sign-in, symptom assessment, booking and payment into one patient app, connected to eight government services.",
     role: "Full-stack developer · React UI, Express API & service adapters",
-    result: "Grand Champion · eGov Hackathon PH 2026 · ₱100,000 prize",
+    result: "Grand Champion · eGov Hackathon PH 2026",
   },
   "glycoswarm-ai": {
     label: "03 / AI systems",

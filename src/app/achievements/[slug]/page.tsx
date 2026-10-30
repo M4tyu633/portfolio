@@ -82,17 +82,28 @@ export default async function AchievementPage({
             </figcaption>
           </figure>
         ) : (
-          <div className="event-result">
-            <span>Grand</span>
-            <div>
-              <h2>Champion.</h2>
-              <p>₱100,000 prize</p>
-              <p>
-                eGovMed put assessment before the queue. I delivered the pitch
-                and live product demo to the judging panel.
-              </p>
+          <>
+            <figure className="event-cover">
+              <Image
+                src="/work/egovmed/award-cheque.webp"
+                alt="The Bisaya Hackers team on stage at the eGovPH Hackathon 2026."
+                width={1440}
+                height={960}
+                sizes="100vw"
+              />
+              <figcaption>Grand Champion · eGov Hackathon PH 2026</figcaption>
+            </figure>
+            <div className="event-result">
+              <span>Grand</span>
+              <div>
+                <h2>Champion.</h2>
+                                <p>
+                  eGovMed put assessment before the queue. I delivered the pitch
+                  and live product demo to the judging panel.
+                </p>
+              </div>
             </div>
-          </div>
+          </>
         )}
         <section className="event-account">
           <p className="event-pull">
@@ -136,7 +147,7 @@ export default async function AchievementPage({
             <p>
               {gear
                 ? "Tumbang Preso became NCR’s entry for the national finals. The regional competition build is the Godot version. The later Unity rewrite is the next generation, not the build that won."
-                : "eGovMed won Grand Champion at eGov Hackathon PH, with a ₱100,000 prize. Philippine General Hospital is the pilot target. That is an ambition for the product, not a claimed hospital deployment."}
+                : "eGovMed won Grand Champion at eGov Hackathon PH. Philippine General Hospital is the pilot target. That is an ambition for the product, not a claimed hospital deployment."}
             </p>
             <Link
               className="scene-link"

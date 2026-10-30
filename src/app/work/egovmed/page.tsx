@@ -30,8 +30,8 @@ export default function EgovPage() {
             <p className="u-meta">Try it yourself</p>
             <h2 id="egov-demo-title">Take a visit from start to finish.</h2>
             <p>
-              The real patient app, running in your browser. Describe a
-              symptom, verify your identity, book a visit and pay.
+              The real patient app, running in your browser. Describe a symptom,
+              verify your identity, book a visit and pay.
             </p>
             <a className="world-button" href="/demos/egovmed/index.html">
               Open eGovMed ↗
@@ -158,8 +158,7 @@ export default function EgovPage() {
             <p>eGov Hackathon PH 2026</p>
             <h2>Grand Champion.</h2>
             <p>
-              ₱100,000 prize. Philippine General Hospital is the pilot target,
-              not a claimed deployment or endorsement.
+              Philippine General Hospital is the pilot target, not a claimed deployment or endorsement.
             </p>
           </div>
           <nav aria-label="Continue from eGovMed">

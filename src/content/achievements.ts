@@ -102,7 +102,7 @@ export const achievements: Achievement[] = [
     slug: "egov-hackathon",
     title: "eGov Hackathon PH",
     result: "Grand Champion",
-    org: "₱100,000 prize",
+    org: "Bisaya Hackers",
     year: "2026",
     tier: "A",
     project: "egovmed",
@@ -117,7 +117,6 @@ export const achievements: Achievement[] = [
         value: "Full-stack development · API integrations · patient workflows",
       },
       { label: "Result", value: "Grand Champion" },
-      { label: "Prize", value: "₱100,000" },
       { label: "Pilot target", value: "Philippine General Hospital" },
     ],
     sections: [
@@ -161,13 +160,12 @@ export const achievements: Achievement[] = [
             kind: "figures",
             items: [
               { value: "Grand", label: "Champion" },
-              { value: "₱100,000", label: "Prize" },
               { value: "8", label: "Government APIs integrated" },
             ],
           },
           {
             kind: "p",
-            text: "eGovMed won Grand Champion at eGov Hackathon PH 2026, with a ₱100,000 prize.",
+            text: "eGovMed won Grand Champion at eGov Hackathon PH 2026.",
           },
         ],
       },

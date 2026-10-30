@@ -3,8 +3,9 @@ import type { Project } from "../types";
 /* ===========================================================================
  * 02 · eGOVMED
  *
- * Result updated by Matthew on October 17, 2026: Grand Champion. The prize is
- * ₱100,000 and it is confirmed rather than estimated. No fake government
+ * Result updated by Matthew on October 17, 2026: Grand Champion. The ₱100,000
+ * cheque was the grant every Top 30 finalist team received, not a winner's
+ * prize, so the site states the title only (owner, October 30). No fake government
  * marks, no PGH endorsement: PGH is the pilot TARGET and is written as one.
  * ======================================================================== */
 
@@ -29,7 +30,7 @@ export const egovmed: Project = {
     alt: "The eGovMed home screen: a greeting by name, a Start a visit card, tiles for Records, Payments, Report and Messages, and a bottom tab bar.",
     fit: "contain",
   },
-  award: "Grand Champion · eGov Hackathon PH 2026 · ₱100,000",
+  award: "Grand Champion · eGov Hackathon PH 2026",
   built: ["React + Vite", "Node / Express", "Redis", "Besu", "eGov API stack"],
   related: ["egov-hackathon"],
   links: {
@@ -43,7 +44,7 @@ export const egovmed: Project = {
     },
     { label: "Team", value: "BH Studios, UP Manila" },
     { label: "Event", value: "eGov Hackathon PH 2026" },
-    { label: "Result", value: "Grand Champion · ₱100,000" },
+    { label: "Result", value: "Grand Champion" },
     { label: "Pilot target", value: "Philippine General Hospital" },
     { label: "Stack", value: "React + Vite · Node/Express · Redis · Besu" },
   ],
@@ -171,7 +172,7 @@ export const egovmed: Project = {
       blocks: [
         {
           kind: "p",
-          text: "eGovMed won Grand Champion at the eGov Hackathon PH 2026, with a ₱100,000 prize. The pilot target is the Philippine General Hospital.",
+          text: "eGovMed won Grand Champion at the eGov Hackathon PH 2026. The pilot target is the Philippine General Hospital.",
         },
       ],
     },
