@@ -57,7 +57,7 @@ export const egovmed: Project = {
       "One patient, six stages. Select a stage to see which government service is behind it.",
   },
 
-  lede: "I built across the React frontend and Express backend, connecting eight government services into one patient journey. Identity, triage, booking and payment each have explicit service adapters, validation and mock/live boundaries.",
+  lede: "eGovMed lets a patient handle a hospital visit from one phone app: verify their identity through eGovPH, describe symptoms, book a slot and pay. I worked across the React app and the Express server, connecting eight government services into that single flow. Each service sits behind its own adapter, so the demo here runs safely offline.",
 
   sections: [
     {

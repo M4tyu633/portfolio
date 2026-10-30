@@ -114,8 +114,25 @@ a:hover .pv-device {
   border-left: 1px solid #d5edb733;
 }
 .product-visual-khan .pv-logo {
-  filter: brightness(0) invert(1);
   width: 40cqw;
+}
+.product-visual-khan .pv-brand {
+  top: 11%;
+}
+.pv-tag {
+  position: absolute;
+  z-index: 3;
+  left: 6%;
+  top: 6%;
+  padding: 0.6cqw 1.2cqw;
+  border: 1px solid #ffffff3d;
+  border-radius: 99px;
+  font:
+    500 1.5cqw/1.3 var(--font-plex-mono),
+    monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #ffffffc7;
 }
 .product-visual-khan .pv-device {
   border-color: #526c93;
@@ -499,4 +516,57 @@ a:hover .pv-device {
   a:hover .pv-device {
     transform: none;
   }
+}
+
+/* Flat, honest framing: captures sit square to the viewer. */
+.pv-device,
+.product-visual-egov .pv-device,
+.product-visual-tumbang .pv-device,
+.product-visual-glyco .pv-device,
+.product-visual-chip8 .pv-device,
+.product-visual-reading .pv-device {
+  transform: none;
+  border-width: 1px;
+  border-radius: 0.8cqw;
+  box-shadow: 0 2cqw 6cqw #0008;
+}
+a:hover .pv-device {
+  transform: translateY(-1%);
+}
+.product-visual-egov .pv-device {
+  border: 0.8cqw solid #e1e8f2;
+  border-radius: 3.4cqw;
+}
+.product-visual-tumbang .pv-device {
+  left: 8%;
+  top: 40%;
+}
+/* The eGovMed brand card: white plate in a Philippine-flag frame. */
+.pv-egov-plate {
+  display: block;
+  width: 46cqw;
+  padding: 3.4cqw 3cqw;
+  border: 1.6cqw solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, #f3c300 0 27%, transparent 27%) border-box,
+    linear-gradient(#0844e6 0 50%, #a50e0e 50%) border-box;
+  box-shadow: 0 2cqw 5cqw #0007;
+}
+.pv-egov-plate .pv-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.product-visual-egov .pv-brand {
+  top: 30%;
+  max-width: 52%;
+}
+.product-visual-egov .pv-brand p {
+  margin-top: 2.4cqw;
+}
+.product-visual-tumbang .pv-device {
+  left: 10%;
+  width: 80%;
+  top: 45%;
 }

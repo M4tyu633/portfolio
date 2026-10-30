@@ -15,18 +15,13 @@ export default function ProductVisual({
   return (
     <div className={`product-visual product-visual-${project.world}`}>
       <div className="pv-surface">
-        <div className="pv-meta" aria-hidden="true">
-          <span>{project.category}</span>
-          <span>
-            {project.year} / {project.n}
-          </span>
-        </div>
         <div className="pv-brand">
           {project.world === "khan" ? (
+            // Brand mark in its own colours; wordmark reversed for the navy ground.
             <Image
-              src="/work/khanpanion/logo.svg"
-              width={485}
-              height={112}
+              src="/work/khanpanion/logo-reverse.svg"
+              width={329}
+              height={64}
               alt="Khanpanion"
               className="pv-logo"
             />
@@ -38,6 +33,16 @@ export default function ProductVisual({
               alt="Tumbang Preso"
               className="pv-logo"
             />
+          ) : project.world === "egov" ? (
+            <span className="pv-egov-plate">
+              <Image
+                src="/work/egovmed/logo-wordmark.png"
+                width={859}
+                height={192}
+                alt="eGovMed"
+                className="pv-logo"
+              />
+            </span>
           ) : (
             <span className="pv-name">{copy?.name ?? project.title}</span>
           )}
@@ -64,16 +69,11 @@ export default function ProductVisual({
             1977
           </span>
         ) : null}
-        <div className="pv-footer" aria-hidden="true">
-          <span>{game ? "GODOT / ONLINE MULTIPLAYER" : copy?.technical}</span>
-          <span>
-            {project.world === "egov"
-              ? "OFFLINE DEMO"
-              : project.world === "glyco"
-                ? "PRESERVED DEMO"
-                : "PRODUCT / ENGINEERING"}
+        {project.world === "egov" || project.world === "glyco" ? (
+          <span className="pv-tag">
+            {project.world === "egov" ? "Offline demo" : "Preserved demo"}
           </span>
-        </div>
+        ) : null}
       </div>
     </div>
   );

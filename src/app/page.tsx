@@ -5,6 +5,25 @@ import Nav from "@/components/chrome/Nav";
 import GalleryProjects from "@/components/home/GalleryProjects";
 import { contact } from "@/content/site";
 
+function TrophyIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="16"
+      height="16"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M8 4h8v5a4 4 0 0 1-8 0V4Z" />
+      <path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M10 17h4" />
+    </svg>
+  );
+}
+
 export default function Home() {
   return (
     <>
@@ -18,19 +37,19 @@ export default function Home() {
           <div className="studio-hero-grid">
             <div className="studio-hero-copy">
               <p className="studio-eyebrow">
-                <i aria-hidden="true" /> SOFTWARE DEVELOPER & CS STUDENT
+                <i aria-hidden="true" /> FULL-STACK DEVELOPER · CS AT UP MANILA
               </p>
               <h1 id="studio-title">
                 I BUILD
                 <br />
-                THE WHOLE
+                SOFTWARE
                 <br />
-                <span>SYSTEM.</span>
+                <span>THAT WINS.</span>
               </h1>
               <p className="studio-intro">
-                I’m Matthew, a software developer and CS student at UP Manila. I
-                build Next.js applications, API integrations and the engines
-                behind interactive products.
+                I’m Matthew Labrador. I build web apps, APIs and game systems
+                from the first commit to the deployed product. In 2026 that work
+                took two Grand Champion titles and a first place.
               </p>
               <div className="studio-actions">
                 <a className="studio-button" href="#selected-work">
@@ -46,45 +65,56 @@ export default function Home() {
                 </a>
               </div>
               <p className="studio-hiring-note">
-                Open to development internships & technical collaborations.
+                Open to software engineering internships and technical
+                collaborations.
               </p>
             </div>
             <Link
               href="/work/khanpanion"
               className="studio-feature"
-              aria-label="Explore Khanpanion, Grand Champion at KEIC 2026"
+              aria-label="Explore Khanpanion, Grand Champion at the Khan Academy Education Impact Challenge 2026"
             >
-              <div className="studio-feature-top">
-                <span>FEATURED BUILD / NEXT.JS + TYPESCRIPT</span>
-                <span aria-hidden="true">↗</span>
-              </div>
               <div className="studio-feature-image">
                 <ProductVisual project={khanpanion} priority />
               </div>
               <div className="studio-feature-caption">
-                <span className="studio-award-stamp">
-                  GRAND
-                  <br />
-                  CHAMPION
-                </span>
-                <div>
-                  <h2>Khanpanion</h2>
-                  <p>
-                    Khan Academy Education
-                    <br />
+                <p className="studio-award-line">
+                  <TrophyIcon />
+                  <span>
+                    <strong>Grand Champion</strong> · Khan Academy Education
                     Impact Challenge 2026
-                  </p>
+                  </span>
+                </p>
+                <div className="studio-feature-title">
+                  <h2>Khanpanion</h2>
+                  <span aria-hidden="true">↗</span>
                 </div>
+                <p>
+                  A study platform that traces a missed question back to the
+                  exact skill behind it. I led the team and built the learning
+                  engine in TypeScript.
+                </p>
               </div>
-              <span className="studio-feature-note">
-                Typed learning engine · Resumable practice · Local persistence
-              </span>
             </Link>
           </div>
-          <div className="studio-label studio-hero-bottom">
-            <span>WEB APPLICATIONS / SYSTEMS / APPLIED AI</span>
-            <span>IMPLEMENTATION → VALIDATION → DELIVERY</span>
-          </div>
+          <dl className="studio-proof" aria-label="Highlights">
+            <div>
+              <dt>2× Grand Champion</dt>
+              <dd>Khanpanion and eGovMed, 2026</dd>
+            </div>
+            <div>
+              <dt>1st Place</dt>
+              <dd>Gear Up NCR, as sole developer of Tumbang Preso</dd>
+            </div>
+            <div>
+              <dt>Campus Ambassador</dt>
+              <dd>NVIDIA Philippines, 2026–present</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>TypeScript · Next.js · Node · Python · C++ · Godot</dd>
+            </div>
+          </dl>
         </section>
         <section
           id="selected-work"
@@ -95,20 +125,23 @@ export default function Home() {
             <div>
               <p className="studio-eyebrow">01 / SELECTED WORK</p>
               <h2 id="work-title">
-                MADE TO
+                SELECTED
                 <br />
-                <span>BE USED.</span>
+                <span>WORK.</span>
               </h2>
             </div>
             <p>
-              Different problems. Working products.
-              <br />
-              Here’s what I built and what happened next.
+              Three products for three very different users: students, patients
+              and players. Each was judged by an outside panel, and each one
+              won.
             </p>
           </div>
           <GalleryProjects />
           <Link href="/work" className="studio-all-work">
-            <span>There’s more under the hood.</span>
+            <span>
+              Plus a C++ emulator, two medical ML models and a multi-agent AI
+              prototype.
+            </span>
             <strong>ALL SEVEN PROJECTS ↗</strong>
           </Link>
         </section>
@@ -117,14 +150,14 @@ export default function Home() {
           aria-labelledby="recognition-title"
         >
           <div>
-            <p className="studio-eyebrow">02 / OUT IN THE WORLD</p>
+            <p className="studio-eyebrow">02 / RECOGNITION</p>
             <h2 id="recognition-title">
               THE
               <br />
               <span>RESULTS.</span>
             </h2>
             <Link href="/achievements" className="studio-link">
-              The results & the stories ↗
+              The story behind each result ↗
             </Link>
           </div>
           <ol>
@@ -151,7 +184,7 @@ export default function Home() {
         <section className="studio-current" aria-labelledby="current-title">
           <div>
             <p className="studio-eyebrow">
-              03 / STILL LEARNING. ALWAYS BUILDING.
+              03 / RIGHT NOW
             </p>
             <h2 id="current-title">CURRENTLY.</h2>
             <p>
@@ -160,7 +193,7 @@ export default function Home() {
               on using and deploying models on personal hardware.
             </p>
             <Link href="/about" className="studio-link">
-              Meet the person behind the work ↗
+              More about me ↗
             </Link>
           </div>
           <div className="studio-roles">

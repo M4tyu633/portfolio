@@ -1,3 +1,9 @@
+# Refinement October 30 2026
+
+Owner feedback: the award stamp read as generated, the Khanpanion card lacked the real logo, and parts were hard to read. Changes: Khanpanion uses its real mark in brand colours with a reversed wordmark (`public/work/khanpanion/logo-reverse.svg`); eGovMed uses its real wordmark in black with the tricolour O on a white plate in a flag-colour frame (`public/work/egovmed/logo-wordmark.png`, recoloured from the app's own logo). Rotated stamp, tilted device mockups, overlapping footer labels and the tilted hero card were removed; captures now sit flat. The hero has plainer copy and a proof strip (awards, NVIDIA role, stack). Homepage and Khanpanion/eGovMed case-study intros were rewritten in plain English. The owner liked the plain TUMP capture gallery; keep that direction. Lint, TypeScript and production build pass; home checked at 1440px and 375px with no overflow.
+
+---
+
 # Current update October 27 2026
 
 The owner rejected the replacement resume layout and requested the original format. Recovered the exact October 17 PDF and editable Word source from the previous resume task; its PDF matches the private pre-edit backup SHA-256 `7B7166D5B2E456BB9227766656C8A4D8F5975D88F3A79D52AE92186A1B05980C`.

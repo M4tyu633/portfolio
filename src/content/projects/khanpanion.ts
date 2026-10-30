@@ -9,7 +9,7 @@ export const khanpanion: Project = {
   world: "khan",
   display: "plex",
   oneLiner:
-    "A Next.js study platform with deterministic skill routing, generated practice and resumable exam preparation.",
+    "A college-prep study app that turns every wrong answer into the right next lesson.",
   did: "Developer and team lead · Learning engine, application architecture and interface.",
   outcome: "Grand Champion · Khan Academy Education Impact Challenge 2026",
   media: {
@@ -50,7 +50,7 @@ export const khanpanion: Project = {
       value: "Static export on Vercel · no account required",
     },
   ],
-  lede: "I developed a Next.js study platform that connects exam preparation, weekly planning and prerequisite repair. Its TypeScript learning engine routes a missed skill to a focused explanation, Khan Academy resources and fresh independent checks, while preserving progress on the learner’s device.",
+  lede: "Khanpanion helps students prepare for college exams. When a student gets a question wrong, it finds the earlier skill they are missing, explains it, points to the right Khan Academy lesson and checks again with a new question. I led the team and built the learning engine and interface in Next.js and TypeScript. Progress saves on the student’s own device, so there is no account to create.",
   sections: [
     {
       n: "01",

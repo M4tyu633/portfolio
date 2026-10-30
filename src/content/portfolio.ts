@@ -13,25 +13,25 @@ export const projectNotes: Record<
     label: "07 / Education",
     title: "A clearer route into college.",
     summary:
-      "A Next.js study platform with typed prerequisite routing, generated practice and resumable exam sessions. I connected missed skills to targeted Khan Academy resources.",
-    role: "Developer & team lead · Learning engine, state management & UI",
+      "A college-prep study platform. When a student misses a question, it traces the gap back to the prerequisite skill, explains it, links the right Khan Academy lesson and checks again with fresh practice.",
+    role: "Team lead & developer · TypeScript learning engine, state & UI",
     result: "Grand Champion · Khan Academy Education Impact Challenge 2026",
   },
   "tumbang-preso": {
     label: "01 / Multiplayer game",
     title: "A street game. A whole new playground.",
     summary:
-      "The Filipino game of slippers and tin cans, rebuilt for four online players. I developed the gameplay, assembled the world, built the interface and wrote the multiplayer netcode.",
+      "The Filipino street game of slippers and tin cans, rebuilt as a four-player online game. As sole developer I built the gameplay systems, the world, the interface and the multiplayer netcode.",
     role: "Sole developer · Gameplay systems, level assembly & multiplayer netcode",
-    result: "1st Place · Gear Up NCR 2026",
+    result: "1st Place · Gear Up NCR Esports Game Dev Challenge 2026",
   },
   egovmed: {
     label: "02 / Civic technology",
     title: "One patient. One connected visit.",
     summary:
-      "A hospital visit brings enough uncertainty. eGovMed connects sign-in, symptom assessment, booking and payment through eight government services.",
+      "A hospital visit usually means separate sign-ups, forms and queues. eGovMed puts sign-in, symptom assessment, booking and payment into one patient app, connected to eight government services.",
     role: "Full-stack developer · React UI, Express API & service adapters",
-    result: "Grand Champion · eGov Hackathon PH 2026",
+    result: "Grand Champion · eGov Hackathon PH 2026 · ₱100,000 prize",
   },
   "glycoswarm-ai": {
     label: "03 / AI systems",
