@@ -33,6 +33,12 @@ with ZipFile(reference) as source:
     for span in spans[1:]:
         span.text = ''
     spans[1].text = 'Developed a Next.js study platform with typed prerequisite routing, generated practice, resumable mock exams and device-local learning state, linked to targeted Khan Academy resources.'
+    def replace(old, new):
+        spans = [s for s in document.xpath('//w:t', namespaces=ns) if s.text and old in s.text]
+        assert len(spans) == 1, (old, len(spans))
+        spans[0].text = spans[0].text.replace(old, new)
+    replace('Won 1st Place Champion with Team BH Studios', 'Won Grand Champion with Team BH Studios')
+    replace('1st Place, Gear Up NCR (2026,', 'Grand Champion, Gear Up NCR (2026,')
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with ZipFile(args.output, 'w') as target:
         for item in source.infolist():
