@@ -12,7 +12,7 @@ const awards = [
     href: "/work/khanpanion",
     meta: "2026 · Education",
     result: "Grand Champion",
-    event: "Khan Academy Education Impact Challenge",
+    event: "Khan Academy Education Impact Challenge · ₱200,000 prize",
     logo: "/work/khanpanion/logo-reverse.svg",
     w: 329,
     h: 64,
@@ -118,8 +118,8 @@ export default function Home() {
                 <p className="studio-award-line">
                   <TrophyIcon />
                   <span>
-                    <strong>Grand Champion</strong> · Khan Academy Education
-                    Impact Challenge 2026
+                    <strong>Grand Champion · ₱200,000</strong> · Khan Academy
+                    Education Impact Challenge 2026
                   </span>
                 </p>
                 <div className="studio-feature-title">
@@ -137,7 +137,7 @@ export default function Home() {
           <dl className="studio-proof" aria-label="Highlights">
             <div>
               <dt>3× Grand Champion</dt>
-              <dd>Khanpanion, eGovMed and Tumbang Preso, 2026</dd>
+              <dd>Khanpanion (₱200,000), eGovMed (₱100,000) and Tumbang Preso, 2026</dd>
             </div>
             <div>
               <dt>DOST Scholar</dt>

@@ -15,7 +15,7 @@ export const projectNotes: Record<
     summary:
       "A college-prep study platform. When a student misses a question, it traces the gap back to the prerequisite skill, explains it, links the right Khan Academy lesson and checks again with fresh practice.",
     role: "Team lead & developer · TypeScript learning engine, state & UI",
-    result: "Grand Champion · Khan Academy Education Impact Challenge 2026",
+    result: "Grand Champion · Khan Academy Education Impact Challenge 2026 · ₱200,000 prize",
   },
   "tumbang-preso": {
     label: "01 / Multiplayer game",

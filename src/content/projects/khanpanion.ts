@@ -17,7 +17,7 @@ export const khanpanion: Project = {
     alt: "The current Khanpanion application: navy study workspace, subject browser and interactive learning entry points, captured from the local production export.",
     fit: "contain",
   },
-  award: "Grand Champion · Khan Academy Education Impact Challenge 2026",
+  award: "Grand Champion · Khan Academy Education Impact Challenge 2026 · ₱200,000",
   built: [
     "Next.js",
     "React",
@@ -35,7 +35,7 @@ export const khanpanion: Project = {
       label: "My role",
       value: "Developer · team lead · application architecture",
     },
-    { label: "Result", value: "Grand Champion, KEIC 2026" },
+    { label: "Result", value: "Grand Champion, KEIC 2026 · ₱200,000 prize" },
     { label: "Stack", value: "Next.js · React · TypeScript" },
     {
       label: "Learning engine",
@@ -153,7 +153,7 @@ export const khanpanion: Project = {
       blocks: [
         {
           kind: "lead",
-          text: "Grand Champion · Khan Academy Education Impact Challenge 2026.",
+          text: "Grand Champion · Khan Academy Education Impact Challenge 2026 · ₱200,000 prize.",
         },
         {
           kind: "p",

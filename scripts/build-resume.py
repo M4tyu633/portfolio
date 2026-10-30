@@ -38,7 +38,9 @@ with ZipFile(reference) as source:
         assert len(spans) == 1, (old, len(spans))
         spans[0].text = spans[0].text.replace(old, new)
     replace('Won 1st Place Champion with Team BH Studios', 'Won Grand Champion with Team BH Studios')
-    replace('1st Place, Gear Up NCR (2026,', 'Grand Champion, Gear Up NCR (2026,')
+    replace('1st Place, Gear Up NCR (2026, NCR Representative to Nationals)', 'Grand Champion, Gear Up NCR (2026)')
+    replace('Impact Challenge 2026 (Enactus Philippines).', 'Impact Challenge 2026 (₱200,000 prize).')
+    replace('Impact Challenge (2026) •', 'Impact Challenge (2026, ₱200,000) •')
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with ZipFile(args.output, 'w') as target:
         for item in source.infolist():

@@ -181,3 +181,62 @@ main.receipts-page header h1 {
   line-height: 0.9;
   text-transform: uppercase;
 }
+
+/* Khanpanion award photos. */
+.award-photos {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 56px clamp(24px, 4vw, 64px) 72px;
+  border-top: 1px solid var(--w-rule);
+}
+.award-photos-head {
+  max-width: 46rem;
+  margin-bottom: 28px;
+}
+.award-photos-head h2 {
+  margin-top: 10px;
+  font:
+    600 clamp(28px, 3.2vw, 44px)/1.08 var(--font-gallery),
+    Impact,
+    sans-serif;
+  text-transform: uppercase;
+}
+.award-photos-head p:last-child {
+  margin-top: 10px;
+  color: var(--w-ink-2);
+  font-size: 16px;
+}
+.award-photos-grid {
+  display: grid;
+  grid-template-columns: 2.1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 14px;
+  height: clamp(420px, 44vw, 640px);
+}
+.award-photos-grid figure {
+  overflow: hidden;
+  background: var(--w-ground-2);
+}
+.award-photos-grid figure.is-main {
+  grid-row: 1 / 3;
+}
+.award-photos-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 700px) {
+  .award-photos-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    height: auto;
+  }
+  .award-photos-grid figure.is-main {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .award-photos-grid figure {
+    aspect-ratio: 3 / 4;
+  }
+}

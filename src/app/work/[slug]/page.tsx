@@ -5,6 +5,7 @@ import { daruma, franklin } from "@/app/fonts";
 import Nav from "@/components/chrome/Nav";
 import WorldSync from "@/components/chrome/WorldSync";
 import Blocks from "@/components/ui/Blocks";
+import AwardPhotos from "@/components/work/AwardPhotos";
 import ProjectHero from "@/components/work/ProjectHero";
 import { achievementBySlug } from "@/content/achievements";
 import { projectBySlug, projects } from "@/content/projects";
@@ -84,6 +85,7 @@ export default async function ProjectPage({
 
       <main id="main" className="flex-1">
         <ProjectHero project={project} />
+        {project.slug === "khanpanion" ? <AwardPhotos /> : null}
 
         <div className="case-body">
           {project.sections.map((section) => (

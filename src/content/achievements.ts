@@ -277,7 +277,7 @@ export const achievements: Achievement[] = [
     slug: "khan-academy-education-impact",
     title: "Khan Academy Education Impact Challenge",
     result: "Grand Champion",
-    org: "Enactus Philippines · KEIC 2026",
+    org: "Enactus Philippines · KEIC 2026 · ₱200,000 prize",
     year: "2026",
     tier: "B",
     project: "khanpanion",
