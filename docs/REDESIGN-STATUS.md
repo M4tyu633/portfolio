@@ -1,3 +1,9 @@
+# Refinement continued, October 30 2026
+
+Owner-confirmed: Gear Up NCR result is **Grand Champion** (site, achievements and resume updated; no national-finals win is claimed). Shipped to production in small verified commits: a unified charcoal base on every page via `src/app/css/calm.css` (project brand colours as accents only; labels and captions use the sans; CHIP-8 keeps mono); real NVIDIA and PC Express logos beside the roles; Results rows with project logos; full-bleed screenshot previews with a small brand badge (eGovMed shows three phone screens, with the demo banner cropped out of the captures); "demo" labels removed from previews; contact as Email/LinkedIn/Resume rows; About "Problems I've solved" with real project decisions; case-study sections aligned to the opening frame; plain-English intros on every case study. The owner wants previews presented as the product, not as demos. Lint, TypeScript and build pass on each commit; production verified by request after each push.
+
+---
+
 # Refinement October 30 2026
 
 Owner feedback: the award stamp read as generated, the Khanpanion card lacked the real logo, and parts were hard to read. Changes: Khanpanion uses its real mark in brand colours with a reversed wordmark (`public/work/khanpanion/logo-reverse.svg`); eGovMed uses its real wordmark in black with the tricolour O on a white plate in a flag-colour frame (`public/work/egovmed/logo-wordmark.png`, recoloured from the app's own logo). Rotated stamp, tilted device mockups, overlapping footer labels and the tilted hero card were removed; captures now sit flat. The hero has plainer copy and a proof strip (awards, NVIDIA role, stack). Homepage and Khanpanion/eGovMed case-study intros were rewritten in plain English. The owner liked the plain TUMP capture gallery; keep that direction. Lint, TypeScript and production build pass; home checked at 1440px and 375px with no overflow.
