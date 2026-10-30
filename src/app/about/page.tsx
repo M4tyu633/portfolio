@@ -64,12 +64,13 @@ export default function AboutPage() {
               place of a philosophy section. */}
           <section aria-labelledby="evidence" className="about-evidence">
             <h2 id="evidence" className="u-display">
-              How I make decisions
+              Problems I’ve solved
             </h2>
             <ol>
               {about.evidence.map((e) => (
                 <li key={e.label}>
                   <div className="u-meta text-ink-3">{e.label}</div>
+                  <h3 className="about-problem">{e.problem}</h3>
                   <p>{e.text}</p>
                   <Link href={e.href} className="u-meta">
                     {e.project} <span aria-hidden>&rarr;</span>

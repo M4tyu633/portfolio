@@ -18,22 +18,25 @@ export const about = {
    * named project, so the claim underneath it is checkable. */
   evidence: [
     {
-      project: "Tumbang Preso",
-      href: "/work/tumbang-preso",
-      label: "Game physics",
-      text: "The engine's collision callbacks felt unreliable, so I staged 36 contacts and logged both tests. 16 area overlaps never fired, and they clustered by target. The build ships a host-side distance check instead.",
-    },
-    {
-      project: "Knee MRI Reader",
-      href: "/work/knee-mri-reader",
-      label: "Model evaluation",
-      text: "The model scores 0.997 macro AUC in-sample and 0.843 strictly out-of-fold. The headline number on this site is 0.843, because the other one is measured on studies the model has already seen.",
+      project: "Khanpanion",
+      href: "/work/khanpanion",
+      label: "Learning design",
+      problem: "A right answer after a hint isn’t real understanding.",
+      text: "So hinted answers don’t count as progress. Before Khanpanion marks a skill as fixed, the student has to answer two brand-new questions correctly on their own.",
     },
     {
       project: "eGovMed",
       href: "/work/egovmed",
-      label: "Identity API",
-      text: "Two government documents disagreed about the liveness endpoint, so I ran a real session and a random UUID against it. Both returned byte-identical errors, which told me the failure mode I had to design for.",
+      label: "Patient safety",
+      problem: "An AI triage model could under-rate a real emergency.",
+      text: "I put a rule-based safety floor under the model. It can only raise a patient’s urgency, never lower it, so a broken or wrong AI response can’t downgrade an emergency.",
+    },
+    {
+      project: "Tumbang Preso",
+      href: "/work/tumbang-preso",
+      label: "Online play",
+      problem: "Players on different home and mobile networks couldn’t reach each other.",
+      text: "I deployed dedicated game servers on a Linux VPS with join codes, so four players on any network can meet in the same match.",
     },
   ],
   /* Short annotations for a reader outside the Philippines, who has no reason
