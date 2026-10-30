@@ -46,7 +46,7 @@ export const kneeMri: Project = {
     { label: "Findings", value: "Twelve, scored simultaneously" },
   ],
 
-  lede: "I built the pipeline from raw DICOM studies to multi-view model training and a browser reading station. The system combines DINOv2 features, cross-view attention and ONNX delivery, with a strict out-of-fold macro AUC of 0.843.",
+  lede: "A knee MRI is several scans taken from different angles. I built a model that reads them together and flags twelve common findings, such as ligament tears and fluid, and a viewer that shows its scores next to the radiologist’s notes. I did everything from cleaning the raw scans to training and the web app. On studies it never saw during training it scores 0.843 AUC.",
 
   sections: [
     {

@@ -61,7 +61,7 @@ export const glycoswarm: Project = {
       "Select a specialist to isolate it. The others dim, and its inputs, its job and what it contributes to synthesis appear.",
   },
 
-  lede: "I designed the LangGraph workflow, FastAPI service and Next.js interface for a multi-agent diabetes screening prototype. Four specialists process different inputs before synthesis, with explicit contracts and unavailable-provider states.",
+  lede: "Diabetes damages the kidneys, nerves, eyes and heart, and each needs a different check. GlycoSwarm gives each one its own AI specialist, runs all four in parallel on a patient’s lab data, then combines what they found. I led the team and built the agent workflow (LangGraph), the API (FastAPI) and the interface (Next.js). It is a hackathon prototype, not a clinical tool.",
 
   sections: [
     {

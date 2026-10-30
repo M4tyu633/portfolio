@@ -51,7 +51,7 @@ export const chip8: Project = {
     coda: "It runs in this browser. Thirty-five instructions, 4 KB of memory, and a 64 by 32 display.",
   },
 
-  lede: "I implemented a C++ interpreter, debugger and six original ROMs, then compiled the machine to WebAssembly. Run a game in the browser and inspect the real registers, memory and disassembly as each instruction executes.",
+  lede: "CHIP-8 is a tiny virtual game console from the 1970s. I built it from scratch in C++, wrote six original games for it and compiled it to run in your browser. Play a game, then pause and step through it one instruction at a time to see the machine’s memory and registers change.",
 
   sections: [
     {

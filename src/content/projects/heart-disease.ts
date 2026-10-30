@@ -42,7 +42,7 @@ export const heartDisease: Project = {
       value: "Signed additive log-odds contributions",
     },
   ],
-  lede: "I built the data pipeline and model comparison, then exported Logistic Regression for local browser inference. Change an input and follow its signed log-odds contribution to the resulting probability. Research benchmarks remain separate from the browser model.",
+  lede: "Most risk models give you a number and no reason. CardioSense shows its working: change a measurement such as age or cholesterol and see exactly how much it pushes the heart-disease score up or down. I prepared the data, compared three models and built the interface. The model runs entirely in your browser. It is a research demonstration, not medical advice.",
   sections: [
     {
       n: "01",

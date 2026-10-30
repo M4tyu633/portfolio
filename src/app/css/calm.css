@@ -1,6 +1,7 @@
 /* One readable base for every page: the studio's near-black and ivory.
  * Each project keeps its identity through its own brand accent, not through a
  * saturated full-page ground. Loaded last so it settles the older world sheets. */
+[data-world="index"][data-world],
 [data-world="khan"][data-world],
 [data-world="egov"][data-world],
 [data-world="glyco"][data-world],
@@ -150,4 +151,14 @@ body:not([data-world="chip8"]) figcaption {
 .about-evidence li > a {
   margin-top: auto;
   padding-top: 20px;
+}
+
+[data-world="index"][data-world] {
+  --w-accent: #ff563d;
+  --w-accent-2: #d8f46b;
+  --w-accent-ink: #111110;
+  --w-focus: #d8f46b;
+}
+body[data-world="index"] {
+  background-image: none;
 }
