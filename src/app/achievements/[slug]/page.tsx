@@ -83,21 +83,11 @@ export default async function AchievementPage({
           </figure>
         ) : (
           <>
-            <figure className="event-cover">
-              <Image
-                src="/work/egovmed/award-cheque.webp"
-                alt="The Bisaya Hackers team on stage at the eGovPH Hackathon 2026."
-                width={1440}
-                height={960}
-                sizes="100vw"
-              />
-              <figcaption>Grand Champion · eGov Hackathon PH 2026</figcaption>
-            </figure>
             <div className="event-result">
               <span>Grand</span>
               <div>
                 <h2>Champion.</h2>
-                                <p>
+                <p>
                   eGovMed put assessment before the queue. I delivered the pitch
                   and live product demo to the judging panel.
                 </p>
