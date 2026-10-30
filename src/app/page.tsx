@@ -147,14 +147,9 @@ export default function Home() {
           aria-labelledby="work-title"
         >
           <div className="studio-section-heading">
-            <div>
-              <p className="studio-eyebrow">01 / SELECTED WORK</p>
-              <h2 id="work-title">
-                SELECTED
-                <br />
-                <span>WORK.</span>
-              </h2>
-            </div>
+            <h2 id="work-title">
+              SELECTED <span>WORK.</span>
+            </h2>
             <p>
               Three products for three very different users: students, patients
               and players. Each was judged by an outside panel, and each one
@@ -172,8 +167,9 @@ export default function Home() {
         </section>
         <section className="studio-current" aria-labelledby="current-title">
           <div>
-            <p className="studio-eyebrow">02 / RIGHT NOW</p>
-            <h2 id="current-title">CURRENTLY.</h2>
+            <h2 id="current-title">
+              RIGHT <span>NOW.</span>
+            </h2>
             <p>
               Alongside computer science at UP Manila, I build local AI
               applications on NVIDIA RTX 5090 GPUs and run talks and training on

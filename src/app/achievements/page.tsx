@@ -48,7 +48,6 @@ export default function AchievementsPage() {
             data-seq="rise"
           >
             <div>
-              <p className="u-meta text-ink-3">Achievements</p>
               <h1 className="u-display mt-2 text-[clamp(3rem,10vw,8rem)]">
                 {receipts.title}
               </h1>
