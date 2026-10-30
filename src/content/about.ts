@@ -7,7 +7,7 @@ export const about = {
   paragraphs: [
     "I'm a BS Computer Science student at UP Manila and a DOST undergraduate scholar. I enjoy building across the whole system: the interface people touch, the services behind it, and the decisions that make it reliable.",
     "That curiosity has taken me from multiplayer games to hospital workflows, machine-learning pipelines and a C++ emulator. Competitions taught me to make clear decisions under time pressure, test the parts that matter and bring a working product into the room.",
-    "I’m currently a Campus Ambassador with NVIDIA Philippines and an intern at PC Express, both since 2026. My work across these roles includes local AI applications using NVIDIA RTX 5090 GPUs and talks and training on using and deploying models on personal hardware.",
+    "Since October 2026 I’ve been a Campus Ambassador for NVIDIA Philippines, building local AI applications on RTX 5090 GPUs and running talks and training on deploying models on personal hardware. In November 2026 I start as an intern at PC Express, where I’ll automate workflows and build local AI applications on their hardware.",
     "Before computer science, I spent three years competing in debate. It still shapes how I work: I like asking good questions, explaining technical ideas clearly and being able to defend a decision with evidence. I want to bring that mix of building and communication to a team doing useful work.",
   ],
   portrait: {
@@ -71,13 +71,13 @@ export const timeline: {
     note: "DOST Undergraduate Scholar. Active in Google Developer Group and UP Socomsci.",
   },
   {
-    period: "2026 – present",
+    period: "Oct 2026 – present",
     role: "Campus Ambassador",
     org: "NVIDIA Philippines",
   },
   {
-    period: "2026 – present",
-    role: "Intern",
+    period: "From Nov 2026",
+    role: "Incoming intern",
     org: "PC Express",
   },
   {

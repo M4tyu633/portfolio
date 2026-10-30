@@ -26,8 +26,14 @@ with ZipFile(reference) as source:
     spans = experience.xpath('.//w:t', namespaces=ns)
     for span in spans[1:]:
         span.text = ''
-    spans[1].text = 'Across these roles, develop local AI applications with NVIDIA RTX 5090 GPUs and deliver talks and training on using and deploying models on personal hardware.'
+    spans[1].text = 'NVIDIA: local AI apps on RTX 5090 GPUs, plus talks and training on running models locally. PC Express: workflow automation and local AI tools.'
     role.addnext(experience)
+    # NVIDIA since October 2026; the PC Express internship starts 6 November 2026.
+    nvidia = next(p for p in paragraphs if text(p).startswith('NVIDIA Philippines | Campus Ambassador'))
+    nvidia.xpath('.//w:t', namespaces=ns)[-1].text = 'Oct 2026–Present'
+    role_spans = role.xpath('.//w:t', namespaces=ns)
+    role_spans[0].text = 'PC Express | Incoming Intern'
+    role_spans[-1].text = 'Starting Nov 2026'
     khan = next(p for p in paragraphs if 'Built a free college-preparation platform with exam-specific study plans' in text(p))
     spans = khan.xpath('.//w:t', namespaces=ns)
     for span in spans[1:]:

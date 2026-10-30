@@ -1,5 +1,3 @@
-import ProductVisual from "@/components/work/ProductVisual";
-import { khanpanion } from "@/content/projects/khanpanion";
 import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/chrome/Nav";
@@ -10,9 +8,9 @@ const awards = [
   {
     project: "Khanpanion",
     href: "/work/khanpanion",
-    meta: "2026 · Education",
+    meta: "Khanpanion · ₱200,000 prize",
     result: "Grand Champion",
-    event: "Khan Academy Education Impact Challenge · ₱200,000 prize",
+    event: "Khan Academy Education Impact Challenge",
     logo: "/work/khanpanion/logo-reverse.svg",
     w: 329,
     h: 64,
@@ -21,7 +19,7 @@ const awards = [
   {
     project: "eGovMed",
     href: "/achievements/egov-hackathon",
-    meta: "2026 · Civic technology",
+    meta: "eGovMed · patient app on 8 government services",
     result: "Grand Champion",
     event: "eGov Hackathon PH",
     logo: "/work/egovmed/logo-wordmark.png",
@@ -32,9 +30,9 @@ const awards = [
   {
     project: "Tumbang Preso",
     href: "/achievements/gear-up-ncr",
-    meta: "2026 · Game development",
+    meta: "Tumbang Preso · four-player online game",
     result: "Grand Champion",
-    event: "Gear Up NCR Esports Game Dev Challenge",
+    event: "Gear Up NCR Game Dev Challenge",
     logo: "/work/tumbang/wordmark.webp",
     w: 900,
     h: 300,
@@ -106,48 +104,48 @@ export default function Home() {
                 collaborations.
               </p>
             </div>
-            <Link
-              href="/work/khanpanion"
-              className="studio-feature"
-              aria-label="Explore Khanpanion, Grand Champion at the Khan Academy Education Impact Challenge 2026"
-            >
-              <div className="studio-feature-image">
-                <ProductVisual project={khanpanion} priority />
-              </div>
-              <div className="studio-feature-caption">
-                <p className="studio-award-line">
-                  <TrophyIcon />
-                  <span>
-                    <strong>Grand Champion · ₱200,000</strong> · Khan Academy
-                    Education Impact Challenge 2026
-                  </span>
-                </p>
-                <div className="studio-feature-title">
-                  <h2>Khanpanion</h2>
-                  <span aria-hidden="true">↗</span>
-                </div>
-                <p>
-                  A study platform that traces a missed question back to the
-                  exact skill behind it. I led the team and built the learning
-                  engine in TypeScript.
-                </p>
-              </div>
-            </Link>
+            <div className="hero-wins">
+              <p className="hero-wins-head">
+                <TrophyIcon />
+                <span>3× Grand Champion · 2026</span>
+              </p>
+              <ol>
+                {awards.map((award) => (
+                  <li key={award.project}>
+                    <Link href={award.href} className="hero-win">
+                      <span className={`studio-award-logo ${award.logoClass}`}>
+                        <Image
+                          src={award.logo}
+                          width={award.w}
+                          height={award.h}
+                          alt={award.project}
+                          priority
+                        />
+                      </span>
+                      <span className="hero-win-text">
+                        <strong>{award.event}</strong>
+                        <span>{award.meta}</span>
+                      </span>
+                      <span className="hero-win-go" aria-hidden="true">
+                        ↗
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+              <Link href="/achievements" className="studio-link">
+                All achievements ↗
+              </Link>
+            </div>
           </div>
           <dl className="studio-proof" aria-label="Highlights">
-            <div>
-              <dt>3× Grand Champion</dt>
-              <dd>
-                Khanpanion (₱200,000 prize), eGovMed and Tumbang Preso, 2026
-              </dd>
-            </div>
             <div>
               <dt>DOST Scholar</dt>
               <dd>BS Computer Science, UP Manila</dd>
             </div>
             <div>
               <dt>Campus Ambassador</dt>
-              <dd>NVIDIA Philippines, 2026–present</dd>
+              <dd>NVIDIA Philippines, since October 2026</dd>
             </div>
             <div>
               <dt>Stack</dt>
@@ -184,54 +182,16 @@ export default function Home() {
             <strong>ALL SEVEN PROJECTS ↗</strong>
           </Link>
         </section>
-        <section
-          className="studio-recognition"
-          aria-labelledby="recognition-title"
-        >
-          <div>
-            <p className="studio-eyebrow">02 / RECOGNITION</p>
-            <h2 id="recognition-title">
-              THE
-              <br />
-              <span>RESULTS.</span>
-            </h2>
-            <Link href="/achievements" className="studio-link">
-              The story behind each result ↗
-            </Link>
-          </div>
-          <ol>
-            {awards.map((award) => (
-              <li key={award.project}>
-                <Link href={award.href} className="studio-award-row">
-                  <span className={`studio-award-logo ${award.logoClass}`}>
-                    <Image
-                      src={award.logo}
-                      width={award.w}
-                      height={award.h}
-                      alt=""
-                    />
-                  </span>
-                  <span className="studio-award-text">
-                    <span className="studio-award-meta">{award.meta}</span>
-                    <strong>{award.result}</strong>
-                    <span className="studio-award-event">{award.event}</span>
-                  </span>
-                  <span className="studio-award-go">
-                    {award.project} <span aria-hidden="true">↗</span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ol>
-        </section>
         <section className="studio-current" aria-labelledby="current-title">
           <div>
-            <p className="studio-eyebrow">03 / RIGHT NOW</p>
+            <p className="studio-eyebrow">02 / RIGHT NOW</p>
             <h2 id="current-title">CURRENTLY.</h2>
             <p>
-              Alongside computer science at UP Manila, I work on local AI
-              applications with NVIDIA RTX 5090 GPUs and give talks and training
-              on using and deploying models on personal hardware.
+              Alongside computer science at UP Manila, I build local AI
+              applications on NVIDIA RTX 5090 GPUs and run talks and training on
+              deploying models on your own hardware. In November I start at PC
+              Express, automating workflows and building local AI tools on
+              their hardware.
             </p>
             <Link href="/about" className="studio-link">
               More about me ↗
@@ -248,9 +208,13 @@ export default function Home() {
                 />
               </span>
               <div>
-                <span>2026 — PRESENT</span>
+                <span>OCT 2026 — PRESENT</span>
                 <h3>NVIDIA Philippines</h3>
                 <p>Campus Ambassador</p>
+                <small>
+                  Local AI apps on RTX 5090 GPUs; talks and training on running
+                  models locally.
+                </small>
               </div>
             </article>
             <article>
@@ -263,9 +227,12 @@ export default function Home() {
                 />
               </span>
               <div>
-                <span>2026 — PRESENT</span>
+                <span>STARTS NOV 2026</span>
                 <h3>PC Express</h3>
-                <p>Intern</p>
+                <p>Incoming Intern</p>
+                <small>
+                  Automation and local AI applications on PC Express hardware.
+                </small>
               </div>
             </article>
           </div>
