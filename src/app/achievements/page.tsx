@@ -8,7 +8,7 @@ import type { Achievement } from "@/content/types";
 export const metadata: Metadata = {
   title: "Achievements",
   description:
-    "Competitions, rankings, scholarships, and the work behind them. First place at Gear Up NCR and Grand Champion at eGov Hackathon PH and the Khan Academy Education Impact Challenge.",
+    "Competitions, rankings, scholarships, and the work behind them. Grand Champion at Gear Up NCR, eGov Hackathon PH and the Khan Academy Education Impact Challenge.",
 };
 
 /* ===========================================================================
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
  * match its neighbours.
  * ======================================================================== */
 
-/* The two Grand Champion titles lead their year, then the first place. */
+/* The Grand Champion titles lead their year. */
 const leading = ["khan-academy-education-impact", "egov-hackathon", "gear-up-ncr"];
 const rank = (slug: string) => {
   const i = leading.indexOf(slug);

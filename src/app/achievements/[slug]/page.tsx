@@ -77,8 +77,8 @@ export default async function AchievementPage({
               sizes="100vw"
             />
             <figcaption>
-              The team at Gear Up NCR. First place, and a place at the national
-              finals.
+              The team at Gear Up NCR. Grand Champion, and a place at the
+              national finals.
             </figcaption>
           </figure>
         ) : (
@@ -125,7 +125,7 @@ export default async function AchievementPage({
               height={1200}
               sizes="(min-width: 768px) 60vw, 100vw"
             />
-            <figcaption>1st Place · Gear Up NCR</figcaption>
+            <figcaption>Grand Champion · Gear Up NCR</figcaption>
           </figure>
         )}
         <section className="event-account">

@@ -19,7 +19,7 @@ export const tumbangPreso: Project = {
   oneLiner:
     "A four-player networked take on the Filipino street game, built alone in five days.",
   did: "I built the whole game.",
-  outcome: "1st Place · Gear Up NCR 2026",
+  outcome: "Grand Champion · Gear Up NCR 2026",
   media: {
     src: "/work/tumbang/original/round-capture.webp",
     alt: "Actual four-player Tumbang Preso gameplay from the original Godot competition recording, showing the plaza and in-game HUD.",
@@ -28,7 +28,7 @@ export const tumbangPreso: Project = {
     src: "/work/tumbang/match.mp4",
     poster: "/work/tumbang/match-poster.webp",
   },
-  award: "1st Place · Gear Up NCR Esports Game Dev Challenge 2026",
+  award: "Grand Champion · Gear Up NCR Esports Game Dev Challenge 2026",
   built: [
     "Godot 4.7",
     "GDScript",
@@ -50,7 +50,7 @@ export const tumbangPreso: Project = {
     { label: "Role", value: "Lead developer, built it solo" },
     { label: "Team", value: "BH Studios" },
     { label: "Event", value: "Gear Up NCR, 6 to 8 August 2026" },
-    { label: "Result", value: "1st Place, representing NCR at Nationals" },
+    { label: "Result", value: "Grand Champion, representing NCR at Nationals" },
     { label: "Nationals", value: "General Santos City, Mindanao" },
     { label: "Built in", value: "Five days, empty project to shipped build" },
   ],
@@ -58,7 +58,7 @@ export const tumbangPreso: Project = {
   home: {
     headline: "Five days. Four players. One tin can.",
     body: "BH Studios entered as a team. I developed the gameplay, level assembly, interface, sound integration, bots, physics and multiplayer networking.",
-    coda: "It won 1st Place at Gear Up NCR.",
+    coda: "It won Grand Champion at Gear Up NCR.",
     figure: "tp-throw",
     figureCaption:
       "Drag back and let go. Every contact is judged twice at once, and the two answers do not always agree.",

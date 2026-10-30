@@ -85,7 +85,7 @@ export default async function ProjectPage({
       <main id="main" className="flex-1">
         <ProjectHero project={project} />
 
-        <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
+        <div className="case-body">
           {project.sections.map((section) => (
             <section
               key={section.n}
@@ -116,7 +116,7 @@ export default async function ProjectPage({
                   </div>
                 </div>
               ) : (
-                <div className="grid gap-x-14 gap-y-4 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]">
+                <div className="grid gap-x-16 gap-y-5 lg:grid-cols-[minmax(0,17rem)_minmax(0,52rem)]">
                   <div className="lg:sticky lg:top-24 lg:self-start">
                     <div className="flex items-baseline gap-4 lg:block">
                       <span className="u-meta text-accent tabular-nums">
@@ -124,13 +124,13 @@ export default async function ProjectPage({
                       </span>
                       <h2
                         id={`s${section.n}-h`}
-                        className="u-display mt-0 text-[clamp(1.5rem,3vw,2.125rem)] lg:mt-3"
+                        className="u-display mt-0 text-[clamp(1.6rem,2.6vw,2.25rem)] leading-[1.15] tracking-[-0.01em] text-balance lg:mt-3"
                       >
                         {section.heading}
                       </h2>
                     </div>
                     {section.standfirst ? (
-                      <p className="text-ink-3 mt-3 hidden text-[0.875rem] leading-relaxed lg:block">
+                      <p className="text-ink-2 mt-4 hidden text-[0.9375rem] leading-relaxed lg:block">
                         {section.standfirst}
                       </p>
                     ) : null}

@@ -23,7 +23,7 @@ export const projectNotes: Record<
     summary:
       "The Filipino street game of slippers and tin cans, rebuilt as a four-player online game. As sole developer I built the gameplay systems, the world, the interface and the multiplayer netcode.",
     role: "Sole developer · Gameplay systems, level assembly & multiplayer netcode",
-    result: "1st Place · Gear Up NCR Esports Game Dev Challenge 2026",
+    result: "Grand Champion · Gear Up NCR Esports Game Dev Challenge 2026",
   },
   egovmed: {
     label: "02 / Civic technology",

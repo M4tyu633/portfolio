@@ -33,7 +33,7 @@ const awards = [
     project: "Tumbang Preso",
     href: "/achievements/gear-up-ncr",
     meta: "2026 · Game development",
-    result: "1st Place",
+    result: "Grand Champion",
     event: "Gear Up NCR Esports Game Dev Challenge",
     logo: "/work/tumbang/wordmark.webp",
     w: 900,
@@ -86,7 +86,7 @@ export default function Home() {
               <p className="studio-intro">
                 I’m Matthew Labrador. I build web apps, APIs and game systems
                 from the first commit to the deployed product. In 2026 that work
-                took two Grand Champion titles and a first place.
+                won three Grand Champion titles.
               </p>
               <div className="studio-actions">
                 <a className="studio-button" href="#selected-work">
@@ -136,12 +136,12 @@ export default function Home() {
           </div>
           <dl className="studio-proof" aria-label="Highlights">
             <div>
-              <dt>2× Grand Champion</dt>
-              <dd>Khanpanion and eGovMed, 2026</dd>
+              <dt>3× Grand Champion</dt>
+              <dd>Khanpanion, eGovMed and Tumbang Preso, 2026</dd>
             </div>
             <div>
-              <dt>1st Place</dt>
-              <dd>Gear Up NCR, as sole developer of Tumbang Preso</dd>
+              <dt>DOST Scholar</dt>
+              <dd>BS Computer Science, UP Manila</dd>
             </div>
             <div>
               <dt>Campus Ambassador</dt>

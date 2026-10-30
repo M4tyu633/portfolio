@@ -63,3 +63,10 @@ body:not([data-world="chip8"]) figcaption {
   letter-spacing: 0;
   color: var(--w-ink-2);
 }
+
+/* Case-study body shares the opening's frame so every rule lines up. */
+.case-body {
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: clamp(24px, 4vw, 64px);
+}

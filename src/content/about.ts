@@ -87,7 +87,7 @@ export const timeline: {
     period: "2026",
     role: "Lead developer",
     org: "Gear Up NCR Esports Game Dev Challenge",
-    note: "1st place in Metro Manila, and the region's entry at the national finals.",
+    note: "Grand Champion, and the region's entry at the national finals.",
   },
   {
     period: "2026",

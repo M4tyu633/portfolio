@@ -67,7 +67,7 @@ function BlockView({ block }: { block: Block }) {
 
     case "decision":
       return (
-        <div className="border-rule my-8 grid max-w-[46em] gap-px border sm:grid-cols-3">
+        <div className="border-rule bg-ground-2 my-10 grid border">
           <Cell label="Situation" text={block.situation} />
           <Cell label="Constraint" text={block.constraint} />
           <Cell label="Decision" text={block.decision} accent />
@@ -163,14 +163,16 @@ function Cell({
   accent?: boolean;
 }) {
   return (
-    <div className="bg-ground p-4">
+    <div className="border-rule grid gap-2 p-5 not-last:border-b sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-6 sm:px-7 sm:py-6">
       <div
-        className="u-meta"
+        className="u-meta pt-0.5"
         style={{ color: accent ? "var(--w-focus)" : "var(--w-ink-3)" }}
       >
         {label}
       </div>
-      <p className="text-ink-2 mt-2 text-[0.9375rem] leading-relaxed">
+      <p
+        className={`text-[1rem] leading-relaxed ${accent ? "text-ink" : "text-ink-2"}`}
+      >
         <Rich text={text} />
       </p>
     </div>

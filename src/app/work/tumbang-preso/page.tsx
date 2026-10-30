@@ -147,7 +147,7 @@ export default function TumbangPage() {
                 the menu puts SINGLE PLAYER on. A hairline box with a gold
                 border is a portfolio badge; this is the build's own furniture. */}
             <p className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-3">
-              <span className="tp-banner">1st Place</span>
+              <span className="tp-banner">Grand Champion</span>
               <span className="u-meta text-[#fcd39f]">
                 <span className="hidden sm:inline">
                   Gear Up NCR Esports Game Dev Challenge
@@ -485,7 +485,7 @@ export default function TumbangPage() {
             <div className="grid gap-x-14 gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
               <div>
                 <p className="u-display text-accent text-[clamp(3.5rem,11vw,8rem)] leading-[0.82]">
-                  1st Place
+                  Grand Champion
                 </p>
                 <span aria-hidden className="tp-bunting mt-6 block" />
                 <h2
@@ -514,7 +514,7 @@ export default function TumbangPage() {
                 <div className="border-rule relative aspect-[4/3] border">
                   <Image
                     src={`${M}/trophies.webp`}
-                    alt="The Gear Up NCR first place trophy beside the team's certificates of recognition."
+                    alt="The Gear Up NCR Grand Champion trophy beside the team's certificates of recognition."
                     fill
                     sizes="(min-width: 1024px) 44rem, 100vw"
                     className="object-cover"

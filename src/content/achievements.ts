@@ -23,20 +23,20 @@ export const achievements: Achievement[] = [
     n: "01",
     slug: "gear-up-ncr",
     title: "Gear Up NCR Esports Game Dev Challenge",
-    result: "1st Place",
+    result: "Grand Champion",
     org: "National Capital Region",
     year: "2026",
     tier: "A",
     project: "tumbang-preso",
     summary:
-      "Sole developer on Tumbang Preso. First place in the region, and NCR's entry at the national finals in General Santos City.",
+      "Sole developer on Tumbang Preso. Grand Champion, and NCR's entry at the national finals in General Santos City.",
     lede: "We waded in through knee-deep floodwater on the first morning. On the third, the game was going to nationals.",
     facts: [
       { label: "Event", value: "Gear Up NCR Esports Game Dev Challenge" },
       { label: "Dates", value: "6 to 8 August 2026" },
       { label: "Team", value: "BH Studios" },
       { label: "My role", value: "Lead developer, built the game solo" },
-      { label: "Result", value: "1st Place, representing NCR at Nationals" },
+      { label: "Result", value: "Grand Champion, representing NCR at Nationals" },
       { label: "Next", value: "National finals, General Santos City" },
     ],
     sections: [
@@ -87,7 +87,7 @@ export const achievements: Achievement[] = [
         blocks: [
           {
             kind: "p",
-            text: "1st Place. The game now represents the National Capital Region at the national finals in General Santos City. DOST and several partner companies are backing the entry from here and are connecting the team with industry professionals.",
+            text: "Grand Champion. The game now represents the National Capital Region at the national finals in General Santos City. DOST and several partner companies are backing the entry from here and are connecting the team with industry professionals.",
           },
           {
             kind: "p",

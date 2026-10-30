@@ -154,7 +154,7 @@ export const entrances: Entrance[] = [
     title: "Tumbang Preso",
     line: "A four-player online game of the Filipino street game, built from an empty project to a competition build in five days.",
     did: "I built the whole game.",
-    result: "1st Place · Gear Up NCR 2026",
+    result: "Grand Champion · Gear Up NCR 2026",
     href: "/work/tumbang-preso",
     action: "Enter the build",
     world: "tumbang",
