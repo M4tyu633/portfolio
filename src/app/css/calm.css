@@ -162,3 +162,22 @@ body:not([data-world="chip8"]) figcaption {
 body[data-world="index"] {
   background-image: none;
 }
+
+/* About and Achievements sit on the same charcoal as everything else. */
+main.receipts-page,
+main.about-page {
+  --w-ground: #111110;
+  --w-ground-2: #1b1c18;
+  --w-accent: #ff563d;
+  background: #111110;
+}
+main.receipts-page header h1 {
+  font-style: normal;
+}
+.evidence-result strong {
+  font-family: var(--font-gallery), Impact, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}

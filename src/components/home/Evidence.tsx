@@ -26,21 +26,21 @@ export default function Evidence() {
         <figure className="evidence-award">
           <Image
             src="/work/tumbang/trophies.webp"
-            alt="The first-place plaque and certificates of recognition awarded to BH Studios."
+            alt="The championship plaque and certificates of recognition awarded to BH Studios."
             width={1600}
             height={2134}
             sizes="(min-width: 900px) 28vw, 50vw"
           />
           <figcaption>
-            The first-place plaque and the team certificates.
+            The championship plaque and the team certificates.
           </figcaption>
         </figure>
         <p className="evidence-result">
           <span>01 / Gear Up NCR</span>
           <strong>
-            First
+            Grand
             <br />
-            place.
+            Champion.
           </strong>
           <span>BH Studios · 2026</span>
         </p>
