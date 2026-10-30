@@ -58,7 +58,7 @@ export default function ProductVisual({
             src={project.media.src}
             alt={project.media.alt}
             width={project.world === "egov" ? 430 : 1440}
-            height={project.world === "egov" ? 930 : 900}
+            height={project.world === "egov" ? 845 : 900}
             sizes="(max-width: 700px) 90vw, 65vw"
             priority={priority}
             className="pv-capture"
@@ -67,11 +67,6 @@ export default function ProductVisual({
         {project.world === "chip8" ? (
           <span className="pv-watermark" aria-hidden="true">
             1977
-          </span>
-        ) : null}
-        {project.world === "egov" || project.world === "glyco" ? (
-          <span className="pv-tag">
-            {project.world === "egov" ? "Offline demo" : "Preserved demo"}
           </span>
         ) : null}
       </div>

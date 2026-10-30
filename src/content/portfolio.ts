@@ -37,7 +37,7 @@ export const projectNotes: Record<
     label: "03 / AI systems",
     title: "Four perspectives on one patient.",
     summary:
-      "Four specialist agents examine different diabetes risks in parallel. I designed their workflow and led the team from the agent graph to the demo.",
+      "Four specialist agents examine different diabetes risks in parallel. I designed their workflow and led the team from the agent graph to the working prototype.",
     role: "Lead developer · Agent architecture & deployment",
     result: "AMD Developer Hackathon · Preserved prototype",
   },

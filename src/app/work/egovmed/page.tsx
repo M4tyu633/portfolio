@@ -27,19 +27,18 @@ export default function EgovPage() {
         <ProjectHero project={egovmed} />
         <section className="demo-preview" aria-labelledby="egov-demo-title">
           <div className="demo-preview-copy">
-            <p className="u-meta">Interactive demo</p>
+            <p className="u-meta">Try it yourself</p>
             <h2 id="egov-demo-title">Take a visit from start to finish.</h2>
             <p>
-              The original patient interface, now with a complete local
-              walkthrough. Try symptom intake, identity verification, booking
-              and payment.
+              The real patient app, running in your browser. Describe a
+              symptom, verify your identity, book a visit and pay.
             </p>
             <a className="world-button" href="/demos/egovmed/index.html">
-              Try the patient demo ↗
+              Open eGovMed ↗
             </a>
             <p className="demo-notice">
-              Demo only. The hackathon APIs have expired. All patients, identity
-              checks, bookings and payments in this walkthrough are simulated.
+              Runs on sample data now that the hackathon’s government APIs have
+              been retired.
             </p>
           </div>
           <div className="demo-phone-strip">
@@ -82,19 +81,19 @@ export default function EgovPage() {
           </span>
           <div>
             <h2>
-              The demo can run offline.
+              It runs offline.
               <br />
-              Production must know better.
+              Production won’t fake it.
             </h2>
             <p>
               Mock and live paths are selected per service. The production gate
               refuses missing credentials or forbidden mocks, rather than
-              quietly serving a demonstration as a working integration.
+              quietly passing off sample data as a working integration.
             </p>
             <p>
               The same discipline applies to the data: clinical records stay
-              off-chain. The chain anchors a fingerprint. Estimated benefits in
-              the demo are labelled as estimates, not payer determinations.
+              off-chain. The chain anchors a fingerprint. Estimated benefits are
+              labelled as estimates, not payer determinations.
             </p>
           </div>
         </section>

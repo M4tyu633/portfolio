@@ -35,7 +35,7 @@ export const egovmed: Project = {
   links: {
     demo: "/demos/egovmed/index.html",
   },
-  linkLabels: { demo: "Try the interactive demo" },
+  linkLabels: { demo: "Open eGovMed" },
   facts: [
     {
       label: "My role",
@@ -57,7 +57,7 @@ export const egovmed: Project = {
       "One patient, six stages. Select a stage to see which government service is behind it.",
   },
 
-  lede: "eGovMed lets a patient handle a hospital visit from one phone app: verify their identity through eGovPH, describe symptoms, book a slot and pay. I worked across the React app and the Express server, connecting eight government services into that single flow. Each service sits behind its own adapter, so the demo here runs safely offline.",
+  lede: "eGovMed lets a patient handle a hospital visit from one phone app: verify their identity through eGovPH, describe symptoms, book a slot and pay. I worked across the React app and the Express server, connecting eight government services into that single flow. Each service sits behind its own adapter, so the whole app also runs offline.",
 
   sections: [
     {
@@ -68,7 +68,7 @@ export const egovmed: Project = {
       blocks: [
         {
           kind: "p",
-          text: "A patient signs in with an eGovPH account and the profile auto-fills from SSO. They describe symptoms in English, Tagalog or Taglish, and triage returns a specialty, an urgency level and any red flags. Identity is confirmed with consent through a face liveness capture and a PhilSys demographic match, then the appointment is booked and a queue number issued with an SMS confirmation. The bill settles through the unified government gateway with demo benefit estimates clearly labelled.",
+          text: "A patient signs in with an eGovPH account and the profile auto-fills from SSO. They describe symptoms in English, Tagalog or Taglish, and triage returns a specialty, an urgency level and any red flags. Identity is confirmed with consent through a face liveness capture and a PhilSys demographic match, then the appointment is booked and a queue number issued with an SMS confirmation. The bill settles through the unified government gateway with benefit estimates clearly labelled.",
         },
         {
           kind: "p",
@@ -83,7 +83,7 @@ export const egovmed: Project = {
       blocks: [
         {
           kind: "p",
-          text: "I gave every adapter both a mock and a live path, picked per service by an environment variable, so the whole product runs offline with no credentials and a sandbox going down cannot take the demo with it.",
+          text: "I gave every adapter both a mock and a live path, picked per service by an environment variable, so the whole product runs offline with no credentials and a sandbox going down cannot take the app with it.",
         },
         { kind: "figure", id: "eg-ledger" },
         {
