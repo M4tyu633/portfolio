@@ -1,8 +1,27 @@
 import Image from "next/image";
 import type { Project } from "@/content/types";
-import { presentations } from "@/content/presentation";
 
-/** Native captures retain their interface pixels inside authored product compositions. */
+const badges: Partial<
+  Record<Project["world"], { src: string; w: number; h: number; tone?: string }>
+> = {
+  khan: { src: "/work/khanpanion/logo-reverse.svg", w: 329, h: 64 },
+  egov: {
+    src: "/work/egovmed/logo-wordmark.png",
+    w: 859,
+    h: 192,
+    tone: "is-egov",
+  },
+  tumbang: {
+    src: "/work/tumbang/wordmark.webp",
+    w: 900,
+    h: 300,
+    tone: "is-tump",
+  },
+};
+
+const egovScreens = ["patient-home", "patient-booking", "patient-payment"];
+
+/** The real product, full-bleed, with its own logo as a small badge. */
 export default function ProductVisual({
   project,
   priority = false,
@@ -10,65 +29,43 @@ export default function ProductVisual({
   project: Project;
   priority?: boolean;
 }) {
-  const copy = presentations[project.world];
-  const game = project.world === "tumbang";
+  const badge = badges[project.world];
+  const phones = project.world === "egov";
+  const name =
+    project.slug === "heart-disease-prediction" ? "CardioSense" : project.title;
   return (
     <div className={`product-visual product-visual-${project.world}`}>
-      <div className="pv-surface">
-        <div className="pv-brand">
-          {project.world === "khan" ? (
-            // Brand mark in its own colours; wordmark reversed for the navy ground.
+      <div className={`shot-frame ${phones ? "is-phones" : ""}`}>
+        {phones ? (
+          egovScreens.map((file, i) => (
             <Image
-              src="/work/khanpanion/logo-reverse.svg"
-              width={329}
-              height={64}
-              alt="Khanpanion"
-              className="pv-logo"
+              key={file}
+              src={`/work/egovmed/${file}.jpg`}
+              alt={i === 0 ? project.media.alt : ""}
+              width={430}
+              height={845}
+              sizes="(max-width: 700px) 30vw, 18vw"
+              priority={priority}
             />
-          ) : game ? (
-            <Image
-              src="/work/tumbang/wordmark.webp"
-              width={900}
-              height={300}
-              alt="Tumbang Preso"
-              className="pv-logo"
-            />
-          ) : project.world === "egov" ? (
-            <span className="pv-egov-plate">
-              <Image
-                src="/work/egovmed/logo-wordmark.png"
-                width={859}
-                height={192}
-                alt="eGovMed"
-                className="pv-logo"
-              />
-            </span>
-          ) : (
-            <span className="pv-name">{copy?.name ?? project.title}</span>
-          )}
-          <p>{game ? "The street is your playground." : copy?.caption}</p>
-        </div>
-        <div className="pv-device">
-          <div className="pv-device-bar" aria-hidden="true">
-            <span>● ● ●</span>
-            <span>{project.title}</span>
-            <span>↗</span>
-          </div>
+          ))
+        ) : (
           <Image
             src={project.media.src}
             alt={project.media.alt}
-            width={project.world === "egov" ? 430 : 1440}
-            height={project.world === "egov" ? 845 : 900}
-            sizes="(max-width: 700px) 90vw, 65vw"
+            width={1440}
+            height={900}
+            sizes="(max-width: 700px) 92vw, 60vw"
             priority={priority}
-            className="pv-capture"
+            className="shot-image"
           />
-        </div>
-        {project.world === "chip8" ? (
-          <span className="pv-watermark" aria-hidden="true">
-            1977
-          </span>
-        ) : null}
+        )}
+        <span className={`shot-badge ${badge?.tone ?? ""}`}>
+          {badge ? (
+            <Image src={badge.src} width={badge.w} height={badge.h} alt="" />
+          ) : (
+            <span className="shot-badge-name">{name}</span>
+          )}
+        </span>
       </div>
     </div>
   );

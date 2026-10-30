@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { contact, emailHref, gmailCompose } from "@/content/site";
+import { contact, emailHref } from "@/content/site";
 import CopyEmail from "./CopyEmail";
 export default function Footer() {
   return (
@@ -17,25 +17,45 @@ export default function Footer() {
         <div>
           <p>
             I’m open to software development internships, research and technical
-            collaborations. Tell me what you’re building and where I can help.
+            collaborations. Email is the fastest way to reach me.
           </p>
-          <div className="contact-actions">
-            <a href={emailHref} className="studio-button">
-              Email Matthew <span aria-hidden="true">↗</span>
-            </a>
-            <CopyEmail />
-          </div>
-          <a className="studio-footer-email" href={emailHref}>
-            {contact.email}
-          </a>
-          <a
-            className="contact-gmail"
-            href={gmailCompose}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Prefer Gmail? Open compose ↗
-          </a>
+          <ul className="contact-list">
+            <li>
+              <span className="contact-kind">Email</span>
+              <a className="contact-value" href={emailHref}>
+                {contact.email}
+              </a>
+              <CopyEmail />
+            </li>
+            <li>
+              <span className="contact-kind">LinkedIn</span>
+              <a
+                className="contact-value"
+                href={contact.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                linkedin.com/in/m4tyuuu1
+              </a>
+              <span className="contact-go" aria-hidden="true">
+                ↗
+              </span>
+            </li>
+            <li>
+              <span className="contact-kind">Résumé</span>
+              <a
+                className="contact-value"
+                href={contact.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                One-page PDF
+              </a>
+              <span className="contact-go" aria-hidden="true">
+                ↗
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
       <div className="studio-footer-bottom">

@@ -70,3 +70,67 @@ body:not([data-world="chip8"]) figcaption {
   margin-inline: auto;
   padding-inline: clamp(24px, 4vw, 64px);
 }
+
+/* Contact: one clear row per way to reach me. */
+.contact-list {
+  list-style: none;
+  margin-top: 28px;
+  border-top: 1px solid #f3f0e72b;
+}
+.contact-list li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid #f3f0e72b;
+}
+.contact-kind {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #aaa79f;
+}
+.contact-value {
+  font-size: 17px;
+  color: #f3f0e7;
+  overflow-wrap: anywhere;
+  transition: color 0.2s;
+}
+/* The whole row is the link's hit area, except the copy button. */
+.contact-value::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.contact-list li:hover .contact-value,
+.contact-list li:hover .contact-go {
+  color: #ff563d;
+}
+.contact-go {
+  font-size: 18px;
+  color: #aaa79f;
+  transition: color 0.2s;
+}
+.contact-list .contact-copy {
+  position: relative;
+  z-index: 1;
+}
+.contact-list .contact-copy button {
+  padding: 7px 14px;
+  font-size: 13px;
+  border: 1px solid #f3f0e74d;
+}
+.contact-list .contact-copy button:hover {
+  border-color: #d8f46b;
+}
+@media (max-width: 600px) {
+  .contact-list li {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 14px;
+  }
+  .contact-kind {
+    grid-column: 1 / -1;
+  }
+}

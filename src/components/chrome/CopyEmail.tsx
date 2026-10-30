@@ -16,16 +16,16 @@ export default function CopyEmail() {
     if (timer.current) clearTimeout(timer.current);
     try {
       await navigator.clipboard.writeText(contact.email);
-      setStatus("Email copied");
+      setStatus("Copied");
     } catch {
-      setStatus("Select the address below to copy it.");
+      setStatus("Select the address to copy it.");
     }
     timer.current = setTimeout(() => setStatus(""), 4000);
   }
   return (
     <span className="contact-copy">
       <button type="button" onClick={copy}>
-        Copy email <span aria-hidden="true">⧉</span>
+        Copy
       </button>
       <span role="status" className="contact-copy-status">
         {status}

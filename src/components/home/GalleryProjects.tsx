@@ -31,9 +31,6 @@ export default function GalleryProjects({ all = false }: { all?: boolean }) {
               aria-label={`Explore ${project.title}`}
             >
               <ProductVisual project={project} />
-              <span className="studio-project-open">
-                OPEN PROJECT <span aria-hidden="true">↗</span>
-              </span>
             </Link>
             <div className="studio-project-copy">
               <p className="studio-eyebrow">

@@ -1,307 +1,108 @@
-/* Native product captures, composed around each project's identity. */
+/* Project previews: the real product, full-bleed, with a small brand badge. */
 .product-visual {
-  container-type: inline-size;
   width: 100%;
   min-width: 0;
-  isolation: isolate;
 }
-.pv-surface {
-  aspect-ratio: 1.5;
+.shot-frame {
   position: relative;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: #101e35;
-  color: #f3f4ec;
+  background: #0b1424;
 }
-.pv-meta,
-.pv-footer {
-  position: absolute;
-  z-index: 3;
-  left: 6%;
-  right: 6%;
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  font:
-    500 1.55cqw/1.4 var(--font-plex-mono),
-    monospace;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.pv-meta {
-  top: 6%;
-  opacity: 0.64;
-}
-.pv-footer {
-  bottom: 5%;
-  opacity: 0.64;
-  font-size: 1.3cqw;
-}
-.pv-brand {
-  position: absolute;
-  z-index: 2;
-  left: 7%;
-  top: 15%;
-  max-width: 70%;
-}
-.pv-name {
-  display: block;
-  font:
-    600 7cqw/1.08 var(--font-plex-sans),
-    sans-serif;
-  letter-spacing: -0.055em;
-}
-.pv-brand p {
-  margin-top: 1.4cqw;
-  font-size: 2.6cqw;
-  line-height: 1.4;
-  max-width: 23em;
-  opacity: 0.76;
-}
-.pv-logo {
-  width: 42cqw;
-  height: auto;
-  object-fit: contain;
-}
-.pv-device {
-  position: absolute;
-  width: 84%;
-  left: 8%;
-  top: 37%;
-  border: 0.55cqw solid #e5e8e9;
-  border-radius: 1.2cqw;
-  overflow: hidden;
-  background: #0c1424;
-  box-shadow: 0 3cqw 8cqw #0007;
-  transform: perspective(1100px) rotateY(-7deg) rotateX(5deg) rotateZ(-3deg);
-  transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.3, 1);
-}
-.pv-device-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #b5bbc7;
-  height: 3cqw;
-  font-size: 1cqw;
-  padding-inline: 1.2cqw;
-  background: #1a2535;
-}
-.pv-device-bar span:first-child {
-  font-size: 0.7cqw;
-  letter-spacing: 0.3em;
-}
-.pv-capture {
-  display: block;
+.shot-frame > img.shot-image {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
 }
-a:hover .pv-device {
-  transform: perspective(1100px) rotateY(-2deg) rotateX(2deg) rotateZ(-1deg)
-    translateY(-1%);
+a:hover .shot-frame > img.shot-image {
+  transform: scale(1.025);
 }
-.product-visual-khan .pv-surface {
-  background:
-    radial-gradient(ellipse at 65% 80%, #294f91 0, transparent 55%), #0b2046;
-}
-.product-visual-khan .pv-surface::before {
+.shot-frame::after {
   content: "";
   position: absolute;
-  width: 50cqw;
-  height: 80cqw;
-  background: #dcf1b811;
-  transform: rotate(-32deg);
-  left: 60%;
-  top: -20%;
-  border-left: 1px solid #d5edb733;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px #ffffff14;
+  background: linear-gradient(0deg, #0009, transparent 34%);
 }
-.product-visual-khan .pv-logo {
-  width: 40cqw;
-}
-.product-visual-khan .pv-brand {
-  top: 11%;
-}
-.pv-tag {
+.shot-badge {
   position: absolute;
-  z-index: 3;
-  left: 6%;
-  top: 6%;
-  padding: 0.6cqw 1.2cqw;
-  border: 1px solid #ffffff3d;
-  border-radius: 99px;
+  z-index: 2;
+  left: 3.5%;
+  bottom: 5%;
+  display: flex;
+  align-items: center;
+  height: clamp(34px, 9%, 54px);
+  padding: 0 clamp(10px, 1.6%, 16px);
+  background: #0d1220e6;
+  border: 1px solid #ffffff24;
+  backdrop-filter: blur(8px);
+}
+.shot-badge img {
+  height: 58%;
+  width: auto;
+}
+.shot-badge-name {
   font:
-    500 1.5cqw/1.3 var(--font-plex-mono),
-    monospace;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #ffffffc7;
-}
-.product-visual-khan .pv-device {
-  border-color: #526c93;
-}
-.product-visual-egov .pv-surface {
-  background:
-    radial-gradient(ellipse at 90% 15%, #2b6cbb 0, transparent 60%), #091d3f;
-}
-.product-visual-egov .pv-brand {
-  top: 35%;
-  max-width: 48%;
-}
-.product-visual-egov .pv-name {
-  font-size: 9cqw;
-  letter-spacing: -0.065em;
-  color: #fff;
-}
-.product-visual-egov .pv-brand p {
-  max-width: 10em;
-  font-size: 3cqw;
-}
-.product-visual-egov .pv-device {
-  width: 28%;
-  top: 5%;
-  left: 64%;
-  border: 1cqw solid #e1e8f2;
-  border-radius: 4cqw;
-  transform: perspective(1000px) rotateY(-15deg) rotateZ(7deg);
-  box-shadow: -3cqw 4cqw 8cqw #0006;
-}
-.product-visual-egov .pv-device-bar {
-  display: none;
-}
-.product-visual-egov .pv-footer {
-  right: 48%;
-}
-.product-visual-egov .pv-footer span:last-child {
-  display: none;
-}
-.product-visual-tumbang .pv-surface {
-  background:
-    linear-gradient(90deg, #101d16d9, #17241a40),
-    url("/work/tumbang/original/menu-backdrop.webp") center/cover;
-}
-.product-visual-tumbang .pv-brand {
-  top: 10%;
-  left: 5%;
-}
-.product-visual-tumbang .pv-logo {
-  width: 36cqw;
-  height: 19cqw;
-  object-fit: contain;
-}
-.product-visual-tumbang .pv-brand p {
-  margin-top: -1cqw;
-  font-weight: 500;
-  color: #fff1bd;
-}
-.product-visual-tumbang .pv-meta {
-  display: none;
-}
-.product-visual-tumbang .pv-device {
-  left: 17%;
-  width: 84%;
-  top: 41%;
-  border-color: #c7aa62;
-  transform: perspective(900px) rotateY(-9deg) rotateZ(-6deg);
-}
-.product-visual-tumbang .pv-footer {
-  color: #fff2c6;
-}
-.product-visual-glyco .pv-surface {
-  background:
-    radial-gradient(ellipse at 80% 70%, #195345, transparent 65%), #071e1d;
-}
-.product-visual-glyco .pv-name {
-  color: #8ee7cb;
-  font-weight: 400;
-}
-.product-visual-glyco .pv-device {
-  border-color: #254b44;
-  left: 6%;
-  top: 37%;
-  width: 88%;
-  transform: perspective(1000px) rotateX(5deg) rotateY(8deg) rotateZ(3deg);
-}
-.product-visual-chip8 .pv-surface {
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 3px,
-      #ffb14a04 3px,
-      #ffb14a04 4px
-    ),
-    #211b15;
-}
-.product-visual-chip8 .pv-name {
-  font-family: var(--font-plex-mono), monospace;
-  color: #ffb14a;
-  font-size: 8cqw;
-  font-weight: 500;
-}
-.product-visual-chip8 .pv-device {
-  width: 82%;
-  left: 9%;
-  top: 36%;
-  border-color: #655442;
-  transform: perspective(1000px) rotateX(10deg) rotateZ(-3deg);
-}
-.product-visual-chip8 .pv-device-bar {
-  display: none;
-}
-.pv-watermark {
-  position: absolute;
-  right: 4%;
-  top: 7%;
-  font:
-    700 14cqw/1 var(--font-gallery),
+    600 clamp(14px, 2vw, 20px)/1 var(--font-plex-sans),
     sans-serif;
-  color: #ffb14a18;
+  color: #f3f0e7;
+  letter-spacing: -0.01em;
 }
-.product-visual-reading .pv-surface {
-  background: linear-gradient(140deg, #28323b, #0b1119 65%);
-}
-.product-visual-reading .pv-name {
-  font-size: 6.8cqw;
-  font-weight: 400;
-}
-.product-visual-reading .pv-device {
-  left: 5%;
-  width: 90%;
-  top: 36%;
-  border-color: #576571;
-  transform: perspective(1000px) rotateY(-6deg) rotateX(4deg);
-}
-.product-visual-cardio .pv-surface {
+.shot-badge.is-egov {
   background:
-    radial-gradient(ellipse at 70% 70%, #62303a, transparent 60%), #24151d;
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, #f3c300 0 27%, transparent 27%) border-box,
+    linear-gradient(#0844e6 0 50%, #a50e0e 50%) border-box;
+  border: 4px solid transparent;
+  backdrop-filter: none;
 }
-.product-visual-cardio .pv-name {
-  color: #f6c2c5;
+.shot-badge.is-tump {
+  background: #101d16d9;
+  height: clamp(44px, 13%, 72px);
 }
-.product-visual-cardio .pv-device {
-  border-color: #88545f;
-  top: 36%;
+.shot-badge.is-tump img {
+  height: 100%;
+}
+/* eGovMed is a phone app: three real screens on its own blue. */
+.shot-frame.is-phones {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  gap: 4%;
+  padding: 6% 9% 0;
+  background:
+    radial-gradient(ellipse at 50% 0, #2a63e0, transparent 70%), #0a2a7a;
+}
+.shot-frame.is-phones > img {
+  width: 100%;
+  height: auto;
+  border-radius: 7% / 3.6%;
+  border: 3px solid #e7ecf5;
+  box-shadow: 0 18px 40px #0007;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.shot-frame.is-phones > img:nth-child(2) {
+  margin-top: -3%;
+}
+.shot-frame.is-phones > img:nth-child(1),
+.shot-frame.is-phones > img:nth-child(3) {
+  margin-top: 7%;
+}
+a:hover .shot-frame.is-phones > img:nth-child(2) {
+  transform: translateY(-2%);
 }
 .studio-project-media:has(.product-visual) {
   background: transparent;
-}
-.studio-project-media .product-visual img {
-  padding: 0;
-  object-fit: contain;
-}
-.studio-project-media:hover .product-visual img {
-  transform: none;
 }
 .studio-feature-image:has(.product-visual) {
   padding: 0;
   background: transparent;
   aspect-ratio: auto;
 }
-.studio-feature-image .product-visual img {
-  height: auto;
-  object-fit: contain;
-}
-.studio-feature:hover .product-visual img {
-  transform: none;
-}
+
 .case-opening {
   max-width: 1600px;
   margin: auto;
@@ -518,55 +319,12 @@ a:hover .pv-device {
   }
 }
 
-/* Flat, honest framing: captures sit square to the viewer. */
-.pv-device,
-.product-visual-egov .pv-device,
-.product-visual-tumbang .pv-device,
-.product-visual-glyco .pv-device,
-.product-visual-chip8 .pv-device,
-.product-visual-reading .pv-device {
-  transform: none;
-  border-width: 1px;
-  border-radius: 0.8cqw;
-  box-shadow: 0 2cqw 6cqw #0008;
-}
-a:hover .pv-device {
-  transform: translateY(-1%);
-}
-.product-visual-egov .pv-device {
-  border: 0.8cqw solid #e1e8f2;
-  border-radius: 3.4cqw;
-}
-.product-visual-tumbang .pv-device {
-  left: 8%;
-  top: 40%;
-}
-/* The eGovMed brand card: white plate in a Philippine-flag frame. */
-.pv-egov-plate {
-  display: block;
-  width: 46cqw;
-  padding: 3.4cqw 3cqw;
-  border: 1.6cqw solid transparent;
-  background:
-    linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(90deg, #f3c300 0 27%, transparent 27%) border-box,
-    linear-gradient(#0844e6 0 50%, #a50e0e 50%) border-box;
-  box-shadow: 0 2cqw 5cqw #0007;
-}
-.pv-egov-plate .pv-logo {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.product-visual-egov .pv-brand {
-  top: 30%;
-  max-width: 52%;
-}
-.product-visual-egov .pv-brand p {
-  margin-top: 2.4cqw;
-}
-.product-visual-tumbang .pv-device {
-  left: 10%;
-  width: 80%;
-  top: 45%;
+@media (prefers-reduced-motion: reduce) {
+  .shot-frame > img,
+  .shot-frame.is-phones > img {
+    transition: none;
+  }
+  a:hover .shot-frame > img {
+    transform: none !important;
+  }
 }
