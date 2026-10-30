@@ -267,116 +267,9 @@ main.receipts-page header h1 {
   font-size: 12.5px;
 }
 
-/* Hero: the three wins, compact, each with its logo. */
-.hero-wins {
-  align-self: center;
-  padding: 26px;
-  background: #1b1c18;
-  border: 1px solid #f3f0e72b;
-  box-shadow: 8px 8px 0 #ff563d;
-}
-.hero-wins-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-  font:
-    600 26px/1 var(--font-gallery),
-    Impact,
-    sans-serif;
-  text-transform: uppercase;
-  color: #d8f46b;
-}
-.hero-wins ol {
-  list-style: none;
-  display: grid;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-.hero-win {
-  display: grid;
-  grid-template-columns: 132px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 18px;
-  padding: 12px;
-  background: #111110;
-  border: 1px solid #f3f0e71f;
-  transition:
-    border-color 0.2s,
-    transform 0.2s;
-}
-.hero-win:hover {
-  border-color: #ff563d;
-  transform: translateX(3px);
-}
-.hero-win .studio-award-logo {
-  width: auto;
-  min-width: 0;
-  height: 58px;
-  padding: 10px 12px;
-  overflow: hidden;
-}
-.hero-win-text {
-  display: grid;
-  gap: 4px;
-  min-width: 0;
-}
-.hero-win-text strong {
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.3;
-  color: #f3f0e7;
-}
-.hero-win-text span {
-  font-size: 13px;
-  line-height: 1.4;
-  color: #aaa79f;
-}
-.hero-win-go {
-  color: #aaa79f;
-}
-.hero-win:hover .hero-win-go {
-  color: #ff563d;
-}
-.studio-proof {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
 /* Project cards: the title sits beside the shot, so only eGovMed keeps a badge. */
 .studio-project .shot-badge:not(.is-egov) {
   display: none;
-}
-@media (max-width: 1100px) {
-  .studio-proof > div:nth-child(3) {
-    padding-left: 24px;
-    border-left: 1px solid #f3f0e71f;
-  }
-  .studio-proof > div:nth-child(n + 3) {
-    border-top: 0;
-  }
-}
-@media (max-width: 600px) {
-  .hero-wins {
-    padding: 20px;
-    box-shadow: 6px 6px 0 #ff563d;
-  }
-  .hero-win {
-    grid-template-columns: 96px minmax(0, 1fr);
-    gap: 14px;
-  }
-  .hero-win .studio-award-logo {
-    height: 48px;
-  }
-  .hero-win-go {
-    display: none;
-  }
-  .studio-proof {
-    grid-template-columns: 1fr;
-  }
-  .studio-proof > div:nth-child(3) {
-    padding-left: 0;
-    border-left: 0;
-    border-top: 1px solid #f3f0e71f;
-  }
 }
 .studio-roles small {
   display: block;
@@ -385,4 +278,170 @@ main.receipts-page header h1 {
   line-height: 1.5;
   color: #aaa79f;
   max-width: 44ch;
+}
+
+/* Hero: editorial type on the left, intro on the right, wins as a ruled row. */
+.hero2-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 6vw;
+  padding: 44px 0 56px;
+}
+.hero2-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 22px;
+}
+.studio-hero h1.hero2-title {
+  font-size: clamp(76px, 9vw, 150px);
+  line-height: 0.86;
+  margin: 0;
+}
+.studio-hero h1.hero2-title > span {
+  font-size: 1em;
+  color: #ff563d;
+}
+.hero2-side {
+  padding-bottom: 10px;
+}
+.hero2-intro {
+  font-size: 19px;
+  line-height: 1.6;
+  color: #cfccc3;
+  max-width: 30ch;
+}
+.hero2-wins {
+  border-top: 1px solid #f3f0e736;
+  padding: 26px 0 36px;
+}
+.hero2-wins-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #d8f46b;
+}
+.hero2-wins ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.hero2-wins li + li {
+  border-left: 1px solid #f3f0e71f;
+}
+.hero2-win {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  padding: 4px 28px 6px;
+}
+.hero2-wins li:first-child .hero2-win {
+  padding-left: 0;
+}
+.hero2-logo {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 10px;
+}
+.hero2-logo img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+.hero2-logo.is-khan {
+  height: 30px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+.hero2-logo.is-egov {
+  height: 46px;
+  width: max-content;
+  padding: 4px 8px;
+  border: 4px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, #f3c300 0 27%, transparent 27%) border-box,
+    linear-gradient(#0844e6 0 50%, #a50e0e 50%) border-box;
+}
+.hero2-logo.is-tump {
+  height: 44px;
+  margin-top: -2px;
+}
+.hero2-win strong {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #f3f0e7;
+  transition: color 0.2s;
+}
+.hero2-win > span:last-child {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #aaa79f;
+}
+.hero2-win:hover strong {
+  color: #ff563d;
+}
+@media (max-width: 900px) {
+  .hero2-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 32px 0 40px;
+  }
+  .hero2-intro {
+    font-size: 17px;
+    max-width: 36ch;
+  }
+  .hero2-wins ul {
+    grid-template-columns: 1fr;
+  }
+  .hero2-wins li + li {
+    border-left: 0;
+    border-top: 1px solid #f3f0e71f;
+  }
+  .hero2-win,
+  .hero2-wins li:first-child .hero2-win {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 18px;
+    row-gap: 4px;
+    padding: 18px 0;
+  }
+  .hero2-logo {
+    grid-row: 1 / 3;
+    align-self: center;
+    margin: 0 !important;
+    height: 34px;
+  }
+  .hero2-logo.is-khan {
+    height: 24px;
+  }
+  .hero2-logo.is-egov {
+    height: 36px;
+  }
+  .hero2-logo.is-tump {
+    height: 40px;
+  }
+  .hero2-win strong {
+    font-size: 15px;
+  }
+  .hero2-win > span:last-child {
+    font-size: 13px;
+  }
+}
+@media (max-width: 600px) {
+  .studio-hero h1.hero2-title {
+    font-size: clamp(72px, 21vw, 104px);
+  }
 }

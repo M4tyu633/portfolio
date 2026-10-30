@@ -69,26 +69,27 @@ export default function Home() {
             <span>MATTHEW EMMANUEL LABRADOR</span>
             <span>MANILA, PH / 2026</span>
           </div>
-          <div className="studio-hero-grid">
-            <div className="studio-hero-copy">
-              <p className="studio-eyebrow">
+          <div className="hero2-grid">
+            <div>
+              <p className="studio-eyebrow hero2-eyebrow">
                 <i aria-hidden="true" /> FULL-STACK DEVELOPER · CS AT UP MANILA
               </p>
-              <h1 id="studio-title">
+              <h1 id="studio-title" className="hero2-title">
                 I BUILD
                 <br />
                 SOFTWARE
                 <br />
                 <span>THAT WINS.</span>
               </h1>
-              <p className="studio-intro">
+            </div>
+            <div className="hero2-side">
+              <p className="hero2-intro">
                 I’m Matthew Labrador. I build web apps, APIs and game systems
-                from the first commit to the deployed product. In 2026 that work
-                won three Grand Champion titles.
+                from the first commit to the deployed product.
               </p>
               <div className="studio-actions">
                 <a className="studio-button" href="#selected-work">
-                  See selected projects <span aria-hidden="true">↘</span>
+                  See my work <span aria-hidden="true">↘</span>
                 </a>
                 <a
                   className="studio-link"
@@ -104,54 +105,31 @@ export default function Home() {
                 collaborations.
               </p>
             </div>
-            <div className="hero-wins">
-              <p className="hero-wins-head">
-                <TrophyIcon />
-                <span>3× Grand Champion · 2026</span>
-              </p>
-              <ol>
-                {awards.map((award) => (
-                  <li key={award.project}>
-                    <Link href={award.href} className="hero-win">
-                      <span className={`studio-award-logo ${award.logoClass}`}>
-                        <Image
-                          src={award.logo}
-                          width={award.w}
-                          height={award.h}
-                          alt={award.project}
-                          priority
-                        />
-                      </span>
-                      <span className="hero-win-text">
-                        <strong>{award.event}</strong>
-                        <span>{award.meta}</span>
-                      </span>
-                      <span className="hero-win-go" aria-hidden="true">
-                        ↗
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ol>
-              <Link href="/achievements" className="studio-link">
-                All achievements ↗
-              </Link>
-            </div>
           </div>
-          <dl className="studio-proof" aria-label="Highlights">
-            <div>
-              <dt>DOST Scholar</dt>
-              <dd>BS Computer Science, UP Manila</dd>
-            </div>
-            <div>
-              <dt>Campus Ambassador</dt>
-              <dd>NVIDIA Philippines, since October 2026</dd>
-            </div>
-            <div>
-              <dt>Stack</dt>
-              <dd>TypeScript · Next.js · Node · Python · C++ · Godot</dd>
-            </div>
-          </dl>
+          <div className="hero2-wins">
+            <p className="hero2-wins-label">
+              <TrophyIcon /> 3× Grand Champion in 2026
+            </p>
+            <ul>
+              {awards.map((award) => (
+                <li key={award.project}>
+                  <Link href={award.href} className="hero2-win">
+                    <span className={`hero2-logo ${award.logoClass}`}>
+                      <Image
+                        src={award.logo}
+                        width={award.w}
+                        height={award.h}
+                        alt={award.project}
+                        priority
+                      />
+                    </span>
+                    <strong>{award.event}</strong>
+                    <span>{award.meta}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
         <section
           id="selected-work"
