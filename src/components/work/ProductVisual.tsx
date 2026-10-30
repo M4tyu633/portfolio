@@ -19,7 +19,7 @@ const badges: Partial<
   },
 };
 
-const egovScreens = ["patient-home", "patient-booking", "patient-payment"];
+const egovScreens = ["patient-booking", "patient-home", "patient-payment"];
 
 /** The real product, full-bleed, with its own logo as a small badge. */
 export default function ProductVisual({
@@ -41,7 +41,7 @@ export default function ProductVisual({
             <Image
               key={file}
               src={`/work/egovmed/${file}.jpg`}
-              alt={i === 0 ? project.media.alt : ""}
+              alt={i === 1 ? project.media.alt : ""}
               width={430}
               height={845}
               sizes="(max-width: 700px) 30vw, 18vw"
