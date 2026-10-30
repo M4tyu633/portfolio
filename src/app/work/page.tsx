@@ -18,8 +18,8 @@ export default function Work() {
             <h1>THE WORK.</h1>
           </div>
           <p>
-            Games, applied AI, civic technology and systems programming. Built
-            with care from the first decision to the final demo.
+            Seven projects: three competition winners, a C++ emulator, two
+            medical ML models and a multi-agent AI prototype.
           </p>
         </header>
         <GalleryProjects all />

@@ -24,6 +24,13 @@ export const metadata: Metadata = {
  * match its neighbours.
  * ======================================================================== */
 
+/* The two Grand Champion titles lead their year, then the first place. */
+const leading = ["khan-academy-education-impact", "egov-hackathon", "gear-up-ncr"];
+const rank = (slug: string) => {
+  const i = leading.indexOf(slug);
+  return i === -1 ? leading.length : i;
+};
+
 export default function AchievementsPage() {
   const years = Array.from(new Set(achievements.map((a) => a.year)));
 
@@ -66,6 +73,7 @@ export default function AchievementsPage() {
               <ol data-seq="rows" className="receipts-rows">
                 {achievements
                   .filter((a) => a.year === year)
+                  .sort((a, b) => rank(a.slug) - rank(b.slug))
                   .map((a) => (
                     <Row key={a.slug} a={a} />
                   ))}

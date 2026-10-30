@@ -1,0 +1,65 @@
+/* One readable base for every page: the studio's near-black and ivory.
+ * Each project keeps its identity through its own brand accent, not through a
+ * saturated full-page ground. Loaded last so it settles the older world sheets. */
+[data-world="khan"][data-world],
+[data-world="egov"][data-world],
+[data-world="glyco"][data-world],
+[data-world="chip8"][data-world],
+[data-world="reading"][data-world],
+[data-world="cardio"][data-world],
+[data-world="seam"][data-world] {
+  --w-ground: #111110;
+  --w-ground-2: #1b1c18;
+  --w-ground-3: #262722;
+  --w-ink: #f3f0e7;
+  --w-ink-2: #cfccc3;
+  --w-ink-3: #aaa79f;
+  --w-rule: #f3f0e72b;
+  --w-rule-2: #f3f0e714;
+  color-scheme: dark;
+}
+[data-world="khan"][data-world] {
+  --w-accent: #2fd3a8;
+  --w-accent-2: #2fd3a8;
+  --w-accent-ink: #062a22;
+  --w-focus: #2fd3a8;
+}
+/* eGovMed: the logo's blue leads; flag yellow and red stay as signals. */
+[data-world="egov"][data-world] {
+  --w-accent: #5b8cff;
+  --w-accent-2: #f3c300;
+  --w-accent-ink: #ffffff;
+  --w-focus: #f3c300;
+  --eg-blue: #8fb0ff;
+  --eg-teal: #45c9b3;
+  --eg-amber: #f3c300;
+  --eg-red: #ff8a80;
+  --eg-green: #45c9b3;
+  --eg-ok: #45c9b3;
+  --eg-stamp: #ff8a80;
+  --eg-route: #8fb0ff;
+  --eg-hold: #f3c300;
+}
+[data-world="egov"][data-world] .case-primary {
+  background: #0844e6;
+}
+
+.receipts-page h1 {
+  font-style: normal;
+}
+
+/* Monospace is for code. Labels, captions and metadata read in the UI sans;
+ * the CHIP-8 page keeps its terminal voice. */
+body:not([data-world="chip8"]) {
+  --font-plex-mono: var(--font-plex-sans);
+  --font-mono: var(--font-plex-sans), system-ui, sans-serif;
+}
+body:not([data-world="chip8"]) :is(code, pre, kbd, samp) {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+body:not([data-world="chip8"]) figcaption {
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--w-ink-2);
+}

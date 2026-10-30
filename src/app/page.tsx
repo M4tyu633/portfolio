@@ -1,9 +1,46 @@
 import ProductVisual from "@/components/work/ProductVisual";
 import { khanpanion } from "@/content/projects/khanpanion";
+import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/chrome/Nav";
 import GalleryProjects from "@/components/home/GalleryProjects";
 import { contact } from "@/content/site";
+
+const awards = [
+  {
+    project: "Khanpanion",
+    href: "/work/khanpanion",
+    meta: "2026 · Education",
+    result: "Grand Champion",
+    event: "Khan Academy Education Impact Challenge",
+    logo: "/work/khanpanion/logo-reverse.svg",
+    w: 329,
+    h: 64,
+    logoClass: "is-khan",
+  },
+  {
+    project: "eGovMed",
+    href: "/achievements/egov-hackathon",
+    meta: "2026 · Civic technology",
+    result: "Grand Champion",
+    event: "eGov Hackathon PH · ₱100,000 prize",
+    logo: "/work/egovmed/logo-wordmark.png",
+    w: 859,
+    h: 192,
+    logoClass: "is-egov",
+  },
+  {
+    project: "Tumbang Preso",
+    href: "/achievements/gear-up-ncr",
+    meta: "2026 · Game development",
+    result: "1st Place",
+    event: "Gear Up NCR Esports Game Dev Challenge",
+    logo: "/work/tumbang/wordmark.webp",
+    w: 900,
+    h: 300,
+    logoClass: "is-tump",
+  },
+];
 
 function TrophyIcon() {
   return (
@@ -161,24 +198,28 @@ export default function Home() {
             </Link>
           </div>
           <ol>
-            <li>
-              <span>2026 / EDUCATION</span>
-              <strong>GRAND CHAMPION</strong>
-              <p>Khan Academy Education Impact Challenge</p>
-              <Link href="/work/khanpanion">Khanpanion ↗</Link>
-            </li>
-            <li>
-              <span>2026 / CIVIC TECHNOLOGY</span>
-              <strong>GRAND CHAMPION</strong>
-              <p>eGov Hackathon PH</p>
-              <Link href="/achievements/egov-hackathon">eGovMed ↗</Link>
-            </li>
-            <li>
-              <span>2026 / GAME DEVELOPMENT</span>
-              <strong>1ST PLACE</strong>
-              <p>Gear Up NCR Esports Game Dev Challenge</p>
-              <Link href="/achievements/gear-up-ncr">Tumbang Preso ↗</Link>
-            </li>
+            {awards.map((award) => (
+              <li key={award.project}>
+                <Link href={award.href} className="studio-award-row">
+                  <span className={`studio-award-logo ${award.logoClass}`}>
+                    <Image
+                      src={award.logo}
+                      width={award.w}
+                      height={award.h}
+                      alt=""
+                    />
+                  </span>
+                  <span className="studio-award-text">
+                    <span className="studio-award-meta">{award.meta}</span>
+                    <strong>{award.result}</strong>
+                    <span className="studio-award-event">{award.event}</span>
+                  </span>
+                  <span className="studio-award-go">
+                    {award.project} <span aria-hidden="true">↗</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
           </ol>
         </section>
         <section className="studio-current" aria-labelledby="current-title">
@@ -198,18 +239,29 @@ export default function Home() {
           </div>
           <div className="studio-roles">
             <article>
-              <span>2026 — PRESENT</span>
-              <h3>
+              <span className="studio-role-logo is-nvidia" aria-hidden="true">
                 NVIDIA
-                <br />
-                PHILIPPINES
-              </h3>
-              <p>Campus Ambassador</p>
+              </span>
+              <div>
+                <span>2026 — PRESENT</span>
+                <h3>NVIDIA Philippines</h3>
+                <p>Campus Ambassador</p>
+              </div>
             </article>
             <article>
-              <span>2026 — PRESENT</span>
-              <h3>PC EXPRESS</h3>
-              <p>Intern</p>
+              <span className="studio-role-logo is-pcx">
+                <Image
+                  src="/work/roles/pc-express.webp"
+                  width={720}
+                  height={190}
+                  alt=""
+                />
+              </span>
+              <div>
+                <span>2026 — PRESENT</span>
+                <h3>PC Express</h3>
+                <p>Intern</p>
+              </div>
             </article>
           </div>
         </section>
