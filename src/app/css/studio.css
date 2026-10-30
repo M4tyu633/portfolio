@@ -617,13 +617,7 @@ body[data-world="index"] {
   height: 100%;
   object-fit: contain;
 }
-.studio-role-logo.is-nvidia {
-  color: #76b900;
-  font:
-    700 30px/1 var(--font-plex-sans),
-    sans-serif;
-  letter-spacing: 0.02em;
-}
+
 .studio-roles article:first-child {
   border-top: 1px solid #f3f0e736;
 }

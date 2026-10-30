@@ -239,8 +239,13 @@ export default function Home() {
           </div>
           <div className="studio-roles">
             <article>
-              <span className="studio-role-logo is-nvidia" aria-hidden="true">
-                NVIDIA
+              <span className="studio-role-logo">
+                <Image
+                  src="/work/roles/nvidia.svg"
+                  width={656}
+                  height={120}
+                  alt=""
+                />
               </span>
               <div>
                 <span>2026 — PRESENT</span>
